@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+system "echo [script] starting server on http://tegu.lvh.me:7777/"
+system "rails s --port=7777"
