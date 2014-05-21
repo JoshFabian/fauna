@@ -9,6 +9,15 @@ gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
+# Use HAML for templates
+gem 'haml', '~> 4.0.5'
+
+# Foundation css grid
+gem 'foundation-rails'
+
+# Use AutoPrefixer to avoid writing out vendor prefixes in css
+gem "autoprefixer-rails"
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
