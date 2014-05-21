@@ -1,0 +1,44 @@
+// Scroll background tiles on landing page
+
+@-webkit-keyframes scrollBackground {
+  from {
+    background-position:0 0;
+  }
+
+  to {
+    background-position:100% 0;
+  }  
+}
+
+@keyframes scrollBackground {
+  from {
+    background-position:0 0;
+  }
+  to {
+    background-position:100% 0;
+  }  
+}
+
+@-webkit-keyframes scrollBgGridLinks {
+  from {
+    -webkit-transform:translateY(0px);
+    transform:translateY(0px);
+  }
+
+  to {
+    -webkit-transform:translateY(-330px);
+    transform:translateY(-330px);
+  }  
+}
+
+@keyframes scrollBgGridLinks {
+  from {
+    -webkit-transform:translateY(0px);
+    transform:translateY(0px);
+  }
+
+  to {
+    -webkit-transform:translateY(-330px);
+    transform:translateY(-330px);
+  }  
+}
