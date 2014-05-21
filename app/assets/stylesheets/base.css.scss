@@ -1,3 +1,9 @@
+@import "globals/all";
+
 body {
   background: #eee !important;
+}
+
+.highlight {
+  color: $orange;
 }
