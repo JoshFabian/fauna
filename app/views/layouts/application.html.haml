@@ -9,7 +9,7 @@
 %head
   %meta{ :charset => "utf-8" }
 
-  %title= content_for?(:title) ? yield(:title) : "Curalist"
+  %title= content_for?(:title) ? yield(:title) : "Fauna"
 
   -# Uncomment to make IE8 render like IE7
   -# meta http-equiv="X-UA-Compatible" content="IE=7"
@@ -32,13 +32,5 @@
 
   = yield
 
-  -# = gflash
-
-  -# :javascript
-  -#   var current_user = #{current_user.id rescue 0};
-  -#   var current_roles = #{current_user.roles.map(&:to_s) rescue []};
-  -#   var auth_token = "#{current_user.auth_token rescue ''}";
-
-  -# = javascript_include_tag "application", "data-turbolinks-track" => true
   -# = cloudinary_js_config
 

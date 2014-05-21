@@ -1,1 +1,64 @@
 @import "globals/all";
+@import "foundation/components/grid";
+.landing-page {
+  .scrolling-background-container {
+    overflow: hidden;
+    height: 300px;
+    position: relative;
+  }
+  .scrolling-bg {
+    background: black;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 650px;
+    background-image: image-url("scroll-bg.jpg");
+    background-repeat:repeat-y;
+    background-size: cover;
+    background-position: top right;
+    -webkit-animation: scrollBgGridLinks 35s linear;
+    animation: scrollBgGridLinks 35s linear;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+  }
+  .email-block {
+    @extend .clearfix;
+    background: #fff;
+    border-radius: 3px;
+    position: relative;
+    top: -110px;
+    text-align: center;
+    padding: 15px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.1);
+  }
+  .landing-logo {
+    width: 160px;
+    height: auto;
+    margin: 15px 0 15px 0;
+  }
+
+  .landing-form {
+    margin-top: 20px;
+    input {
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+      border-right: none;
+      &:focus {
+        box-shadow: none;
+        border: 1px solid #cccccc;
+        border-right: none;
+      }
+    }
+    .button {
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      background: $orange;
+      padding-top: 1px;
+      &:hover {
+        background: darken($orange, 5);
+      }
+    }
+  }
+}
