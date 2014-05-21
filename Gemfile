@@ -44,6 +44,31 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+gem 'aasm'
+gem 'bitmask_attributes'
+gem 'cloudinary'
+gem 'fluent-logger'
+gem 'fluent-plugin-file-alternative'
+gem 'logging'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'rack-cors', :require => 'rack/cors'
+gem 'rails-observers'
+gem 'unicorn'
+gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba'
+
+group :development, :test do
+  gem 'awesome_print'
+  gem 'database_cleaner'
+  gem 'byebug', :platforms => [:ruby_20]
+  gem 'debugger', :platforms => [:ruby_19]
+  gem 'fabrication'
+  gem 'minitest-colorize'
+  gem 'minitest-focus'
+  gem 'minitest-rails'
+  gem 'rspec-rails', '~> 2.0'
+end
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
