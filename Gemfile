@@ -9,9 +9,6 @@ gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
-# Use HAML for templates
-gem 'haml', '~> 4.0.5'
-
 # Foundation css grid
 gem 'foundation-rails'
 
@@ -47,13 +44,18 @@ end
 gem 'aasm'
 gem 'bitmask_attributes'
 gem 'cloudinary'
+gem 'devise'
 gem 'fluent-logger'
 gem 'fluent-plugin-file-alternative'
+gem 'grape'
+gem 'haml'
 gem 'logging'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'open4' # required by rubber
 gem 'rack-cors', :require => 'rack/cors'
 gem 'rails-observers'
+gem 'rubber'
 gem 'unicorn'
 gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba'
 
