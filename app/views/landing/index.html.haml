@@ -7,11 +7,14 @@
       %h3 The easiest way to buy and sell reptiles online.
       .landing-form.small-11.columns.small-centered
         .row.collapse
-          // If user hasn't submitted email
-          -# = render :partial => "email_form"
+          .user-email-form-wrapper
+            -# step 1: Submit email
+            = render partial: "user_email_form"
 
-          // After email has submitted email
-          -# = render :partial => "user_type"
+          .user-role-form-wrapper{style: 'display: none;'}
+            -# step 2: After email has submitted email
+            = render partial: "user_role_form"
 
-          // After submitting email
-      = render :partial => "invite_friends"
+      .user-invite-friends-form-wrapper{style: 'display: none;'}
+        -# step 3:
+        = render partial: "user_invite_friends"

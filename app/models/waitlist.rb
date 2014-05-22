@@ -9,6 +9,15 @@ class Waitlist < ActiveRecord::Base
     self.code ||= generate_token(prefix: self.prefix)
   end
 
+  def share_url
+    "http://www.fauna.net/#{code}"
+  end
+
+  def as_json(options={})
+    options ||= {}
+    super(methods: [:share_url])
+  end
+
   protected
 
   def generate_token(options={})

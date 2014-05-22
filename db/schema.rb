@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20140521200739) do
   create_table "waitlists", force: true do |t|
     t.string   "email",        limit: 50
     t.string   "code",         limit: 20
+    t.string   "role",         limit: 20
     t.string   "referer",      limit: 50
     t.integer  "signup_count",            default: 0
     t.datetime "created_at"
@@ -25,6 +26,7 @@ ActiveRecord::Schema.define(version: 20140521200739) do
   add_index "waitlists", ["code"], name: "index_waitlists_on_code"
   add_index "waitlists", ["email"], name: "index_waitlists_on_email"
   add_index "waitlists", ["referer"], name: "index_waitlists_on_referer"
+  add_index "waitlists", ["role"], name: "index_waitlists_on_role"
   add_index "waitlists", ["signup_count"], name: "index_waitlists_on_signup_count"
 
 end
