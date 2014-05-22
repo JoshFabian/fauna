@@ -1,0 +1,23 @@
+%header.global-head
+  .row
+    .left-nav
+      = image_tag "landing-logo.jpg", :class => "header-logo"
+    .right-nav
+      .search
+        <input type="text" placeholder="Search..." />
+      .guest-links
+        = link_to "LOGIN"
+        or
+        = link_to "REGISTER"
+        
+%header.global-subhead
+  .row
+    %ul.inline-list
+      %li= link_to "Pythons", "#"
+      %li= link_to "Boas", "#"
+      %li= link_to "Colubrids", "#"
+      %li= link_to "Venomous", "#"
+      %li= link_to "Crocodilians", "#"
+      %li= link_to "Lizards", "#"
+      %li= link_to "Amphibians", "#"
+      %li= link_to "Turtles & Tortoises", "#"

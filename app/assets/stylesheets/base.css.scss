@@ -7,3 +7,24 @@ body {
 .highlight {
   color: $orange;
 }
+
+.button {
+  border-radius: 3px;
+  &.btn-outline {
+    background: transparent;
+    border: 2px solid;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    &:hover {
+      background: rgba(255,255,255,.1);
+    }
+  }
+  &.btn-white {
+    background: #fff;
+    color: #222;
+    &:hover {
+      background: darken(#fff, 15);
+      color: #222;
+    }
+  }
+}

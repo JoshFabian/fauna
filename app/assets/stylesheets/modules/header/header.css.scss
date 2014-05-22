@@ -1,0 +1,87 @@
+@import "globals/all";
+@import "foundation/components/grid";
+
+.global-head {
+  @include grid-column(12);
+  background: #fff;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  .header-logo {
+    width: 105px;
+  }
+  .right-nav, .left-nav {
+    @include grid-column(6);
+    padding: 0;
+  }
+  .right-nav {
+    text-align: right;
+    a {
+      color: $orange;
+      font-size: 14px;
+      &:hover {
+        color: darken($orange, 10);
+      }
+    }
+    .guest-links {
+      @include grid-column(4);
+      padding: 0;
+      line-height: 35px;
+    }
+    .search {
+      @include grid-column(8);
+      padding: 0;
+      input {
+        width: 100%;
+        border-radius: 3px;
+        box-shadow: none;
+        background: #f7f7f7;
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.global-subhead {
+  @include grid-column(12);
+  padding: 10px;
+  background: #f9f9f9;
+  border-bottom: 1px solid #d6d6d6;
+  border-top: 1px solid #d6d6d6;
+  position: relative;
+  margin-bottom: 30px;
+  .inline-list {
+    margin-bottom: 0;
+    position: relative;
+    overflow: visible;
+    a {
+      color: #848484;
+      font-size: 14px;
+      &:hover {
+        color: $orange;
+      }
+    }
+    &:after, &:before {
+      bottom: 10px;
+      left: 35px;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+    }
+
+    &:after {
+      border-color: rgba(249, 249, 249, 0);
+      border-bottom-color: #f9f9f9;
+      border-width: 9px;
+      margin-left: -9px;
+    }
+    &:before {
+      border-color: rgba(214, 214, 214, 0);
+      border-bottom-color: #d6d6d6;
+      border-width: 10px;
+      margin-left: -10px;
+    }
+  }
+}
