@@ -3,10 +3,11 @@ class Tegu.Landing
     $(".user-email-form-wrapper").hide()
     $(".user-role-form-wrapper").show()
 
-  @goto_step_3: (signup_count, invite_code) ->
+  @goto_step_3: (signup_count, share_url) ->
     $(".user-email-form-wrapper").hide()
     $(".user-role-form-wrapper").hide()
     $(".user-invite-friends-form-wrapper .signup-count").html(signup_count)
+    $(".user-invite-friends-form-wrapper .invite-code input").val(share_url)
     $(".user-invite-friends-form-wrapper").show()
 
 $(document).ready ->
@@ -45,6 +46,6 @@ $(document).ready ->
           Tegu.WaitlistApi.update(waitlist_id, form_data, auth_token, callback)
         (data, callback) ->
           console.log data
-          Tegu.Landing.goto_step_3(data.waitlist.signup_count, data.waitlist.code)
+          Tegu.Landing.goto_step_3(data.waitlist.signup_count, data.waitlist.share_url)
       ]
 
