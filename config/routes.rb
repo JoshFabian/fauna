@@ -7,6 +7,8 @@ Tegu::Application.routes.draw do
   get '/' => redirect("/landing")
   get 'landing' => 'landing#index'
 
+  get 'home' => 'home#index'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
