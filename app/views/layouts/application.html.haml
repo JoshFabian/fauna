@@ -32,5 +32,7 @@
 
   = yield
 
-  -# = cloudinary_js_config
-
+  :javascript
+    var current_user = #{current_user.id rescue 0};
+    var current_roles = #{current_user.roles.map(&:to_s) rescue []};
+    var auth_token = "#{current_user.auth_token rescue ''}";

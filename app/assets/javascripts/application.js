@@ -13,6 +13,15 @@
 //= require jquery
 //= require jquery_ujs
 //= require foundation
+//= require jquery.validate
+//= require async
 //= require_tree .
 
-$(function(){ $(document).foundation(); });
+$(document).ready(function() {
+  $(document).foundation();
+
+  // initialize form validation
+  $('.form-validation').each(function() {
+    $(this).validate();
+  })
+})
