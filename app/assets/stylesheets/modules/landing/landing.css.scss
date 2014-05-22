@@ -32,6 +32,8 @@
     text-align: center;
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
     padding: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
   .landing-logo {
     width: 160px;
@@ -51,7 +53,7 @@
         border-right: none;
       }
     }
-    .button {
+    .email-form-button {
       border-top-right-radius: 3px;
       border-bottom-right-radius: 3px;
       background: $orange;
@@ -60,7 +62,22 @@
         background: darken($orange, 5);
       }
     }
+    .radio-submit {
+      background: $orange;
+      border-radius: 3px;
+      padding: 10px 60px;
+      margin-top: 10px;
+      &:hover {
+        background: darken($orange, 5);
+      }
+    }
   }
+}
+
+.invite-friends {
+  background: #fff;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
 }
 .invite-code {
   background: lighten(#eee,3);

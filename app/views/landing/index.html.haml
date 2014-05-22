@@ -7,16 +7,11 @@
       %h3 The easiest way to buy and sell reptiles online.
       .landing-form.small-11.columns.small-centered
         .row.collapse
-          .small-9.columns
-            %input{:placeholder => "Enter your email...", :type => "text"}
-          .small-3.columns
-            %a.button.postfix{:href => "#"} Request Invite
+          // If user hasn't submitted email
+          -# = render :partial => "email_form"
+
+          // After email has submitted email
+          -# = render :partial => "user_type"
+
           // After submitting email
-          .small-12.columns
-            %hr
-            %h3 Invite your friends. <span class="highlight">Earn Fauna Credits.</span>
-            %h4.secondary You've invited <span class="highlight">12</span> people to Fauna. 
-      .invite-code
-        %h4 Your special invite link:
-        %p Copy paste the URL below into <strong>Twitter</strong>, <strong>Facebook</strong> or in an <strong>Email</strong>
-        %input{:readonly => "", :type => "text", :value => "http://www.fauna.net/Uaht93"}
+      = render :partial => "invite_friends"
