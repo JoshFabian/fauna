@@ -6,14 +6,13 @@
       = image_tag "landing-logo.jpg", :class => "landing-logo"
       %h3 The easiest way to buy and sell reptiles online.
       .landing-form.small-11.columns.small-centered
-        .row.collapse
-          .user-email-form-wrapper
-            -# step 1: Submit email
-            = render partial: "user_email_form"
+        .user-email-form-wrapper
+          -# step 1: Submit email
+          = render partial: "user_email_form"
 
-          .user-role-form-wrapper{style: 'display: none;'}
-            -# step 2: After email has submitted email
-            = render partial: "user_role_form"
+        .user-role-form-wrapper{style: 'display: none;'}
+          -# step 2: After email has submitted email
+          = render partial: "user_role_form"
 
       .user-invite-friends-form-wrapper{style: 'display: none;'}
         -# step 3:

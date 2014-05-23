@@ -1,6 +1,8 @@
 = form_for Waitlist.new, url: '#', html: {class: 'form-validation user-email-form'} do |f|
   = hidden_field_tag :referer, @code, name: "waitlist[referer]"
-  .small-9.columns
-    %input.required.email{placeholder: "Enter your email...", type: "text", name: "waitlist[email]"}
-  .small-3.columns
-    %a.button.email-form-button.postfix{href: "#"} Request Invite
+  .row.collapse
+    .small-9.columns
+      %input.required.email{placeholder: "Enter your email...", type: "text", name: "waitlist[email]"}
+    .small-3.columns
+      %a.button.email-form-button.postfix{href: "#"} Request Invite
+    %label.error.hide{:for => "waitlist[email]"} Please enter a valid email address.

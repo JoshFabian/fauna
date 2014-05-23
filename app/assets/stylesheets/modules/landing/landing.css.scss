@@ -42,6 +42,7 @@
 
   .landing-form {
     margin-top: 20px;
+    padding-bottom: 20px;
     input {
       border-top-left-radius: 3px;
       border-bottom-left-radius: 3px;
@@ -53,8 +54,8 @@
       }
     }
     .email-form-button {
-      border-top-right-radius: 3px;
-      border-bottom-right-radius: 3px;
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
       background: $orange;
       padding-top: 1px;
       &:hover {
