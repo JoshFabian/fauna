@@ -10,10 +10,8 @@ Tegu::Application.routes.draw do
   get '/' => redirect("/landing")
   get 'landing(/:code)' => 'landing#index', as: :landing
 
-  get 'home' => 'home#index'
-  root 'home#index'
-
   resources :listings
+  root 'listings#index'
 
   # oauth
   get 'auth/:provider/callback', to: 'oauths#callback'

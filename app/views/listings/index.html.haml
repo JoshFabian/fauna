@@ -1,0 +1,16 @@
+= render partial: "listings/header"
+
+.guest-message
+  = render partial: "listings/guest_message"
+
+.row
+  %h5 Recent Listings
+  %ul.small-block-grid-4
+    - 20.times do
+      %li
+        .listing-panel
+          = image_tag "http://www.placehold.it/235/200"
+          .listing-info
+            .title
+              Listing Title
+
