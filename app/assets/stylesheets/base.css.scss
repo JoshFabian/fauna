@@ -27,4 +27,13 @@ body {
       color: #222;
     }
   }
+  &.contact-seller {
+    background-color: #16a085;
+    color: #fff;
+    padding: 15px 70px;
+    border-radius: 2px;
+    &:hover {
+      background-color: darken(#16a085, 10);
+    }
+  }
 }
