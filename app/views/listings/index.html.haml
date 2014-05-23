@@ -1,6 +1,6 @@
 = render partial: "listings/header"
 
-.guest-message
+- if !user_signed_in?
   = render partial: "listings/guest_message"
 
 .row
