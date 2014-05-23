@@ -6,4 +6,8 @@ class ListingsController < ApplicationController
   def index
   end
 
+  # GET /listings/1
+  def show
+  end
+
 end
