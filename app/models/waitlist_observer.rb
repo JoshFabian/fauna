@@ -1,7 +1,7 @@
 class WaitlistObserver < ActiveRecord::Observer
   include Loggy
 
-  def after_save(object)
+  def after_create(object)
     Waitlist.where(code: object.referer).each do |waitlist|
       waitlist.increment!(:signup_count)
     end

@@ -1,4 +1,12 @@
 class Tegu.WaitlistApi
+  @check: (email, token, callback = null) ->
+    api = "/api/v1/waitlists/check?email=#{email}&token=#{token}"
+    $.ajax api,
+      type: 'GET'
+      dataType: 'json'
+      success: (data) ->
+        callback(null, data) if callback
+
   @create: (params, token, callback = null) ->
     api = "/api/v1/waitlists/?token=#{token}"
     $.ajax api,
