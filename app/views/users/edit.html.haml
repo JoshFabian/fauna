@@ -7,6 +7,18 @@
       %h3 Login to your account
       .login-form.small-8.columns.small-centered
         %a.button{:href => "#"} Login with Facebook
-        %input{:placeholder => "Username", :type => "text"}
+        %input{:placeholder => "email", :type => "text"}
         %input{:placeholder => "Password", :type => "password"}
         %a.button{:href => "#"} Login
+      %hr
+      %h3 Create an account 
+      .register-form.small-8.columns.small-centered
+        %input{:placeholder => "email", :type => "text"}
+        .small-6.columns{:style => "padding-left: 0; padding-right: 5px;"}
+          %input{:placeholder => "first name", :type => "text"}
+        .small-6.columns{:style => "padding-left: 5px; padding-right: 0;"}
+          %input.small-6.columns{:placeholder => "last name", :type => "text"}
+        %input{:placeholder => "username", :type => "text"}
+        %input{:placeholder => "Password", :type => "password"}
+        %a.button{:href => "#"} Continue
+
