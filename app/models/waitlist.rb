@@ -10,7 +10,7 @@ class Waitlist < ActiveRecord::Base
   end
 
   def share_url
-    "http://www.fauna.net/#{code}"
+    "http://www.fauna.net/landing/#{code}"
   end
 
   def as_json(options={})

@@ -3,16 +3,18 @@ class Tegu.Landing
     $(".user-email-form-wrapper").hide()
     $(".user-role-form-wrapper").show()
 
-  @goto_step_3: (signup_count, share_url) ->
+  @goto_step_3: (waitlist) ->
     $(".user-email-form-wrapper").hide()
     $(".user-role-form-wrapper").hide()
-    $(".user-invite-friends-form-wrapper .signup-count").html(signup_count)
-    $(".user-invite-friends-form-wrapper .invite-code input").val(share_url)
+    $(".user-invite-friends-form-wrapper .signup-count").html(waitlist.signup_count)
+    $(".user-invite-friends-form-wrapper .invite-code input").val(waitlist.share_url)
     $(".user-invite-friends-form-wrapper").show()
 
 $(document).ready ->
 
   waitlist_id = 0
+
+  # user email form
 
   $(".email-form-button").on 'click', (event) ->
     event.preventDefault()
@@ -22,15 +24,27 @@ $(document).ready ->
     onsubmit: true,
     submitHandler: (form) ->
       form_data = $(".user-email-form").serialize()
+      form_email = $(".user-email-form input.email").val()
       async.waterfall [
         (callback) ->
-          # create
-          Tegu.WaitlistApi.create(form_data, auth_token, callback)
+          # check email
+          console.log "checking email:#{form_email}"
+          Tegu.WaitlistApi.check(form_email, auth_token, callback)
         (data, callback) ->
           console.log data
+          if data.waitlist
+            waitlist_id = data.waitlist.id
+            Tegu.Landing.goto_step_3(data.waitlist)
+          else
+            # create
+            Tegu.WaitlistApi.create(form_data, auth_token, callback)
+        (data, callback) ->
+          # console.log data
           waitlist_id = data.waitlist.id
           Tegu.Landing.goto_step_2()
       ]
+
+  # user role form
 
   $(".user-role-form-submit").on 'click', (event) ->
     event.preventDefault()
@@ -45,7 +59,7 @@ $(document).ready ->
           # update
           Tegu.WaitlistApi.update(waitlist_id, form_data, auth_token, callback)
         (data, callback) ->
-          console.log data
-          Tegu.Landing.goto_step_3(data.waitlist.signup_count, data.waitlist.share_url)
+          # console.log data
+          Tegu.Landing.goto_step_3(data.waitlist)
       ]
 

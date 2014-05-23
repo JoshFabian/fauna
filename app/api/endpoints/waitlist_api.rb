@@ -9,7 +9,7 @@ module Endpoints
     resource :waitlists do
       helpers do
         def waitlist_params
-          ActionController::Parameters.new(params).require(:waitlist).permit(:email, :role)
+          ActionController::Parameters.new(params).require(:waitlist).permit(:email, :referer, :role)
         end
       end
 
@@ -23,6 +23,12 @@ module Endpoints
       put ':id' do
         @waitlist = Waitlist.find(params.id)
         @waitlist.update(waitlist_params)
+        {waitlist: @waitlist}
+      end
+
+      desc "Check waitlist"
+      get 'check' do
+        @waitlist = Waitlist.find_by_email(params.email)
         {waitlist: @waitlist}
       end
     end

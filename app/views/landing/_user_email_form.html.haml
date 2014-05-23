@@ -1,4 +1,5 @@
 = form_for Waitlist.new, url: '#', html: {class: 'form-validation user-email-form'} do |f|
+  = hidden_field_tag :referer, @code, name: "waitlist[referer]"
   .small-9.columns
     %input.required.email{placeholder: "Enter your email...", type: "text", name: "waitlist[email]"}
   .small-3.columns
