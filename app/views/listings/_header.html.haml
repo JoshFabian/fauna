@@ -5,11 +5,12 @@
     .right-nav
       .search
         <input type="text" placeholder="Search..." />
-      .guest-links
-        = link_to "LOGIN"
-        or
-        = link_to "REGISTER"
-        
+      - if !user_signed_in?
+        .guest-links
+          = link_to "LOGIN", login_path
+          or
+          = link_to "REGISTER", login_path
+
 %header.global-subhead
   .row
     %ul.inline-list
