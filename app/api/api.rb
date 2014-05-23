@@ -13,5 +13,6 @@ class Api < Grape::API
   prefix 'api'
   version 'v1', using: :path
   helpers LoggerHelper
+  mount Endpoints::PingApi
   mount Endpoints::WaitlistApi
 end
