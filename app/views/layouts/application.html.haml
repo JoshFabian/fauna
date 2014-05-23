@@ -30,7 +30,10 @@
   -#   = render(:partial => 'layouts/header_user')
   -# - else
   -#   = render(:partial => 'layouts/header_guest') unless @no_header
-  = render partial: "listings/header"
+
+  // Hacky fix for not showing header on landing page templates
+  - if user_signed_in?
+    = render partial: "listings/header"
   = yield
 
   :javascript
