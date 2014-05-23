@@ -30,7 +30,7 @@
   -#   = render(:partial => 'layouts/header_user')
   -# - else
   -#   = render(:partial => 'layouts/header_guest') unless @no_header
-
+  = render partial: "listings/header"
   = yield
 
   :javascript
