@@ -9,6 +9,7 @@ class Tegu.Landing
     $(".user-invite-friends-form-wrapper .signup-count").html(waitlist.signup_count)
     $(".user-invite-friends-form-wrapper .invite-code input").val(waitlist.share_url)
     $(".user-invite-friends-form-wrapper").show()
+    $(".landing-form").addClass('hide')
 
 $(document).ready ->
 

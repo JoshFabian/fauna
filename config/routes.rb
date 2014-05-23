@@ -13,6 +13,8 @@ Tegu::Application.routes.draw do
   get 'home' => 'home#index'
   root 'home#index'
 
+  resources :listings
+
   # oauth
   get 'auth/:provider/callback', to: 'oauths#callback'
   get 'auth/failure', to: 'oauths#failure'
