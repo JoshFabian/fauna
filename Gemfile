@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.2'
@@ -43,6 +43,7 @@ end
 
 gem 'aasm'
 gem 'bitmask_attributes'
+gem 'cancan'
 gem 'cloudinary'
 gem 'devise'
 gem 'faker'
@@ -84,6 +85,3 @@ end
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]
