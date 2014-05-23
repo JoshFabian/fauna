@@ -1,0 +1,14 @@
+<%
+  @path = "#{Rubber.root}/config/database.yml"
+  shared_dir = "/mnt/slate-production/shared/db"
+
+  @post = <<-ENDSCRIPT
+    mkdir -p #{shared_dir}
+  ENDSCRIPT
+%>
+
+<%= Rubber.env %>:
+  adapter: sqlite3
+  encoding: utf8
+  database: /mnt/slate-production/shared/db/slate.production.sqlite3
+  pool: 5
