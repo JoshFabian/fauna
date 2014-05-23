@@ -1,0 +1,13 @@
+.landing-page
+  .scrolling-background-container
+    .scrolling-bg.animate-background
+  .row
+    .email-block.small-6.small-centered.columns
+      = image_tag "landing-logo.jpg", :class => "landing-logo"
+      %h3 Login to your account
+      .login-form.small-8.columns.small-centered
+        %a.button{href: user_omniauth_authorize_path(:facebook)} Login with Facebook
+        = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "form-validation"}) do |f|
+          = f.email_field :email, :autofocus => true, :required => true, :class => "", :placeholder => 'email'
+          = f.password_field :password, :required => true, :class => "", :placeholder => 'password'
+          = f.submit "Login", :class => 'button'

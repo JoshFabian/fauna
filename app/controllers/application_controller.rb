@@ -16,4 +16,17 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::UnknownFormat do |exception|
     redirect_to root_url, :alert => exception.message
   end
+
+  def after_sign_in_path_for(resource)
+    stored_location_for(resource) || waitlists_path
+  end
+
+  def after_sign_out_path_for(resource)
+    login_path
+  end
+
+  def admin_role_required!
+    raise CanCan::AccessDenied, "Unauthorized" unless user_signed_in? and current_user.roles?(:admin)
+  end
+
 end

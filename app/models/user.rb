@@ -9,6 +9,9 @@ class User < ActiveRecord::Base
   validates :email, presence: true, uniqueness: true
   validates :handle, presence: true, uniqueness: true
 
+  has_many :oauths, dependent: :destroy
+  has_many :facebook_oauths, -> { where(provider: 'facebook') }, :class_name => 'Oauth'
+
   bitmask :roles, :as => [:admin, :basic]
 
   before_validation(on: :create) do

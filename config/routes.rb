@@ -8,19 +8,35 @@ Tegu::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'landing#index'
   get '/' => redirect("/landing")
-  get 'login' => 'users#edit'
   get 'landing(/:code)' => 'landing#index', as: :landing
 
   get 'home' => 'home#index'
+  root 'home#index'
 
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
+  # oauth
+  get 'auth/:provider/callback', to: 'oauths#callback'
+  get 'auth/failure', to: 'oauths#failure'
 
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
+  # users
+  resources :users, only: [:index] do
+    get 'become', on: :member
+    get 'validate_email', :on => :collection
+    get 'validate_handle', :on => :collection
+  end
+  devise_for :users
+  devise_scope :user do
+    get "login", to: "devise/sessions#new", :as => :login
+    get "signup", to: "devise/registrations#new", :as => :signup
+    get "logout", to: "devise/sessions#destroy", :as => :logout
+  end
 
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
+  # signup
+  get 'signup/new/facebook', to: "signup#new_facebook", as: :new_facebook_signup
+  get 'signup/new/password', to: "signup#new_password", as: :new_password_signup
+  post 'signup/create/facebook', to: "signup#create_facebook", as: :create_facebook_signup
+  post 'signup/create/password', to: "signup#create_password", as: :create_password_signup
+
+  resources :waitlists, only: [:index]
 
   # Example resource route with options:
   #   resources :products do
