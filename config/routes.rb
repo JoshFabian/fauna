@@ -9,6 +9,7 @@ Tegu::Application.routes.draw do
   # root 'landing#index'
   get '/' => redirect("/landing")
   get 'landing' => 'landing#index'
+  get 'login' => 'users#edit'
 
   get 'home' => 'home#index'
 

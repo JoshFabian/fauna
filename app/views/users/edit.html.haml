@@ -1,0 +1,12 @@
+.landing-page
+  .scrolling-background-container
+    .scrolling-bg.animate-background
+  .row
+    .email-block.small-6.small-centered.columns
+      = image_tag "landing-logo.jpg", :class => "landing-logo"
+      %h3 Login to your account
+      .login-form.small-8.columns.small-centered
+        %a.button{:href => "#"} Login with Facebook
+        %input{:placeholder => "Username", :type => "text"}
+        %input{:placeholder => "Password", :type => "password"}
+        %a.button{:href => "#"} Login
