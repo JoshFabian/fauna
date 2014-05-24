@@ -29,7 +29,8 @@ $(document).ready ->
     # show image preview
     image_url = Tegu.CloudinaryHelper.transform(data.result.url, "c_fit,w_200,h_200")
     image_box = $(this).closest(".image-box")
-    # image_box.html("<img src='#{image_url}'></img>")
+    $(image_box).find("div:first").addClass('hide')
+    $(image_box).append("<img src='#{image_url}'></img>")
     async.waterfall [
       (callback) ->
         # get new image partial
