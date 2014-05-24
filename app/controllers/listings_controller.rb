@@ -7,6 +7,16 @@ class ListingsController < ApplicationController
     @listings = Listing.all
   end
 
+  # GET /listings/:category
+  def by_category
+    @category = params[:category]
+    @listings = Listing.search(filter: {term: {category_names: @category}}).records
+
+    respond_to do |format|
+      format.html { render(action: :index) }
+    end
+  end
+
   # GET /listings/1
   def show
     @listing = Listing.find(params[:id])

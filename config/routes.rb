@@ -11,6 +11,9 @@ Tegu::Application.routes.draw do
   get 'landing(/:code)' => 'landing#index', as: :landing
 
   root 'listings#index'
+  get 'reptiles/:category' => "listings#by_category", constraints: { category: /[a-z-]+/ },
+    as: :reptile_category
+  resources :reptiles, controller: 'listings'
   resources :listings
   resources :listing_forms, only: [] do
     get :new_image, on: :collection

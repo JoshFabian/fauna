@@ -1,7 +1,8 @@
 %header.global-head
   .row
     .left-nav
-      = image_tag "landing-logo.jpg", :class => "header-logo"
+      = link_to reptiles_path do
+        = image_tag "landing-logo.jpg", :class => "header-logo"
     .right-nav
       .search
         <input type="text" placeholder="Search..." />
@@ -14,11 +15,12 @@
 %header.global-subhead
   .row
     %ul.inline-list
-      %li= link_to "Pythons", "#"
-      %li= link_to "Boas", "#"
-      %li= link_to "Colubrids", "#"
-      %li= link_to "Venomous", "#"
-      %li= link_to "Crocodilians", "#"
-      %li= link_to "Lizards", "#"
-      %li= link_to "Amphibians", "#"
-      %li= link_to "Turtles & Tortoises", "#"
+      - Category.roots.order("position asc").each do |category|
+        %li= link_to category.name, reptile_category_path(category.name.parameterize)
+      -# %li= link_to "Boas", reptile_category_path('boas')
+      -# %li= link_to "Colubrids", reptile_category_path('colubrids')
+      -# %li= link_to "Venomous", reptile_category_path('venoumous')
+      -# %li= link_to "Crocodilians", "#"
+      -# %li= link_to "Lizards", "#"
+      -# %li= link_to "Amphibians", "#"
+      -# %li= link_to "Turtles & Tortoises", "#"

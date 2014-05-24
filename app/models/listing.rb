@@ -21,6 +21,24 @@ class Listing < ActiveRecord::Base
     state :approved, initial: true
   end
 
+  # mappings do
+  #   indexes :category_names, analyzer: 'snowball'
+  # end
+
+  def as_indexed_json(options={})
+    as_json(methods: [:category_names])
+  end
+
+  def category_names
+    categories.collect{ |o| o.name.downcase }
+  end
+
+  def index!
+    self.__elasticsearch__.update_document
+  rescue Exception => e
+    
+  end
+
   def primary_image
     images.order("position asc").first
   end

@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20140524161435) do
     t.string   "name",           limit: 100
     t.integer  "parent_id"
     t.integer  "level"
+    t.integer  "position"
     t.integer  "children_count",             default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -26,6 +27,7 @@ ActiveRecord::Schema.define(version: 20140524161435) do
   add_index "categories", ["level"], name: "index_categories_on_level"
   add_index "categories", ["name"], name: "index_categories_on_name"
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id"
+  add_index "categories", ["position"], name: "index_categories_on_position"
 
   create_table "listing_categories", force: true do |t|
     t.integer  "category_id"

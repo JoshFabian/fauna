@@ -4,6 +4,7 @@ class CreateCategories < ActiveRecord::Migration
       t.string :name, limit: 100
       t.integer :parent_id
       t.integer :level
+      t.integer :position
       t.integer :children_count, default: 0
       t.timestamps
     end
@@ -11,6 +12,7 @@ class CreateCategories < ActiveRecord::Migration
     add_index :categories, :name
     add_index :categories, :parent_id
     add_index :categories, :level
+    add_index :categories, :position
     add_index :categories, :children_count
 
     create_table :listing_categories do |t|

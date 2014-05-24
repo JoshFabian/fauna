@@ -36,8 +36,8 @@ namespace :db do
       end
       raise Exception, "invalid file: #{data_file}" if !File.exists?(data_file)
       puts "#{Time.now}: loading file #{data_file}"
-      SerializationHelper::Base.new(helper).load(data_file)
-      Rake::Task['db:index_all'].invoke
+      # SerializationHelper::Base.new(helper).load(data_file)
+      # Rake::Task['db:index_all'].invoke
       puts "#{Time.now}: completed"
     end
   end

@@ -19,12 +19,40 @@ class ListingTest < ActiveSupport::TestCase
   describe "search" do
     before do
       @user = Fabricate(:user)
-      @listing1 = @user.listings.create!(title: "Lizard", price: 100)
-      @listing2 = @user.listings.create!(title: "Tegu", price: 100)
-      Listing.import
+    end
+
+    describe "by category" do
+      before do
+        @boas = Category.create!(name: 'Boas')
+        @listing1 = @user.listings.create!(title: "Lizard", price: 100)
+        @listing1.categories.push(@boas)
+        @listing1.category_names.must_equal ['boas']
+        Listing.import
+      end
+
+      it "should find on exact category match" do
+        sleep 1 # todo: fix this
+        @results = Listing.search 'boas'
+        @results.size.must_equal 1
+        @results = Listing.search(filter: {term: {category_names: 'boas'}})
+        @results.size.must_equal 1
+      end
+
+      it "should not find on invalid category" do
+        @results = Listing.search 'bogus'
+        @results.size.must_equal 0
+        @results = Listing.search(filter: {term: {category_names: 'bogus'}})
+        @results.size.must_equal 0
+      end
     end
 
     describe "by title" do
+      before do
+        @listing1 = @user.listings.create!(title: "Lizard", price: 100)
+        @listing2 = @user.listings.create!(title: "Tegu", price: 100)
+        Listing.import
+      end
+
       it "should find on exact title match" do
         @results = Listing.search 'lizard'
         @results.size.must_equal 1
@@ -46,6 +74,12 @@ class ListingTest < ActiveSupport::TestCase
     end
 
     describe "by user" do
+      before do
+        @listing1 = @user.listings.create!(title: "Lizard", price: 100)
+        @listing2 = @user.listings.create!(title: "Tegu", price: 100)
+        Listing.import
+      end
+
       it "should find when user matches" do
         @results = Listing.search(filter: {term: {user_id: @user.id}})
         @results.size.must_equal 2
