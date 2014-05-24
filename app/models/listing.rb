@@ -1,6 +1,7 @@
 class Listing < ActiveRecord::Base
   include AASM
   include Currency
+  include FriendlyId
   include Loggy
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
@@ -17,6 +18,8 @@ class Listing < ActiveRecord::Base
 
   belongs_to :user
 
+  friendly_id :title, use: :slugged
+
   aasm column: 'state' do
     state :approved, initial: true
   end
@@ -24,6 +27,9 @@ class Listing < ActiveRecord::Base
   # mappings do
   #   indexes :category_names, analyzer: 'snowball'
   # end
+
+  # set search index name
+  index_name "listings.#{Rails.env}"
 
   def as_indexed_json(options={})
     as_json(methods: [:category_names])
@@ -46,4 +52,10 @@ class Listing < ActiveRecord::Base
   def price=(s)
     write_attribute(:price, to_cents(s))
   end
+
+  # used by friendly_id
+  def should_generate_new_friendly_id?
+    slug.blank? || title_changed?
+  end
+
 end

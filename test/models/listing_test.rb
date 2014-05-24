@@ -16,6 +16,24 @@ class ListingTest < ActiveSupport::TestCase
     end
   end
 
+  describe "slug" do
+    before do
+      @user = Fabricate(:user)
+    end
+
+    it "should auto create slug from title" do
+      @listing = @user.listings.create!(title: "Listing 1", price: 100)
+      @listing.slug.must_equal 'listing-1'
+    end
+
+    it "should change slug when title is changed" do
+      @listing = @user.listings.create!(title: "Listing 1", price: 100)
+      @listing.update_attributes(title: "Tegu Lizard")
+      @listing.reload
+      @listing.slug.must_equal "tegu-lizard"
+    end
+  end
+
   describe "search" do
     before do
       @user = Fabricate(:user)

@@ -4,6 +4,7 @@ class CreateListings < ActiveRecord::Migration
       t.references :user
       t.string :state, limit: 20
       t.string :title, limit: 100
+      t.string :slug, limit: 100
       t.text :description
       t.integer :price
       t.timestamps
@@ -12,6 +13,7 @@ class CreateListings < ActiveRecord::Migration
     add_index :listings, :user_id
     add_index :listings, :state
     add_index :listings, :title
+    add_index :listings, :slug
     add_index :listings, :price
     add_index :listings, :created_at
   end

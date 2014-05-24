@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20140524161435) do
     t.integer  "user_id"
     t.string   "state",        limit: 20
     t.string   "title",        limit: 100
+    t.string   "slug",         limit: 100
     t.text     "description"
     t.integer  "price"
     t.datetime "created_at"
@@ -71,6 +72,7 @@ ActiveRecord::Schema.define(version: 20140524161435) do
   add_index "listings", ["created_at"], name: "index_listings_on_created_at"
   add_index "listings", ["images_count"], name: "index_listings_on_images_count"
   add_index "listings", ["price"], name: "index_listings_on_price"
+  add_index "listings", ["slug"], name: "index_listings_on_slug"
   add_index "listings", ["state"], name: "index_listings_on_state"
   add_index "listings", ["title"], name: "index_listings_on_title"
   add_index "listings", ["user_id"], name: "index_listings_on_user_id"
