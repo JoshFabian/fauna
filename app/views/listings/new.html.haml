@@ -1,64 +1,45 @@
 .row
   .new-listing.small-8.columns.small-centered
     %h3.text-center Create New Listing
-    .rounded-panel
-      .listing-field
-        %label What is it?
-        %select
-          %option{:value => "default"} Reptile Category
-          %option{:value => "pythons"} Pythons
-          %option{:value => "boas"} Boas
-          %option{:value => "colubrids"} Colubrids
-          %option{:value => "venomous"} Venomous
-          %option{:value => "crocodilians"} Crocodilians
-          %option{:value => "lizards"} Lizards
-          %option{:value => "amphibians"} Amphibians
-          %option{:value => "turtles"} Turtles & Tortoises
-
-        %select
-          %option{:value => "default"} Reptile Sub-Category
-          %option{:value => "geckos"} Geckos
-          %option{:value => "bearded-dragons"} Bearded Dragons
-          %option{:value => "monitors"} Monitors & Tegus
-          %option{:value => "other"} Other Lizards
-      %hr
-      .listing-field
-        %label Title
-        %input{:placeholder => "Try to describe your reptile the way a buyer would.", :type => "text"}
-      %hr
-      .listing-field
-        %label Photos
-        %ul.image-grid.small-block-grid-5
-          %li
-            .image-box
-              = image_tag "http://www.placehold.it/200/200"
-            = link_to "remove", "#"
-          %li
-            .image-box
-              = image_tag "http://www.placehold.it/200/200"
-            = link_to "remove", "#"
-          %li
-            .image-box.add
-              %div
-                .upload-container
-                  %input#image-upload.image-upload{:multiple => "multiple", :name => "image-upload", :type => "file"}
-                .add-images-button
-                  .button-add
-                  %span Add Photo
-          %li
-            .image-box.empty
-              %div
-          %li
-            .image-box.empty
-              %div
-      %hr        
-      .listing-field
-        %label Description
-        %textarea{:placeholder => "Try to answer the questions buyers will have. Tell the reptile's story and explain why it's special."}
-      %hr 
-      .listing-field
-        %label Price
-        .small-3.columns{:style => "padding: 0;"}
-          %input{:placeholder => "$0.00", :type => "text"}
-      %hr
-      = link_to 'Create Listing', '#', class: 'button'
+    = form_for(@listing, as: :listing, html: {class: "form-validation listing-edit", :'data-user-id' => current_user.id.to_i, :'data-listing-id' => @listing.id.to_i}) do |f|
+      .rounded-panel
+        .listing-field
+          %label What is it?
+          = f.select :categories, @root1_categories.map{ |o| [o.name, o.id]}, {prompt: 'Reptile Category', selected: @categories.map{ |o| o.id }}, {required: true, name: "listing[categories][]"}
+          -# = f.select :categories, @root2_categories.map{ |o| [o.name, o.id]}, {prompt: 'Reptile Sub-Category', selected: @subcategories.map{ |o| o.id }}, {required: false, name: "listing[categories][]"}
+          -# todo
+          -# %select
+          -#   %option{:value => "default"} Reptile Sub-Category
+          -#   %option{:value => "geckos"} Geckos
+          -#   %option{:value => "bearded-dragons"} Bearded Dragons
+          -#   %option{:value => "monitors"} Monitors & Tegus
+          -#   %option{:value => "other"} Other Lizards
+        %hr
+        .listing-field
+          %label Title
+          = f.text_field :title, autofocus: false, required: true, class: "", placeholder: "Try to describe your reptile the way a buyer would."
+        %hr
+        .listing-field
+          %label Photos
+          %ul.image-grid.small-block-grid-5
+            - i = 0
+            - @images.each_with_index do |image, index|
+              = render(partial: "listings/edit_current_image", locals: {image: image})
+              - i += 1
+            -# = render(partial: "listings/edit_current_image")
+            = render(partial: "listings/edit_new_image")
+            - i += 1
+            - while i < 5
+              = render(partial: "listings/edit_empty_image")
+              - i += 1
+        %hr
+        .listing-field
+          %label Description
+          = f.text_area :description, autofocus: false, required: true, class: "", placeholder: "Try to answer the questions buyers will have. Tell the reptile's story and explain why it's special."
+        %hr 
+        .listing-field
+          %label Price
+          .small-3.columns{:style => "padding: 0;"}
+            = f.text_field :price, autofocus: false, required: true, class: "numeral price", placeholder: "$0.00", :'data-number' => @listing.price
+        %hr
+        = f.submit "Create Listing", class: 'button'

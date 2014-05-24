@@ -14,7 +14,9 @@
 //= require jquery_ujs
 //= require foundation
 //= require jquery.validate
+//= require cloudinary
 //= require async
+//= require numeral
 //= require_tree .
 
 $(document).ready(function() {

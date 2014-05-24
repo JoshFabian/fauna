@@ -42,10 +42,14 @@ group :doc do
 end
 
 gem 'aasm'
+gem 'acts_as_list'
+gem 'acts_as_tree'
 gem 'bitmask_attributes'
 gem 'cancan'
 gem 'cloudinary'
 gem 'devise'
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
 gem 'faker'
 gem 'fluent-logger'
 gem 'fluent-plugin-file-alternative'

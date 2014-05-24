@@ -20,7 +20,7 @@
   -# turn turbolinks off
   = stylesheet_link_tag "application", media: "all"
   = javascript_include_tag "application"
-  -# = cloudinary_js_config
+  = cloudinary_js_config
   = csrf_meta_tag
   = render(partial: 'layouts/header_segmentio')
 
@@ -33,7 +33,7 @@
 
   // Hacky fix for not showing header on landing page templates
   - if user_signed_in?
-    = render partial: "listings/header"
+    = render partial: "layouts/header"
   = yield
 
   :javascript

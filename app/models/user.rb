@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include Loggy
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,:lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable,
@@ -11,6 +13,8 @@ class User < ActiveRecord::Base
 
   has_many :oauths, dependent: :destroy
   has_many :facebook_oauths, -> { where(provider: 'facebook') }, :class_name => 'Oauth'
+
+  has_many :listings, dependent: :destroy
 
   bitmask :roles, :as => [:admin, :basic]
 

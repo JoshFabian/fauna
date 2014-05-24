@@ -10,8 +10,11 @@ Tegu::Application.routes.draw do
   get '/' => redirect("/landing")
   get 'landing(/:code)' => 'landing#index', as: :landing
 
-  resources :listings
   root 'listings#index'
+  resources :listings
+  resources :listing_forms, only: [] do
+    get :new_image, on: :collection
+  end
 
   # oauth
   get 'auth/:provider/callback', to: 'oauths#callback'

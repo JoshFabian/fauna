@@ -11,7 +11,67 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140523190457) do
+ActiveRecord::Schema.define(version: 20140524161435) do
+
+  create_table "categories", force: true do |t|
+    t.string   "name",           limit: 100
+    t.integer  "parent_id"
+    t.integer  "level"
+    t.integer  "children_count",             default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "categories", ["children_count"], name: "index_categories_on_children_count"
+  add_index "categories", ["level"], name: "index_categories_on_level"
+  add_index "categories", ["name"], name: "index_categories_on_name"
+  add_index "categories", ["parent_id"], name: "index_categories_on_parent_id"
+
+  create_table "listing_categories", force: true do |t|
+    t.integer  "category_id"
+    t.integer  "listing_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "listing_categories", ["category_id"], name: "index_listing_categories_on_category_id"
+  add_index "listing_categories", ["listing_id"], name: "index_listing_categories_on_listing_id"
+
+  create_table "listing_images", force: true do |t|
+    t.integer  "listing_id"
+    t.integer  "position"
+    t.string   "etag",          limit: 100
+    t.string   "public_id",     limit: 100
+    t.string   "version",       limit: 100
+    t.integer  "bytes"
+    t.integer  "height"
+    t.integer  "width"
+    t.string   "format",        limit: 100
+    t.string   "resource_type", limit: 100
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "listing_images", ["listing_id"], name: "index_listing_images_on_listing_id"
+  add_index "listing_images", ["position"], name: "index_listing_images_on_position"
+
+  create_table "listings", force: true do |t|
+    t.integer  "user_id"
+    t.string   "state",        limit: 20
+    t.string   "title",        limit: 100
+    t.text     "description"
+    t.integer  "price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "images_count",             default: 0
+  end
+
+  add_index "listings", ["created_at"], name: "index_listings_on_created_at"
+  add_index "listings", ["images_count"], name: "index_listings_on_images_count"
+  add_index "listings", ["price"], name: "index_listings_on_price"
+  add_index "listings", ["state"], name: "index_listings_on_state"
+  add_index "listings", ["title"], name: "index_listings_on_title"
+  add_index "listings", ["user_id"], name: "index_listings_on_user_id"
 
   create_table "oauths", force: true do |t|
     t.integer  "user_id"

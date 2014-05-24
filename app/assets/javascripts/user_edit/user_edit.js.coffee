@@ -16,7 +16,7 @@ $(document).ready ->
         async.series([
           (callback) ->
             # update list
-            Slate.UserApi.update(user_id, form_data, auth_token, callback)
+            Tegu.UserApi.update(user_id, form_data, auth_token, callback)
         ],
         # optional callback
         (err, results) ->
