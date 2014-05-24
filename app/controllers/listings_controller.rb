@@ -4,6 +4,7 @@ class ListingsController < ApplicationController
 
   # GET /listings
   def index
+    @listings = Listing.all
   end
 
   # GET /listings/1
@@ -21,6 +22,7 @@ class ListingsController < ApplicationController
     @categories = @listing.categories.where(level: 1)
     @subcategories = @listing.categories.where(level: 2)
 
+    @title = "Create New Listing"
     @root1_categories = Category.where(level: 1)
     @root2_categories = Category.where(level: 2)
 
@@ -36,6 +38,7 @@ class ListingsController < ApplicationController
     @categories = @listing.categories.where(level: 1)
     @subcategories = @listing.categories.where(level: 2)
 
+    @title = "Edit Listing"
     @root1_categories = Category.where(level: 1)
     @root2_categories = Category.where(level: 2)
 

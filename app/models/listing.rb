@@ -21,6 +21,10 @@ class Listing < ActiveRecord::Base
     state :approved, initial: true
   end
 
+  def primary_image
+    images.order("position asc").first
+  end
+
   def price=(s)
     write_attribute(:price, to_cents(s))
   end

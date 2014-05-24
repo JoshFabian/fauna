@@ -4,11 +4,13 @@
 .row
   %h5 Recent Listings
   %ul.small-block-grid-4
-    - 20.times do
+    - @listings.each do |listing|
+      - image = listing.primary_image
       %li
         .listing-panel
-          = image_tag "http://www.placehold.it/235/200", :class => "grid-thumb"
+          -# = image_tag "http://www.placehold.it/235/200", :class => "grid-thumb"
+          = image_tag cloudinary_url(image.full_public_id, transformation: [{width: 235, height: 200, crop: 'fill'}])
           .listing-info
             .title
-              Listing Title
+              = listing.title
 

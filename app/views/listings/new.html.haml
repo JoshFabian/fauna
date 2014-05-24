@@ -1,6 +1,6 @@
 .row
   .new-listing.small-8.columns.small-centered
-    %h3.text-center Create New Listing
+    %h3.text-center= @title
     = form_for(@listing, as: :listing, html: {class: "form-validation listing-edit", :'data-user-id' => current_user.id.to_i, :'data-listing-id' => @listing.id.to_i}) do |f|
       .rounded-panel
         .listing-field
@@ -42,4 +42,4 @@
           .small-3.columns{:style => "padding: 0;"}
             = f.text_field :price, autofocus: false, required: true, class: "numeral price", placeholder: "$0.00", :'data-number' => @listing.price
         %hr
-        = f.submit "Create Listing", class: 'button'
+        = f.submit @save_title, class: 'button'
