@@ -11,8 +11,10 @@ namespace :db do
 
   desc "Load most recnet, reset search indices"
   task :x => ["db:migrate"] do
-    file = Dir["#{Rails.root}/db/data*"].sort.last
-    puts "#{Time.now}: loading file: #{file}"
+    format_class = ENV['class'] || "YamlDb::Helper"
+    helper = format_class.constantize
+    data_file = Dir["#{Rails.root}/db/data*"].sort.last
+    puts "#{Time.now}: loading file: #{data_file}"
     SerializationHelper::Base.new(helper).load(data_file)
     Rake::Task['db:index_all'].invoke
     puts "#{Time.now}: completed"
