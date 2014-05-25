@@ -24,7 +24,7 @@ Tegu::Application.routes.draw do
 
   # user listing scopes
   get ':handle/listings' => "listings#by_user", as: :user_listings
-  get ':handle/listing/:listing' => "listings#show", as: :user_listing
+  get ':handle/listings/:id' => "listings#show", as: :user_listing
 
   # oauth
   get 'auth/:provider/callback', to: 'oauths#callback'

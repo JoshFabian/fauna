@@ -42,8 +42,16 @@ class ListingsController < ApplicationController
   end
 
   # GET /listings/1
+  # GET /:handle/listings/1
   def show
-    @listing = Listing.friendly.find(params[:id])
+    if params[:handle].present?
+      # find user listing
+      @user = User.find_by_handle(params[:handle])
+      @listing = @user.listings.friendly.find(params[:id])
+    else
+      # deprecated
+      @listing = Listing.friendly.find(params[:id])
+    end
     @images = @listing.images.order("position asc")
     @main_image = @images.first
     @images = @images.last(4)
