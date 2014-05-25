@@ -7,11 +7,16 @@
       .search
         = form_for "", url: listing_search_path, html: {class: "search-form"} do |f|
           = f.text_field 'query', name: 'query', value: @query, placeholder: 'Search ...'
+
       - if !user_signed_in?
         .guest-links
-          = link_to "LOGIN", login_path
+          = link_to "Login", login_path
           or
-          = link_to "REGISTER", login_path
+          = link_to "Register", login_path
+      - else
+        -# temporary
+        .guest-links
+          = link_to 'Logout', logout_path
 
 %header.global-subhead
   .row
