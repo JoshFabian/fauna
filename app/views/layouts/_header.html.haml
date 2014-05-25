@@ -1,12 +1,12 @@
 %header.global-head
   .row
     .left-nav
-      = link_to reptiles_path do
+      = link_to listings_path do
         = image_tag "landing-logo.jpg", :class => "header-logo"
     .right-nav
       .search
-        = form_for "", url: reptile_search_path, html: {class: "search-form"} do |f|
-          = f.text_field 'query', name: 'query', placeholder: 'Search ...'
+        = form_for "", url: listing_search_path, html: {class: "search-form"} do |f|
+          = f.text_field 'query', name: 'query', value: @query, placeholder: 'Search ...'
       - if !user_signed_in?
         .guest-links
           = link_to "LOGIN", login_path
@@ -17,7 +17,7 @@
   .row
     %ul.inline-list
       - Category.roots.order("position asc").each do |category|
-        %li= link_to category.name, reptile_category_path(category.name.parameterize)
+        %li= link_to category.name, listing_category_path(category.name.parameterize)
       -# %li= link_to "Boas", reptile_category_path('boas')
       -# %li= link_to "Colubrids", reptile_category_path('colubrids')
       -# %li= link_to "Venomous", reptile_category_path('venoumous')

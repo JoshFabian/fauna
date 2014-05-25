@@ -31,9 +31,19 @@ class ListingsController < ApplicationController
     end
   end
 
+  # GET /:handle/listings
+  def by_user
+    @user = User.find_by_handle(params[:handle])
+    @listings = Listing.search(filter: {term: {user_id: @user.id}}).records
+
+    respond_to do |format|
+      format.html { render(action: :index) }
+    end
+  end
+
   # GET /listings/1
   def show
-    @listing = Listing.find(params[:id])
+    @listing = Listing.friendly.find(params[:id])
     @images = @listing.images.order("position asc")
     @main_image = @images.first
     @images = @images.last(4)

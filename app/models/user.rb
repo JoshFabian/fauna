@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  include FriendlyId
   include Loggy
 
   # Include default devise modules. Others available are:
@@ -9,12 +10,14 @@ class User < ActiveRecord::Base
   alias_attribute :auth_token, :authentication_token
 
   validates :email, presence: true, uniqueness: true
-  validates :handle, presence: true, uniqueness: true
+  validates :handle, presence: true, uniqueness: true, format: {with: /[a-z0-9]/}
 
   has_many :oauths, dependent: :destroy
   has_many :facebook_oauths, -> { where(provider: 'facebook') }, :class_name => 'Oauth'
 
   has_many :listings, dependent: :destroy
+
+  friendly_id :handle
 
   bitmask :roles, :as => [:admin, :basic]
 

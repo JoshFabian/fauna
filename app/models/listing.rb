@@ -18,7 +18,8 @@ class Listing < ActiveRecord::Base
 
   belongs_to :user
 
-  friendly_id :title, use: :slugged
+  # friendly_id :title, use: :slugged
+  friendly_id :title, use: :scoped, scope: :user
 
   aasm column: 'state' do
     state :approved, initial: true

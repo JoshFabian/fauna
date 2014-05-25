@@ -11,14 +11,20 @@ Tegu::Application.routes.draw do
   get 'landing(/:code)' => 'landing#index', as: :landing
 
   root 'listings#index'
-  get 'reptiles/:category' => "listings#by_category", constraints: { category: /[a-z-]+/ },
-    as: :reptile_category
-  match 'reptiles/search' => "listings#by_search", as: :reptile_search, via: [:get, :post]
+  # get 'reptiles/:category' => "listings#by_category", constraints: { category: /[a-z-]+/ },
+  #   as: :reptile_category
+  match 'listings/search' => "listings#by_search", as: :listing_search, via: [:get, :post]
+  get 'listings/:category' => "listings#by_category", constraints: { category: /[a-z-]+/ },
+    as: :listing_category
   resources :reptiles, controller: 'listings'
   resources :listings
   resources :listing_forms, only: [] do
     get :new_image, on: :collection
   end
+
+  # user listing scopes
+  get ':handle/listings' => "listings#by_user", as: :user_listings
+  get ':handle/listing/:listing' => "listings#show", as: :user_listing
 
   # oauth
   get 'auth/:provider/callback', to: 'oauths#callback'

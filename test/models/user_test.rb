@@ -13,6 +13,16 @@ class UserTest < ActiveSupport::TestCase
   end
 
   describe "handle" do
+    it "should allow letter, digits" do
+      @user = Fabricate(:user, email: "brian@gmail.com", handle: 'brian0')
+      @user.handle.must_equal "brian0"
+    end
+
+    it "should not allow random characters" do
+      @user = Fabricate(:user, email: "brian@gmail.com", handle: 'brian-*')
+      @user.handle.must_equal "brian"
+    end
+
     it "should initialize handle using email" do
       @user = Fabricate(:user, email: "brian@gmail.com")
       @user.handle.must_equal "brian"

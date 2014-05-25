@@ -3,7 +3,7 @@ require 'test_helper'
 class ListingTest < ActiveSupport::TestCase
   describe "create" do
     before do
-      @user = Fabricate(:user)
+      @user = Fabricate(:user, handle: "handle")
     end
 
     it "should create with required attributes" do
@@ -76,12 +76,12 @@ class ListingTest < ActiveSupport::TestCase
         @results.size.must_equal 1
         @results = Listing.search 'tegu'
         @results.size.must_equal 1
-        @results = Listing.search 'tegu*'
-        @results.size.must_equal 1
       end
 
       it "should find on substring title match" do
         @results = Listing.search 'liz*'
+        @results.size.must_equal 1
+        @results = Listing.search 'tegu*'
         @results.size.must_equal 1
       end
 
@@ -91,19 +91,40 @@ class ListingTest < ActiveSupport::TestCase
       end
     end
 
-    describe "by user" do
+    describe "by user handle" do
       before do
         @listing1 = @user.listings.create!(title: "Lizard", price: 100)
         @listing2 = @user.listings.create!(title: "Tegu", price: 100)
         Listing.import
       end
 
-      it "should find when user matches" do
+      it "should find on handle match" do
+        skip "only works with sleep"
+        @results = Listing.search(@user.handle)
+        @results.size.must_equal 2
+        @results = Listing.search(filter: {term: {user_handle: @user.handle}})
+        @results.size.must_equal 2
+      end
+
+      it "should not find when invalid handle" do
+        @results = Listing.search(filter: {term: {user_handle: "bogus"}})
+        @results.size.must_equal 0
+      end
+    end
+
+    describe "by user id" do
+      before do
+        @listing1 = @user.listings.create!(title: "Lizard", price: 100)
+        @listing2 = @user.listings.create!(title: "Tegu", price: 100)
+        Listing.import
+      end
+
+      it "should find on id match" do
         @results = Listing.search(filter: {term: {user_id: @user.id}})
         @results.size.must_equal 2
       end
 
-      it "should not find when invalid user" do
+      it "should not find when invalid id" do
         @results = Listing.search(filter: {term: {user_id: 0}})
         @results.size.must_equal 0
       end

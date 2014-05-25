@@ -5,9 +5,10 @@
   %h5 Recent Listings
   %ul.small-block-grid-4
     - @listings.each do |listing|
+      - user = listing.user
       - image = listing.primary_image
       %li
-        = link_to reptile_path(listing.id) do
+        = link_to listing_path(listing.id) do
           .listing-panel
             -# = image_tag "http://www.placehold.it/235/200", :class => "grid-thumb"
             = image_tag cloudinary_url(image.full_public_id, transformation: [{width: 235, height: 200, crop: 'fill'}])
