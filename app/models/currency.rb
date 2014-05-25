@@ -2,6 +2,8 @@ module Currency
 
   def to_cents(s)
     if s.is_a?(String)
+      # remove commas
+      s = s.gsub(/[,]/, '')
       if s.match(/^\$\d+\.\d+/)
         # dollars and cents
         s = s.gsub(/[.$]/, '').to_i
