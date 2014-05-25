@@ -5,7 +5,8 @@
         = image_tag "landing-logo.jpg", :class => "header-logo"
     .right-nav
       .search
-        <input type="text" placeholder="Search..." />
+        = form_for "", url: reptile_search_path, html: {class: "search-form"} do |f|
+          = f.text_field 'query', name: 'query', placeholder: 'Search ...'
       - if !user_signed_in?
         .guest-links
           = link_to "LOGIN", login_path

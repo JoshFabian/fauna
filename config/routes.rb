@@ -13,6 +13,7 @@ Tegu::Application.routes.draw do
   root 'listings#index'
   get 'reptiles/:category' => "listings#by_category", constraints: { category: /[a-z-]+/ },
     as: :reptile_category
+  match 'reptiles/search' => "listings#by_search", as: :reptile_search, via: [:get, :post]
   resources :reptiles, controller: 'listings'
   resources :listings
   resources :listing_forms, only: [] do

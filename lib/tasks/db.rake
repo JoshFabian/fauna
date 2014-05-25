@@ -9,8 +9,12 @@ namespace :db do
     puts "#{Time.now}: index_all completed"
   end
 
-  desc "Load dataset from db/data.yml, reset search indices"
-  task :x => ["db:migrate", "db:data:load", "db:index_all"] do
+  desc "Load most recnet, reset search indices"
+  task :x => ["db:migrate"] do
+    file = Dir["#{Rails.root}/db/data*"].sort.last
+    puts "#{Time.now}: loading file: #{file}"
+    SerializationHelper::Base.new(helper).load(data_file)
+    Rake::Task['db:index_all'].invoke
     puts "#{Time.now}: completed"
   end
 
@@ -36,8 +40,8 @@ namespace :db do
       end
       raise Exception, "invalid file: #{data_file}" if !File.exists?(data_file)
       puts "#{Time.now}: loading file #{data_file}"
-      # SerializationHelper::Base.new(helper).load(data_file)
-      # Rake::Task['db:index_all'].invoke
+      SerializationHelper::Base.new(helper).load(data_file)
+      Rake::Task['db:index_all'].invoke
       puts "#{Time.now}: completed"
     end
   end

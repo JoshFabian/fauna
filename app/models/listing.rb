@@ -32,7 +32,7 @@ class Listing < ActiveRecord::Base
   index_name "listings.#{Rails.env}"
 
   def as_indexed_json(options={})
-    as_json(methods: [:category_names])
+    as_json(methods: [:category_names, :user_handle])
   end
 
   def category_names
@@ -58,4 +58,7 @@ class Listing < ActiveRecord::Base
     slug.blank? || title_changed?
   end
 
+  def user_handle
+    user.try(:handle)
+  end
 end

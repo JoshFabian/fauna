@@ -5,12 +5,26 @@ class ListingsController < ApplicationController
   # GET /listings
   def index
     @listings = Listing.all
+
+    respond_to do |format|
+      format.html { render(action: :index) }
+    end
   end
 
   # GET /listings/:category
   def by_category
     @category = params[:category]
     @listings = Listing.search(filter: {term: {category_names: @category}}).records
+
+    respond_to do |format|
+      format.html { render(action: :index) }
+    end
+  end
+
+  # GET /listings/search
+  def by_search
+    @query = params[:query].to_s
+    @listings = Listing.search(@query).records
 
     respond_to do |format|
       format.html { render(action: :index) }
