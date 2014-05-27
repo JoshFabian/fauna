@@ -46,15 +46,14 @@ class ListingsController < ApplicationController
   def show
     if params[:handle].present?
       # find user listing
-      @user = User.find_by_handle(params[:handle])
-      @listing = @user.listings.friendly.find(params[:id])
+      @listing = User.friendly.find(params[:handle]).listings.friendly.find(params[:id])
+      # @user = User.find_by_handle(params[:handle])
+      # @listing = @user.listings.friendly.find(params[:id])
     else
       # deprecated
       @listing = Listing.friendly.find(params[:id])
     end
-    @images = @listing.images.order("position asc")
-    @main_image = @images.first
-    @images = @images.last(4)
+    @main_image, *@other_images = @listing.images.order("position asc")
   end
 
   # GET /listings/new
