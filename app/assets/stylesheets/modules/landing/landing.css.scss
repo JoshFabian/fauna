@@ -111,3 +111,21 @@
     top: 1px;
   }
 }
+
+.user-list {
+  background: #eee;
+  border-radius: 3px;
+  text-align: left;
+  padding: 15px;
+  list-style-type: none;
+  li {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    &:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+}

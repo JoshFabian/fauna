@@ -1,6 +1,6 @@
 = form_for Waitlist.new, url: '#', html: {class: 'form-validation user-email-form'} do |f|
   = hidden_field_tag :referer, @code, name: "waitlist[referer]"
-  %p Fauna is a reptile marketplace built for safer, smarter shopping. Find and create offers from breeders who want what you want - safe and transparent buying and selling.
+  %p Fauna is a reptile marketplace built for safer, smarter shopping. Find offers from breeders who want what you want - safe and transparent buying and selling.
   .row.collapse
     .small-9.columns
       %input.required.email{placeholder: "Enter your email...", type: "text", name: "waitlist[email]"}
