@@ -17,14 +17,14 @@ Tegu::Application.routes.draw do
   root 'listings#index'
   # get 'reptiles/:category' => "listings#by_category", constraints: { category: /[a-z-]+/ },
   #   as: :reptile_category
-  match 'listings/search' => "listings#by_search", as: :listing_search, via: [:get, :post]
-  get 'listings/:category' => "listings#by_category", constraints: { category: /[a-z-]+/ },
-    as: :listing_category
   resources :reptiles, controller: 'listings'
   resources :listings
   resources :listing_forms, only: [] do
     get :new_image, on: :collection
   end
+  match 'listings/search' => "listings#by_search", as: :listing_search, via: [:get, :post]
+  get 'listings/:category' => "listings#by_category", constraints: { category: /[a-z-]+/ },
+    as: :listing_category
 
   # user listing scopes
   get ':handle/listings' => "listings#by_user", as: :user_listings
