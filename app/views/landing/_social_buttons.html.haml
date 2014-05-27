@@ -1,0 +1,17 @@
+.social-buttons
+  %span.fb-button
+    .fb-like{"data-action" => "like", "data-href" => "https://www.facebook.com/faunamarketplace", "data-layout" => "button_count", "data-share" => "false", "data-show-faces" => "false"}
+
+  %span.twt-button
+    %a.twitter-share-button{"data-lang" => "en", "data-via" => "faunamarketplace", "data-text" => "Fauna is a reptile marketplace built for safer, smarter shopping.", :href => "https://twitter.com/share"} Tweet
+
+#fb-root
+:javascript
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");

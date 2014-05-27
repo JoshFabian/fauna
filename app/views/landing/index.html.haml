@@ -5,7 +5,7 @@
     .email-block.small-8.small-centered.columns
       = image_tag "landing-logo.jpg", :class => "landing-logo"
       %h4 We're changing the way you buy and sell reptiles online.
-
+              
       .landing-form.small-11.columns.small-centered
         .user-email-form-wrapper
           -# step 1: Submit email
@@ -18,3 +18,4 @@
       .user-invite-friends-form-wrapper{style: 'display: none;'}
         -# step 3:
         = render partial: "user_invite_friends"
+    = render partial: "social_buttons"

@@ -1,10 +1,11 @@
 = form_for Waitlist.new, url: '#', html: {class: 'form-validation user-role-form'} do |f|
-  %h5 One last question! Will you be buying or selling on Fauna?
-  = radio_button("waitlist", "role", "buyer")
-  %label{for: "waitlist_role_buyer"} Buying
-  = radio_button("waitlist", "role", "seller")
-  %label{for: "waitlist_role_seller"} Selling
-  = radio_button("waitlist", "role", "both")
-  %label{for: "waitlist_role_both"} Both!
+  .role-wrapper
+    %h5 One last question! Will you be buying or selling on Fauna?
+    = radio_button("waitlist", "role", "buyer")
+    %label{for: "waitlist_role_buyer"} Buying
+    = radio_button("waitlist", "role", "seller")
+    %label{for: "waitlist_role_seller"} Selling
+    = radio_button("waitlist", "role", "both")
+    %label{for: "waitlist_role_both"} Both!
   .large-12.columns
     = link_to 'Continue', '#', class: 'button radio-submit user-role-form-submit'
