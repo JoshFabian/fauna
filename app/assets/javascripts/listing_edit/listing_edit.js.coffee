@@ -16,6 +16,7 @@ $(document).ready ->
   $("form.listing-edit").validate
     onsubmit: true,
     submitHandler: (form) ->
+      Tegu.ListingForm.disable_form()
       form_data = $("form.listing-edit").serialize()
       listing_id = $("form.listing-edit").data('listing-id')
       if listing_id == 0
@@ -26,6 +27,7 @@ $(document).ready ->
             Tegu.ListingApi.create(form_data, auth_token, callback)
           (data, callback) ->
             console.log data
+            Tegu.ListingForm.enable_form()
         ]
       else
         console.log("listing:#{listing_id} update ...")
@@ -35,5 +37,6 @@ $(document).ready ->
             Tegu.ListingApi.update(listing_id, form_data, auth_token, callback)
           (data, callback) ->
             console.log data
-            # jQuery.gritter.add({image: '/assets/success.png', title: 'User', text: 'Saved'})
+            Tegu.ListingForm.enable_form()
         ]
+  

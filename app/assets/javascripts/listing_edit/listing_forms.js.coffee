@@ -1,4 +1,10 @@
 class Tegu.ListingForm
+  @disable_form: () ->
+    $("form.listing-edit input[type='submit']").addClass('disabled').attr('disabled', true).val("Saving ...")
+
+  @enable_form: (s = "Saved") ->
+    $("form.listing-edit input[type='submit']").removeClass('disabled').attr('disabled', false).val(s)
+
   @format_currency: () ->
     $("input.numeral").map ->
       try
