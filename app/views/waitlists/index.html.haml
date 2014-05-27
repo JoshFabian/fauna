@@ -16,9 +16,11 @@
       %th Id
       %th Email
       %th Role
+      %th Referrals
 
     - @waitlists.each do |waitlist|
       %tr
         %td= waitlist.id
         %td= waitlist.email
         %td= waitlist.role
+        %td= waitlist.signup_count
