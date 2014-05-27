@@ -5,6 +5,10 @@ Tegu::Application.routes.draw do
   # Grape api
   mount Api => '/'
 
+  constraints(DomainRoute.new) do
+    match "/(*path)" => redirect {|params, req| "//www.fauna.net/#{params[:path]}"},  via: [:get, :post]
+  end
+
   # You can have the root of your site routed with "root"
   # root 'landing#index'
   get '/' => redirect("/landing")
