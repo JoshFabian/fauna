@@ -5,6 +5,10 @@ class Waitlist < ActiveRecord::Base
 
   attr_accessor :prefix
 
+  scope :both, -> { where(role: 'both') }
+  scope :buyer, -> { where(role: 'buyer') }
+  scope :seller, -> { where(role: 'seller') }
+
   before_validation(on: :create) do
     self.code ||= generate_token(prefix: self.prefix)
   end

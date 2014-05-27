@@ -31,7 +31,8 @@
   -# - else
   -#   = render(:partial => 'layouts/header_guest') unless @no_header
 
-  = render partial: "layouts/normal_header"
+  - if user_signed_in?
+    = render partial: "layouts/normal_header"
   = yield
 
   // GoSquared

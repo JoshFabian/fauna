@@ -1,23 +1,22 @@
 .row
-  .text-center  
-    %h3 09 Beta Registrations
+  .text-center
+    %h3 #{@total_count} Beta Registrations
   .small-4.columns
     .text-center
-      %h3 03 Buyers
+      %h3 #{@buyers_count} Buyers
   .small-4.columns
     .text-center
-      %h3 03 Sellers
+      %h3 #{@sellers_count} Sellers
   .small-4.columns
     .text-center
-      %h3 03 Both
+      %h3 #{@both_count} Both
 
   %table.small-12.columns
     %tr
       %th Email
       %th Role
-    %tr
-      %td contact@joshfabian.com
-      %td Buyer
-    %tr
-      %td therealsanjaykapoor@gmail.com
-      %td Sell
+
+    - @waitlists.each do |waitlist|
+      %tr
+        %td= waitlist.email
+        %td= waitlist.role
