@@ -1,0 +1,14 @@
+.row
+  %table.small-12.columns
+    %tr
+      %th Id
+      %th Email
+      %th Handle
+      %th Roles
+
+    - @users.each do |user|
+      %tr
+        %td= user.id
+        %td= user.email
+        %td= user.handle
+        %td= user.roles.map(&:to_s).join(',')

@@ -3,6 +3,10 @@ class UsersController < ApplicationController
   before_filter :authenticate_user!, except: [:validate_email, :validate_handle]
   before_filter :admin_role_required!, only: [:become, :index]
 
+  def index
+    @users = User.all
+  end
+
   def edit
     @user = current_user
     @url = my_settings_path

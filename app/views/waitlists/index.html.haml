@@ -13,10 +13,12 @@
 
   %table.small-12.columns
     %tr
+      %th Id
       %th Email
       %th Role
 
     - @waitlists.each do |waitlist|
       %tr
+        %td= waitlist.id
         %td= waitlist.email
         %td= waitlist.role
