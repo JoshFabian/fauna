@@ -7,17 +7,29 @@
 .cover-photos.small-12.columns
   .cover-photo.small-4.columns{style: "background-image: url('http://bloodbankdragons.com/2014photos2/DSC00329.JPG')"}
     .overlay
-      .add-images-button
-        .button-add
-        %span Add Photo
+      .edit-show
+        .upload-image
+          %i.icon.ion-image
+          %h4 Change cover photo
   .cover-photo.small-4.columns{style: "background-image: url('http://bloodbankdragons.com/2014photos2/DSC00332.JPG')"}
     .overlay
+      .upload-image
+        %i.icon.ion-image
+        %h4 Change cover photo
   .cover-photo.small-4.columns{style: "background-image: url('http://bloodbankdragons.com/2014photos2/DSC00338.JPG')"}
     .overlay
+      .upload-image
+        %i.icon.ion-image
+        %h4 Change cover photo
 .user-bar.small-12.columns
   .row
     .profile-avatar
       = image_tag "http://www.placehold.it/100/100"
+      .edit-show
+        .overlay
+          .upload-image
+            %i.icon.ion-image
+            %h6 Change
     .profile-name
       .edit-hide
         %h3 Bloodbank Dragons

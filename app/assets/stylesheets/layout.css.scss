@@ -295,9 +295,45 @@
   display: none;
 }
 
+.upload-image {
+  text-align: center;
+  color: #fff;
+  font-size: 60px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  cursor: pointer;
+  i {
+    margin-top: 100px;
+  }
+  h4 {
+    color: #fff;
+  }
+}
+
+.profile-avatar {
+  .upload-image {
+    i {
+      margin-top: -15px;
+      font-size: 30px;
+    }
+    h6 {
+      color: #fff;
+    }
+  }
+}
+
 body.editing {
   .global-head, .global-subhead, .sub-user-bar .inline-list, .review-column, .user-trust {
     opacity: .3;
+  }
+  .overlay {
+    background: rgba(0,0,0,.7);
+    &:hover {
+      background: rgba(0,0,0,.8);
+    }
   }
   .edit-hide{
     display: none;
