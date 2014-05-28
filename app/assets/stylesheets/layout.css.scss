@@ -290,3 +290,19 @@
     }
   }
 }
+
+.edit-show {
+  display: none;
+}
+
+body.editing {
+  .global-head, .global-subhead, .sub-user-bar .inline-list, .review-column, .user-trust {
+    opacity: .3;
+  }
+  .edit-hide{
+    display: none;
+  }
+  .edit-show {
+    display: block;
+  }
+}
