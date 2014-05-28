@@ -3,12 +3,20 @@ class UsersController < ApplicationController
   before_filter :authenticate_user!, except: [:validate_email, :validate_handle]
   before_filter :admin_role_required!, only: [:become, :index]
 
+  # GET /users
   def index
     @users = User.all
   end
 
+  # GET /users/1
+  def show
+    @user = User.find(params[:id])
+    @edit = @user.id == current_user.id
+  end
+
+  # GET /users/1/edit
   def edit
-    @user = current_user
+    @user = User.find(params[:id])
     @url = my_settings_path
     @title = "My Profile"
 

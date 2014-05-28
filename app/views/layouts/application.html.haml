@@ -25,7 +25,7 @@
   = render(partial: 'layouts/header_segmentio')
   = yield :tracking
 
-%body.editing{'data-no-turbolink' => true}
+%body{'data-no-turbolink' => true}
 
   -# - if user_signed_in?
   -#   = render(:partial => 'layouts/header_user')

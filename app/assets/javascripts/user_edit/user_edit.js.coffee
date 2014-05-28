@@ -1,5 +1,11 @@
 $(document).ready ->
 
+  $(".edit-hide .button, .edit-show .button").on 'click', (e) ->
+    e.preventDefault()
+    $("body").toggleClass('editing')
+    name = $(this).text()
+    console.log "name: #{name}"
+
   # user edit form
   $("form.user-edit").validate
     onsubmit: true,
