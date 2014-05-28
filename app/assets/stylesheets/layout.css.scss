@@ -132,3 +132,161 @@
     cursor: pointer;
   }
 }
+
+.user-bar {
+  background: #fff;
+  .profile-avatar {
+    position: absolute;
+    bottom: 10px;
+    border: 3px solid #fff;
+    border-radius: 3px;
+  }
+  .profile-name {
+    float: left;
+    margin-left: 120px;
+  }
+  .profile-follow {
+    float: right;
+    .button {
+      padding: 5px 40px;
+      position: relative;
+      top: 10px;
+      background: $orange;
+      &.active {
+        background: darken(#dedede,25);
+      }
+      &:hover {
+        background: darken($orange, 10);
+      }
+    }
+  }
+}
+
+.sub-user-bar {
+  background: #fff;
+  @extend %shadow;
+  margin-bottom: 30px;
+  ul {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    li {
+      a {
+        font-size: 12px;
+        padding-bottom: 5px;
+        color: lighten(#222, 30);
+        &.active {
+          border-bottom: 3px solid $orange;
+          color: #222;
+          font-weight: bold;
+        }
+        &:hover {
+          color: #222;
+        }
+      }
+    }
+  }
+}
+
+.profile-sidebar {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  ul {
+    margin: 0;
+    list-style-type: none;
+    li {
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+        margin-bottom: 0;
+      }
+      iframe {
+        margin-top: 10px;
+      }
+    }
+  }
+  .rounded-panel {
+    padding: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+  }
+}
+
+.feedback {
+  .rounded-panel {
+    padding: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+.user-trust {
+  .icon {
+    margin-right: 10px;
+    &.ion-android-checkmark {
+      color: #1bbc9b;
+    }
+    &.ion-android-close {
+      color: #b2bcbb;
+    } 
+  }
+  h6 {
+    font-weight: bold;
+  }
+  ul {
+    margin-left: 15px;
+    li {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.ion-android-star {
+  margin-right: 0 !important;
+  font-size: 13px;
+  position: relative;
+  top: -2px;
+  color: #b3bdbc;
+  &.active {
+    color: #f4b603;
+  }
+}
+
+.review {
+  @extend .clearfix;
+  padding-bottom: 5px;
+  .review-header {
+    margin-bottom: 15px;
+    padding: 0;
+  }
+  .listing-title {
+    float: left;
+  }
+  .review-rating {
+    float: right;
+    text-align: right;
+  }
+  .review-bubble {
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 10px;
+    min-height: 90px;
+    @extend .clearfix;
+    .reviewer {
+      float: left;
+    }
+    .review-date {
+      float: right;
+    }
+    .review p {
+      margin-top: 15px;
+      margin-bottom: 0px;
+      font-style: italic;
+    }
+  }
+}

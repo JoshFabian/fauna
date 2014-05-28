@@ -12,6 +12,9 @@ gem 'sass-rails', '~> 4.0.0'
 # Foundation css grid
 gem 'foundation-rails'
 
+# Ionicons icons
+gem 'ionicons-rails'
+
 # Use AutoPrefixer to avoid writing out vendor prefixes in css
 gem "autoprefixer-rails"
 

@@ -1,0 +1,130 @@
+:css
+  .global-subhead {
+    border-bottom: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+.cover-photos.small-12.columns
+  .cover-photo.small-4.columns{style: "background-image: url('http://bloodbankdragons.com/2014photos2/DSC00329.JPG')"}
+    .overlay
+  .cover-photo.small-4.columns{style: "background-image: url('http://bloodbankdragons.com/2014photos2/DSC00332.JPG')"}
+    .overlay
+  .cover-photo.small-4.columns{style: "background-image: url('http://bloodbankdragons.com/2014photos2/DSC00338.JPG')"}
+    .overlay
+.user-bar.small-12.columns
+  .row
+    .profile-avatar
+      = image_tag "http://www.placehold.it/100/100"
+    .profile-name
+      %h3 Bloodbank Dragons
+    .profile-follow
+      %a.button{:href => "#"} Follow
+.sub-user-bar
+  .row
+    %ul.inline-list
+      %li= link_to "Home", "#", :class=>"active"
+      %li= link_to "Listings", "#"
+      %li= link_to "Reviews", "#"
+      %li= link_to "Followers", "#"
+      %li= link_to "Following", "#"
+
+.row
+  .small-8.columns.no-padding-left
+    .recent-listing
+      %h5 Recent Listings (<a href="#">42</a>)
+      %ul.small-block-grid-3
+        - 3.times do
+          %li
+            %a{:href => "/JoshFabian/listings/2"}
+              .listing-panel
+                %img{:alt => "Gfg2qswl0dogh96i2jlv", :src => "https://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_235/v1401302146/gfg2qswl0dogh96i2jlv.jpg"}
+                  .listing-info
+                    .title
+                      Amazing Tegu
+    .feedback
+      .rounded-panel
+        .padding-wrapper
+          %h5 Recent Feedback
+        - 5.times do
+          %hr
+          .padding-wrapper
+            .review
+              .review-header.small-12.columns
+                .listing-title
+                  %strong Female translucent 6 1/4 inches - $325
+                .review-rating
+                  %i.icon.ion-android-star.active
+                  %i.icon.ion-android-star.active
+                  %i.icon.ion-android-star.active
+                  %i.icon.ion-android-star.active
+                  %i.icon.ion-android-star
+              .small-12.columns.no-padding
+                .small-2.columns.no-padding
+                  = image_tag "http://www.placehold.it/90/90"
+                .small-10.columns.no-padding-right
+                  .review-bubble
+                    .small-12.columns.no-padding
+                      .reviewer
+                        = link_to "Username", "#"     
+                      .review-date
+                        May 3, 2014
+                    .small-12.columns.no-padding
+                      .review
+                        %p "Arrived happy and healthy! Couldn't ask for a better experience."
+
+
+
+  .profile-sidebar.small-4.columns
+    .rounded-panel
+      .padding-wrapper
+        %h5 About
+      %hr
+      .padding-wrapper
+        %p We breed bearded dragons :)
+        %ul
+          %li (503) 396-8402
+          %li= link_to "bloodbankdragons.com", "#"
+          %li 
+            Springfield, Oregon 97477
+            %iframe{:frameborder => "0", :height => "250", :src => "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d45876.48194058557!2d-123.0057715!3d44.056924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54c0e1abfcb2492f%3A0x60e31235d99ad11e!2sSpringfield%2C+OR+97477!5e0!3m2!1sen!2sus!4v1401306391956", :style => "border:0", :width => "100%"}
+
+    .rounded-panel.user-trust
+      .padding-wrapper
+        %h5 User Trust
+      %hr
+      .padding-wrapper
+        %h6 Identity Verification
+        %ul 
+          %li 
+            %i.icon.ion-android-checkmark
+            Email Address
+          %li
+            %i.icon.ion-android-checkmark 
+            Phone Number
+          %li
+            %i.icon.ion-android-close
+            Facebook
+        %hr
+        %h6 Market Feedback
+        %ul
+          %li
+            %i.icon.ion-android-star.active
+            %i.icon.ion-android-star.active
+            %i.icon.ion-android-star.active
+            %i.icon.ion-android-star.active
+            %i.icon.ion-android-star 
+            Matched Description
+          %li
+            %i.icon.ion-android-star.active
+            %i.icon.ion-android-star.active
+            %i.icon.ion-android-star.active
+            %i.icon.ion-android-star.active
+            %i.icon.ion-android-star 
+            Communication
+          %li
+            %i.icon.ion-android-star.active
+            %i.icon.ion-android-star.active
+            %i.icon.ion-android-star.active
+            %i.icon.ion-android-star
+            %i.icon.ion-android-star 
+            Shipping Time
