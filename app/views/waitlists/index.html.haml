@@ -17,6 +17,7 @@
       %th Email
       %th Role
       %th Referrals
+      %th Referer
 
     - @waitlists.each do |waitlist|
       %tr
@@ -24,3 +25,4 @@
         %td= waitlist.email
         %td= waitlist.role
         %td= waitlist.signup_count
+        %td= waitlist.referer
