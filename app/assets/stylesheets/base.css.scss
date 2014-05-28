@@ -37,3 +37,23 @@ body {
     }
   }
 }
+
+.padding-wrapper {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+hr {
+  margin: 10px 0 !important;
+}
+
+.no-padding-left {
+  padding-left: 0 !important;
+}
+.no-padding-right {
+  padding-right: 0 !important;
+}
+.no-padding {
+  @extend .no-padding-left;
+  @extend .no-padding-right;
+}
