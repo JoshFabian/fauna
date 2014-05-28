@@ -11,6 +11,7 @@ class Waitlist < ActiveRecord::Base
 
   before_validation(on: :create) do
     self.code ||= generate_token(prefix: self.prefix)
+    self.role ||= 'both'
   end
 
   def share_url

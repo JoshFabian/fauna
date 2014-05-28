@@ -11,6 +11,11 @@ class WaitlistTest < ActiveSupport::TestCase
       @waitlist.code.present?.must_equal true
     end
 
+    it "should default role to both" do
+      @waitlist = Waitlist.create!(email: "user@gmail.com")
+      @waitlist.role.must_equal 'both'
+    end
+
     it "should validate email" do
       @waitlist = Waitlist.create(email: "foo")
       @waitlist.valid?.must_equal false
