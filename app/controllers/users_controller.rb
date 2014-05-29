@@ -12,6 +12,8 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @edit = @user.id == current_user.id
+    @cover_images = @user.cover_images.first(3)
+    @blank_images = 3 - @cover_images.size
   end
 
   # GET /users/1/edit

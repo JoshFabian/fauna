@@ -1,0 +1,11 @@
+.cover-photo.small-4.columns{style: "background-image: url('#{user_cover_image_profile(image)}')"}
+  .overlay
+    .edit-show
+      .upload-image
+        %i.icon.ion-image
+        %h4 Change cover photo
+      .upload-image-start
+        = f.cl_image_upload(:cover_images, :html => {:class => 'hide'})
+        .progress.round.center.hide{:style => 'padding: 0px; width: 10%;'}
+          %span.meter
+        = hidden_field :cover_image_params, nil, :id => 'cover_image_params', :name => 'cover_image_params[]', :class => 'cover-image-params'

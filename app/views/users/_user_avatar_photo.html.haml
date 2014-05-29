@@ -1,0 +1,12 @@
+.profile-avatar
+  = image_tag user_avatar_image_profile(image)
+  .edit-show
+    .overlay
+      .upload-image
+        %i.icon.ion-image
+        %h6 Change
+      .upload-image-start
+        = f.cl_image_upload(:avatar, :html => {:class => 'hide'})
+        .progress.round.center.hide{:style => 'padding: 0px; width: 10%;'}
+          %span.meter
+        = hidden_field :avatar_image_params, nil, :id => 'avatar_image_params', :name => 'avatar_image_params', :class => 'avatar-image-params'

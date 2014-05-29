@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140524161435) do
+ActiveRecord::Schema.define(version: 20140528215056) do
 
   create_table "categories", force: true do |t|
     t.string   "name",           limit: 100
@@ -89,6 +89,42 @@ ActiveRecord::Schema.define(version: 20140524161435) do
   add_index "oauths", ["provider"], name: "index_oauths_on_provider"
   add_index "oauths", ["uid"], name: "index_oauths_on_uid"
   add_index "oauths", ["user_id"], name: "index_oauths_on_user_id"
+
+  create_table "user_avatar_images", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "position"
+    t.string   "etag",          limit: 100
+    t.string   "public_id",     limit: 100
+    t.string   "version",       limit: 100
+    t.integer  "bytes"
+    t.integer  "height"
+    t.integer  "width"
+    t.string   "format",        limit: 100
+    t.string   "resource_type", limit: 100
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_avatar_images", ["position"], name: "index_user_avatar_images_on_position"
+  add_index "user_avatar_images", ["user_id"], name: "index_user_avatar_images_on_user_id"
+
+  create_table "user_cover_images", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "position"
+    t.string   "etag",          limit: 100
+    t.string   "public_id",     limit: 100
+    t.string   "version",       limit: 100
+    t.integer  "bytes"
+    t.integer  "height"
+    t.integer  "width"
+    t.string   "format",        limit: 100
+    t.string   "resource_type", limit: 100
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_cover_images", ["position"], name: "index_user_cover_images_on_position"
+  add_index "user_cover_images", ["user_id"], name: "index_user_cover_images_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                              default: "", null: false
