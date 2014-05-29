@@ -14,12 +14,10 @@
           or
           = link_to "Register", login_path
       - else
-        %a{"data-dropdown" => "drop1", :href => "#"} JoshFabian
+        = link_to current_user.handle, '#', :'data-dropdown' => 'drop1'
         %ul#drop1.f-dropdown{"data-dropdown-content" => ""}
-          %li
-            %a{:href => "#"} View Profile
-          %li
-            %a{:href => "#"} Logout
+          %li= link_to 'Profile', user_path(current_user.id)
+          %li= link_to 'Logout', logout_path
         
         -# = link_to 'JoshFabian', "#"
         -# -# temporary
