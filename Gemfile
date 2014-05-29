@@ -47,6 +47,7 @@ end
 gem 'aasm'
 gem 'acts_as_list'
 gem 'acts_as_tree'
+gem 'attachinary'
 gem 'bitmask_attributes'
 gem 'cancan'
 gem 'cloudinary'

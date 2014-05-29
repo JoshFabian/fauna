@@ -1,5 +1,11 @@
 module ApplicationHelper
 
+  def category_cover_image(category, size=1440)
+    cloudinary_url(category.cover_image.path)
+  rescue Exception => e
+    "http://www.placehold.it/#{size}/#{size}"
+  end
+
   def listing_image_thumbnail(image, size=200)
     cloudinary_url(image.full_public_id, transformation: [{width: size, height: size, crop: 'fill'}])
   rescue Exception => e

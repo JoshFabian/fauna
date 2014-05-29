@@ -15,4 +15,17 @@ namespace :categories do
     end
     puts "#{Time.now}: completed"
   end
+
+  desc "Import category images"
+  task :import_images => :environment do
+    puts "#{Time.now}: importing category images"
+    Category.roots.each do |category|
+      next if category.cover_image.present?
+      name = category.name.downcase.split(' ').first
+      path = "#{Rails.root}/data/images/#{name}.jpg"
+      category.cover_image = File.open(path, 'r')
+      category.save
+    end
+    puts "#{Time.now}: completed"
+  end
 end

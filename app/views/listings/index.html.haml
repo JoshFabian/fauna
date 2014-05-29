@@ -10,7 +10,7 @@
   = render partial: "listings/guest_message"
   
 - if @category.present?
-  .category-header.small-12.columns{:style => "background-image: url('http://images.alphacoders.com/184/184883.jpg')"}
+  .category-header.small-12.columns{:style => "background-image: url('#{category_cover_image(@category)}')"}
     .overlay
     .category-nav
       .row

@@ -8,6 +8,8 @@ class Category < ActiveRecord::Base
   has_many :listing_categories
   has_many :listings, through: :listing_categories
 
+  has_attachment :cover_image, accept: [:jpg, :png, :gif]
+
   acts_as_tree order: :name, counter_cache: :children_count
   acts_as_list scope: [:level]
 
