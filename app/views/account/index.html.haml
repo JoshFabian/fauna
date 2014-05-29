@@ -1,0 +1,70 @@
+.row
+  .account-page.small-8.small-centered.columns
+    .rounded-panel
+      .account-avatar
+        = image_tag "http://www.placehold.it/60/60"
+      .account-header
+        %h3 Hello, Josh!
+        %p You can manage your account here!
+      .account-navigation
+        %ul.inline-list
+          %li= link_to "Personal", "#"
+          %li= link_to "Listing Credits", "#", :class => "active"
+          %li= link_to "Delete Account", "#"
+      .account-tagline
+        %h4 Pay as you go or upgrade to Pro.
+        %p Take your Fauna experience to the next level. No contracts. Cancel anytime.
+      .pricing-blocks
+        .small-6.columns.no-padding-left
+          .lined-panel
+            %h3 Pay as you go
+            %h6 You have <strong>2</strong> listing credits.
+            %hr
+            .payment-option
+              .small-12.columns.no-padding
+                %input#oneCredit{:name => "credits", :type => "radio", :value => "oneCredit"}
+                  %label{:for => "oneCredit"} Buy 1 listing credit - $5.00
+
+              .small-12.columns.no-padding
+                %input#fiveCredit{:name => "credits", :type => "radio", :value => "fiveCredit"}
+                  %label{:for => "fiveCredit"} Buy 5 listing credits - $20.00
+
+              .small-12.columns.no-padding
+                %input#tenCredit{:name => "credits", :type => "radio", :value => "tenCredit"}
+                  %label{:for => "tenCredit"} Buy 10 listing credits - $30.00
+              %a.button{:href => "#"} 
+                %i.icon.ion-ios7-locked-outline
+                Buy Credits
+
+
+
+        .small-6.columns.no-padding-right
+          .lined-panel
+            %h3 Pro
+            .price
+              .dollar $
+              .amount 39
+              .period /month
+            %ul
+              %li 
+                %i.icon.ion-android-checkmark
+                Plan benefit
+              %li 
+                %i.icon.ion-android-checkmark
+                Plan benefit
+              %li 
+                %i.icon.ion-android-checkmark
+                Plan benefit
+            %hr
+            .payment-option
+              .small-12.columns.no-padding
+                %input#monthly{:name => "plan", :type => "radio", :value => "monthly"}
+                  %label{:for => "monthly"} Pay Monthly
+              .small-12.columns.no-padding
+                %input#yearly{:name => "plan", :type => "radio", :value => "yearly"}
+                  %label{:for => "yearly"} Pay Yearly (20% off!)
+            %a.button{:href => "#"} 
+              %i.icon.ion-ios7-locked-outline
+              Upgrade
+
+

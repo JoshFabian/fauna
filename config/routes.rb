@@ -1,4 +1,5 @@
 Tegu::Application.routes.draw do
+  get "account" => "account#index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -15,6 +16,7 @@ Tegu::Application.routes.draw do
   get 'landing(/:code)' => 'landing#index', as: :landing
 
   root 'listings#index'
+  
   # get 'reptiles/:category' => "listings#by_category", constraints: { category: /[a-z-]+/ },
   #   as: :reptile_category
   resources :reptiles, controller: 'listings'

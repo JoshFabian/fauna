@@ -27,6 +27,14 @@
   border-radius: 3px;
   padding: 15px;
   @extend %shadow;
+  @extend .clearfix;
+}
+
+.lined-panel {
+  border-radius: 3px;
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  @extend .clearfix;
 }
 
 .listing-panel {
@@ -362,6 +370,95 @@ body.editing {
       &:first-child {
         margin-left: 0;
       }
+    }
+  }
+}
+
+// Account Page 
+.account-page {
+  margin-top: 50px;
+  .rounded-panel {
+    padding-bottom: 20px;
+  }
+}
+.account-avatar {
+  position: absolute;
+  top: -30px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  img {
+    border-radius: 50%;
+    border: 3px solid #fff;
+  }
+}
+.account-navigation {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 25px;
+  .inline-list {
+    margin-bottom: 5px;
+    a {
+      color: lighten(#333, 40);
+      &.active {
+        color: #f15b2b;
+      }
+    }
+  }
+}
+.account-header {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.pricing-blocks {
+  ul {
+    list-style: none;
+    margin-left: 0;
+    li {
+      .ion-android-checkmark {
+        color: #10921f;
+        font-size: 18px;
+        vertical-align: middle;
+        margin-right: 5px;
+        position: relative;
+        top: -3px;
+        display: inline-block;
+      }
+    }
+  }
+  .price {
+    margin-bottom: 15px;
+    div {
+      display: inline-block;
+      line-height: 1;
+      margin-right: -4px;
+    }
+    .dollar {
+      vertical-align: top;
+      font-size: 21px;
+      position: relative;
+      top: 10px;
+    }
+    .amount {
+      font-size: 60px;
+      font-weight: 700;
+      margin-right: 5px;
+    }
+    .period {
+      color: #cac7c7;
+      vertical-align: baseline;
+      font-size: 21px;
+    }
+  }
+  .button {
+    background: #16a085;
+    color: #fff;
+    font-size: 18px;
+    width: 100%;
+    margin-bottom: 0;
+    .ion-ios7-locked-outline {
+      font-size: 19px;
+      margin-right: 5px;
     }
   }
 }
