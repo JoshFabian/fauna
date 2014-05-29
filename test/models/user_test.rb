@@ -46,28 +46,41 @@ class UserTest < ActiveSupport::TestCase
   end
 
   describe "roles" do
-    it "should initialize role to basic" do
+    before do
       @user = Fabricate(:user, email: "user@gmail.com")
+    end
+
+    it "should initialize role to basic" do
       @user.reload
       @user.roles?(:basic).must_equal true
       @user.roles?(:admin).must_equal false
     end
 
     it "should add admin role" do
-      @user = Fabricate(:user, email: "user@gmail.com")
       @user.roles << :admin
       @user.save
       @user.reload.roles?(:admin).must_equal true
     end
 
     it "should remove admin role" do
-      @user = Fabricate(:user, email: "user@gmail.com")
       @user.roles << :admin
       @user.save
       @user.reload
       @user.roles = @user.roles - [:admin]
       @user.save
       @user.reload.roles?(:admin).must_equal false
+    end
+  end
+
+  describe "avatar" do
+    before do
+      @user = Fabricate(:user, email: "user@gmail.com")
+    end
+
+    it "should create avatar image" do
+      @avatar = @user.create_avatar_image!(public_id: 'general', version: '1', format: 'png', width: 1425, height: 372)
+      @user.reload
+      @user.avatar_image.must_equal @avatar
     end
   end
 end

@@ -30,5 +30,6 @@ class Api < Grape::API
   helpers LoggerHelper
   mount Endpoints::ListingApi
   mount Endpoints::PingApi
+  mount Endpoints::UserApi
   mount Endpoints::WaitlistApi
 end

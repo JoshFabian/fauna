@@ -11,7 +11,7 @@ module Endpoints
         def listing_params
           ActionController::Parameters.new(params).require(:listing).permit(:description, :price, :title)
         end
-        
+
         def listing_image_params(hash)
           ActionController::Parameters.new(hash).permit(:bytes, :etag, :format, :height, :position, :public_id,
             :resource_type, :version, :width)
