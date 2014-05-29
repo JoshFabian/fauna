@@ -14,9 +14,17 @@
           or
           = link_to "Register", login_path
       - else
-        -# temporary
-        .guest-links
-          = link_to 'Logout', logout_path
+        %a{"data-dropdown" => "drop1", :href => "#"} JoshFabian
+        %ul#drop1.f-dropdown{"data-dropdown-content" => ""}
+          %li
+            %a{:href => "#"} View Profile
+          %li
+            %a{:href => "#"} Logout
+        
+        -# = link_to 'JoshFabian', "#"
+        -# -# temporary
+        -# .guest-links
+        -#   = link_to 'Logout', logout_path
 
 %header.global-subhead
   .row
