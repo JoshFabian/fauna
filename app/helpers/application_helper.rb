@@ -13,7 +13,7 @@ module ApplicationHelper
   end
 
   def user_cover_image_profile(image, size=350)
-    cloudinary_url(image.full_public_id, transformation: [{width: 350, height: 300, crop: 'fill'}])
+    cloudinary_url(image.full_public_id, transformation: [{width: 350, height: 300, crop: 'fit'}])
   rescue Exception => e
     "http://www.placehold.it/#{size}/#{size}"
   end
