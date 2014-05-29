@@ -1,5 +1,7 @@
 $(document).ready ->
 
+  Tegu.cover_image_deletes = []
+
   $(".edit-hide .button, .edit-show .button").on 'click', (e) ->
     e.preventDefault()
     $("body").toggleClass('editing')
@@ -12,8 +14,8 @@ $(document).ready ->
   $("form.user-edit").validate
     onsubmit: true,
     submitHandler: (form) ->
+      $("form.user-edit #cover_image_deletes").val(Tegu.cover_image_deletes.join(","))
       form_data = $("form.user-edit").serialize()
-      # avatar_params = $("form.user-edit input.avatar-params").val()
       user_id = $("form.user-edit").data('user-id')
       if user_id == 0
         console.log('creating user')
@@ -28,7 +30,8 @@ $(document).ready ->
             Tegu.UserApi.update(user_id, form_data, auth_token, callback)
           (data, callback) ->
             console.log data
-            # update user fields
+            # reload page
+            window.location.reload(true)
         ],
         # optional callback
         (err, results) ->

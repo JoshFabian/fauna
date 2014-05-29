@@ -72,7 +72,7 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  describe "avatar" do
+  describe "avatar image" do
     before do
       @user = Fabricate(:user, email: "user@gmail.com")
     end
@@ -81,6 +81,27 @@ class UserTest < ActiveSupport::TestCase
       @avatar = @user.create_avatar_image!(public_id: 'general', version: '1', format: 'png', width: 1425, height: 372)
       @user.reload
       @user.avatar_image.must_equal @avatar
+    end
+  end
+
+  describe "cover images" do
+    before do
+      @user = Fabricate(:user, email: "user@gmail.com")
+    end
+
+    it "should create cover image" do
+      @cover = @user.cover_images.create!(public_id: 'general', version: '1', format: 'png', width: 1425, height: 372)
+      @user.reload
+      @cover.position.must_equal 1
+      @user.cover_images.must_equal [@cover]
+    end
+
+    it "should create cover image with position" do
+      @cover = @user.cover_images.create!(public_id: 'general', version: '1', format: 'png', width: 1425, height: 372,
+        position: 3)
+      @user.reload
+      @cover.position.must_equal 3
+      @user.cover_images.must_equal [@cover]
     end
   end
 end
