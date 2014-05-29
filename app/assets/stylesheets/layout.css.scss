@@ -342,3 +342,26 @@ body.editing {
     display: block;
   }
 }
+
+// Category page 
+.category-nav {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  a {
+    color: #fff;
+  }
+  h1 {
+    color: #fff;
+  }
+  ul {
+    margin-left: 0;
+    li {
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}
