@@ -12,6 +12,8 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @edit = @user.id == current_user.id
+    @total_listings = @user.listings.count
+    @recent_listings = @user.listings.order("id desc").limit(3)
     @cover_images = @user.cover_images.order("position asc").first(3)
     @blank_images = 3 - @cover_images.size
   end

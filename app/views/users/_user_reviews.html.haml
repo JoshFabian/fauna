@@ -1,0 +1,29 @@
+.rounded-panel
+  .padding-wrapper
+    %h5 Recent Feedback
+  - 5.times do
+    %hr
+    .padding-wrapper
+      .review
+        .review-header.small-12.columns
+          .listing-title
+            %strong Female translucent 6 1/4 inches - $325
+          .review-rating
+            %i.icon.ion-android-star.active
+            %i.icon.ion-android-star.active
+            %i.icon.ion-android-star.active
+            %i.icon.ion-android-star.active
+            %i.icon.ion-android-star
+        .small-12.columns.no-padding
+          .small-2.columns.no-padding
+            = image_tag "http://www.placehold.it/90/90"
+          .small-10.columns.no-padding-right
+            .review-bubble
+              .small-12.columns.no-padding
+                .reviewer
+                  = link_to "Username", "#"
+                .review-date
+                  May 3, 2014
+              .small-12.columns.no-padding
+                .review
+                  %p "Arrived happy and healthy! Couldn't ask for a better experience."
