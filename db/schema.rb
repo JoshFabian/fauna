@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140529200736) do
+ActiveRecord::Schema.define(version: 20140529213955) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -166,6 +166,10 @@ ActiveRecord::Schema.define(version: 20140529200736) do
     t.string   "resource_type",          limit: 50
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "about"
+    t.text     "data"
+    t.string   "phone",                  limit: 30
+    t.string   "website",                limit: 100
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true

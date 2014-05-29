@@ -24,4 +24,7 @@ module ApplicationHelper
     "http://www.placehold.it/#{size}/#{size}"
   end
 
+  def website(s)
+    s.gsub(/https?:\/\//, '')
+  end
 end

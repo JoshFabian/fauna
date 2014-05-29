@@ -25,8 +25,8 @@ module Endpoints
         end
 
         def user_params
-          permit_params = [:bio, :email, :first_name, :handle, :last_name, :password, :password_confirmation,
-            :website]
+          permit_params = [:about, :email, :first_name, :handle, :last_name, :password, :password_confirmation,
+            :phone, :website]
           ActionController::Parameters.new(params).required(:user).permit(permit_params)
         end
       end
