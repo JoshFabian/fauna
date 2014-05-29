@@ -17,6 +17,13 @@ $(document).ready ->
   # callback after file upload
   $(document).on "fileuploaddone", '.cover-photo .cloudinary-fileupload', (e, data) ->
     console.log "user cover upload completed"
+    # mark original image as deleted
+    image_id = $(this).closest(".cover-photo").data('image-id')
+    Tegu.cover_image_deletes.push(image_id)
+    $("input#cover_image_deletes").val(Tegu.cover_image_deletes.join(","))
+    # add position to image params
+    position = $(this).closest(".cover-photo").data('position')
+    data.result.position = position
     # save image params
     $(this).closest(".cover-photo").find(".cover-image-params").val(JSON.stringify(data.result))
     # show uploaded image

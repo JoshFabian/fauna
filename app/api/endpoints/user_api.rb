@@ -13,7 +13,7 @@ module Endpoints
 
       helpers do
         def permitted_image_params
-          [:bytes, :etag, :format, :height, :public_id, :resource_type, :version, :width]
+          [:bytes, :etag, :format, :height, :position, :public_id, :resource_type, :version, :width]
         end
 
         def user_avatar_image_params(hash)
@@ -40,7 +40,7 @@ module Endpoints
 
       desc "Update user"
       put ':id' do
-        puts "[user params]:#{params}"
+        # puts "[user params]:#{params}"
         @user = User.find(params.id)
         error! '', 401 if @user != current_user
         if params.user.password.blank? and params.user.password_confirmation.blank?
@@ -49,7 +49,7 @@ module Endpoints
         end
         @user.update_attributes(user_params)
         if params.avatar_image_params.present?
-          puts "*** adding avatar image:#{params.avatar_image_params}"
+          # puts "*** adding avatar image:#{params.avatar_image_params}"
           begin
             @user.create_avatar_image!(user_avatar_image_params(JSON.parse(params.avatar_image_params)))
           rescue Exception => e
@@ -57,11 +57,18 @@ module Endpoints
         end
         if params.cover_image_params.present?
           params.cover_image_params.select{ |s| s.present? }.each do |s|
-            puts "*** adding cover image:#{s}"
+            # puts "*** adding cover image:#{s}"
             begin
               @user.cover_images.create!(user_cover_image_params(JSON.parse(s)))
             rescue Exception => e
             end
+          end
+        end
+        if params.cover_image_deletes.present?
+          params.cover_image_deletes.split(',').each do |id|
+            # puts "*** removing cover image:#{id}"
+            image = @user.cover_images.find_by_id(id)
+            @user.cover_images.destroy(image)
           end
         end
         error! 'Invalid User', 406 if @user.invalid?
