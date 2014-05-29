@@ -22,6 +22,6 @@ class ElasticIndex
   protected
 
   def self.klasses
-    [Listing]
+    [Category, Listing]
   end
 end

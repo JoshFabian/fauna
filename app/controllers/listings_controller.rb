@@ -13,7 +13,8 @@ class ListingsController < ApplicationController
 
   # GET /listings/:category
   def by_category
-    @category = Category.roots.find_by_name(params[:category].to_s.titleize)
+    @categories = Category.search(query: {match: {name: params[:category]}}, filter: {term: {level: 1}}).records
+    @category = @categories.first
     @subcategories = @category.children
     @listings = Listing.search(filter: {term: {category_names: @category.name}}).records
 
