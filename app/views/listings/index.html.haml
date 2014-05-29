@@ -8,16 +8,18 @@
 - # Show only on index
 - if !user_signed_in?
   = render partial: "listings/guest_message"
-.category-header.small-12.columns{:style => "background-image: url('http://images.alphacoders.com/184/184883.jpg')"}
-  .overlay
-  .category-nav
-    .row 
-      %h1 Lizards
-      %hr
-      %ul.centered-inline-list
-        %li= link_to "Geckos", "#"
-        %li= link_to "Geckos", "#"
-        %li= link_to "Geckos", "#"
+  
+- if @category.present?
+  .category-header.small-12.columns{:style => "background-image: url('http://images.alphacoders.com/184/184883.jpg')"}
+    .overlay
+    .category-nav
+      .row
+        %h1= @category.try(:name)
+        %hr
+        %ul.centered-inline-list
+          - @subcategories.each do |child|
+            %li= link_to child.name, "#"
+
 .row
   %h5 Recent Listings
   %ul.small-block-grid-4
