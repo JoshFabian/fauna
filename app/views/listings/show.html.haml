@@ -29,6 +29,47 @@
           %p This is a description
 
     .listing-aside.small-5.columns
+      .category-breadcrumbs
+        %span
+          = link_to "Lizards"
+          %i.icon.ion-ios7-arrow-forward
+          = link_to "Monitors & Tegus"
       %h3= @listing.title
       %h1= number_to_currency(@listing.price.to_f/100.0, precision: 2)
+
       %a.button.contact-seller{:href => "#"} Contact Seller
+      .social-links
+        .fb-share-button{"data-type" => "button_count"}
+        %a.twitter-share-button{"data-lang" => "en", :href => "https://twitter.com/share"} Tweet
+        :javascript
+          !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+
+      .user-widget
+        .author-image.small-2.columns
+          = image_tag "http://www.placehold.it/60/60"
+        .author-name.small-10.columns
+          %h5 Bloodbank Dragons
+          %p Chicago, IL
+        .author-bio.small-12.columns
+          %p We are Chicago's most well known reptile specialty store. We carry a large selection of reptiles and amphibians. Our store is open 7 days a week!
+        .more-from-author.small-12.columns
+          %span More from <strong>Bloodbank Dragons</strong>
+          .more-listings
+            %ul.small-block-grid-2
+              - 2.times do
+                %li
+                  %a{:href => "/JoshFabian/listings/2"}
+                    .listing-panel
+                      %img{:alt => "Gfg2qswl0dogh96i2jlv", :src => "https://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_235/v1401302146/gfg2qswl0dogh96i2jlv.jpg"}
+                        .listing-info
+                          .title
+                            Amazing Tegu
+    #fb-root
+    :javascript
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
