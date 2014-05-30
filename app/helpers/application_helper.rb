@@ -18,6 +18,12 @@ module ApplicationHelper
     "http://www.placehold.it/#{size}/#{size}"
   end
 
+  def user_avatar_image_thumbnail(image, size=60)
+    cloudinary_url(image.full_public_id, transformation: [{width: 60, height: 60, crop: 'fill'}])
+  rescue Exception => e
+    "http://www.placehold.it/#{size}/#{size}"
+  end
+
   def user_cover_image_profile(image, size=350)
     cloudinary_url(image.full_public_id, transformation: [{width: 350, height: 300, crop: 'fit'}])
   rescue Exception => e

@@ -62,6 +62,11 @@ class ListingsController < ApplicationController
       # deprecated
       @listing = Listing.friendly.find(params[:id])
     end
+
+    @user = @listing.user
+    @categories = @listing.categories
+    @category = @categories.select{ |o| o.level == 1 }.first
+    @subcategory = @categories.select{ |o| o.level == 2 }.first
     @main_image, *@other_images = @listing.images.order("position asc")
   end
 

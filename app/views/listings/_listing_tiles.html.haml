@@ -1,8 +1,10 @@
 .row
   %h5
-    = link_to "Lizards"
-    %i.icon.ion-ios7-arrow-forward
-    Monitors & Tegus
+    - if @category.present?
+      = link_to @category.name, listing_category_path(@category.name.parameterize)
+      - if @subcategory.present?
+        %i.icon.ion-ios7-arrow-forward
+        = @subcategory.name
   %ul.small-block-grid-4
     - @listings.each do |listing|
       - user = listing.user
