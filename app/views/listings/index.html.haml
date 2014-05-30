@@ -8,31 +8,9 @@
 - # Show only on index
 - if !user_signed_in?
   = render partial: "listings/guest_message"
-  
-- if @category.present?
-  .category-header.small-12.columns{:style => "background-image: url('#{category_cover_image(@category)}')"}
-    .overlay
-    .category-nav
-      .row
-        %h1= @category.name
-        %hr
-        %ul.centered-inline-list
-          - @subcategories.each do |child|
-            %li= link_to child.name, listing_category_path(@category.name.parameterize, child.name.parameterize)
 
-.row
-  %h5 Recent Listings
-  %ul.small-block-grid-4
-    - @listings.each do |listing|
-      - user = listing.user
-      - image = listing.primary_image
-      %li
-        -# = link_to listing_path(listing.id) do
-        = link_to user_listing_path(user, listing.id) do
-          .listing-panel
-            -# = image_tag "http://www.placehold.it/235/200", :class => "grid-thumb"
-            = image_tag cloudinary_url(image.full_public_id, transformation: [{width: 235, height: 200, crop: 'fill'}])
-            .listing-info
-              .title
-                = listing.title
+- if @category.present?
+  = render partial: "listings/category_header"
+
+= render(partial: "listings/listing_tiles")
 
