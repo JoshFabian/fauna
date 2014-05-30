@@ -33,7 +33,11 @@ class Listing < ActiveRecord::Base
   index_name "listings.#{Rails.env}"
 
   def as_indexed_json(options={})
-    as_json(methods: [:category_names, :user_handle])
+    as_json(methods: [:category_ids, :category_names, :user_handle])
+  end
+
+  def category_ids
+    categories.collect(&:id)
   end
 
   def category_names
@@ -43,15 +47,14 @@ class Listing < ActiveRecord::Base
   def index!
     self.__elasticsearch__.update_document
   rescue Exception => e
-    
-  end
-
-  def primary_image
-    images.order("position asc").first
   end
 
   def price=(s)
     write_attribute(:price, to_cents(s))
+  end
+
+  def primary_image
+    images.order("position asc").first
   end
 
   # used by friendly_id

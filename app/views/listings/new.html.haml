@@ -5,15 +5,10 @@
       .rounded-panel
         .listing-field
           %label What is it?
-          = f.select :categories, @root1_categories.map{ |o| [o.name, o.id]}, {prompt: 'Reptile Category', selected: @categories.map{ |o| o.id }}, {required: true, name: "listing[categories][]"}
-          -# = f.select :categories, @root2_categories.map{ |o| [o.name, o.id]}, {prompt: 'Reptile Sub-Category', selected: @subcategories.map{ |o| o.id }}, {required: false, name: "listing[categories][]"}
-          -# todo
-          -# %select
-          -#   %option{:value => "default"} Reptile Sub-Category
-          -#   %option{:value => "geckos"} Geckos
-          -#   %option{:value => "bearded-dragons"} Bearded Dragons
-          -#   %option{:value => "monitors"} Monitors & Tegus
-          -#   %option{:value => "other"} Other Lizards
+          .small-12.columns.no-padding{class: "category-wrapper", :'data-category-level' => 1, :'data-category-name' => @category.try(:name)}
+            = render(partial: "listings/edit_categories", locals: {categories: @root1_categories, selected: @category, prompt: "Reptile Categories", level: 1})
+          .small-12.columns.no-padding{class: "category-wrapper", :'data-category-level' => 2, :'data-category-name' => @subcategory.try(:name)}
+            = render(partial: "listings/edit_categories", locals: {categories: @root2_categories, selected: @subcategory, prompt: "Reptile Sub-Category", level: 2})
         %hr
         .listing-field
           %label Title

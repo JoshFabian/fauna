@@ -24,6 +24,10 @@ class Category < ActiveRecord::Base
     Category.where(level: 1)
   end
 
+  def self.find_by_match(s)
+    self.where("name LIKE ?", "#{s}%").first
+  end
+
   protected
 
   def get_parent_level

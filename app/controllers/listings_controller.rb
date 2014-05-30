@@ -14,10 +14,16 @@ class ListingsController < ApplicationController
   # GET /listings/:category
   # GET /listings/:category/:subcategory
   def by_category
-    @categories = Category.search(query: {match: {name: params[:category]}}, filter: {term: {level: 1}}).records
-    @category = @categories.first
+    @token = params[:category].titleize.split.first
+    @subtoken = params[:subcategory].to_s.titleize.split.first
+    # @categories = Category.search(query: {match: {name: @token}}, filter: {term: {level: 1}}).records
+    # @category = @categories.first
+    @category = Category.roots.find_by_match(@token)
+    @subcategory = @category.children.find_by_match(@subtoken) if @subtoken.present?
+    @category_ids = @subcategory.present? ? @subcategory.id : @category.id
+    @listings = Listing.search(filter: {term: {category_ids: @category_ids}}).records
+
     @subcategories = @category.children
-    @listings = Listing.search(filter: {term: {category_names: @category.name}}).records
 
     respond_to do |format|
       format.html { render(action: :index) }
@@ -62,13 +68,13 @@ class ListingsController < ApplicationController
   # GET /listings/new
   def new
     @listing = current_user.listings.new
-    @images = @listing.images
-    @categories = @listing.categories.where(level: 1)
-    @subcategories = @listing.categories.where(level: 2)
+    @category = []
+    @subcategory = []
+    @images = []
 
     @title = "Create New Listing"
     @root1_categories = Category.where(level: 1)
-    @root2_categories = Category.where(level: 2)
+    @root2_categories = []
 
     respond_to do |format|
       format.html
@@ -78,13 +84,13 @@ class ListingsController < ApplicationController
   # GET /listings/1/edit
   def edit
     @listing = current_user.listings.find(params[:id])
+    @category = @listing.categories.where(level: 1).first
+    @subcategory = @listing.categories.where(level: 2).first
     @images = @listing.images.order("position asc")
-    @categories = @listing.categories.where(level: 1)
-    @subcategories = @listing.categories.where(level: 2)
 
     @title = "Edit Listing"
     @root1_categories = Category.where(level: 1)
-    @root2_categories = Category.where(level: 2)
+    @root2_categories = Category.where(level: 2, parent_id: @category.try(:id))
 
     respond_to do |format|
       format.html { render(action: :new) }

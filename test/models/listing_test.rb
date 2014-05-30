@@ -39,14 +39,13 @@ class ListingTest < ActiveSupport::TestCase
       @user = Fabricate(:user)
     end
 
-    describe "by category" do
+    describe "by category name" do
       before do
         @lizards = Category.create!(name: 'Lizards')
         @geckos = Category.create!(name: 'Geckos')
         @listing1 = @user.listings.create!(title: "Lizard", price: 100)
         @listing1.categories.push(@lizards)
         @listing1.categories.push(@geckos)
-        @listing1.category_names.must_equal ['lizards', 'geckos']
         Listing.import
         Listing.__elasticsearch__.refresh_index!
       end
@@ -75,6 +74,23 @@ class ListingTest < ActiveSupport::TestCase
         @results.size.must_equal 0
         @results = Listing.search(filter: {term: {category_names: 'bogus'}})
         @results.size.must_equal 0
+      end
+    end
+
+    describe "by category id" do
+      before do
+        @lizards = Category.create!(name: 'Lizards')
+        @listing1 = @user.listings.create!(title: "Lizard", price: 100)
+        @listing1.categories.push(@lizards)
+        Listing.import
+        Listing.__elasticsearch__.refresh_index!
+      end
+
+      it "should find on category match" do
+        @results = Listing.search(filter: {term: {category_ids: @lizards.id}})
+        @results.size.must_equal 1
+        @results = Listing.search(filter: {term: {category_ids: [@lizards.id]}})
+        @results.size.must_equal 1
       end
     end
 

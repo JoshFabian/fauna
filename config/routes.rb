@@ -22,6 +22,7 @@ Tegu::Application.routes.draw do
   resources :reptiles, controller: 'listings'
   resources :listings, except: [:show]
   resources :listing_forms, only: [] do
+    get :subcategories, on: :collection
     get :new_image, on: :collection
   end
   match 'listings/search' => "listings#by_search", as: :listing_search, via: [:get, :post]

@@ -40,6 +40,18 @@ describe Category do
     end
   end
 
+  describe "find by" do
+    it "should find on category substring" do
+      @category = Category.create!(name: 'Turtles & Tortoises')
+      Category.find_by_match("turtles").must_equal @category
+    end
+
+    it "should find on category match" do
+      @category = Category.create!(name: 'Boas')
+      Category.find_by_match("boas").must_equal @category
+    end
+  end
+
   describe "listings" do
     before do
       @user = Fabricate(:user)
