@@ -25,6 +25,6 @@ module ApplicationHelper
   end
 
   def website(s)
-    s.gsub(/https?:\/\//, '')
+    s.gsub(/https?:\/\//, '') rescue s
   end
 end
