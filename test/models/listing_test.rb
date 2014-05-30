@@ -3,7 +3,7 @@ require 'test_helper'
 class ListingTest < ActiveSupport::TestCase
   describe "create" do
     before do
-      @user = Fabricate(:user, handle: "handle")
+      @user = Fabricate(:user)
     end
 
     it "should create with required attributes" do
@@ -41,18 +41,32 @@ class ListingTest < ActiveSupport::TestCase
 
     describe "by category" do
       before do
-        @boas = Category.create!(name: 'Boas')
+        @lizards = Category.create!(name: 'Lizards')
+        @geckos = Category.create!(name: 'Geckos')
         @listing1 = @user.listings.create!(title: "Lizard", price: 100)
-        @listing1.categories.push(@boas)
-        @listing1.category_names.must_equal ['boas']
+        @listing1.categories.push(@lizards)
+        @listing1.categories.push(@geckos)
+        @listing1.category_names.must_equal ['lizards', 'geckos']
         Listing.import
+        Listing.__elasticsearch__.refresh_index!
       end
 
       it "should find on exact category match" do
-        sleep 1 # todo: fix this
-        @results = Listing.search 'boas'
+        @results = Listing.search 'lizards'
         @results.size.must_equal 1
-        @results = Listing.search(filter: {term: {category_names: 'boas'}})
+        @results = Listing.search(filter: {term: {category_names: 'lizards'}})
+        @results.size.must_equal 1
+      end
+
+      it "should find on substring category match" do
+        @results = Listing.search 'liz*'
+        @results.size.must_equal 1
+      end
+
+      it "should find on exact subcategory match" do
+        @results = Listing.search 'geckos'
+        @results.size.must_equal 1
+        @results = Listing.search(filter: {term: {category_names: 'geckos'}})
         @results.size.must_equal 1
       end
 
@@ -69,6 +83,7 @@ class ListingTest < ActiveSupport::TestCase
         @listing1 = @user.listings.create!(title: "Lizard", price: 100)
         @listing2 = @user.listings.create!(title: "Tegu", price: 100)
         Listing.import
+        Listing.__elasticsearch__.refresh_index!
       end
 
       it "should find on exact title match" do
@@ -93,9 +108,10 @@ class ListingTest < ActiveSupport::TestCase
 
     describe "by user handle" do
       before do
-        @listing1 = @user.listings.create!(title: "Lizard", price: 100)
-        @listing2 = @user.listings.create!(title: "Tegu", price: 100)
+        @listing1 = @user.listings.create!(title: "1", price: 100)
+        @listing2 = @user.listings.create!(title: "2", price: 100)
         Listing.import
+        Listing.__elasticsearch__.refresh_index!
       end
 
       it "should find on handle match" do
@@ -114,9 +130,10 @@ class ListingTest < ActiveSupport::TestCase
 
     describe "by user id" do
       before do
-        @listing1 = @user.listings.create!(title: "Lizard", price: 100)
-        @listing2 = @user.listings.create!(title: "Tegu", price: 100)
+        @listing1 = @user.listings.create!(title: "1", price: 100)
+        @listing2 = @user.listings.create!(title: "2", price: 100)
         Listing.import
+        Listing.__elasticsearch__.refresh_index!
       end
 
       it "should find on id match" do
