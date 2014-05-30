@@ -5,7 +5,7 @@ class WaitlistsController < ApplicationController
 
   # GET /waitlists
   def index
-    @waitlists = Waitlist.all
+    @waitlists = Waitlist.order("id desc")
     @total_count = Waitlist.count
     @both_count = Waitlist.both.count
     @buyers_count = Waitlist.buyer.count
