@@ -1,4 +1,4 @@
-.cover-photo.small-4.columns{style: "background-image: url('#{user_cover_image_profile(image)}')", :'data-image-id' => image.try(:id), :'data-position' => position}
+.cover-photo.small-4.columns{style: "background-image: url('#{user_cover_image_profile(image)}')", :'data-image-id' => image.try(:id).to_i, :'data-position' => position}
   .overlay
     .edit-show
       .upload-image

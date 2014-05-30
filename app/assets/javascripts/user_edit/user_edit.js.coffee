@@ -17,9 +17,15 @@ $(document).ready ->
       $("form.user-edit #cover_image_deletes").val(Tegu.cover_image_deletes.join(","))
       form_data = $("form.user-edit").serialize()
       user_id = $("form.user-edit").data('user-id')
+      # get cover image positions
+      cover_images = []
+      for object in $(".cover-photos .cover-photo")
+        if $(object).data('image-id') != 0
+          cover_images.push {id: $(object).data('image-id'), position: $(object).data('position')}
+      console.log "cover images:#{JSON.stringify cover_images}"
       if user_id == 0
         console.log('creating user')
-        # creat user using default form submit
+        # create user using default form submit
         form.submit()
       else
         # update user
@@ -28,6 +34,10 @@ $(document).ready ->
           (callback) ->
             # update user
             Tegu.UserApi.update(user_id, form_data, auth_token, callback)
+          (data, callback) ->
+            console.log data
+            # sort cover images
+            Tegu.UserApi.sort_cover_images(user_id, {cover_images: cover_images}, auth_token, callback)
           (data, callback) ->
             console.log data
             # reload page

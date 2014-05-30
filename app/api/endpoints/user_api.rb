@@ -40,7 +40,7 @@ module Endpoints
 
       desc "Update user"
       put ':id' do
-        # puts "[user params]:#{params}"
+        # puts "[params]:#{params}"
         @user = User.find(params.id)
         error! '', 401 if @user != current_user
         if params.user.password.blank? and params.user.password_confirmation.blank?
@@ -67,8 +67,11 @@ module Endpoints
         if params.cover_image_deletes.present?
           params.cover_image_deletes.split(',').each do |id|
             # puts "*** removing cover image:#{id}"
-            image = @user.cover_images.find_by_id(id)
-            @user.cover_images.destroy(image)
+            begin
+              image = @user.cover_images.find_by_id(id)
+              @user.cover_images.destroy(image)
+            rescue Exception => e
+            end
           end
         end
         error! 'Invalid User', 406 if @user.invalid?
@@ -76,6 +79,23 @@ module Endpoints
         {user: @user}
       end
 
+      desc "Update cover image positions"
+      put ':id/cover_images/sort' do
+        @user = User.find(params.id)
+        if params.cover_images.present?
+          params.cover_images.each do |object|
+            begin
+              object = object.last if object.is_a?(Array)
+              image = @user.cover_images.find(object.id)
+              image.update_attributes(position: object.position)
+            rescue Exception => e
+            end
+          end
+        end
+        @images = @user.cover_images
+        logger.post("tegu.api", log_data.merge({event: 'user.cover_images.update', user_id: @user.id}))
+        {user: {id: @user.id, cover_images: @images.as_json(only: [:id, :position])}}
+      end
     end
 
   end

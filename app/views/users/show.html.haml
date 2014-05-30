@@ -8,14 +8,8 @@
 = form_for(@user, as: :user, html: {class: "form-validation user-edit", :'data-user-id' => @user.id.to_i}) do |f|
   .cover-photos.small-12.columns
     = hidden_field "cover_image_deletes", nil, value: nil, name: "cover_image_deletes", id: "cover_image_deletes"
-    - position = 1
-    - @cover_images.each do |image|
-      = render(partial: "users/user_cover_photo", locals: {f: f, image: image, position: image.position})
-      - position = image.position + 1
-
-    - 1.upto(@blank_images).each do |i|
-      = render(partial: "users/user_cover_photo", locals: {f: f, image: i, position: position})
-      - position = position + 1
+    - @cover_set.each_with_index do |object, index|
+      = render(partial: "users/user_cover_photo", locals: {f: f, image: object, position: index+1})
 
   .user-bar.small-12.columns
     .row

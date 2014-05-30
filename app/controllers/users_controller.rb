@@ -15,7 +15,9 @@ class UsersController < ApplicationController
     @total_listings = @user.listings.count
     @recent_listings = @user.listings.order("id desc").limit(3)
     @cover_images = @user.cover_images.order("position asc").first(3)
-    @blank_images = 3 - @cover_images.size
+    @cover_set = 1.upto(3).map do |i|
+      @cover_images.select{ |o| o.position == i }.first or i
+    end
   end
 
   # GET /users/1/edit
