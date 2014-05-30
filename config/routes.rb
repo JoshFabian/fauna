@@ -10,6 +10,12 @@ Tegu::Application.routes.draw do
     match "/(*path)" => redirect {|params, req| "//www.fauna.net/#{params[:path]}"},  via: [:get, :post]
   end
 
+  # vanity user scopes
+  get ':handle' => "users#show", as: :user, constraints: HandleRoute.new
+  get ':handle/listings' => "users#listings", as: :user_listings
+  get ':handle/listings/:id' => "listings#show", as: :user_listing
+  get ':handle/reviews' => "users#reviews", as: :user_reviews
+
   # You can have the root of your site routed with "root"
   # root 'landing#index'
   get '/' => redirect("/landing")
@@ -17,9 +23,6 @@ Tegu::Application.routes.draw do
 
   root 'listings#index'
   
-  # get 'reptiles/:category' => "listings#by_category", constraints: { category: /[a-z-]+/ },
-  #   as: :reptile_category
-  resources :reptiles, controller: 'listings'
   resources :listings, except: [:show]
   resources :listing_forms, only: [] do
     get :subcategories, on: :collection
@@ -29,10 +32,6 @@ Tegu::Application.routes.draw do
   get 'listings/:category(/:subcategory)' => "listings#by_category", constraints: {category: /[a-z-]+/},
     as: :listing_category
   get 'listings/:id' => "listings#show", constraints: {id: /[0-9]+/}
-
-  # user listing scopes
-  get ':handle/listings' => "listings#by_user", as: :user_listings
-  get ':handle/listings/:id' => "listings#show", as: :user_listing
 
   # oauth
   get 'auth/:provider/callback', to: 'oauths#callback'

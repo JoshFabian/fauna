@@ -30,48 +30,15 @@
   .sub-user-bar
     .row
       %ul.inline-list
-        %li= link_to "Home", "#", :class=>"active"
-        %li= link_to "Listings", "#"
-        %li= link_to "Reviews", "#"
+        %li= link_to "Home", user_path(@user), class: [@tab == 'home' ? 'active' : nil]
+        %li= link_to "Listings", user_listings_path(@user), class: [@tab == 'listings' ? 'active' : nil]
+        %li= link_to "Reviews", user_reviews_path(@user), class: [@tab == 'reviews' ? 'active' : nil]
         - if false
           %li= link_to "Followers", "#"
           %li= link_to "Following", "#"
 
-  .row
-    .review-column.small-8.columns.no-padding-left
-      .recent-listing
-        %h5 Recent Listings (<a href="#">#{@total_listings}</a>)
-        %ul.small-block-grid-3
-          - 3.times do
-            %li
-              %a{:href => "/JoshFabian/listings/2"}
-                .listing-panel
-                  %img{:alt => "Gfg2qswl0dogh96i2jlv", :src => "https://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_235/v1401302146/gfg2qswl0dogh96i2jlv.jpg"}
-                    .listing-info
-                      .title
-                        Amazing Tegu
-      .feedback
-        = render(partial: "users/user_reviews")
-
-    .profile-sidebar.small-4.columns
-      .rounded-panel
-        .padding-wrapper
-          %h5 About
-        %hr
-        .padding-wrapper
-          .user-info.edit-hide
-            %p= @user.about
-            %ul
-              %li= number_to_phone(@user.phone)
-              %li= link_to website(@user.website), @user.website
-              %li
-                Springfield, Oregon 97477
-                %iframe{:frameborder => "0", :height => "250", :src => "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d45876.48194058557!2d-123.0057715!3d44.056924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54c0e1abfcb2492f%3A0x60e31235d99ad11e!2sSpringfield%2C+OR+97477!5e0!3m2!1sen!2sus!4v1401306391956", :style => "border:0", :width => "100%"}
-          .edit-show
-            = f.text_area :about, placeholder: "About you"
-            = f.text_field :phone, placeholder: "Phone Number", class: 'digits'
-            = f.text_field :website, placeholder: "Website", class: 'url'
-            %input{:placeholder => "Location", :type => "text"}
-
-      .rounded-panel.user-trust
-        = render(partial: "users/user_trust")
+  - if @tab == 'home'
+    = render(partial: "users/user_home", locals: {f: f})
+  - elsif @tab == 'listings'
+    = render(partial: "listings/listing_tiles")
+    
