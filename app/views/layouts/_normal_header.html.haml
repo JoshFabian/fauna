@@ -17,6 +17,8 @@
         = link_to current_user.handle, '#', :'data-dropdown' => 'drop1'
         %ul#drop1.f-dropdown{"data-dropdown-content" => ""}
           %li= link_to 'Profile', user_path(current_user.id)
+          - if current_user.roles?(:admin)
+            %li= link_to 'Waitlists', waitlists_path
           %li= link_to 'Logout', logout_path
         
         -# = link_to 'JoshFabian', "#"

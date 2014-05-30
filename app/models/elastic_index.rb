@@ -2,8 +2,8 @@ class ElasticIndex
 
   def self.create_all
     # klasses.each do |klass|
-    #   # klass.index.create rescue nil
-    #   klass.create_elasticsearch_index rescue nil
+    #   # klass.create_elasticsearch_index rescue nil
+    #   klass.__elasticsearch__.create_index! rescue nil
     # end
   end
 

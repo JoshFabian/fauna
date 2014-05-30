@@ -42,15 +42,26 @@ describe Category do
 
   describe "listings" do
     before do
-      @lizards = Category.create!(name: 'Lizards')
       @user = Fabricate(:user)
       @listing = Fabricate(:listing, user: @user)
     end
 
     it "should attach category object to listing" do
+      @lizards = Category.create!(name: 'Lizards')
       @listing.categories.push(@lizards)
+      @listing.reload
       @listing.categories.collect(&:name).must_equal ['Lizards']
       @listing.category_names.must_equal ['lizards']
+    end
+
+    it "should attach category and subcategory objects to listing" do
+      @lizards = Category.create!(name: 'Lizards')
+      @geckos = @lizards.children.create!(name: 'Geckos')
+      @listing.categories.push(@lizards)
+      @listing.categories.push(@geckos)
+      @listing.reload
+      @listing.categories.collect(&:name).must_equal ['Lizards', 'Geckos']
+      @listing.category_names.must_equal ['lizards', 'geckos']
     end
   end
 end

@@ -12,6 +12,7 @@ class ListingsController < ApplicationController
   end
 
   # GET /listings/:category
+  # GET /listings/:category/:subcategory
   def by_category
     @categories = Category.search(query: {match: {name: params[:category]}}, filter: {term: {level: 1}}).records
     @category = @categories.first
