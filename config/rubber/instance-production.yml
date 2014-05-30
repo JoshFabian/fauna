@@ -16,9 +16,9 @@
     name: sqlite
     options: {}
   - !ruby/object:Rubber::Configuration::RoleItem
-      name: db
-      options:
-        primary: true
+    name: db
+    options:
+      primary: true
   - !ruby/object:Rubber::Configuration::RoleItem
     name: elasticsearch
     options: {}
