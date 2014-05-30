@@ -17,6 +17,7 @@ class UsersController < ApplicationController
     @cover_set = 1.upto(3).map do |i|
       @cover_images.select{ |o| o.position == i }.first or i
     end
+
     @total_listings = @user.listings.count
     @recent_listings = @user.listings.order("id desc").limit(3)
 

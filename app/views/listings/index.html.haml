@@ -10,15 +10,7 @@
   = render partial: "listings/guest_message"
 
 - if @category.present?
-  .category-header.small-12.columns{:style => "background-image: url('#{category_cover_image(@category)}')"}
-    .overlay
-    .category-nav
-      .row
-        %h1= @category.name
-        %hr
-        %ul.centered-inline-list
-          - @subcategories.each do |child|
-            %li= link_to child.name, listing_category_path(@category.name.parameterize, child.name.parameterize)
+  = render partial: "listings/category_header"
 
 = render(partial: "listings/listing_tiles")
 
