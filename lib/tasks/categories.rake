@@ -6,7 +6,7 @@ namespace :categories do
     objects = YAML::load(File.open("#{Rails.root}/data/categories.yml"))
     objects.each do |s|
       root, *children = s
-      root = Category.find_or_create_by(name: s)
+      root = Category.find_or_create_by(name: root)
       puts "#{Time.now}: root:#{root.name}"
       children.flatten.each do |s|
         root.children.find_or_create_by(name: s)
