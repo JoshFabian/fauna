@@ -31,9 +31,11 @@
     .listing-aside.small-5.columns
       .category-breadcrumbs
         %span
-          = link_to "Lizards"
-          %i.icon.ion-ios7-arrow-forward
-          = link_to "Monitors & Tegus"
+          - if @category.present?
+            = link_to @category.name, listing_category_path(@category.name.parameterize)
+            - if @subcategory.present?
+              %i.icon.ion-ios7-arrow-forward
+              = link_to @subcategory.name, listing_category_path(@category.name.parameterize, @subcategory.name.parameterize)
       %h3= @listing.title
       %h1= number_to_currency(@listing.price.to_f/100.0, precision: 2)
 
@@ -46,24 +48,26 @@
 
       .user-widget
         .author-image.small-2.columns
-          = image_tag "http://www.placehold.it/60/60"
+          = image_tag user_avatar_image_thumbnail(@user.avatar_image)
         .author-name.small-10.columns
-          %h5 Bloodbank Dragons
+          %h5= @user.handle
           %p Chicago, IL
         .author-bio.small-12.columns
-          %p We are Chicago's most well known reptile specialty store. We carry a large selection of reptiles and amphibians. Our store is open 7 days a week!
-        .more-from-author.small-12.columns
-          %span More from <strong>Bloodbank Dragons</strong>
-          .more-listings
-            %ul.small-block-grid-2
-              - 2.times do
-                %li
-                  %a{:href => "/JoshFabian/listings/2"}
-                    .listing-panel
-                      %img{:alt => "Gfg2qswl0dogh96i2jlv", :src => "https://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_235/v1401302146/gfg2qswl0dogh96i2jlv.jpg"}
-                        .listing-info
-                          .title
-                            Amazing Tegu
+          %p= @user.about
+          
+        - if false
+          .more-from-author.small-12.columns
+            %span More from <strong>#{@user.handle}</strong>
+            .more-listings
+              %ul.small-block-grid-2
+                - 2.times do
+                  %li
+                    %a{:href => "/JoshFabian/listings/2"}
+                      .listing-panel
+                        %img{:alt => "Gfg2qswl0dogh96i2jlv", :src => "https://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_235/v1401302146/gfg2qswl0dogh96i2jlv.jpg"}
+                          .listing-info
+                            .title
+                              Amazing Tegu
     #fb-root
     :javascript
       (function(d, s, id) {
