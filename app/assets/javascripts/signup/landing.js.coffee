@@ -3,13 +3,17 @@ class Tegu.Landing
     $(".user-email-form-wrapper").hide()
     $(".user-role-form-wrapper").show()
 
-  @goto_step_3: (waitlist) ->
+  @goto_step_3_original: (waitlist) ->
     $(".user-email-form-wrapper").hide()
     $(".user-role-form-wrapper").hide()
     $(".user-invite-friends-form-wrapper .signup-count").html(waitlist.signup_count)
     $(".user-invite-friends-form-wrapper .invite-code input").val(waitlist.share_url)
     $(".user-invite-friends-form-wrapper").show()
     $(".landing-form").addClass('hide')
+
+  @goto_step_3: (waitlist) ->
+    # redirect to success landing
+    window.location.href = "/landing/success/#{waitlist.code}"
 
 $(document).ready ->
 

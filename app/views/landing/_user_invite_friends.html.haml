@@ -9,4 +9,4 @@
 .invite-code
   %h4 Your special invite link:
   %p Copy paste the URL below into <strong>Twitter</strong>, <strong>Facebook</strong> or in an <strong>Email</strong>
-  %input{:readonly => "", :type => "text", :value => "http://www.fauna.net/Uaht93"}
+  %input{readonly: '', type: "text", value: @waitlist.try(:share_url)}

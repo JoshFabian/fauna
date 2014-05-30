@@ -19,6 +19,7 @@ Tegu::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'landing#index'
   get '/' => redirect("/landing")
+  get 'landing/success/:code' => 'landing#success', as: :landing_success
   get 'landing(/:code)' => 'landing#index', as: :landing
 
   root 'listings#index'
