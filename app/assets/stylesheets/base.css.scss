@@ -19,6 +19,13 @@ body {
       background: rgba(255,255,255,.1);
     }
   }
+  &.secondary {
+    background: #7f8c8d !important;
+    &:hover {
+      color: #fff !important;
+      background: darken(#7f8c8d, 10) !important;
+    }
+  }
   &.btn-white {
     background: #fff;
     color: #222;

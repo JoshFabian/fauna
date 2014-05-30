@@ -34,7 +34,7 @@
           = link_to "Lizards"
           %i.icon.ion-ios7-arrow-forward
           = link_to "Monitors & Tegus"
-      %h3= @listing.title
+      %h4= @listing.title
       %h1= number_to_currency(@listing.price.to_f/100.0, precision: 2)
 
       %a.button.contact-seller{:href => "#"} Contact Seller

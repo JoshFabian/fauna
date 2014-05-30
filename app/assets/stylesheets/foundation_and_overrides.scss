@@ -38,7 +38,7 @@ $row-width: rem-calc(1440);
 // We use these to control various global styles
 $body-bg: #eee;
 // $body-font-color: #222;
-// $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$body-font-family: 'Open Sans', sans-serif;
 // $body-font-weight: normal;
 // $body-font-style: normal;
 
@@ -114,7 +114,7 @@ $body-bg: #eee;
 
 // We use these to control header font styles
 // $header-font-family: $body-font-family;
-// $header-font-weight: 300;
+$header-font-weight: 600;
 // $header-font-style: normal;
 // $header-font-color: #222;
 // $header-line-height: 1.4;
