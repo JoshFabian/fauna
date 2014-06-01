@@ -1,0 +1,21 @@
+.row
+  .text-center
+    %h3 #{Payment.count} Payments
+
+  %table.small-12.columns
+    %tr
+      %th Id
+      %th Buyer
+      %th State
+      %th Listing
+      %th Key
+
+    - @payments.each do |payment|
+      - buyer = payment.buyer
+      - listing = payment.listing
+      %tr
+        %td= payment.id
+        %td= buyer.handle
+        %td= payment.state
+        %td= listing.title
+        %td= payment.exception? ? payment.error_message : payment.key

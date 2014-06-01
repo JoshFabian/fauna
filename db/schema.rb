@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140529213955) do
+ActiveRecord::Schema.define(version: 20140531165327) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -105,6 +105,27 @@ ActiveRecord::Schema.define(version: 20140529213955) do
   add_index "oauths", ["provider"], name: "index_oauths_on_provider"
   add_index "oauths", ["uid"], name: "index_oauths_on_uid"
   add_index "oauths", ["user_id"], name: "index_oauths_on_user_id"
+
+  create_table "payments", force: true do |t|
+    t.integer  "listing_id"
+    t.integer  "buyer_id"
+    t.string   "state",         limit: 20
+    t.string   "key",           limit: 100
+    t.string   "payment_url"
+    t.string   "error_message"
+    t.datetime "canceled_at"
+    t.datetime "completed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "payments", ["buyer_id"], name: "index_payments_on_buyer_id"
+  add_index "payments", ["canceled_at"], name: "index_payments_on_canceled_at"
+  add_index "payments", ["completed_at"], name: "index_payments_on_completed_at"
+  add_index "payments", ["created_at"], name: "index_payments_on_created_at"
+  add_index "payments", ["key"], name: "index_payments_on_key"
+  add_index "payments", ["listing_id"], name: "index_payments_on_listing_id"
+  add_index "payments", ["state"], name: "index_payments_on_state"
 
   create_table "user_avatar_images", force: true do |t|
     t.integer  "user_id"

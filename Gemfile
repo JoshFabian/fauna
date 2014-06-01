@@ -64,6 +64,7 @@ gem 'logging'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'open4' # required by rubber
+gem 'paypal-sdk-adaptivepayments'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'rails-observers'
 gem 'rubber'

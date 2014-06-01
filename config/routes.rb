@@ -59,6 +59,12 @@ Tegu::Application.routes.draw do
 
   resources :waitlists, only: [:index]
 
+  # paypal adaptive pay routes
+  get 'paypal/pay/:listing_id/start', to: "paypal#start", as: :paypal_start
+  get 'paypal/pay/:payment_id/:status', to: "paypal#status", as: :paypal_status
+
+  resources :payments, only: [:index]
+
   # Example resource route with options:
   #   resources :products do
   #     member do
