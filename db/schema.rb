@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140531165327) do
+ActiveRecord::Schema.define(version: 20140601180234) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -164,12 +164,12 @@ ActiveRecord::Schema.define(version: 20140531165327) do
   add_index "user_cover_images", ["user_id"], name: "index_user_cover_images_on_user_id"
 
   create_table "users", force: true do |t|
-    t.string   "email",                              default: "", null: false
-    t.string   "encrypted_password",                 default: "", null: false
+    t.string   "email",                                                        default: "", null: false
+    t.string   "encrypted_password",                                           default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                      default: 0
+    t.integer  "sign_in_count",                                                default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -191,6 +191,12 @@ ActiveRecord::Schema.define(version: 20140531165327) do
     t.text     "data"
     t.string   "phone",                  limit: 30
     t.string   "website",                limit: 100
+    t.string   "street",                 limit: 60
+    t.string   "city",                   limit: 60
+    t.string   "state_code",             limit: 2
+    t.string   "postal_code",            limit: 16
+    t.decimal  "lat",                                precision: 15, scale: 10
+    t.decimal  "lng",                                precision: 15, scale: 10
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true
@@ -198,8 +204,10 @@ ActiveRecord::Schema.define(version: 20140531165327) do
   add_index "users", ["first_name"], name: "index_users_on_first_name"
   add_index "users", ["handle"], name: "index_users_on_handle"
   add_index "users", ["last_name"], name: "index_users_on_last_name"
+  add_index "users", ["postal_code"], name: "index_users_on_postal_code"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   add_index "users", ["roles"], name: "index_users_on_roles"
+  add_index "users", ["state_code"], name: "index_users_on_state_code"
 
   create_table "waitlists", force: true do |t|
     t.string   "email",        limit: 50

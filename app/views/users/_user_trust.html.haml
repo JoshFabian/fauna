@@ -5,13 +5,13 @@
   %h6 Identity Verification
   %ul 
     %li 
-      %i.icon.ion-android-checkmark
+      %i.icon{class: @user.email_verified? ? 'ion-android-checkmark' : 'ion-android-close'}
       Email Address
     %li
-      %i.icon.ion-android-checkmark 
+      %i.icon{class: @user.phone_verified? ? 'ion-android-checkmark' : 'ion-android-close'}
       Phone Number
     %li
-      %i.icon.ion-android-close
+      %i.icon{class: @user.facebook_verified? ? 'ion-android-checkmark' : 'ion-android-close'}
       Facebook
   %hr
   %h6 Market Feedback

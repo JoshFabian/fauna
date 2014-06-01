@@ -72,6 +72,27 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
+  describe "location" do
+    before do
+      @user = Fabricate(:user, email: "user@gmail.com")
+    end
+
+    it "should display city and state" do
+      @user.update_attributes(city: "Chicago", state_code: "IL")
+      @user.city_state.must_equal 'Chicago, IL'
+    end
+
+    it "should display city when no state" do
+      @user.update_attributes(city: "Chicago")
+      @user.city_state.must_equal 'Chicago'
+    end
+
+    it "should display city, state, and zip" do
+      @user.update_attributes(city: "Chicago", state_code: "IL", postal_code: "60610")
+      @user.city_state_zip.must_equal 'Chicago, IL 60610'
+    end
+  end
+
   describe "avatar image" do
     before do
       @user = Fabricate(:user, email: "user@gmail.com")

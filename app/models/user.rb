@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
 
   alias_attribute :auth_token, :authentication_token
 
+  acts_as_mappable lat_column_name: :lat, lng_column_name: :lng, default_units: :miles
+
   validates :email, presence: true, uniqueness: true
   validates :handle, presence: true, uniqueness: true, format: {with: /[a-z0-9]/}
 
@@ -28,6 +30,22 @@ class User < ActiveRecord::Base
     self.auth_token ||= generate_authentication_token
     self.handle ||= self.email
     self.roles = [:basic]
+  end
+
+  def city_state
+    [city, state_code].compact.join(', ')
+  end
+
+  def city_state_zip
+    [city_state, postal_code].join(' ')
+  end
+
+  def email_verified?
+    email.present?
+  end
+
+  def facebook_verified?
+    facebook_oauths.count > 0
   end
 
   def first_last_initial
@@ -55,6 +73,10 @@ class User < ActiveRecord::Base
 
   def initials
     [first_name.first(1), last_name.first(1)].compact.join('') rescue ''
+  end
+
+  def phone_verified?
+    false
   end
 
   # build user object from omniauth auth hash
