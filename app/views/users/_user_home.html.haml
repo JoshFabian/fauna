@@ -1,7 +1,8 @@
 .row
   .review-column.small-8.columns.no-padding-left
     .recent-listing
-      = render(partial: "users/user_recent_listings")
+      - if @total_listings > 0
+        = render(partial: "users/user_recent_listings")
 
     .feedback
       = render(partial: "users/user_reviews")
