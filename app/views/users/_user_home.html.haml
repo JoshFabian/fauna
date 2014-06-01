@@ -1,16 +1,8 @@
 .row
   .review-column.small-8.columns.no-padding-left
     .recent-listing
-      %h5 Recent Listings (<a href="#">#{@total_listings}</a>)
-      %ul.small-block-grid-3
-        - 3.times do
-          %li
-            %a{:href => "/JoshFabian/listings/2"}
-              .listing-panel
-                %img{:alt => "Gfg2qswl0dogh96i2jlv", :src => "https://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_235/v1401302146/gfg2qswl0dogh96i2jlv.jpg"}
-                  .listing-info
-                    .title
-                      Amazing Tegu
+      = render(partial: "users/user_recent_listings")
+
     .feedback
       = render(partial: "users/user_reviews")
 

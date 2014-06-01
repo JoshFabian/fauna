@@ -1,0 +1,11 @@
+%h5 Recent Listings (<a href="#">#{@total_listings}</a>)
+%ul.small-block-grid-3
+  - @recent_listings.each do |listing|
+    - user = listing.user
+    - image = listing.primary_image
+    %li
+      = link_to user_listing_path(user, listing.id) do
+        .listing-panel
+          = image_tag cloudinary_url(image.full_public_id, transformation: [{width: 235, height: 200, crop: 'fill'}])
+          .listing-info
+            .title= listing.title
