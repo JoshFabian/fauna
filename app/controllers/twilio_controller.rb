@@ -1,5 +1,7 @@
 class TwilioController < ApplicationController
 
+  skip_before_filter :verify_authenticity_token
+
   # POST /twilio/sms/reply
   def sms_reply
     
