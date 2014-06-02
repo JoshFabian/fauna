@@ -61,6 +61,7 @@ Tegu::Application.routes.draw do
 
   # paypal adaptive pay routes
   get 'paypal/pay/:listing_id/start', to: "paypal#start", as: :paypal_start
+  post 'paypal/pay/:payment_id/ipn_notify', to: "paypal#ipn_notify", as: :paypal_ipn_notify
   get 'paypal/pay/:payment_id/:status', to: "paypal#status", as: :paypal_status
   resources :payments, only: [:index]
 
