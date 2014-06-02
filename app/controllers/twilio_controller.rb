@@ -2,6 +2,8 @@ class TwilioController < ApplicationController
 
   skip_before_filter :verify_authenticity_token
 
+  before_filter :authenticate_user!, only: [:sms_test, :sms_send]
+
   # POST /twilio/sms/reply
   def sms_reply
     logger.post("tegu.app", log_data.merge({event: 'twilio.sms.reply', from: params[:From], body: params[:Body]}))
