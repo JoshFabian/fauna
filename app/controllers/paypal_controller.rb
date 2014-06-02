@@ -1,5 +1,7 @@
 class PaypalController < ApplicationController
 
+  skip_before_filter :verify_authenticity_token
+
   before_filter :authenticate_user!, only: [:start, :status]
 
   # GET /paypal/pay/:listing_id/start
