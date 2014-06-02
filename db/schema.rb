@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140601180234) do
+ActiveRecord::Schema.define(version: 20140602141125) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -126,6 +126,23 @@ ActiveRecord::Schema.define(version: 20140601180234) do
   add_index "payments", ["key"], name: "index_payments_on_key"
   add_index "payments", ["listing_id"], name: "index_payments_on_listing_id"
   add_index "payments", ["state"], name: "index_payments_on_state"
+
+  create_table "phone_tokens", force: true do |t|
+    t.integer  "user_id"
+    t.string   "to",          limit: 20
+    t.string   "state",       limit: 20
+    t.string   "code",        limit: 10
+    t.datetime "sent_at"
+    t.datetime "verified_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "phone_tokens", ["code"], name: "index_phone_tokens_on_code"
+  add_index "phone_tokens", ["sent_at"], name: "index_phone_tokens_on_sent_at"
+  add_index "phone_tokens", ["state"], name: "index_phone_tokens_on_state"
+  add_index "phone_tokens", ["user_id"], name: "index_phone_tokens_on_user_id"
+  add_index "phone_tokens", ["verified_at"], name: "index_phone_tokens_on_verified_at"
 
   create_table "user_avatar_images", force: true do |t|
     t.integer  "user_id"

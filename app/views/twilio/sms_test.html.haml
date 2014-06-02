@@ -3,6 +3,6 @@
     %h3 Twilio SMS Send/Verify
 
 .row
-  = form_for Waitlist.new, url: twilio_sms_send_path do |f|
-    .small-4.prepend-4.columns
-      = text_field_tag 'to', nil, placeholder: "phone number"
+  = form_for Waitlist.new, url: twilio_sms_send_path, html: {class: "form-validation"} do |f|
+    .small-4.small-offset-4.columns
+      = text_field_tag 'to', nil, placeholder: "10 digit phone number", class: 'required digits', minLength: 10, maxLength: 10

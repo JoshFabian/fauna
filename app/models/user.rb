@@ -22,6 +22,8 @@ class User < ActiveRecord::Base
   has_one :avatar_image, class_name: "UserAvatarImage", dependent: :destroy
   has_many :cover_images, class_name: "UserCoverImage", dependent: :destroy
 
+  has_many :phone_tokens
+
   friendly_id :handle
 
   bitmask :roles, :as => [:admin, :basic]

@@ -39,8 +39,7 @@ class PaypalController < ApplicationController
   def ipn_notify
     @payment = Payment.find(params[:payment_id])
 
-    logger.post("tegu.app", log_data.merge({event: "paypal.pay.#{params[:status]}", payment_id: @payment.id,
-      params: params}))
+    logger.post("tegu.app", log_data.merge({event: "paypal.pay.ipn_notify", payment_id: @payment.id, params: params}))
 
     return head(:ok)
   end
