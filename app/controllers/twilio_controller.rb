@@ -14,11 +14,15 @@ class TwilioController < ApplicationController
     @phone_token = current_user.phone_tokens.create(to: params[:to])
     @phone_token.send_sms(to: @phone_token.to, body: "code: #{@phone_token.code}")
     logger.post("tegu.app", log_data.merge({event: 'twilio.sms.send', to: @phone_token.to, code: @phone_token.code}))
-    redirect_to twilio_sms_test_path
+    redirect_to twilio_sms_verify_path
   end
 
-  # GET /twilio/sms/test
-  def sms_test
+  # GET /twilio/sms/start
+  def sms_start
+  end
+
+  # GET /twilio/sms/verify
+  def sms_verify
   end
 
 end
