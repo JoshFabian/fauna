@@ -1,0 +1,8 @@
+.row
+  .text-center
+    %h3 Twilio SMS Send/Verify
+
+.row
+  = form_for Waitlist.new, url: twilio_sms_send_path do |f|
+    .small-4.prepend-4.columns
+      = text_field_tag 'to', nil, placeholder: "phone number"
