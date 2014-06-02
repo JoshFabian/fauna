@@ -68,7 +68,8 @@ Tegu::Application.routes.draw do
   # twilio
   match 'twilio/sms/reply' => "twilio#sms_reply", as: :twilio_sms_reply, via: [:get, :post]
   match 'twilio/sms/send'=> "twilio#sms_send", as: :twilio_sms_send, via: [:get, :post]
-  match 'twilio/sms/test'=> "twilio#sms_test", as: :twilio_sms_test, via: [:get]
+  match 'twilio/sms/start'=> "twilio#sms_start", as: :twilio_sms_start, via: [:get]
+  match 'twilio/sms/verify'=> "twilio#sms_verify", as: :twilio_sms_verify, via: [:get]
 
   # Example resource route with options:
   #   resources :products do
