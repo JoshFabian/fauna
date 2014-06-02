@@ -554,3 +554,16 @@ body.editing {
     margin-left: 5px;
   }
 }
+
+// Phone verification
+input.verification {
+  border-radius: 3px;
+  box-shadow: none;
+  height: 50px;
+  font-size: 20px;
+}
+
+.verify-help {
+  margin-top: 15px;
+  margin-bottom: 0;
+}

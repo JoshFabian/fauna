@@ -45,6 +45,21 @@ body {
   }
 }
 
+.form-button {
+  background: $orange;
+  border-radius: 3px;
+  padding: 15px 30px;
+  margin-top: 0px;
+  cursor: pointer;
+  box-shadow: none;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  width: 100%;
+  &:hover {
+    background: darken($orange, 10);
+  }
+}
 .padding-wrapper {
   padding-left: 15px;
   padding-right: 15px;
