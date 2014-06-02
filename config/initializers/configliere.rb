@@ -1,0 +1,1 @@
+Settings.read("#{Rails.root}/config/twilio.yml")

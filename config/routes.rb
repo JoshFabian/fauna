@@ -62,8 +62,11 @@ Tegu::Application.routes.draw do
   # paypal adaptive pay routes
   get 'paypal/pay/:listing_id/start', to: "paypal#start", as: :paypal_start
   get 'paypal/pay/:payment_id/:status', to: "paypal#status", as: :paypal_status
-
   resources :payments, only: [:index]
+
+  # twilio
+  match 'twilio/sms/reply' => "twilio#sms_reply", as: :twilio_sms_reply, via: [:get, :post]
+  match 'twilio/sms/send'=> "twilio#sms_send", as: :twilio_sms_send, via: [:get, :post]
 
   # Example resource route with options:
   #   resources :products do
