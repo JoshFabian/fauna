@@ -81,6 +81,7 @@ group :development, :test do
   gem 'byebug', :platforms => [:ruby_20]
   gem 'debugger', :platforms => [:ruby_19]
   gem 'fabrication'
+  gem 'flexmock'
   gem 'guard', :require => false
   gem 'guard-livereload', :require => false
   gem 'minitest-colorize'

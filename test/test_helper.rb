@@ -5,6 +5,7 @@ require 'database_cleaner'
 require 'minitest/rails'
 require 'minitest/focus'
 require 'minitest/colorize'
+require 'flexmock/test_unit'
 
 DatabaseCleaner.strategy = :transaction
 

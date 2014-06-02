@@ -9,6 +9,6 @@
 
     %p We perform this verification for the safety of everyone on Fauna. Your phone number will not be publicly available, and we won't use it for any marketing or pass it on to anyone who will do so.
 
-    = form_for Waitlist.new, url: twilio_sms_send_path, html: {class: "form-validation"} do |f|
-      = text_field_tag 'to', nil, placeholder: "Enter your mobile phone number", class: 'required digits verification', minLength: 10, maxLength: 10
+    = form_for Waitlist.new, url: twilio_sms_send_path, html: {class: "form-validation user-sms-send"} do |f|
+      = text_field_tag 'to', nil, placeholder: "Enter your mobile phone number", class: 'required digits verification', minLength: 10, maxLength: 10, id: "user_to"
       %input.form-button{:type => "submit", :value => "Send Verification Code"}

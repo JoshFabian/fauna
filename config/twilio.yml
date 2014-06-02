@@ -7,3 +7,9 @@ staging:
   sid: AC45d9087a7355b3e9c072504e8e6acdec
   token: b90acd4e43ac5f0a35f2e1c47a913ba9
   from: +16502855967
+
+test:
+  sid: test
+  token: test
+  from: +16502855967
+

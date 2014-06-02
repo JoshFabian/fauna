@@ -17,7 +17,7 @@ class PhoneToken < ActiveRecord::Base
     end
 
     event :verify do
-      transitions to: :verified, :from => [:sent, :created]
+      transitions to: :verified, :from => [:sent, :created, :verified]
     end
   end
 
@@ -33,7 +33,7 @@ class PhoneToken < ActiveRecord::Base
     self.verified_at = Time.zone.now
   end
 
-  def send_sms(options={})
+  def send_token(options={})
     config = Settings[Rails.env]
     client = Twilio::REST::Client.new(config[:sid], config[:token])
     message = client.account.messages.create(from: config[:from], to: options[:to], body: options[:body])
