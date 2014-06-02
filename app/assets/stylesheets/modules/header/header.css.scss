@@ -13,8 +13,60 @@
     @include grid-column(6);
     padding: 0;
   }
+  .search {
+    @include grid-column(8);
+    padding: 0;
+    display: inline-block;
+    float: none;
+    margin-left: 15px;
+    position: relative;
+    .icon {
+      position: absolute;
+      z-index: 999;
+      top: 8px;
+      font-size: 17px;
+      left: 9px;
+      color: #969ba1;
+    }
+    input {
+      width: 250px;
+      border-radius: 3px;
+      box-shadow: none;
+      background: #f7f7f7;
+      margin-bottom: 0;
+      height: 30px;
+      position: relative;
+      top: 2px;
+      background: #fff;
+      transition: .2s ease-in;
+      text-indent: 20px;
+      &:focus {
+        background: $orange;
+        border: $orange;
+        color: #fff;
+        &+.icon {
+          color: #fff;
+        }
+
+      }
+    }
+    input:focus::-webkit-input-placeholder {
+      color: #fff;
+      opacity: 1;
+    }
+    input:focus::-moz-placeholder {
+      color: #fff;
+      opacity: 1;
+    }
+    input:focus::-ms-input-placeholder {
+      color: #fff;
+      opacity: 1;
+    }
+  }
   .right-nav {
     text-align: right;
+    position: relative;
+    top: 1px;
     a {
       color: $orange;
       font-size: 14px;
@@ -22,21 +74,58 @@
         color: darken($orange, 10);
       }
     }
+    .button {
+      background: $orange;
+      color: #fff !important;
+      padding: 5px 30px;
+      font-size: 14px;
+      margin-bottom: 0;
+      &:hover {
+        color: #fff;
+        background: darken($orange, 15);
+      }
+    }
+    .f-dropdown {
+      border-radius: 3px;
+      margin-top: 15px;
+      text-align: center;
+      li {
+        border-bottom: 1px solid #eee;
+        &:last-child {
+          border-bottom: none;
+        }
+        a {
+          padding: 10px 0;
+          color: #969ba1;
+          &:hover {
+            background: lighten(#eee, 4);
+            color: darken(#969ba1, 5);
+          }
+        }
+      }
+    }
+    .header-cta .button {
+      background: #1abc9c;
+      &:hover {
+        background: darken(#1abc9c, 5);
+      }
+    }
+    .header-username, .header-inbox, .header-cta {
+      display: inline-block;
+      a {
+        color: #969ba1;
+        &:hover {
+          color: $orange;
+        }
+      }
+    }
+    .header-inbox {
+      margin: 0 15px;
+    }
     .guest-links {
       @include grid-column(4);
       padding: 0;
       line-height: 35px;
-    }
-    .search {
-      @include grid-column(8);
-      padding: 0;
-      input {
-        width: 100%;
-        border-radius: 3px;
-        box-shadow: none;
-        background: #f7f7f7;
-        margin-bottom: 0;
-      }
     }
   }
 }

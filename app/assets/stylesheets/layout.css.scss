@@ -103,6 +103,13 @@
   padding: 0;
   padding-bottom: 5px;
   overflow: hidden;
+  position: relative;
+  top: 0;
+  transition: .1s ease-in;
+  &:hover {
+    top: -5px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.2);
+  }
   .listing-info {
     .title {
       color: #333;

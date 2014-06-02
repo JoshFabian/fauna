@@ -3,10 +3,12 @@
     .left-nav
       = link_to listings_path do
         = image_tag "landing-logo.jpg", :class => "header-logo"
-    .right-nav
       .search
         = form_for "", url: listing_search_path, html: {class: "search-form"} do |f|
           = f.text_field 'query', name: 'query', value: @query, placeholder: 'Search ...'
+          %i.icon.ion-ios7-search-strong
+    .right-nav
+      
 
       - if !user_signed_in?
         .guest-links
@@ -14,7 +16,15 @@
           or
           = link_to "Register", login_path
       - else
-        = link_to current_user.handle, '#', :'data-dropdown' => 'drop1'
+        .header-username
+          = link_to '#', :'data-dropdown' => 'drop1' do
+            = current_user.handle
+            %i.icon.ion-arrow-down-b
+        .header-inbox
+          = link_to "#" do
+            %i.icon.ion-android-inbox
+        .header-cta
+          %a.button{:href => "#"} Sell
         %ul#drop1.f-dropdown{"data-dropdown-content" => ""}
           %li= link_to 'Profile', user_path(current_user)
           - if current_user.roles?(:admin)
