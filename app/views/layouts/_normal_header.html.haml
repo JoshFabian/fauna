@@ -24,7 +24,13 @@
           = link_to "#" do
             %i.icon.ion-android-inbox
         .header-cta
-          %a.button{:href => new_listing_path} Sell
+          %a.button{:href => new_listing_path}
+            .credit-count
+              05
+              // Show the following if on paid plan
+              -# %i.icon.ion-ios7-infinite
+            .button-copy
+              Sell
         %ul#drop1.f-dropdown{"data-dropdown-content" => ""}
           %li= link_to 'View Profile', user_path(current_user)
           - if current_user.roles?(:admin)

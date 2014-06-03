@@ -106,8 +106,47 @@
     }
     .header-cta .button {
       background: #1abc9c;
+      padding: 0;
+      .credit-count {
+        display: inline-block;
+        background: darken(#1abc9c, 5);
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+        padding: 5px 8px;
+        border-right: 1px solid darken(#1abc9c, 5);
+        position: relative;
+        .icon {
+          font-size: 17px;
+          position: relative;
+          top: 1px;
+        }
+        &:after {
+          left: 100%;
+          top: 50%;
+          border: solid transparent;
+          content: " ";
+          height: 0;
+          width: 0;
+          position: absolute;
+          pointer-events: none;
+          border-color: rgba(23, 166, 137, 0);
+          border-left-color: #17a689;
+          border-width: 7px;
+          margin-top: -7px;
+        }
+      }
+      .button-copy {
+        padding: 5px 13px 5px 10px;
+        display: inline-block;
+      }
       &:hover {
         background: darken(#1abc9c, 5);
+        .credit-count {
+          border-right: 1px solid #1abc9c;
+          &:after {
+            border-width: 0;
+          }
+        }
       }
     }
     .header-username, .header-inbox, .header-cta {
