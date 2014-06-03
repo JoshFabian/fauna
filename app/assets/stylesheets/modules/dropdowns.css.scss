@@ -1,0 +1,19 @@
+.f-dropdown {
+  border-radius: 3px;
+  margin-top: 15px;
+  text-align: center;
+  li {
+    border-bottom: 1px solid #eee;
+    &:last-child {
+      border-bottom: none;
+    }
+    a {
+      padding: 10px 0;
+      color: #969ba1 !important;
+      &:hover {
+        background: lighten(#eee, 4);
+        color: darken(#969ba1, 5);
+      }
+    }
+  }
+}
