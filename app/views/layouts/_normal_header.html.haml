@@ -26,9 +26,10 @@
         .header-cta
           %a.button{:href => "#"} Sell
         %ul#drop1.f-dropdown{"data-dropdown-content" => ""}
-          %li= link_to 'Profile', user_path(current_user)
+          %li= link_to 'View Profile', user_path(current_user)
           - if current_user.roles?(:admin)
             %li= link_to 'Waitlists', waitlists_path
+          %li= link_to 'Accounts Settings', '/account'
           %li= link_to 'Logout', logout_path
 
 %header.global-subhead
