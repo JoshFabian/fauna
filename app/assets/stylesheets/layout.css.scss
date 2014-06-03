@@ -163,6 +163,67 @@
   }
 }
 
+.list-panel {
+  @extend .rounded-panel;
+  padding: 0;
+  padding-bottom: 5px;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+  transition: .1s ease-in;
+  .listing-info {
+    .title {
+      color: #333;
+      font-size: 14px;
+    }
+    .breeder {
+      float: left;
+      font-size: 14px;
+      color: #a2a3a3;
+    }
+    .price {
+      float: right;
+      color: #1abc9c;
+      font-weight: 500;
+      font-size: 14px;
+    }
+  }
+  .grid-thumb {
+    width: 100%;
+    height: 200px;
+  }
+  .listing-info {
+    padding: 10px;
+  }
+  .listing-aside {
+    padding: 15px;
+  }
+  .listing-images {
+    padding: 0;
+    .main-image {
+      margin-bottom: 10px;
+      img {
+        width: 100%;
+        height: 400px;
+      }
+    }
+    .image-grid {
+      padding-right: 5px;
+      padding-left: 15px;
+    }
+    .more-images {
+      li {
+        padding-right: 5px;
+        padding-left: 5px;
+        img {
+          width: 100%;
+          height: 80px;
+        }
+      }
+    }
+  }
+}
+
 .listing-field {
   @extend .clearfix;
   .image-grid {
