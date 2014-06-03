@@ -4,13 +4,12 @@
       .account-avatar
         = image_tag "http://www.placehold.it/60/60"
       .account-header
-        %h3 Hello, Josh!
-        %p You can manage your account here!
-      .account-navigation
-        %ul.inline-list
-          %li= link_to "Personal", "#"
-          %li= link_to "Listing Credits", "#", :class => "active"
-          %li= link_to "Delete Account", "#"
+        %h3 Hello, #{current_user.handle}!
+      -# .account-navigation
+      -#   %ul.inline-list
+      -#     %li= link_to "Personal", "#"
+      -#     %li= link_to "Listing Credits", "#", :class => "active"
+      -#     %li= link_to "Delete Account", "#"
       .account-tagline
         %h4 Pay as you go or upgrade to Pro.
         %p Take your Fauna experience to the next level. No contracts. Cancel anytime.

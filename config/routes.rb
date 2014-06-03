@@ -1,7 +1,4 @@
 Tegu::Application.routes.draw do
- 
-  get "account" => "account#index"
-  get "messages" => "messages#index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -19,13 +16,12 @@ Tegu::Application.routes.draw do
   get ':handle/reviews' => "users#reviews", as: :user_reviews
 
   # You can have the root of your site routed with "root"
-  # root 'landing#index'
   get '/' => redirect("/landing")
   get 'landing/success/:code' => 'landing#success', as: :landing_success
   get 'landing(/:code)' => 'landing#index', as: :landing
 
   root 'listings#index'
-  
+
   resources :listings, except: [:show]
   resources :listing_forms, only: [] do
     get :subcategories, on: :collection
@@ -59,8 +55,6 @@ Tegu::Application.routes.draw do
   post 'signup/create/facebook', to: "signup#create_facebook", as: :create_facebook_signup
   post 'signup/create/password', to: "signup#create_password", as: :create_password_signup
 
-  resources :waitlists, only: [:index]
-
   # paypal adaptive pay routes
   get 'paypal/pay/:listing_id/start', to: "paypal#start", as: :paypal_start
   post 'paypal/pay/:payment_id/ipn_notify', to: "paypal#ipn_notify", as: :paypal_ipn_notify
@@ -73,6 +67,11 @@ Tegu::Application.routes.draw do
   match 'sms/send'=> "twilio#sms_send", as: :twilio_sms_send, via: [:get, :post]
   match 'sms/verify'=> "twilio#sms_verify", as: :twilio_sms_verify, via: [:get]
   match 'sms/list'=> "twilio#sms_list", as: :twilio_sms_list, via: [:get]
+
+  resources :messages, only: [:index]
+  resources :plans, only: [:index]
+  resources :waitlists, only: [:index]
+
 
   # Example resource route with options:
   #   resources :products do
