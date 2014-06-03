@@ -51,7 +51,7 @@
         .author-image.small-2.columns
           = image_tag user_avatar_image_thumbnail(@user.avatar_image)
         .author-name.small-10.columns
-          %h5= @user.handle
+          %h5= link_to @user.handle, user_path(@user)
           %p Chicago, IL
         .author-bio.small-12.columns
           %p= @user.about
