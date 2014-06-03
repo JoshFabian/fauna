@@ -46,6 +46,22 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /:handle/messages
+  def messages
+    @user = User.find_by_handle(params[:handle])
+    @edit = @user.id == current_user.id
+    @cover_images = @user.cover_images.order("position asc").first(3)
+    @cover_set = 1.upto(3).map do |i|
+      @cover_images.select{ |o| o.position == i }.first or i
+    end
+
+    @tab = 'messages'
+
+    respond_to do |format|
+      format.html { render(action: :show) }
+    end
+  end
+
   # GET /:handle/reviews
   def reviews
     @user = User.find_by_handle(params[:handle])

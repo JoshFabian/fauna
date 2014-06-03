@@ -33,6 +33,7 @@
         %li= link_to "Home", user_path(@user), class: [@tab == 'home' ? 'active' : nil]
         %li= link_to "Listings", user_listings_path(@user), class: [@tab == 'listings' ? 'active' : nil]
         %li= link_to "Reviews", user_reviews_path(@user), class: [@tab == 'reviews' ? 'active' : nil]
+        %li= link_to "Messages", user_messages_path(@user), class: [@tab == 'messages' ? 'active' : nil]
         - if false
           %li= link_to "Followers", "#"
           %li= link_to "Following", "#"
@@ -41,4 +42,5 @@
     = render(partial: "users/user_home", locals: {f: f})
   - elsif @tab == 'listings'
     = render(partial: "listings/listing_tiles")
-    
+  - elsif @tab == 'messages'
+    = render(partial: "messages/index")

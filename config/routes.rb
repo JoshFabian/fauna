@@ -13,6 +13,7 @@ Tegu::Application.routes.draw do
   get ':handle' => "users#show", as: :user, constraints: HandleRoute.new
   get ':handle/listings' => "users#listings", as: :user_listings
   get ':handle/listings/:id' => "listings#show", as: :user_listing
+  get ':handle/messages' => "users#messages", as: :user_messages
   get ':handle/reviews' => "users#reviews", as: :user_reviews
 
   # You can have the root of your site routed with "root"
@@ -69,6 +70,7 @@ Tegu::Application.routes.draw do
   match 'sms/list'=> "twilio#sms_list", as: :twilio_sms_list, via: [:get]
 
   resources :messages, only: [:index]
+  resources :plans, only: [:index]
   resources :plans, only: [:index]
   resources :waitlists, only: [:index]
 
