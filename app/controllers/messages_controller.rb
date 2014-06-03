@@ -7,4 +7,8 @@ class MessagesController < ApplicationController
     end
   end
 
+  # GET /:handle/messages/1
+  def show
+
+  end
 end
