@@ -45,7 +45,7 @@ class Payment < ActiveRecord::Base
   def start(options={})
     amount = (listing.price/100.0)
     seller = listing.user
-    receiver_email = options[:seller_email].present? ? options[:seller_email] : seller.email
+    receiver_email = options[:seller_email].present? ? options[:seller_email] : seller.paypal_email
     mash = Hashie::Mash.new(
       actionType: "PAY",
       cancelUrl: options[:cancel_url],

@@ -39,7 +39,7 @@ Tegu::Application.routes.draw do
   get 'auth/failure', to: 'oauths#failure'
 
   # users
-  resources :users, only: [:index, :show, :update] do
+  resources :users, only: [:edit, :index, :show, :update] do
     get 'become', on: :member
     get 'validate_email', :on => :collection
     get 'validate_handle', :on => :collection

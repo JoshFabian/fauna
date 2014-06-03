@@ -7,15 +7,20 @@
       %th Id
       %th Buyer
       %th State
+      %th Seller
       %th Listing
       %th Key
+      %th Timestamp
 
     - @payments.each do |payment|
       - buyer = payment.buyer
       - listing = payment.listing
+      - seller = listing.user
       %tr
         %td= payment.id
         %td= buyer.handle
         %td= payment.state
-        %td= listing.title
+        %td= seller.handle
+        %td= link_to listing.title, user_listing_path(seller, listing)
         %td= payment.exception? ? payment.error_message : payment.key
+        %td #{time_ago_in_words(payment.completed? ? payment.completed_at : payment.created_at) rescue ''} ago
