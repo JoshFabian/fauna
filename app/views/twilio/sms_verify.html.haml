@@ -5,9 +5,9 @@
     %br
     %p After receiving the text message, enter the verification code.
 
-    = form_for Waitlist.new, url: twilio_sms_send_path, html: {class: "form-validation"} do |f|
-      = text_field_tag 'to', nil, placeholder: "Enter Verification Code", class: 'required digits verification', minLength: 10, maxLength: 10
+    = form_for Waitlist.new, url: '#', html: {class: "form-validation user-sms-verify", :'data-user-handle' => current_user.handle} do |f|
+      = text_field_tag 'to', nil, placeholder: "Enter Verification Code", class: 'required verification', id: "sms_code"
       %input.form-button{:type => "submit", :value => "Verify Phone Number"}
     %p.verify-help 
       Didn't receive a message? 
-      = link_to "Try again", twilio_sms_start_path
+      = link_to "Try again", twilio_sms_send_path

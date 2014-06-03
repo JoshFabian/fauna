@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  it "should create user" do
+  it "should create user with required attributes" do
     @user = User.create!(email: "user@gmail.com", password: "x", password_confirmation: "x")
   end
 

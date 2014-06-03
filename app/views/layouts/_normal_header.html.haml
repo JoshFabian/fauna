@@ -24,7 +24,7 @@
           = link_to "#" do
             %i.icon.ion-android-inbox
         .header-cta
-          %a.button{:href => "#"} Sell
+          %a.button{:href => new_listing_path} Sell
         %ul#drop1.f-dropdown{"data-dropdown-content" => ""}
           %li= link_to 'View Profile', user_path(current_user)
           - if current_user.roles?(:admin)

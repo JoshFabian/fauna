@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140602141125) do
+ActiveRecord::Schema.define(version: 20140603013449) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -214,6 +214,7 @@ ActiveRecord::Schema.define(version: 20140602141125) do
     t.string   "postal_code",            limit: 16
     t.decimal  "lat",                                precision: 15, scale: 10
     t.decimal  "lng",                                precision: 15, scale: 10
+    t.string   "paypal_email",           limit: 100
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true
@@ -221,6 +222,7 @@ ActiveRecord::Schema.define(version: 20140602141125) do
   add_index "users", ["first_name"], name: "index_users_on_first_name"
   add_index "users", ["handle"], name: "index_users_on_handle"
   add_index "users", ["last_name"], name: "index_users_on_last_name"
+  add_index "users", ["paypal_email"], name: "index_users_on_paypal_email"
   add_index "users", ["postal_code"], name: "index_users_on_postal_code"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   add_index "users", ["roles"], name: "index_users_on_roles"

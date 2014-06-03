@@ -39,7 +39,7 @@ Tegu::Application.routes.draw do
   get 'auth/failure', to: 'oauths#failure'
 
   # users
-  resources :users, only: [:index, :show, :update] do
+  resources :users, only: [:edit, :index, :show, :update] do
     get 'become', on: :member
     get 'validate_email', :on => :collection
     get 'validate_handle', :on => :collection
@@ -66,10 +66,11 @@ Tegu::Application.routes.draw do
   resources :payments, only: [:index]
 
   # twilio
-  match 'twilio/sms/reply' => "twilio#sms_reply", as: :twilio_sms_reply, via: [:get, :post]
-  match 'twilio/sms/send'=> "twilio#sms_send", as: :twilio_sms_send, via: [:get, :post]
-  match 'twilio/sms/start'=> "twilio#sms_start", as: :twilio_sms_start, via: [:get]
-  match 'twilio/sms/verify'=> "twilio#sms_verify", as: :twilio_sms_verify, via: [:get]
+  get '/sms' => redirect("/sms/send")
+  match 'sms/reply' => "twilio#sms_reply", as: :twilio_sms_reply, via: [:get, :post]
+  match 'sms/send'=> "twilio#sms_send", as: :twilio_sms_send, via: [:get, :post]
+  match 'sms/verify'=> "twilio#sms_verify", as: :twilio_sms_verify, via: [:get]
+  match 'sms/list'=> "twilio#sms_list", as: :twilio_sms_list, via: [:get]
 
   # Example resource route with options:
   #   resources :products do

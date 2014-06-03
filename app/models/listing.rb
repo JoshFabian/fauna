@@ -1,10 +1,9 @@
 class Listing < ActiveRecord::Base
   include AASM
   include Currency
+  include Elasticsearch::Model
   include FriendlyId
   include Loggy
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
 
   validates :price, presence: true
   validates :state, presence: true
@@ -23,6 +22,11 @@ class Listing < ActiveRecord::Base
 
   aasm column: 'state' do
     state :approved, initial: true
+    state :sold
+
+    event :sold do
+      transitions to: :sold, :from => [:approved]
+    end
   end
 
   # mappings do
@@ -42,11 +46,6 @@ class Listing < ActiveRecord::Base
 
   def category_names
     categories.collect{ |o| o.name.downcase }
-  end
-
-  def index!
-    self.__elasticsearch__.update_document
-  rescue Exception => e
   end
 
   def price=(s)

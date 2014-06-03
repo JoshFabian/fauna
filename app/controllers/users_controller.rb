@@ -65,7 +65,7 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
-    @url = my_settings_path
+    @url = user_path(@user)
     @title = "My Profile"
 
     respond_to do |format|

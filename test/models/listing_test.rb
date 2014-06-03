@@ -94,6 +94,26 @@ class ListingTest < ActiveSupport::TestCase
       end
     end
 
+    describe "by state" do
+      before do
+        @listing1 = @user.listings.create!(title: "Lizard", price: 100)
+        Listing.import
+      end
+
+      it "should find approved listings" do
+        @listing1.state.must_equal 'approved'
+        Listing.search('lizard').results.size.must_equal 1
+      end
+
+      it "should not find sold listings" do
+        @listing1.sold!
+        @listing1.reload
+        @listing1.state.must_equal 'sold'
+        Listing.__elasticsearch__.refresh_index!
+        Listing.search('lizard').results.size.must_equal 0
+      end
+    end
+
     describe "by title" do
       before do
         @listing1 = @user.listings.create!(title: "Lizard", price: 100)

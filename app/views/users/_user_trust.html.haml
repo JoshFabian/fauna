@@ -10,6 +10,8 @@
     %li
       %i.icon{class: @user.phone_verified? ? 'ion-android-checkmark' : 'ion-android-close'}
       Phone Number
+      - if !@user.phone_verified?
+        %span.right= link_to 'verify', sms_path
     %li
       %i.icon{class: @user.facebook_verified? ? 'ion-android-checkmark' : 'ion-android-close'}
       Facebook

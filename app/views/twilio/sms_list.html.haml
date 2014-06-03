@@ -1,0 +1,17 @@
+.row
+  .text-center
+    %h3 #{PhoneToken.count} SMS Tokens
+
+  %table.small-12.columns
+    %tr
+      %th Id
+      %th To
+      %th Code
+      %th State
+
+    - @tokens.each do |token|
+      %tr
+        %td= token.id
+        %td= token.to
+        %td= token.code
+        %td= token.state

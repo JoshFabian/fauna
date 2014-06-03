@@ -78,7 +78,7 @@ class User < ActiveRecord::Base
   end
 
   def phone_verified?
-    false
+    phone_tokens.verified.count > 0
   end
 
   # build user object from omniauth auth hash
