@@ -13,7 +13,7 @@
           - @other_images.each do |image|
             %li 
               -# = image_tag "http://placehold.it/110/80"
-              = image_tag cloudinary_url(image.full_public_id, transformation: [{width: 110, height: 80, crop: 'fit'}])
+              = image_tag cloudinary_url(image.full_public_id, transformation: [{width: 110, height: 80, crop: 'fill'}])
 
       %ul.tabs
         %li.active
@@ -39,7 +39,11 @@
       %h4= @listing.title
       %h1= number_to_currency(@listing.price.to_f/100.0, precision: 2)
 
-      = link_to 'Checkout with Paypal', paypal_start_path(listing_id: @listing.id), class: 'button contact-seller'
+      - if @listing.sold?
+        .button.sold-button
+          This reptile has sold
+      - else
+        = link_to 'Checkout with Paypal', paypal_start_path(listing_id: @listing.id), class: 'button buy-button'
 
       .social-links
         .fb-share-button{"data-type" => "button_count"}

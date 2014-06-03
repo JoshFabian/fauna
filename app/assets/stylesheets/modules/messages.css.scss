@@ -1,7 +1,136 @@
+@import "globals/all";
+
 .message-wrapper {
-  padding-top: 0;
-  padding-bottom: 0;
+  padding: 0;
+}
+.message-sidebar {
+  background: lighten(#eee, 4);
+  margin-bottom: -999em;
+  padding-bottom: 999em;
+  padding-top: 20px;
+  overflow: hidden;
+  border-top-left-radius: 3px;
+  transition: .2s ease-in;
+  ul {
+    list-style-type: none;
+    margin-left: 0;
+    li {
+      margin-bottom: 10px;
+      a {
+        color: darken(#aaa, 5);
+        padding: 15px 0;
+      }
+      &.active {
+        .help-icon {
+          border: 1px solid lighten($orange, 5) !important;
+          color: lighten($orange, 5) !important;
+        }
+        a {
+          color: lighten($orange, 5) !important;
+        }
+      }
+
+      &:hover {
+        .help-icon {
+          border: 1px solid darken(#aaa, 30);
+          color: darken(#aaa, 30);
+        }
+        a {
+          color: darken(#aaa, 30);
+        }
+      }
+    }
+  }
+  .help-icon {
+    width: 34px;
+    display: inline-block;
+    font-size: 15px;
+    text-align: center;
+    border: 1px solid #aaaaaa;
+    color: #aaaaaa;
+    border-radius: 50%;
+    padding: 4px 4px;
+    margin-right: 5px;
+    transition: .2s ease-in;
+    // &.star {
+    //   font-size: 21px;
+    // }
+    // &.email {
+    //   font-size: 20px;
+    // }
+  }
 }
 .message-list {
-  border-right: 1px solid #ddd;
+  padding: 0;
+  border-left: 1px solid #ddd;
+  ul {
+    list-style-type: none;
+    margin-left: 0;
+    overflow-y: scroll;
+    width: 100%;
+    max-height: 700px;
+  }
+  .list-header {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0 10px 10px;
+  }
+  .message-summary {
+    border-bottom: 1px solid #ddd;
+    background: darken(#fff, 2);
+    &.new {
+      background: #fff !important;
+      a {
+        &:hover {
+          background: darken(#fff, 1);
+        }
+      }
+    }
+    h6 {
+      .icon {
+        padding: 5px 5px 5px 0;
+        position: relative;
+        top: -1px;
+        color: #aaaaaa;
+        transition: .2s ease-in;
+        &.active, &:hover {
+          color: #fda228;
+        } 
+      }
+    }
+    a {
+      padding: 15px;
+      transition: .1s ease-in;
+      &:hover {
+        background: lighten(#eee, 2);
+      }
+    }
+    p {
+      font-size: 13px;
+      color: #a2a2a2;
+      margin-bottom: 0;
+    }
+    h6 {
+      font-weight: 100;
+    }
+    .message-actions {
+      float: left;
+      margin-right: 10px;
+      position: relative;
+      top: -1px;
+      input {
+        margin-bottom: 0;
+      }
+    }
+    .participant {
+      font-weight: 500;
+      font-size: 13px;
+      display: inline-block;
+    }
+    .time-stamp {
+      float: right;
+      display: inline-block;
+      font-size: 12px;
+      color: #8b909a;
+    }
+  }
 }

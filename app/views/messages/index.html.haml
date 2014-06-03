@@ -1,6 +1,52 @@
 .row
   .message-wrapper.rounded-panel
-    .message-list.small-4.columns
+    .message-sidebar.small-2.columns
+      %ul
+        %li.active 
+          = link_to "#" do
+            %span.help-icon.inbox
+              %i.icon.ion-android-inbox
+            Inbox
+        %li 
+          = link_to "#" do
+            %span.help-icon.star
+              %i.icon.ion-star
+            Starred
+        %li 
+          = link_to "#" do
+            %span.help-icon.email
+              %i.icon.ion-email
+            Sent
+        %li 
+          = link_to "#" do
+            %span.help-icon.trash
+              %i.icon.ion-ios7-trash
+            Trash
       
-    .message-body.small-10.columns
-      message body
+    .message-list.small-10.columns
+      .list-header.small-12.columns
+        test
+      %ul
+        %li.message-summary.clearfix.new
+          %a.small-12.columns{:href => "#"}
+            .message-actions
+              %input#checkbox1{:type => "checkbox"}
+
+            .participant Josh Fabian 
+            .time-stamp Today, 12:52pm
+            %h6
+              %i.icon.ion-ios7-star.active
+              Baby Leatherback Bearded Dragon
+            %p Hey, I was just wondering if you could give me some info on shipping. I'm available Wednesdays and Thursdays but ...
+        - 10.times do
+          %li.message-summary.clearfix
+            %a.small-12.columns{:href => "#"}
+              .message-actions
+                %input#checkbox1{:type => "checkbox"}
+
+              .participant Josh Fabian 
+              .time-stamp Today, 12:52pm
+              %h6
+                %i.icon.ion-ios7-star
+                Baby Leatherback Bearded Dragon
+              %p Hey, I was just wondering if you could give me some info on shipping. I'm available Wednesdays and Thursdays but ...
