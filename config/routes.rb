@@ -68,6 +68,7 @@ Tegu::Application.routes.draw do
   match 'sms/verify'=> "twilio#sms_verify", as: :twilio_sms_verify, via: [:get]
   match 'sms/list'=> "twilio#sms_list", as: :twilio_sms_list, via: [:get]
 
+  resources :messages, only: [:index]
   resources :plans, only: [:index]
   resources :waitlists, only: [:index]
 
