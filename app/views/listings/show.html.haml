@@ -13,7 +13,7 @@
           - @other_images.each do |image|
             %li 
               -# = image_tag "http://placehold.it/110/80"
-              = image_tag cloudinary_url(image.full_public_id, transformation: [{width: 110, height: 80, crop: 'fit'}])
+              = image_tag cloudinary_url(image.full_public_id, transformation: [{width: 110, height: 80, crop: 'fill'}])
 
       %ul.tabs
         %li.active
