@@ -63,20 +63,15 @@
           %p Chicago, IL
         .author-bio.small-12.columns
           %p= @user.about
-          
-        - if false
+
+        - if @other_listings.present?
           .more-from-author.small-12.columns
             %span More from <strong>#{@user.handle}</strong>
             .more-listings
               %ul.small-block-grid-2
-                - 2.times do
-                  %li
-                    %a{:href => "/JoshFabian/listings/2"}
-                      .listing-panel
-                        %img{:alt => "Gfg2qswl0dogh96i2jlv", :src => "https://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_235/v1401302146/gfg2qswl0dogh96i2jlv.jpg"}
-                          .listing-info
-                            .title
-                              Amazing Tegu
+                - @other_listings.each do |other_listing|
+                  = render(partial: "listings/listing_tile", locals: {listing: other_listing, user: other_listing.user})
+
     #fb-root
     :javascript
       (function(d, s, id) {

@@ -58,8 +58,6 @@ class ListingsController < ApplicationController
     if params[:handle].present?
       # find user listing
       @listing = User.friendly.find(params[:handle]).listings.friendly.find(params[:id])
-      # @user = User.find_by_handle(params[:handle])
-      # @listing = @user.listings.friendly.find(params[:id])
     else
       # deprecated
       @listing = Listing.friendly.find(params[:id])
@@ -71,6 +69,8 @@ class ListingsController < ApplicationController
     @subcategory = @categories.select{ |o| o.level == 2 }.first
     @all_images = @listing.images.order("position asc")
     @main_image = @all_images.first
+
+    @other_listings = current_user.listings.approved
   end
 
   # GET /listings/new

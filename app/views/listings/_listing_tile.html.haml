@@ -1,0 +1,13 @@
+- image = listing.primary_image
+
+%li
+  = link_to user_listing_path(user, listing.id) do
+    .listing-panel
+      = image_tag cloudinary_url(image.full_public_id, transformation: [{width: 235, height: 200, crop: 'fill'}])
+      .listing-info
+        .title
+          = listing.title
+        .breeder
+          = user.handle
+        .price
+          = number_to_currency(listing.price/100.0, precision: 2)
