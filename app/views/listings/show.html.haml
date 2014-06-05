@@ -43,7 +43,9 @@
         .button.sold-button
           This reptile has sold
       - else
-        = link_to 'Checkout with Paypal', paypal_start_path(listing_id: @listing.id), class: 'button buy-button'
+        -# = link_to 'Checkout with Paypal', paypal_start_path(listing_id: @listing.id), class: 'button buy-button'
+        = link_to 'Edit Listing', paypal_start_path(listing_id: @listing.id), class: 'button edit-listing'
+        = link_to 'Remove', paypal_start_path(listing_id: @listing.id), class: 'button edit-listing remove-button'
 
       .social-links
         .fb-share-button{"data-type" => "button_count"}
