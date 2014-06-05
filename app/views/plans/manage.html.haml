@@ -1,0 +1,20 @@
+.row
+  %table.small-12.columns
+    %tr
+      %th Id
+      %th Name
+      %th Subscription
+      %th Amount
+      %th Interval
+      %th Interval Count
+      %th # Bought
+
+    - @plans.each do |plan|
+      %tr
+        %td= plan.id
+        %td= plan.name
+        %td= plan.subscription?
+        %td= number_to_currency(plan.amount/100.0)
+        %td= plan.subscription? ? plan.interval : "n/a"
+        %td= plan.subscription? ? plan.interval_count : "n/a"
+        %td= plan.subscription? ? plan.subscriptions_count : plan.charges_count

@@ -71,8 +71,9 @@ Tegu::Application.routes.draw do
   match 'sms/list'=> "twilio#sms_list", as: :twilio_sms_list, via: [:get]
 
   resources :messages, only: [:index]
-  resources :plans, only: [:index]
-  resources :plans, only: [:index]
+  resources :plans, only: [:index] do
+    get :manage, on: :collection
+  end
   resources :waitlists, only: [:index]
 
 

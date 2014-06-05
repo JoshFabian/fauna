@@ -144,6 +144,18 @@ ActiveRecord::Schema.define(version: 20140603225919) do
   add_index "phone_tokens", ["user_id"], name: "index_phone_tokens_on_user_id"
   add_index "phone_tokens", ["verified_at"], name: "index_phone_tokens_on_verified_at"
 
+  create_table "plan_charges", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "plan_id"
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "plan_charges", ["created_at"], name: "index_plan_charges_on_created_at"
+  add_index "plan_charges", ["plan_id"], name: "index_plan_charges_on_plan_id"
+  add_index "plan_charges", ["user_id"], name: "index_plan_charges_on_user_id"
+
   create_table "plans", force: true do |t|
     t.string   "name",                limit: 50
     t.string   "state",               limit: 20
@@ -152,6 +164,7 @@ ActiveRecord::Schema.define(version: 20140603225919) do
     t.string   "interval",            limit: 20
     t.integer  "interval_count"
     t.integer  "trial_period_days"
+    t.integer  "charges_count",                  default: 0
     t.integer  "subscriptions_count",            default: 0
     t.text     "data"
     t.datetime "created_at"
@@ -159,11 +172,13 @@ ActiveRecord::Schema.define(version: 20140603225919) do
   end
 
   add_index "plans", ["amount"], name: "index_plans_on_amount"
+  add_index "plans", ["charges_count"], name: "index_plans_on_charges_count"
   add_index "plans", ["interval"], name: "index_plans_on_interval"
   add_index "plans", ["interval_count"], name: "index_plans_on_interval_count"
   add_index "plans", ["name"], name: "index_plans_on_name"
   add_index "plans", ["state"], name: "index_plans_on_state"
   add_index "plans", ["subscription"], name: "index_plans_on_subscription"
+  add_index "plans", ["subscriptions_count"], name: "index_plans_on_subscriptions_count"
   add_index "plans", ["trial_period_days"], name: "index_plans_on_trial_period_days"
 
   create_table "subscriptions", force: true do |t|
@@ -174,6 +189,7 @@ ActiveRecord::Schema.define(version: 20140603225919) do
     t.datetime "updated_at"
   end
 
+  add_index "subscriptions", ["created_at"], name: "index_subscriptions_on_created_at"
   add_index "subscriptions", ["plan_id"], name: "index_subscriptions_on_plan_id"
   add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id"
 
@@ -250,10 +266,12 @@ ActiveRecord::Schema.define(version: 20140603225919) do
     t.string   "paypal_email",           limit: 100
     t.integer  "listing_credits",                                              default: 0
     t.string   "customer_id",            limit: 100
+    t.integer  "charges_count",                                                default: 0
     t.integer  "subscriptions_count",                                          default: 0
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true
+  add_index "users", ["charges_count"], name: "index_users_on_charges_count"
   add_index "users", ["customer_id"], name: "index_users_on_customer_id"
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["first_name"], name: "index_users_on_first_name"

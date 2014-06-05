@@ -9,12 +9,13 @@ class StripeApiSpec < ActionDispatch::IntegrationTest
     it "should add credits when stripe card token is valid" do
       @user.listing_credits.must_equal 0
       plan = Plan.create!(name: "Buy 1 Credit", amount: 500, credits: 1, subscription: false)
-      charge = flexmock(Stripe::Charge, create: Hashie::Mash.new(id: '123', amount: 500))
+      charge = flexmock(Stripe::Charge, create: {id: 'stripe_id_123', amount: 500})
       put "/api/v1/stripe/buy/credits/#{plan.id}?card_token=123&token=#{@user.auth_token}"
       response.success?.must_equal true
       body = JSON.parse(response.body)
       body.must_include({'event' => 'buy'})
       body['user'].must_include({'id' => @user.id, 'listing_credits' => 1})
+      body['user']['charge'].must_include({'plan_id' => plan.id, 'stripe_id' => 'stripe_id_123'})
       @user.reload
       @user.listing_credits.must_equal 1
     end

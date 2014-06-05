@@ -2,6 +2,9 @@ class Plan < ActiveRecord::Base
   include AASM
   include Loggy
 
+  has_many :subscriptions, dependent: :destroy
+  has_many :charges, class_name: "PlanCharge", dependent: :destroy
+  
   validates :amount, presence: true
   validates :interval, presence: true, inclusion: { in: %w(week month year) }, if: "subscription?"
   validates :interval_count, presence: true, if: "subscription?"

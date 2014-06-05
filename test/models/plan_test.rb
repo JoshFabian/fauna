@@ -19,18 +19,33 @@ class PlanTest < ActiveSupport::TestCase
     end
   end
 
+  describe "charges" do
+    before do
+      @user = Fabricate(:user)
+      @plan = Plan.create!(name: "name", amount: 1000, subscription: false)
+    end
+
+    it "should create charge" do
+      @charge = @user.charges.create(plan: @plan)
+      @user.reload
+      @user.charges_count.must_equal 1
+      @user.charges.must_equal [@charge]
+      @plan.reload
+      @plan.charges_count.must_equal 1
+    end
+  end
+
   describe "subscriptions" do
     before do
       @user = Fabricate(:user)
       @plan = Plan.create!(name: "name", amount: 5000, subscription: true, interval: 'month')
     end
 
-    it "should create user subscription" do
+    it "should create subscription" do
       @sub = @user.subscriptions.create(plan: @plan)
       @user.reload
       @user.subscriptions_count.must_equal 1
       @user.subscriptions.must_equal [@sub]
-      @user.plans.must_equal [@plan]
       @plan.reload
       @plan.subscriptions_count.must_equal 1
     end

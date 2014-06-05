@@ -9,7 +9,10 @@ module Endpoints
           authenticate!
           plan = Plan.find(params[:plan_id])
           # charge card
-          charge = Stripe::Charge.create(amount: plan.amount, card: params.card_token, currency: 'usd')
+          object = Stripe::Charge.create(amount: plan.amount, card: params.card_token, currency: 'usd')
+          object = object.to_hash.select{ |k,v| [:id].include?(k) }
+          # create charge
+          charge = current_user.charges.create(plan: plan, stripe: object)
           # add listing credits
           current_user.increment(:listing_credits, plan.credits)
           current_user.save
@@ -24,7 +27,8 @@ module Endpoints
           event = 'error'
           message = e.message
         end
-        {event: event, message: message, user: current_user.as_json(only: [:id, :listing_credits])}
+        {event: event, message: message, user: current_user.as_json(only: [:id, :listing_credits]).merge(
+          charge: charge.as_json())}
       end
 
       desc "Subscribe user to the specified plan"
@@ -35,8 +39,8 @@ module Endpoints
           customer = Customer.find_or_create(current_user)
           # create stripe subscription
           object = customer.subscriptions.create(plan: plan.stripe_id, card: params.card_token)
-          # filter stripe object
           object = object.to_hash.select{ |k,v| [:id].include?(k) }
+          # create subscription
           subscription = current_user.subscriptions.create(plan: plan, stripe: object)
           event = 'subscribe'
           logger.post("tegu.api", log_data.merge({event: 'stripe.subscribe', plan_id: plan.id}))
