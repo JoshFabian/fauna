@@ -84,6 +84,10 @@ class User < ActiveRecord::Base
     phone_tokens.verified.count > 0
   end
 
+  def verified?
+    facebook_verified? and paypal_verified? and phone_verified?
+  end
+
   # build user object from omniauth auth hash
   def self.from_omniauth(auth)
     User.new do |user|
