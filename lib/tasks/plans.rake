@@ -12,7 +12,7 @@ namespace :plans do
     end
     objects = [{'name' => "Monthly", 'amount' => 4000, 'subscription' => true, 'interval' => 'month',
                 'interval_count' => 1},
-               {'name' => "Yearly", 'amount' => 3000, 'subscription' => true, 'interval' => 'month',
+               {'name' => "Yearly", 'amount' => 36000, 'subscription' => true, 'interval' => 'month',
                 'interval_count' => 12}]
     objects.each do |hash|
       puts "#{Time.now}: hash:#{hash}"
