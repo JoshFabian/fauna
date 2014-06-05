@@ -16,6 +16,7 @@ Tegu::Application.routes.draw do
   get ':handle/messages/:id' => "messages#show", as: :user_message
   get ':handle/messages' => "users#messages", as: :user_messages
   get ':handle/reviews' => "users#reviews", as: :user_reviews
+  get ':handle/verify' => "users#verify", as: :user_verify
 
   # You can have the root of your site routed with "root"
   get '/' => redirect("/landing")

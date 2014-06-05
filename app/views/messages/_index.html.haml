@@ -25,7 +25,18 @@
       
     .message-list.small-10.columns
       .list-header.small-12.columns
-        %input#checkbox1{:type => "checkbox"}
+        %a{ :href => "#"}
+          .message-selector
+            %input#checkbox1{:type => "checkbox"}
+            Select All
+        %a{ :href => "#"}
+          .message-selector
+            %i.icon.ion-alert-circled
+            Report Spam
+        %a{ :href => "#"}
+          .message-selector.delete
+            %i.icon.ion-ios7-trash
+            Delete
       %ul
         %li.message-summary.clearfix.new
           %a.small-12.columns{:href => "#"}

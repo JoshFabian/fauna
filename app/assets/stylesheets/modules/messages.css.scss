@@ -73,6 +73,30 @@
   .list-header {
     border-bottom: 1px solid #ddd;
     padding: 10px 0 10px 10px;
+    .message-selector {
+      display: inline-block;
+      border-radius: 3px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      font-size: 13px;
+      color: #333;
+      transition: .2s ease-in;
+      &:hover {
+        border-color: #17a689;
+      }
+      &.delete {
+        &:hover {
+          color: #e74c3c;
+          border-color: #e74c3c;
+        }
+      }
+      input {
+        margin-bottom: 0;
+        position: relative;
+        top: -1px;
+        margin-right: 5px;
+      }
+    }
   }
   .message-summary {
     border-bottom: 1px solid #ddd;

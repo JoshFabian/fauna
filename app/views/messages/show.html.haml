@@ -1,0 +1,27 @@
+.row
+  .message-wrapper.rounded-panel
+    .message-sidebar.small-2.columns
+      %ul
+        %li.active 
+          = link_to "#" do
+            %span.help-icon.inbox
+              %i.icon.ion-android-inbox
+            Inbox
+        %li 
+          = link_to "#" do
+            %span.help-icon.star
+              %i.icon.ion-star
+            Starred
+        %li 
+          = link_to "#" do
+            %span.help-icon.email
+              %i.icon.ion-email
+            Sent
+        %li 
+          = link_to "#" do
+            %span.help-icon.trash
+              %i.icon.ion-ios7-trash
+            Trash
+      
+    .message-list.small-10.columns
+      
