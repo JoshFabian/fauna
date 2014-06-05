@@ -6,7 +6,7 @@
     .listing-images.small-7.columns
       .main-image
         -# = image_tag "http://placehold.it/600/400"
-        = image_tag cloudinary_url(@main_image.full_public_id, transformation: [{width: 600, height: 400, crop: 'fit'}])
+        = image_tag cloudinary_url(@main_image.full_public_id, transformation: [{width: 600, crop: 'fit'}])
 
       .more-images
         %ul.image-grid.small-block-grid-5
