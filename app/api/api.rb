@@ -18,8 +18,8 @@ module LoggerHelper
   end
 
   def log_data
-    {:timestamp => Time.now.utc.to_s(:standard), :path => request.path, :token => params[:token],
-     :user_id => current_user_id}
+    {timestamp: Time.now.utc.to_s(:standard), path: request.path, token: params[:token], user_id: current_user_id,
+     env: Rails.env}
   end
 end
 
@@ -31,6 +31,7 @@ class Api < Grape::API
   mount Endpoints::ListingApi
   mount Endpoints::PingApi
   mount Endpoints::SmsApi
+  mount Endpoints::StripeApi
   mount Endpoints::UserApi
   mount Endpoints::WaitlistApi
 end

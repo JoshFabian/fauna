@@ -1,3 +1,9 @@
+= content_for :stripe do
+  = javascript_include_tag "https://checkout.stripe.com/checkout.js"
+  :javascript
+    var stripe_payment = 1
+    var stripe_publish_key = "#{Settings[Rails.env]["stripe_publish_key"]}";
+
 .row
   .account-page.small-8.small-centered.columns
     .rounded-panel
@@ -10,32 +16,25 @@
       -#     %li= link_to "Personal", "#"
       -#     %li= link_to "Listing Credits", "#", :class => "active"
       -#     %li= link_to "Delete Account", "#"
-      .account-tagline
+      .account-tagline.text-center
         %h4 Pay as you go or upgrade to Pro.
         %p Take your Fauna experience to the next level. No contracts. Cancel anytime.
       .pricing-blocks
         .small-6.columns.no-padding-left
           .lined-panel
             %h3 Pay as you go
-            %h6 You have <strong>2</strong> listing credits.
+            %h6 You have <strong>#{current_user.listing_credits}</strong> listing credits.
             %hr
-            .payment-option
-              .small-12.columns.no-padding
-                %input#oneCredit{:name => "credits", :type => "radio", :value => "oneCredit"}
-                  %label{:for => "oneCredit"} Buy 1 listing credit - $5.00
+            = form_for Payment.new, url: "#", html: {class: "form-validation plan-credits"} do |f|
+              .payment-option
+                - @credit_plans.each do |plan|
+                  .small-12.columns.no-padding
+                    = radio_button("plan", "id", plan.id, class: 'required plan-credits-radio', :'data-amount' => plan.amount, :'data-plan-id' => plan.id, :'data-subscription' => plan.subscription)
+                    %label{for: "plan_id_#{plan.id}"} #{plan.name} - #{number_to_currency(plan.amount/100.0, precision: 2)}
 
-              .small-12.columns.no-padding
-                %input#fiveCredit{:name => "credits", :type => "radio", :value => "fiveCredit"}
-                  %label{:for => "fiveCredit"} Buy 5 listing credits - $20.00
-
-              .small-12.columns.no-padding
-                %input#tenCredit{:name => "credits", :type => "radio", :value => "tenCredit"}
-                  %label{:for => "tenCredit"} Buy 10 listing credits - $30.00
-              %a.button.secondary{:href => "#"} 
-                %i.icon.ion-ios7-locked-outline
-                Buy Credits
-
-
+                %a.button.secondary.plan-submit{:href => "#"}
+                  %i.icon.ion-ios7-locked-outline
+                  Buy Credits
 
         .small-6.columns.no-padding-right
           .lined-panel
@@ -50,15 +49,18 @@
                 Unlimited Listings
 
             %hr
-            .payment-option
-              .small-12.columns.no-padding
-                %input#monthly{:name => "plan", :type => "radio", :value => "monthly"}
-                  %label{:for => "monthly"} Pay Monthly
-              .small-12.columns.no-padding
-                %input#yearly{:name => "plan", :type => "radio", :value => "yearly"}
-                  %label{:for => "yearly"} Pay Yearly (20% off!)
-            %a.button{:href => "#"} 
-              %i.icon.ion-ios7-locked-outline
-              Upgrade
+            = form_for Payment.new, url: "#", html: {class: "form-validation plan-subscriptions"} do |f|
+              .payment-option
+                - @subscription_plans.each do |plan|
+                  .small-12.columns.no-padding
+                    = radio_button("plan", "id", plan.id, class: 'required plan-subscriptions-radio', :'data-amount' => plan.amount, :'data-interval' => plan.interval, :'data-plan-id' => plan.id, :'data-subscription' => plan.subscription)
+                    %label{for: "plan_id_#{plan.id}"} #{plan.name}
+
+                -# .small-12.columns.no-padding
+                -#   %input#yearly{:name => "plan", :type => "radio", :value => "yearly"}
+                -#     %label{:for => "yearly"} Pay Yearly (20% off!)
+              %a.button.plan-submit{:href => "#"} 
+                %i.icon.ion-ios7-locked-outline
+                Upgrade
 
 

@@ -26,16 +26,19 @@
         .header-cta
           %a.button{:href => new_listing_path}
             .credit-count
-              05
-              // Show the following if on paid plan
-              -# %i.icon.ion-ios7-infinite
+              - if current_user.subscriptions_count > 0
+                -# subscriptions have infinite credits
+                %i.icon.ion-ios7-infinite
+              - else
+                -# show bought credits
+                = current_user.listing_credits
             .button-copy
               Sell
         %ul#drop1.f-dropdown{"data-dropdown-content" => ""}
           %li= link_to 'View Profile', user_path(current_user)
           - if current_user.roles?(:admin)
             %li= link_to 'Waitlists', waitlists_path
-          %li= link_to 'Accounts Settings', '/account'
+          %li= link_to 'Accounts Settings', plans_path
           %li= link_to 'Logout', logout_path
 
 %header.global-subhead

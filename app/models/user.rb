@@ -24,6 +24,9 @@ class User < ActiveRecord::Base
 
   has_many :phone_tokens
 
+  has_many :subscriptions, dependent: :destroy
+  has_many :plans, through: :subscriptions
+
   friendly_id :handle
 
   bitmask :roles, :as => [:admin, :basic]
