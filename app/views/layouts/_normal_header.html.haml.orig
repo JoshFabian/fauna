@@ -1,0 +1,55 @@
+%header.global-head
+  .row
+    .left-nav
+      = link_to listings_path do
+        = image_tag "landing-logo.jpg", :class => "header-logo"
+      .search
+        = form_for "", url: listing_search_path, html: {class: "search-form"} do |f|
+          = f.text_field 'query', name: 'query', value: @query, placeholder: 'Search ...'
+          %i.icon.ion-ios7-search-strong
+    .right-nav
+      
+
+      - if !user_signed_in?
+        .guest-links
+          = link_to "Login", login_path
+          or
+          = link_to "Register", login_path
+      - else
+        .header-username
+          = link_to '#', :'data-dropdown' => 'drop1' do
+            = current_user.handle
+            %i.icon.ion-arrow-down-b
+        .header-inbox
+          = link_to "#" do
+            %i.icon.ion-android-inbox
+        .header-cta
+          %a.button{:href => new_listing_path}
+            .credit-count
+<<<<<<< HEAD
+              - if current_user.subscriptions_count > 0
+                -# subscriptions have infinite credits
+                %i.icon.ion-ios7-infinite
+              - else
+                -# show bought credits
+                = current_user.listing_credits
+=======
+              0
+              // Show the following if on paid plan
+              -# %i.icon.ion-ios7-infinite
+>>>>>>> 1713abf15f4fe0ca1c35fa1b28be3f24665f0e1a
+            .button-copy
+              Sell
+        %ul#drop1.f-dropdown{"data-dropdown-content" => ""}
+          %li= link_to 'View Profile', user_path(current_user)
+          - if current_user.roles?(:admin)
+            %li= link_to 'Waitlists', waitlists_path
+            %li= link_to 'Manage Plans', manage_plans_path
+          %li= link_to 'Accounts Settings', plans_path
+          %li= link_to 'Logout', logout_path
+
+%header.global-subhead
+  .row
+    %ul.inline-list
+      - Category.roots.order("position asc").each do |category|
+        %li= link_to category.name, listing_category_path(category.name.parameterize)

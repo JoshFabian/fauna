@@ -26,4 +26,8 @@ $(document).ready(function() {
   $('.form-validation').each(function() {
     $(this).validate();
   })
+
+  $("a.disabled").on("click", function(e) {
+    e.preventDefault();
+  })
 })

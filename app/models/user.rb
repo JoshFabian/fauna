@@ -45,10 +45,6 @@ class User < ActiveRecord::Base
     [city_state, postal_code].join(' ')
   end
 
-  def email_verified?
-    email.present?
-  end
-
   def facebook_verified?
     facebook_oauths.count > 0
   end
@@ -78,6 +74,10 @@ class User < ActiveRecord::Base
 
   def initials
     [first_name.first(1), last_name.first(1)].compact.join('') rescue ''
+  end
+
+  def paypal_verified?
+    paypal_email.present?
   end
 
   def phone_verified?
