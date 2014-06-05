@@ -1,0 +1,5 @@
+development:
+  stripe_publish_key: pk_test_bLS8ZuoDP3jkmMHDJyW4rTp1
+
+production:
+  stripe_publish_key: pk_test_bLS8ZuoDP3jkmMHDJyW4rTp1

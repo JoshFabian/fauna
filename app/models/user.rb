@@ -24,6 +24,9 @@ class User < ActiveRecord::Base
 
   has_many :phone_tokens
 
+  has_many :subscriptions, dependent: :destroy
+  has_many :charges, class_name: "PlanCharge", dependent: :destroy
+
   friendly_id :handle
 
   bitmask :roles, :as => [:admin, :basic]
@@ -40,10 +43,6 @@ class User < ActiveRecord::Base
 
   def city_state_zip
     [city_state, postal_code].join(' ')
-  end
-
-  def email_verified?
-    email.present?
   end
 
   def facebook_verified?
@@ -75,6 +74,10 @@ class User < ActiveRecord::Base
 
   def initials
     [first_name.first(1), last_name.first(1)].compact.join('') rescue ''
+  end
+
+  def paypal_verified?
+    paypal_email.present?
   end
 
   def phone_verified?

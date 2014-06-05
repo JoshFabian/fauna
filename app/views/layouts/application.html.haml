@@ -27,6 +27,7 @@
   %meta{name: "google-site-verification", content: "_rSFAf2wBRrmhRgSAZqzYT9LZkuEMRs2WF_3ZwsY3Os"}
   = render(partial: 'layouts/header_segmentio')
   = yield :tracking
+  = yield :stripe
 
 %body{'data-no-turbolink' => true}
 

@@ -1,0 +1,24 @@
+.row
+  %h3= @plan.name
+  
+.row
+  %h6= @plan.subscription? ? "Subscriptions" : "Charges"
+  %table.small-12.columns
+    %tr
+      %th Id
+      %th Buyer
+      %th Amount
+      %th Actions
+
+    - @objects.each do |object|
+      - user = object.user
+      %tr
+        %td= object.id
+        %td= user.handle
+        %td= number_to_currency(@plan.amount/100.0)
+        %td
+          - if @plan.subscription?
+            = link_to 'Unsubscribe', '#', class: 'disable'
+          - else
+            = link_to 'Refund', '#', class: 'disable'
+  

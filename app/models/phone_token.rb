@@ -35,8 +35,8 @@ class PhoneToken < ActiveRecord::Base
 
   def send_token(options={})
     config = Settings[Rails.env]
-    client = Twilio::REST::Client.new(config[:sid], config[:token])
-    message = client.account.messages.create(from: config[:from], to: options[:to], body: options[:body])
+    client = Twilio::REST::Client.new(config[:twilio_sid], config[:twilio_token])
+    message = client.account.messages.create(from: config[:twilio_from], to: options[:to], body: options[:body])
     # update state
     self.sent!
     true

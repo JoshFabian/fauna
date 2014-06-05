@@ -26,12 +26,18 @@
         .header-cta
           %a.button{:href => new_listing_path}
             .credit-count
+<<<<<<< HEAD
               - if current_user.subscriptions_count > 0
                 -# subscriptions have infinite credits
                 %i.icon.ion-ios7-infinite
               - else
                 -# show bought credits
                 = current_user.listing_credits
+=======
+              0
+              // Show the following if on paid plan
+              -# %i.icon.ion-ios7-infinite
+>>>>>>> 1713abf15f4fe0ca1c35fa1b28be3f24665f0e1a
             .button-copy
               Sell
         %ul#drop1.f-dropdown{"data-dropdown-content" => ""}
