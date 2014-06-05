@@ -24,6 +24,9 @@
   .secondary {
     color: #fff !important;
   }
+  &:hover {
+    background: darken(#1abc9c, 10);
+  }
 }
 
 .edit-listing {
@@ -45,4 +48,14 @@
   &:hover {
     color: darken(#c0392b, 15);
   }
+}
+
+.submit-message {
+  @extend .green-button;
+  float: right;
+  padding: 6px 15px;
+  margin-bottom: 0;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
 }
