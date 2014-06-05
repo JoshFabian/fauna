@@ -23,7 +23,7 @@
           - if current_user.phone_verified?
             %a.button.green-button.secondary.disabled{:href => "#"} Paypal Verified
           - else
-            %a.button.green-button{:href => sms_path} Verify Paypal
+            %a.button.green-button{:href => paypal_verify_email_path} Verify Paypal
       %hr
       %h5 Connect to Facebook (optional)
       %p Connect your account to Facebook. This helps as it helps build confidence in users that your identity is known.

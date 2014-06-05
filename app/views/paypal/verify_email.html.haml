@@ -1,0 +1,16 @@
+.row
+  .rounded-panel.small-6.columns.small-centered
+    .text-center
+      %h3 Verify your Paypal
+    %br
+
+    %p Enter your paypal email address below. Once you submit your paypal email, we'll confirm that you're paypal verified.
+
+    %p 
+      %strong This is the paypal that all Fauna payments will be sent to.
+
+    %p We perform this verification for the safety of everyone on Fauna. Verification increases the overall security of Fauna because most buyers prefer to do business with Verified sellers.
+
+    = form_for Waitlist.new, url: twilio_sms_send_path, html: {class: "form-validation user-sms-send"} do |f|
+      = text_field_tag 'to', nil, placeholder: "Enter your paypal email", class: 'required digits verification', minLength: 10, maxLength: 10, id: "user_to"
+      %input.form-button{:type => "submit", :value => "Verify Paypal Email"}
