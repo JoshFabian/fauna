@@ -70,7 +70,7 @@ class ListingsController < ApplicationController
     @all_images = @listing.images.order("position asc")
     @main_image = @all_images.first
 
-    @other_listings = current_user.listings.approved
+    @other_listings = current_user.listings.approved.order("id desc").limit(2)
   end
 
   # GET /listings/new
