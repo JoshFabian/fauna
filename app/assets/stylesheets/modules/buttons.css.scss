@@ -1,3 +1,5 @@
+@import "globals/all";
+
 .sold-button {
   background: #ddd;
   color: #333;
@@ -5,5 +7,22 @@
   &:hover {
     background: #ddd;
     color: #333;
+  }
+}
+
+.orange-button {
+  background: $orange;
+  padding: 10px 30px;
+  &.secondary {
+    color: #fff !important;
+  }
+}
+
+.green-button {
+  background: #1abc9c;
+  padding: 10px 30px;
+  margin-bottom: 0;
+  .secondary {
+    color: #fff !important;
   }
 }
