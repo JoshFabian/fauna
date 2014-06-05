@@ -44,8 +44,10 @@
           This reptile has sold
       - else
         -# = link_to 'Checkout with Paypal', paypal_start_path(listing_id: @listing.id), class: 'button buy-button'
+        -# = link_to 'Report Listing', "#", class: 'remove-link'
         = link_to 'Edit Listing', paypal_start_path(listing_id: @listing.id), class: 'button edit-listing'
-        = link_to 'Remove', paypal_start_path(listing_id: @listing.id), class: 'button edit-listing remove-button'
+        = link_to 'Mark as Sold', paypal_start_path(listing_id: @listing.id), class: 'button edit-listing remove-button'
+        = link_to 'Remove Listing', "#", class: 'remove-link'
 
       .social-links
         .fb-share-button{"data-type" => "button_count"}

@@ -37,3 +37,12 @@
     }
   }
 }
+
+.remove-link {
+  color: #c0392b;
+  margin-bottom: 15px;
+  display: block;
+  &:hover {
+    color: darken(#c0392b, 15);
+  }
+}
