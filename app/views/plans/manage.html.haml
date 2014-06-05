@@ -17,4 +17,4 @@
         %td= number_to_currency(plan.amount/100.0)
         %td= plan.subscription? ? plan.interval : "n/a"
         %td= plan.subscription? ? plan.interval_count : "n/a"
-        %td= plan.subscription? ? plan.subscriptions_count : plan.charges_count
+        %td= plan.subscriptions_count + plan.charges_count
