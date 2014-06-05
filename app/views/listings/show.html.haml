@@ -44,9 +44,10 @@
           This reptile has sold
       - elsif current_user.try(:id) == @user.id
         = link_to 'Edit Listing', user_edit_listing_path(@user, @listing.id), class: 'button edit-listing'
-        = link_to 'Remove', user_edit_listing_path(@user, @listing.id), class: 'button edit-listing remove-button'
+        = link_to 'Mark as Sold', user_edit_listing_path(@user, @listing.id), class: 'button edit-listing remove-button'
       - else
         = link_to 'Checkout with Paypal', paypal_start_path(listing_id: @listing.id), class: 'button buy-button'
+        = link_to 'Report Listing', "#", class: 'remove-link'
 
       .social-links
         .fb-share-button{"data-type" => "button_count"}

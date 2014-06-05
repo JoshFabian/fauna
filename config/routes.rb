@@ -11,6 +11,7 @@ Tegu::Application.routes.draw do
 
   # vanity user scopes
   get ':handle' => "users#show", as: :user, constraints: HandleRoute.new
+  get ':handle/listings/:id/edit' => "listings#edit", as: :user_edit_listing
   get ':handle/listings/:id' => "listings#show", as: :user_listing
   get ':handle/listings' => "users#listings", as: :user_listings
   get ':handle/messages/:id' => "messages#show", as: :user_message

@@ -91,7 +91,7 @@ class ListingsController < ApplicationController
 
   # GET /listings/1/edit
   def edit
-    @listing = current_user.listings.find(params[:id])
+    @listing = current_user.listings.friendly.find(params[:id])
     @category = @listing.categories.where(level: 1).first
     @subcategory = @listing.categories.where(level: 2).first
     @images = @listing.images.order("position asc")

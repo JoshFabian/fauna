@@ -26,8 +26,12 @@ $(document).ready ->
             # create listing
             Tegu.ListingApi.create(form_data, auth_token, callback)
           (data, callback) ->
-            console.log data
+            # console.log data
+            Tegu.ListingApi.get_show_route(data.listing.id, auth_token, callback)
+          (data, callback) ->
+            # console.log data
             Tegu.ListingForm.enable_form()
+            window.location.href = data.route
         ]
       else
         console.log("listing:#{listing_id} update ...")
@@ -36,7 +40,11 @@ $(document).ready ->
             # update listing
             Tegu.ListingApi.update(listing_id, form_data, auth_token, callback)
           (data, callback) ->
-            console.log data
+            # console.log data
+            Tegu.ListingApi.get_show_route(listing_id, auth_token, callback)
+          (data, callback) ->
+            # console.log data
             Tegu.ListingForm.enable_form()
+            window.location.href = data.route
         ]
   

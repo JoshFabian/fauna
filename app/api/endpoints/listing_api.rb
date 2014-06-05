@@ -74,6 +74,13 @@ module Endpoints
         end
         {listing: @listing}
       end
+
+      desc "Get listing route"
+      get ':id/show/route' do
+        listing = Listing.find(params[:id])
+        route = Rails.application.routes.url_helpers.user_listing_path(listing.user, listing)
+        {route: route}
+      end
     end
   end
 end

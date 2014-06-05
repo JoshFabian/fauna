@@ -38,6 +38,17 @@ module Endpoints
         {total: User.count, users: @users.map{ |o| {id: o.id, handle: o.handle} }}
       end
 
+      desc "Returns user verified status"
+      get ':id/verified(/:name)' do
+        user = User.find(params[:id])
+        if params.name.blank?
+          bool = user.verified?
+        else
+          bool = user.send("#{params.name}_verified?")
+        end
+        {user: {id: user.id, verified: bool}}
+      end
+
       desc "Update user"
       put ':id' do
         # puts "[params]:#{params}"

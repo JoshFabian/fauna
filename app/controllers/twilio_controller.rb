@@ -10,6 +10,7 @@ class TwilioController < ApplicationController
     @tokens = PhoneToken.order("id desc")
   end
 
+  # callable from twilio management console
   # POST /sms/reply
   def sms_reply
     logger.post("tegu.app", log_data.merge({event: 'twilio.sms.reply', from: params[:From], body: params[:Body]}))
