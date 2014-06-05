@@ -26,3 +26,15 @@
     color: #fff !important;
   }
 }
+
+.edit-listing {
+  padding: 10px 40px;
+  background-color: #7f8c8d;
+  border-radius: 2px;
+  &.remove-button {
+    background-color: #c0392b;
+    &:hover {
+      background-color: darken(#c0392b, 10);
+    }
+  }
+}
