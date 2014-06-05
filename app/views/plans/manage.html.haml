@@ -12,7 +12,7 @@
     - @plans.each do |plan|
       %tr
         %td= plan.id
-        %td= plan.name
+        %td= link_to plan.name, plan_path(plan)
         %td= plan.subscription?
         %td= number_to_currency(plan.amount/100.0)
         %td= plan.subscription? ? plan.interval : "n/a"

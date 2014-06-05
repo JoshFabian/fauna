@@ -31,6 +31,20 @@ module Endpoints
           charge: charge.as_json())}
       end
 
+      desc "Refund charge"
+      put 'refund/:charge_id' do
+        begin
+          authenticate!
+          charge = current_user.charges.find(params.charge_id)
+          charge.refund
+          event = 'refund'
+        rescue Exception => e
+          event = 'error'
+          message = e.message
+        end
+        {event: event, message: message, charge: charge.as_json(only: [:id])}
+      end
+
       desc "Subscribe user to the specified plan"
       put 'subscribe/:plan_id' do
         authenticate!

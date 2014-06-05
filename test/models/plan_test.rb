@@ -27,11 +27,20 @@ class PlanTest < ActiveSupport::TestCase
 
     it "should create charge" do
       @charge = @user.charges.create(plan: @plan)
+      @charge.state.must_equal 'charged'
+      @charge.amount.must_equal 1000
       @user.reload
       @user.charges_count.must_equal 1
       @user.charges.must_equal [@charge]
       @plan.reload
       @plan.charges_count.must_equal 1
+    end
+
+    it "should refund charge" do
+      flexmock(Stripe::Charge, retrieve: flexmock("object", refund: {}))
+      @charge = @user.charges.create(plan: @plan)
+      @charge.refund
+      @charge.state.must_equal 'refunded'
     end
   end
 
@@ -43,6 +52,7 @@ class PlanTest < ActiveSupport::TestCase
 
     it "should create subscription" do
       @sub = @user.subscriptions.create(plan: @plan)
+      @sub.state.must_equal 'subscribed'
       @user.reload
       @user.subscriptions_count.must_equal 1
       @user.subscriptions.must_equal [@sub]

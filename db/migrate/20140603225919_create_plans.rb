@@ -27,23 +27,27 @@ class CreatePlans < ActiveRecord::Migration
     create_table :subscriptions do |t|
       t.references :user
       t.references :plan
+      t.string :state, limit: 20
       t.text :data
       t.timestamps
     end
 
     add_index :subscriptions, :user_id
     add_index :subscriptions, :plan_id
+    add_index :subscriptions, :state
     add_index :subscriptions, :created_at
 
     create_table :plan_charges do |t|
       t.references :user
       t.references :plan
+      t.string :state, limit: 20
       t.text :data
       t.timestamps
     end
 
     add_index :plan_charges, :user_id
     add_index :plan_charges, :plan_id
+    add_index :plan_charges, :state
     add_index :plan_charges, :created_at
 
     # users table
