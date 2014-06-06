@@ -1,7 +1,7 @@
 - image = listing.primary_image
 
 %li
-  = link_to user_listing_path(user, listing.id) do
+  = link_to user_listing_path(user, listing) do
     .listing-panel
       = image_tag cloudinary_url(image.full_public_id, transformation: [{width: 235, height: 200, crop: 'fill'}])
       .listing-info

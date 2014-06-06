@@ -75,6 +75,18 @@ module Endpoints
         {listing: @listing}
       end
 
+      desc "Change listing state"
+      put ':id/event/:event' do
+        @listing = current_user.listings.find(params[:id])
+        begin
+          @listing.send("#{params.event}")
+          @listing.save
+        rescue Exception => e
+          
+        end
+        {listing: @listing}
+      end
+
       desc "Get listing route"
       get ':id/show/route' do
         listing = Listing.find(params[:id])

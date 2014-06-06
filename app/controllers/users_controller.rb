@@ -18,8 +18,8 @@ class UsersController < ApplicationController
       @cover_images.select{ |o| o.position == i }.first or i
     end
 
-    @total_listings = @user.listings.count
-    @recent_listings = @user.listings.order("id desc").limit(3)
+    @total_listings = @user.listings.approved.count
+    @recent_listings = @user.listings.approved.order("id desc").limit(3)
 
     @tab = 'home'
 
