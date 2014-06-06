@@ -42,7 +42,8 @@ class Payment < ActiveRecord::Base
   def event_state_exception
   end
 
-  def start(options={})
+  # use paypal pay method to pay the seller
+  def paypal_pay(options={})
     amount = (listing.price/100.0)
     seller = listing.user
     receiver_email = options[:seller_email].present? ? options[:seller_email] : seller.paypal_email
@@ -57,11 +58,9 @@ class Payment < ActiveRecord::Base
       },
       returnUrl: options[:return_url],
     ).merge(options)
-    # build request object
+    # use adaptive payments pay method
     api = PayPal::SDK::AdaptivePayments.new
-    pay = api.build_pay(mash)
-    # make API call & get response
-    response = api.pay(pay)
+    response = api.pay(api.build_pay(mash))
     if response.success?
       # update payment state
       self.update(key: response.payKey, payment_url: api.payment_url(response))
@@ -70,6 +69,19 @@ class Payment < ActiveRecord::Base
       self.update(error_message: response.error[0].message)
       self.error!
       raise Exception, self.error_message
+    end
+  end
+
+  # get paypal payment details
+  def paypal_details(options={})
+    api = PayPal::SDK::AdaptivePayments.new
+    mash = Hashie::Mash.new(payKey: key)
+    response = api.payment_details(api.build_payment_details(mash))
+    if response.success?
+      # response contains all the payment details
+      Hashie::Mash.new(response.to_hash)
+    else
+      # whoops
     end
   end
 end

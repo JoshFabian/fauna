@@ -8,7 +8,7 @@ class PaypalController < ApplicationController
   def start
     @listing = Listing.find(params[:listing_id])
     @payment = Payment.create(listing: @listing, buyer: current_user)
-    @payment.start(
+    @payment.paypal_pay(
       cancel_url: paypal_status_url(payment_id: @payment.id, status: 'cancel'),
       return_url: paypal_status_url(payment_id: @payment.id, status: 'success'),
       ipn_notify_url: paypal_ipn_notify_url(payment_id: @payment.id))
