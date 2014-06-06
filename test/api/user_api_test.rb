@@ -13,6 +13,14 @@ class UserApiSpec < ActionDispatch::IntegrationTest
       body.must_include({'user' => {'id' => @user.id, 'verified' => false}})
     end
 
+    it "should return true when user is paypal and phone verified" do
+      flexmock(User, find: flexmock('user', 'verified?' => true, 'id' => @user.id))
+      get "/api/v1/users/#{@user.id}/verified?token=#{@user.auth_token}"
+      response.success?.must_equal true
+      body = JSON.parse(response.body)
+      body.must_include({'user' => {'id' => @user.id, 'verified' => true}})
+    end
+
     it "should return true when user phone is verified" do
       flexmock(User, find: flexmock('user', 'phone_verified?' => true, 'id' => @user.id))
       get "/api/v1/users/#{@user.id}/verified/phone?token=#{@user.auth_token}"

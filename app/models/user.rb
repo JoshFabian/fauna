@@ -84,8 +84,9 @@ class User < ActiveRecord::Base
     phone_tokens.verified.count > 0
   end
 
+  # return true if the required fields are verified
   def verified?
-    facebook_verified? and paypal_verified? and phone_verified?
+    paypal_verified? and phone_verified?
   end
 
   # build user object from omniauth auth hash

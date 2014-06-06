@@ -70,7 +70,7 @@ Tegu::Application.routes.draw do
   get '/sms' => redirect("/sms/send")
   match 'sms/reply' => "twilio#sms_reply", as: :twilio_sms_reply, via: [:get, :post]
   match 'sms/send'=> "twilio#sms_send", as: :twilio_sms_send, via: [:get, :post]
-  match 'sms/verify'=> "twilio#sms_verify", as: :twilio_sms_verify, via: [:get]
+  match 'sms/verify_phone'=> "twilio#sms_verify_phone", as: :twilio_sms_verify_phone, via: [:get]
   match 'sms/list'=> "twilio#sms_list", as: :twilio_sms_list, via: [:get]
 
   resources :messages, only: [:index]

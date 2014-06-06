@@ -20,8 +20,8 @@ class TwilioController < ApplicationController
   def sms_send
   end
 
-  # GET /sms/verify
-  def sms_verify
+  # GET /sms/verify_phone
+  def sms_verify_phone
   end
 
 end

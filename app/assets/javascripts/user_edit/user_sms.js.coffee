@@ -12,7 +12,7 @@ $(document).ready ->
           Tegu.SmsApi.send_token(user_to, auth_token, callback)
         (data, callback) ->
           if data.event == 'sent'
-            window.location.href = "/sms/verify"
+            window.location.href = "/sms/verify_phone"
       ],
       # optional callback
       (err, results) ->
@@ -34,5 +34,3 @@ $(document).ready ->
       ],
       # optional callback
       (err, results) ->
-        # console.log results[0]
-        # jQuery.gritter.add({image: '/assets/success.png', title: 'User', text: 'Saved'})

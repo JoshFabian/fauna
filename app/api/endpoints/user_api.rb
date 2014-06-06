@@ -42,11 +42,11 @@ module Endpoints
       get ':id/verified(/:name)' do
         user = User.find(params[:id])
         if params.name.blank?
-          bool = user.verified?
+          verified = user.verified?
         else
-          bool = user.send("#{params.name}_verified?")
+          verified = user.send("#{params.name}_verified?")
         end
-        {user: {id: user.id, verified: bool}}
+        {user: {id: user.id, verified: verified}}
       end
 
       desc "Update user"
