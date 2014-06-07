@@ -67,6 +67,7 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'open4' # required by rubber
 gem 'paypal-sdk-adaptivepayments'
+gem 'paypal-sdk-adaptiveaccounts'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'rails-observers'
 gem 'rubber'
@@ -94,9 +95,6 @@ end
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
-
-# Use unicorn as the app server
-# gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development

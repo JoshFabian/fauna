@@ -29,6 +29,7 @@ class Api < Grape::API
   helpers AuthHelper
   helpers LoggerHelper
   mount Endpoints::ListingApi
+  mount Endpoints::PaypalApi
   mount Endpoints::PingApi
   mount Endpoints::SmsApi
   mount Endpoints::StripeApi

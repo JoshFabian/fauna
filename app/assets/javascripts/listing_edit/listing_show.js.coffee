@@ -6,7 +6,7 @@ $(document).ready ->
     console.log "mark listing:#{listing_id} as sold"
     async.waterfall [
       (callback) ->
-        # create listing
+        # update listing state
         Tegu.ListingApi.put_event(listing_id, 'sold', auth_token, callback)
       (data, callback) ->
         console.log data
