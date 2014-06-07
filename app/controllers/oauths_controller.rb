@@ -7,10 +7,15 @@ class OauthsController < ApplicationController
     # build oauth object
     @oauth = Oauth.from_omniauth(session["omniauth.auth"])
     if @oauth.persisted?
-      # user exists, sign them in
-      @user = @oauth.user
-      sign_in(:user, @user)
-      redirect_to(after_sign_in_path_for(@user)) and return
+      if user_signed_in?
+        # user connected their facebook account
+        redirect_to(user_verify_path(current_user))
+      else
+        # user exists, sign them in
+        @user = @oauth.user
+        sign_in(:user, @user)
+        redirect_to(after_sign_in_path_for(@user)) and return
+      end
     else
       # redirect
       redirect_to(new_facebook_signup_path) and return
