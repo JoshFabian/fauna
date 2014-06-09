@@ -59,3 +59,25 @@
   bottom: 15px;
   right: 15px;
 }
+
+.facebook-button {
+  background: #5975b1;
+  margin-top: 10px;
+  .icon {
+    font-size: 20px;
+    margin-right: 5px;
+    position: relative;
+    top: 1px;
+  }
+  &:hover {
+    background: darken(#5975b1, 10);
+  }
+}
+
+input.button {
+  padding: 10px 50px;
+  background: #1abc9c;
+  &:hover {
+    background: darken(#1abc9c, 10);
+  }
+}
