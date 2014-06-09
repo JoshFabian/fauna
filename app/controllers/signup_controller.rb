@@ -3,6 +3,11 @@ class SignupController < ApplicationController
 
   # before_filter :check_invite!, only: [:create_facebook, :create_password]
 
+  # GET /signup
+  def new
+    redirect_to new_password_signup_path
+  end
+
   # GET /signup/new/facebook
   def new_facebook
     # build user object from omniauth

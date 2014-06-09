@@ -9,10 +9,10 @@
           %i.icon.ion-social-facebook
           Login with Facebook
         .login-text
-          = link_to "Login"
+          = link_to "Login", '#', class: 'user-password-login-show'
           %span or 
-          = link_to "Register with Email"
-        = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "form-validation"}) do |f|
+          = link_to "Register with Email", new_password_signup_path
+        = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "form-validation user-password-login hide"}) do |f|
           = f.email_field :email, :autofocus => true, :required => true, :class => "", :placeholder => 'email'
           = f.password_field :password, :required => true, :class => "", :placeholder => 'password'
           = f.submit "Login", :class => 'button'
