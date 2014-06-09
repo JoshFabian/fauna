@@ -79,8 +79,9 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1/edit
+  # GET /:handle/edit
   def edit
-    @user = User.find(params[:id])
+    @user = User.find_by_handle(params[:handle]) || User.find(params[:id])
     @url = user_path(@user)
     @title = "My Profile"
 
