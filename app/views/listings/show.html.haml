@@ -14,19 +14,20 @@
             %li 
               -# = image_tag "http://placehold.it/110/80"
               = image_tag cloudinary_url(image.full_public_id, transformation: [{width: 110, height: 80, crop: 'fill'}])
-
-      %ul.tabs
-        %li.active
-          %a Description
-        %li
-          %a Reviews
-        %li
-          %a Shipping & Policies
-      .tab-container
-        .description
+      %ul.tabs{"data-tab" => ""}
+        %li.tab-title.active
+          %a{:href => "#description"} Description
+        %li.tab-title
+          %a{:href => "#reviews"} Reviews
+        %li.tab-title
+          %a{:href => "#shipping"} Shipping
+      .tabs-content
+        #description.content.active
           %p= @listing.description
-        .shipping.hide
-          %p This is a description
+        #reviews.content
+          %p Second panel content goes here...
+        #shipping.content
+          %p Third panel content goes here...
 
     .listing-aside.small-5.columns
       .category-breadcrumbs

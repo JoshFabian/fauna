@@ -18,7 +18,6 @@
 //= require async
 //= require numeral
 //= require_tree .
-
 $(document).ready(function() {
   $(document).foundation();
 

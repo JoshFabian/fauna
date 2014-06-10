@@ -28,7 +28,9 @@ Tegu::Application.routes.draw do
 
   root 'listings#index'
 
-  resources :listings, except: [:show]
+  resources :listings, except: [:show] do
+    get :index2, on: :collection
+  end
   resources :listing_forms, only: [] do
     get :subcategories, on: :collection
     get :new_image, on: :collection

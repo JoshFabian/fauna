@@ -1,0 +1,48 @@
+.row
+  - # Show only on index
+  -# - if !user_signed_in?
+  .small-12.columns
+    = render partial: "listings/guest_message"
+
+  %h5 Recent Listings
+  %ul.small-block-grid-4
+    - 8.times do
+      %li
+        %a{:href => "/JoshFabian/listings/amazing-reptile-for-sale"}
+          .listing-panel
+            %img{:alt => "Xwza7ul4nbfobta9ufdr", :src => "https://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_235/v1401469765/xwza7ul4nbfobta9ufdr.jpg"}
+              .listing-info
+                .title
+                  Amazing reptile for sale!
+                .breeder
+                  JoshFabian
+                .price
+                  $130.00
+  %h5 Recent Pythons
+  %ul.small-block-grid-4
+    - 4.times do
+      %li
+        %a{:href => "/JoshFabian/listings/amazing-reptile-for-sale"}
+          .listing-panel
+            %img{:alt => "Xwza7ul4nbfobta9ufdr", :src => "https://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_235/v1401469765/xwza7ul4nbfobta9ufdr.jpg"}
+              .listing-info
+                .title
+                  Amazing reptile for sale!
+                .breeder
+                  JoshFabian
+                .price
+                  $130.00
+  %h5 Recent Boas
+  %ul.small-block-grid-4
+    - 4.times do
+      %li
+        %a{:href => "/JoshFabian/listings/amazing-reptile-for-sale"}
+          .listing-panel
+            %img{:alt => "Xwza7ul4nbfobta9ufdr", :src => "https://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_235/v1401469765/xwza7ul4nbfobta9ufdr.jpg"}
+              .listing-info
+                .title
+                  Amazing reptile for sale!
+                .breeder
+                  JoshFabian
+                .price
+                  $130.00
