@@ -9,10 +9,13 @@ Tegu::Application.routes.draw do
     match "/(*path)" => redirect {|params, req| "//www.fauna.net/#{params[:path]}"},  via: [:get, :post]
   end
 
+  root 'listings#index'
+
   # vanity user scopes
   get ':handle' => "users#show", as: :user, constraints: HandleRoute.new
   get ':handle/edit' => "users#edit", as: :user_edit
   get ':handle/listings/manage' => "listings#manage", as: :user_manage_listings
+  get ':handle/listings/:id/reviews/new' => "reviews#new", as: :new_listing_review
   get ':handle/listings/:id/edit' => "listings#edit", as: :user_edit_listing
   get ':handle/listings/:id' => "listings#show", as: :user_listing
   get ':handle/listings' => "users#listings", as: :user_listings
@@ -25,8 +28,6 @@ Tegu::Application.routes.draw do
   get '/' => redirect("/landing")
   get 'landing/success/:code' => 'landing#success', as: :landing_success
   get 'landing(/:code)' => 'landing#index', as: :landing
-
-  root 'listings#index'
 
   get 'listings' => redirect("/listings/recent")
   resources :listings, except: [:show] do
@@ -82,7 +83,7 @@ Tegu::Application.routes.draw do
   resources :plans, only: [:index, :show] do
     get :manage, on: :collection
   end
-  resources :reviews, only: [:new, :index]
+  resources :reviews, only: []
   resources :waitlists, only: [:index]
 
 
