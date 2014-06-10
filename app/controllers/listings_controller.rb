@@ -13,10 +13,20 @@ class ListingsController < ApplicationController
     end
   end
 
-  def manage
+  # GET /listings/recent
+  def recent
+    @recent_general = Listing.approved.order("id desc").limit(8)
+    @recent_categories = Category.roots.map do |category|
+      mash = Hashie::Mash.new(category: category, listings: category.listings.approved.order('id desc').limit(4))
+    end
+
+    respond_to do |format|
+      format.html
+    end
   end
 
-  def index2
+  # GET /listings/manage
+  def manage
   end
 
   # GET /listings/:category

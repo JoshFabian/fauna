@@ -28,8 +28,9 @@ Tegu::Application.routes.draw do
 
   root 'listings#index'
 
+  get 'listings' => redirect("/listings/recent")
   resources :listings, except: [:show] do
-    get :index2, on: :collection
+    get :recent, on: :collection
   end
   resources :listing_forms, only: [] do
     get :subcategories, on: :collection
