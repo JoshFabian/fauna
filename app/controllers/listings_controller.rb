@@ -13,6 +13,9 @@ class ListingsController < ApplicationController
     end
   end
 
+  def manage
+  end
+
   # GET /listings/:category
   # GET /listings/:category/:subcategory
   def by_category
