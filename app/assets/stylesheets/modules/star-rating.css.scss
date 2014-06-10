@@ -1,0 +1,54 @@
+.star-rating {
+  float:left;
+  margin-top: 5px;
+  margin-left: -6px;
+  margin-bottom: 15px;
+}
+
+/* :not(:checked) is a filter, so that browsers that don’t support :checked don’t 
+   follow these rules. Every browser that supports :checked also supports :not(), so
+   it doesn’t make the test unnecessarily selective */
+.star-rating:not(:checked) > input {
+  position:absolute;
+  top:-9999px;
+  clip:rect(0,0,0,0);
+}
+
+.star-rating:not(:checked) > label {
+  float: right;
+  width: 6px;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 25px;
+  line-height: 1.2;
+  color: #b3bdbc;
+  font-family: "ionicons";
+  transition: .2s ease-in;
+}
+
+.star-rating:not(:checked) > label:before {
+  content: "\f2fc";
+}
+
+.star-rating > input:checked ~ label {
+  color: #f4b603;
+}
+
+.star-rating:not(:checked) > label:hover,
+.star-rating:not(:checked) > label:hover ~ label {
+  color: darken(#f4b603, 5);
+}
+
+.star-rating > input:checked + label:hover,
+.star-rating > input:checked + label:hover ~ label,
+.star-rating > input:checked ~ label:hover,
+.star-rating > input:checked ~ label:hover ~ label,
+.star-rating > label:hover ~ input:checked ~ label {
+  color: darken(#f4b603,10);
+}
+
+.star-rating > label:active {
+  position:relative;
+  top:2px;
+  left:2px;
+}

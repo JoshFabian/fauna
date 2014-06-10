@@ -1,0 +1,72 @@
+.row
+  .small-12.columns
+    %h3.page-title Review your purchase
+  .product-review-details.small-6.columns
+    .main-image
+      = image_tag "https://res.cloudinary.com/tegu/image/upload/c_fit,w_600/v1401469765/xwza7ul4nbfobta9ufdr.jpg"
+    .tab-container
+      I purchased this guy but haven't bred him. Ron Tremper himself told me he was 90% sure he's a snow RADAR but I'm obviously just selling him as a RADAR. Regenerated tail.
+    .view-listing
+      = link_to "view full listing", "#"
+  .small-6.columns
+    .rounded-panel
+      %h6 
+        Review 
+        = link_to "Bloodbank Dragons"
+      %h4 Green Lizard for Sale
+      %hr
+      .star-rating-input
+        %label Did this animal match what was advertised?
+        -# .star-wrapper
+        -#   %i.icon.ion-android-star
+        -#   %i.icon.ion-android-star
+        -#   %i.icon.ion-android-star
+        -#   %i.icon.ion-android-star
+        -#   %i.icon.ion-android-star
+        .small-12.columns.no-padding
+          .star-rating
+            %input#matched-description5{:name => "matched-description", :type => "radio", :value => "5"}
+            %label{:for => "matched-description5", :title => "5 stars"}
+            %input#matched-description4{:name => "matched-description", :type => "radio", :value => "4"}
+            %label{:for => "matched-description4", :title => "4 stars"}
+            %input#matched-description3{:name => "matched-description", :type => "radio", :value => "3"}
+            %label{:for => "matched-description3", :title => "3 stars"}
+            %input#matched-description2{:name => "matched-description", :type => "radio", :value => "2"}
+            %label{:for => "matched-description2", :title => "2 stars"}
+            %input#matched-description1{:name => "matched-description", :type => "radio", :value => "1"}
+            %label{:for => "matched-description", :title => "1 star"}
+      %hr
+      .star-rating-input
+        %label How was the sellers communication?
+        .small-12.columns.no-padding
+          .star-rating
+            %input#communication5{:name => "communication", :type => "radio", :value => "5"}
+            %label{:for => "communication5", :title => "5 stars"}
+            %input#communication4{:name => "communication", :type => "radio", :value => "4"}
+            %label{:for => "communication4", :title => "4 stars"}
+            %input#communication3{:name => "communication", :type => "radio", :value => "3"}
+            %label{:for => "communication3", :title => "3 stars"}
+            %input#communication2{:name => "communication", :type => "radio", :value => "2"}
+            %label{:for => "communication2", :title => "2 stars"}
+            %input#communication1{:name => "communication", :type => "radio", :value => "1"}
+            %label{:for => "communication1", :title => "1 star"}
+      %hr
+      .star-rating-input
+        %label Was the animal shipped safely and arrive in good health?
+        .small-12.columns.no-padding
+          .star-rating
+            %input#shipping5{:name => "shipping", :type => "radio", :value => "5"}
+            %label{:for => "shipping5", :title => "5 stars"}
+            %input#shipping4{:name => "shipping", :type => "radio", :value => "4"}
+            %label{:for => "shipping4", :title => "4 stars"}
+            %input#shipping3{:name => "shipping", :type => "radio", :value => "3"}
+            %label{:for => "shipping3", :title => "3 stars"}
+            %input#shipping2{:name => "shipping", :type => "radio", :value => "2"}
+            %label{:for => "shipping2", :title => "2 stars"}
+            %input#shipping1{:name => "shipping", :type => "radio", :value => "1"}
+            %label{:for => "shipping1", :title => "1 star"}
+      %hr
+      .experience-form
+        %label Tell others about your experience
+        %textarea{:placeholder => "Briefly discuss what you liked or didn't like about this experience."}
+        %input.button{:name => "commit", :type => "submit", :value => "Share Review"}

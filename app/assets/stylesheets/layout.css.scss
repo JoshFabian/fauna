@@ -22,6 +22,11 @@
   }
 }
 
+.page-title {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
 .rounded-panel {
   background: #fff;
   border-radius: 3px;
@@ -415,6 +420,41 @@
   }
 }
 
+.star-rating-input {
+  .star-wrapper {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    display: inline-block;
+    .ion-android-star {
+      font-size: 25px;
+      padding-top: 10px;
+      margin-bottom: 15px;
+      transition: .2s ease-in;
+      cursor: pointer;
+      color: #b3bdbc; 
+    }
+    > .ion-android-star:hover:before,
+    > .ion-android-star:hover ~ .ion-android-star:before {
+      color: #f4b603;
+      transition: .2s ease-in;
+    }
+  }
+}
+
+.experience-form {
+  margin-top: 20px;
+  textarea {
+    border-radius: 3px;
+    box-shadow: none;
+    margin-top: 5px;
+    height: 100px;
+  }
+  .button {
+    float: right;
+    margin-bottom: 0;
+  }
+}
+
 .review {
   @extend .clearfix;
   padding-bottom: 5px;
@@ -448,6 +488,23 @@
     }
   }
 }
+
+.product-review-details {
+  @extend %shadow;
+  background: #fff;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  border-radius: 2px;
+  overflow: hidden;
+  .tab-container {
+    color: darken(#969ba1,5);
+  }
+  .view-listing {
+    padding: 0 15px 15px 15px;
+  }
+}
+
+
 
 .edit-show {
   display: none;
