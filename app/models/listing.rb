@@ -11,6 +11,7 @@ class Listing < ActiveRecord::Base
   validates :user, presence: true
 
   has_many :images, class_name: "ListingImage", dependent: :destroy
+  has_many :reviews, dependent: :destroy
 
   has_many :listing_categories, dependent: :destroy
   has_many :categories, through: :listing_categories

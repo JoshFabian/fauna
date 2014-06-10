@@ -71,6 +71,8 @@ class UsersController < ApplicationController
       @cover_images.select{ |o| o.position == i }.first or i
     end
 
+    @reviews = @user.listing_reviews
+
     @tab = 'reviews'
 
     respond_to do |format|

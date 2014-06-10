@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140603225919) do
+ActiveRecord::Schema.define(version: 20140609223225) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -182,6 +182,31 @@ ActiveRecord::Schema.define(version: 20140603225919) do
   add_index "plans", ["subscription"], name: "index_plans_on_subscription"
   add_index "plans", ["subscriptions_count"], name: "index_plans_on_subscriptions_count"
   add_index "plans", ["trial_period_days"], name: "index_plans_on_trial_period_days"
+
+  create_table "review_ratings", force: true do |t|
+    t.integer "review_id"
+    t.string  "name",      limit: 20
+    t.float   "rating",               default: 0.0
+  end
+
+  add_index "review_ratings", ["name"], name: "index_review_ratings_on_name"
+  add_index "review_ratings", ["rating"], name: "index_review_ratings_on_rating"
+  add_index "review_ratings", ["review_id"], name: "index_review_ratings_on_review_id"
+
+  create_table "reviews", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "listing_id"
+    t.float    "avg_rating", default: 0.0
+    t.text     "body"
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reviews", ["avg_rating"], name: "index_reviews_on_avg_rating"
+  add_index "reviews", ["created_at"], name: "index_reviews_on_created_at"
+  add_index "reviews", ["listing_id"], name: "index_reviews_on_listing_id"
+  add_index "reviews", ["user_id"], name: "index_reviews_on_user_id"
 
   create_table "subscriptions", force: true do |t|
     t.integer  "user_id"

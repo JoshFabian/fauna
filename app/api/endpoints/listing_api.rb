@@ -16,6 +16,10 @@ module Endpoints
           ActionController::Parameters.new(hash).permit(:bytes, :etag, :format, :height, :position, :public_id,
             :resource_type, :version, :width)
         end
+
+        def review_params
+          ActionController::Parameters.new(params).require(:review).permit(:body, :user_id)
+        end
       end
 
       desc "Create listing"
@@ -85,6 +89,20 @@ module Endpoints
           
         end
         {listing: @listing}
+      end
+
+      desc "Create listing review"
+      post ':id/reviews' do
+        authenticate!
+        @listing = Listing.find(params.id)
+        @review = @listing.reviews.create(review_params.merge(user: current_user))
+        error!('401 Unauthorized', 401) if !@review.persisted?
+        if params.ratings and params.ratings.is_a?(Hash)
+          params.ratings.each_pair do |name,rating|
+            @review.ratings.create(name: name, rating: rating)
+          end
+        end
+        {review: @review.as_json().merge(ratings: @review.ratings)}
       end
 
       desc "Get listing route"

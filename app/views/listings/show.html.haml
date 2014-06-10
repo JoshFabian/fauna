@@ -14,7 +14,7 @@
             %li 
               -# = image_tag "http://placehold.it/110/80"
               = image_tag cloudinary_url(image.full_public_id, transformation: [{width: 110, height: 80, crop: 'fill'}])
-      %ul.tabs{"data-tab" => ""}
+      %ul.tabs{:'data-tab' => ""}
         %li.tab-title.active
           %a{:href => "#description"} Description
         %li.tab-title

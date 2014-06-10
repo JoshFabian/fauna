@@ -17,4 +17,32 @@ class ListingApiSpec < ActionDispatch::IntegrationTest
       @listing.state.must_equal 'sold'
     end
   end
+
+  describe "listing review" do
+    before do
+      @user = Fabricate(:user)
+      @listing = @user.listings.create!(title: "Title", price: 100)
+      @reviewer = Fabricate(:user)
+    end
+
+    it "should create review" do
+      data = {review: {body: "body"}}
+      post "/api/v1/listings/#{@listing.id}/reviews?token=#{@reviewer.auth_token}", data
+      response.success?.must_equal true
+      body = JSON.parse(response.body)
+      review = @listing.reviews.first
+      body['review'].must_include({'id' => review.id, 'body' => 'body'})
+    end
+
+    it "should create review with ratings" do
+      data = {review: {body: "body"}, ratings: {communication: 3, description: 4}}
+      post "/api/v1/listings/#{@listing.id}/reviews?token=#{@reviewer.auth_token}", data
+      response.success?.must_equal true
+      body = JSON.parse(response.body)
+      review = @listing.reviews.first
+      body['review'].must_include({'id' => review.id, 'body' => 'body'})
+      body['review']['ratings'].must_include([{'name' => 'communication', 'rating' => 3.0},
+        {'name' => 'description', 'rating' => 4.0}])
+    end
+  end
 end

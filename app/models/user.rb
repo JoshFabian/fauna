@@ -24,8 +24,10 @@ class User < ActiveRecord::Base
 
   has_many :phone_tokens
 
-  has_many :subscriptions, dependent: :destroy
   has_many :charges, class_name: "PlanCharge", dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
+
+  has_many :authored_reviews, class_name: "Review", dependent: :destroy
 
   friendly_id :handle
 
@@ -74,6 +76,19 @@ class User < ActiveRecord::Base
 
   def initials
     [first_name.first(1), last_name.first(1)].compact.join('') rescue ''
+  end
+
+  def listing_reviews
+    Review.where(listing_id: listings.select(:id).collect(&:id))
+  end
+
+  def listing_ratings
+    review_ids = Review.where(listing_id: listings.select(:id).collect(&:id)).select(&:id).collect(&:id)
+    ReviewRating.where(review_id: review_ids)
+  end
+
+  def listing_average_ratings
+    listing_ratings.group(:name).average(:rating)
   end
 
   def paypal_verified?

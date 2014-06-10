@@ -9,7 +9,10 @@ class ReviewsController < ApplicationController
 
   # GET /reviews/new
   def new
-    
+    @listing = Listing.first
+    @user = @listing.user
+
+    @reviewed = @listing.reviews.where(user_id: current_user.id).exists?
   end
 
 end
