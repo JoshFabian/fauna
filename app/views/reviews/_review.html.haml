@@ -1,7 +1,7 @@
 .rounded-panel
   .padding-wrapper
     %h5 Recent Feedback
-  - @reviews.each do |review|
+  - reviews.each do |review|
     - listing = review.listing
     - image = listing.primary_image
     - reviewer = review.user

@@ -21,6 +21,8 @@ class UsersController < ApplicationController
     @total_listings = @user.listings.approved.count
     @recent_listings = @user.listings.approved.order("id desc").limit(3)
 
+    @recent_reviews = @user.listing_reviews.order("id desc").limit(4)
+
     @tab = 'home'
 
     respond_to do |format|

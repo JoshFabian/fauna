@@ -66,6 +66,7 @@ gem 'logging'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'open4' # required by rubber
+gem 'paddock'
 gem 'paypal-sdk-adaptivepayments'
 gem 'paypal-sdk-adaptiveaccounts'
 gem 'rack-cors', :require => 'rack/cors'
