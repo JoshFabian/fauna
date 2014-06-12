@@ -21,6 +21,7 @@ Tegu::Application.routes.draw do
   get ':handle/listings' => "users#listings", as: :user_listings
   get ':handle/messages/:id' => "messages#show", as: :user_message
   get ':handle/messages' => "users#messages", as: :user_messages
+  get ':handle/purchases' => "users#purchases", as: :user_purchases
   get ':handle/reviews' => "users#reviews", as: :user_reviews
   get ':handle/verify' => "users#verify", as: :user_verify
 

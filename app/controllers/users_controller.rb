@@ -64,6 +64,11 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /:handle/purchases
+  def purchases
+
+  end
+
   # GET /:handle/reviews
   def reviews
     @user = User.find_by_handle(params[:handle])
