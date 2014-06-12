@@ -87,6 +87,9 @@ Tegu::Application.routes.draw do
   resources :reviews, only: []
   resources :waitlists, only: [:index]
 
+  get 'about/contact' => "about#contact"
+  get 'about/terms' => "about#terms"
+  get 'about/us' => "about#us"
 
   # Example resource route with options:
   #   resources :products do
