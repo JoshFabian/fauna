@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
 
   before_filter :authenticate_user!
-  before_filter :admin_role_required!, only: [:new]
+  before_filter :admin_role_required!, only: [:index]
 
   # GET /reviews
   def index
