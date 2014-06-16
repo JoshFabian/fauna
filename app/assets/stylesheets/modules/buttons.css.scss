@@ -81,3 +81,21 @@ input.button {
     background: darken(#1abc9c, 10);
   }
 }
+
+.review-button {
+  position: absolute;
+  background: $orange;
+  border-radius: 3px;
+  padding: 5px 15px;
+  bottom: 70px;
+  left: 52px;
+  a {
+    color: #fff;
+  }
+  &.reviewed {
+    background: #fff;
+    a {
+      color: $orange;
+    }
+  }
+}

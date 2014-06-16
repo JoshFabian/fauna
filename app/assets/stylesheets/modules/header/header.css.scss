@@ -194,3 +194,20 @@
     }
   }
 }
+
+.review-alert {
+  @include grid-column(12);
+  margin-top: -31px;
+  margin-bottom: 30px;
+  text-align: center;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+  a {
+    background: #1abc9c;
+    display: block;
+    color: #fff;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+}
