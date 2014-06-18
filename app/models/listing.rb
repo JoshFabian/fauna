@@ -58,8 +58,14 @@ class Listing < ActiveRecord::Base
     images.order("position asc").first
   end
 
-  def review_allowed?(user)
+  def purchased_by?(user)
     payments.completed.where(buyer_id: user.id).exists?
+  rescue Exception => e
+    false
+  end
+
+  def review_allowed?(user)
+    payments.completed.where(buyer_id: user.id).where("completed_at <= ?", 24.hours.ago).exists?
   rescue Exception => e
     false
   end

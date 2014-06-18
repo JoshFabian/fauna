@@ -12,6 +12,11 @@ class PaymentTest < ActiveSupport::TestCase
       @payment = Payment.create!(listing: @listing, buyer: @buyer)
       @payment.state.must_equal 'init'
     end
+
+    it "should default reviewed to false" do
+      @payment = Payment.create!(listing: @listing, buyer: @buyer)
+      @payment.reviewed?.must_equal false
+    end
   end
 
   describe "payment state machine" do
@@ -35,10 +40,16 @@ class PaymentTest < ActiveSupport::TestCase
   end
 
   describe "purchase reviews" do
-    it "should allow buyer to review" do
+    before do
       @payment = Payment.create!(listing: @listing, buyer: @buyer)
-      @listing.review_allowed?(@buyer).must_equal false
       @payment.complete!
+    end
+
+    it "should allow buyer to review after 24 hours" do
+      @payment.update_attributes!(completed_at: 23.hours.ago)
+      @listing.review_allowed?(@buyer).must_equal false
+      @listing.review_allowed?(@seller).must_equal false
+      @payment.update_attributes!(completed_at: 25.hours.ago)
       @listing.review_allowed?(@buyer).must_equal true
       @listing.review_allowed?(@seller).must_equal false
     end
@@ -48,8 +59,36 @@ class PaymentTest < ActiveSupport::TestCase
       @listing.reviewed_by?(@buyer).must_equal true
     end
 
+    it "should set payment reviewed flag after buyer reviews purchase" do
+      @payment.reviewed?.must_equal false
+      @review = @listing.reviews.create!(user: @buyer, body: "body")
+      @payment.reload
+      @payment.reviewed?.must_equal true
+    end
+
     it "should return false if buyer has not reviewed purchase" do
       @listing.reviewed_by?(@buyer).must_equal false
+    end
+
+    it "should set buyer pending_listing_reviews when purchase has not been reviewed after 5 days" do
+      @payment.update_attributes!(completed_at: 4.days.ago)
+      ReviewObserver.set_pending_reviews
+      @buyer.reload
+      @buyer.pending_listing_reviews.must_equal 0
+      @payment.update_attributes!(completed_at: 6.days.ago)
+      ReviewObserver.set_pending_reviews
+      @buyer.reload
+      @buyer.pending_listing_reviews.must_equal 1
+    end
+
+    it "should reset buyer pending_listing_reviews after purchase is reviewed" do
+      @payment.update_attributes!(completed_at: 6.days.ago)
+      @buyer.update_attributes(pending_listing_reviews: 1)
+      @buyer.pending_listing_reviews.must_equal 1
+      @review = @listing.reviews.create!(user: @buyer, body: "body")
+      ReviewObserver.set_pending_reviews
+      @buyer.reload
+      @buyer.pending_listing_reviews.must_equal 0
     end
   end
 end

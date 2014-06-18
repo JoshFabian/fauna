@@ -1,0 +1,5 @@
+%header.review-alert
+  = link_to user_purchases_path(current_user) do
+    You have 
+    %strong= count
+    purchases to review.

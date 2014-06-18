@@ -6,30 +6,16 @@
       - review = @user_reviews.select{ |o| o.listing_id == listing.id }.first
       = render(partial: "listings/listing_tile", locals: {listing: listing, user: listing.user, review: review.present? ? :completed : :pending})
 
-    %li
-      %a{:href => "/JoshFabian/listings/this-is-a-test"}
-        .listing-panel
-          .review-button
-            = link_to 'Post Review', new_listing_review_path(current_user, Listing.first)
-          %img{:alt => "Khjrlyjnaicrxpniebjy", :src => "https://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_235/v1401479260/khjrlyjnaicrxpniebjy.jpg"}
-          .listing-info
-            .title
-              This is a test
-            .breeder
-              JoshFabian
-            .price
-              $199.99
-    %li
-      %a{:href => "/JoshFabian/listings/amazing-reptile-for-sale"}
-        .listing-panel
-          .review-button
-            %a{:href => "#"}
-              Post Review
-          %img{:alt => "Xwza7ul4nbfobta9ufdr", :src => "https://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_235/v1401469765/xwza7ul4nbfobta9ufdr.jpg"}
-            .listing-info
-              .title
-                Amazing reptile for sale!
-              .breeder
-                JoshFabian
-              .price
-                $130.00
+    -# %li
+    -#   %a{:href => "/JoshFabian/listings/this-is-a-test"}
+    -#     .listing-panel
+    -#       .review-button
+    -#         = link_to 'Post Review', new_listing_review_path(current_user, Listing.first)
+    -#       %img{:alt => "Khjrlyjnaicrxpniebjy", :src => "https://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_235/v1401479260/khjrlyjnaicrxpniebjy.jpg"}
+    -#       .listing-info
+    -#         .title
+    -#           This is a test
+    -#         .breeder
+    -#           JoshFabian
+    -#         .price
+    -#           $199.99

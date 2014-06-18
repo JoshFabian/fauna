@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140609223225) do
+ActiveRecord::Schema.define(version: 20140618211830) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 20140609223225) do
     t.datetime "completed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "reviewed",                  default: false
   end
 
   add_index "payments", ["buyer_id"], name: "index_payments_on_buyer_id"
@@ -125,6 +126,7 @@ ActiveRecord::Schema.define(version: 20140609223225) do
   add_index "payments", ["created_at"], name: "index_payments_on_created_at"
   add_index "payments", ["key"], name: "index_payments_on_key"
   add_index "payments", ["listing_id"], name: "index_payments_on_listing_id"
+  add_index "payments", ["reviewed"], name: "index_payments_on_reviewed"
   add_index "payments", ["state"], name: "index_payments_on_state"
 
   create_table "phone_tokens", force: true do |t|
@@ -259,44 +261,45 @@ ActiveRecord::Schema.define(version: 20140609223225) do
   add_index "user_cover_images", ["user_id"], name: "index_user_cover_images_on_user_id"
 
   create_table "users", force: true do |t|
-    t.string   "email",                                                        default: "", null: false
-    t.string   "encrypted_password",                                           default: "", null: false
+    t.string   "email",                                                         default: "", null: false
+    t.string   "encrypted_password",                                            default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                                                default: 0
+    t.integer  "sign_in_count",                                                 default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "authentication_token",   limit: 100
-    t.string   "handle",                 limit: 100
-    t.string   "first_name",             limit: 50
-    t.string   "last_name",              limit: 50
+    t.string   "authentication_token",    limit: 100
+    t.string   "handle",                  limit: 100
+    t.string   "first_name",              limit: 50
+    t.string   "last_name",               limit: 50
     t.integer  "roles"
-    t.string   "public_id",              limit: 50
-    t.string   "version",                limit: 50
+    t.string   "public_id",               limit: 50
+    t.string   "version",                 limit: 50
     t.integer  "width"
     t.integer  "height"
-    t.string   "format",                 limit: 50
-    t.string   "resource_type",          limit: 50
+    t.string   "format",                  limit: 50
+    t.string   "resource_type",           limit: 50
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "about"
     t.text     "data"
-    t.string   "phone",                  limit: 30
-    t.string   "website",                limit: 100
-    t.string   "street",                 limit: 60
-    t.string   "city",                   limit: 60
-    t.string   "state_code",             limit: 2
-    t.string   "postal_code",            limit: 16
-    t.decimal  "lat",                                precision: 15, scale: 10
-    t.decimal  "lng",                                precision: 15, scale: 10
-    t.string   "paypal_email",           limit: 100
-    t.integer  "listing_credits",                                              default: 0
-    t.string   "customer_id",            limit: 100
-    t.integer  "charges_count",                                                default: 0
-    t.integer  "subscriptions_count",                                          default: 0
+    t.string   "phone",                   limit: 30
+    t.string   "website",                 limit: 100
+    t.string   "street",                  limit: 60
+    t.string   "city",                    limit: 60
+    t.string   "state_code",              limit: 2
+    t.string   "postal_code",             limit: 16
+    t.decimal  "lat",                                 precision: 15, scale: 10
+    t.decimal  "lng",                                 precision: 15, scale: 10
+    t.string   "paypal_email",            limit: 100
+    t.integer  "listing_credits",                                               default: 0
+    t.string   "customer_id",             limit: 100
+    t.integer  "charges_count",                                                 default: 0
+    t.integer  "subscriptions_count",                                           default: 0
+    t.integer  "pending_listing_reviews",                                       default: 0
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true
@@ -308,6 +311,7 @@ ActiveRecord::Schema.define(version: 20140609223225) do
   add_index "users", ["last_name"], name: "index_users_on_last_name"
   add_index "users", ["listing_credits"], name: "index_users_on_listing_credits"
   add_index "users", ["paypal_email"], name: "index_users_on_paypal_email"
+  add_index "users", ["pending_listing_reviews"], name: "index_users_on_pending_listing_reviews"
   add_index "users", ["postal_code"], name: "index_users_on_postal_code"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   add_index "users", ["roles"], name: "index_users_on_roles"
