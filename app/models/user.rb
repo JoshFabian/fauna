@@ -18,9 +18,11 @@ class User < ActiveRecord::Base
   has_many :facebook_oauths, -> { where(provider: 'facebook') }, :class_name => 'Oauth'
 
   has_many :listings, dependent: :destroy
+  has_many :payments, class_name: 'Payment', foreign_key: 'buyer_id', dependent: :destroy
+  has_many :purchases, -> { where state: 'completed' }, class_name: 'Payment', foreign_key: 'buyer_id'
 
-  has_one :avatar_image, class_name: "UserAvatarImage", dependent: :destroy
-  has_many :cover_images, class_name: "UserCoverImage", dependent: :destroy
+  has_one :avatar_image, class_name: 'UserAvatarImage', dependent: :destroy
+  has_many :cover_images, class_name: 'UserCoverImage', dependent: :destroy
 
   has_many :phone_tokens
 

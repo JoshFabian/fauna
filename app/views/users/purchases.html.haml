@@ -1,20 +1,24 @@
 .row
   %h5 My Purchases
   %ul.small-block-grid-4
+    - @user_purchases.each do |purchase|
+      - listing = purchase.listing
+      - review = @user_reviews.select{ |o| o.listing_id == listing.id }.first
+      = render(partial: "listings/listing_tile", locals: {listing: listing, user: listing.user, review: review.present? ? :completed : :pending})
+
     %li
       %a{:href => "/JoshFabian/listings/this-is-a-test"}
         .listing-panel
           .review-button
-            %a{:href => "#"}
-              Post Review
+            = link_to 'Post Review', new_listing_review_path(current_user, Listing.first)
           %img{:alt => "Khjrlyjnaicrxpniebjy", :src => "https://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_235/v1401479260/khjrlyjnaicrxpniebjy.jpg"}
-            .listing-info
-              .title
-                This is a test
-              .breeder
-                JoshFabian
-              .price
-                $199.99
+          .listing-info
+            .title
+              This is a test
+            .breeder
+              JoshFabian
+            .price
+              $199.99
     %li
       %a{:href => "/JoshFabian/listings/amazing-reptile-for-sale"}
         .listing-panel
@@ -29,31 +33,3 @@
                 JoshFabian
               .price
                 $130.00
-    %li
-      %a{:href => "/JoshFabian/listings/amazing-tegu"}
-        .listing-panel
-          .review-button.reviewed
-            %a{:href => "#"}
-              View Review
-          %img{:alt => "Gfg2qswl0dogh96i2jlv", :src => "https://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_235/v1401302146/gfg2qswl0dogh96i2jlv.jpg"}
-            .listing-info
-              .title
-                Amazing Tegu
-              .breeder
-                JoshFabian
-              .price
-                $149.99
-    %li
-      %a{:href => "/sanjay/listings/tegu"}
-        .listing-panel
-          .review-button.reviewed
-            %a{:href => "#"}
-              View Review
-          %img{:alt => "Awo2uueqk9ln7jgufdqg", :src => "https://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_235/v1400970700/awo2uueqk9ln7jgufdqg.jpg"}
-            .listing-info
-              .title
-                Tegu
-              .breeder
-                sanjay
-              .price
-                $5,000.00  

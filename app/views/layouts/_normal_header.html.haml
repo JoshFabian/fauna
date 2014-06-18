@@ -43,14 +43,9 @@
             %li= link_to 'Manage Plans', manage_plans_path
           %li= link_to 'Logout', logout_path
 
+-# categories
 %header.global-subhead
   .row
     %ul.inline-list
       - Category.roots.order("position asc").each do |category|
         %li= link_to category.name, listing_category_path(category.name.parameterize)
-
-%header.review-alert
-  %a{:href => "#"}
-    You have 
-    %strong 05
-    purchases to review.
