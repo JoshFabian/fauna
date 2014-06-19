@@ -1,8 +1,15 @@
 - image = listing.primary_image
+- review = local_assigns.fetch :review, :na
 
 %li
   = link_to user_listing_path(user, listing) do
     .listing-panel
+      - if review == :completed
+        .review-button.reviewed
+          = link_to 'View Review', user_reviews_path(user)
+      - elsif review == :pending
+        .review-button
+          = link_to 'Post Review', new_listing_review_path(user, listing)
       = image_tag cloudinary_url(image.full_public_id, transformation: [{width: 235, height: 200, crop: 'fill'}])
       .listing-info
         .title

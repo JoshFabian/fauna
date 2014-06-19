@@ -66,7 +66,14 @@ class UsersController < ApplicationController
 
   # GET /:handle/purchases
   def purchases
+    @user = User.find_by_handle(params[:handle])
 
+    @user_purchases = @user.purchases
+    @user_reviews = @user.listing_reviews
+
+    respond_to do |format|
+      format.html
+    end
   end
 
   # GET /:handle/reviews

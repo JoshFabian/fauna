@@ -11,6 +11,7 @@ class Listing < ActiveRecord::Base
   validates :user, presence: true
 
   has_many :images, class_name: "ListingImage", dependent: :destroy
+  has_many :payments, dependent: :destroy
   has_many :reviews, dependent: :destroy
 
   has_many :listing_categories, dependent: :destroy
@@ -55,6 +56,24 @@ class Listing < ActiveRecord::Base
 
   def primary_image
     images.order("position asc").first
+  end
+
+  def purchased_by?(user)
+    payments.completed.where(buyer_id: user.id).exists?
+  rescue Exception => e
+    false
+  end
+
+  def review_allowed?(user)
+    payments.completed.where(buyer_id: user.id).where("completed_at <= ?", 24.hours.ago).exists?
+  rescue Exception => e
+    false
+  end
+
+  def reviewed_by?(user)
+    reviews.where(user_id: user.id).exists?
+  rescue Exception => e
+    false
   end
 
   # used by friendly_id
