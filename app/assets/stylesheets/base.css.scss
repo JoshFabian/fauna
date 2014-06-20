@@ -18,6 +18,18 @@ body {
   .date-cell {
     width: 100px;
   }
+  .name-cell {
+    width: 515px;
+  }
+  .mark-sold {
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #c0392b;
+    &:hover {
+      color: darken(#c0392b, 10);
+    }
+  }
+
 }
 
 .highlight {

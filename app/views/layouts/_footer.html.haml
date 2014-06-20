@@ -1,3 +1,23 @@
 %footer.global-footer
   .row
-    footer
+    .small-12.columns.no-padding
+      .footer-logo
+        = link_to listings_path do
+          = image_tag "landing-logo.jpg", :class => "header-logo"
+      %ul.inline-list.social-icons 
+        %li
+          = link_to "#" do
+            %i.icon.ion-social-twitter
+        %li
+          = link_to "#" do 
+            %i.icon.ion-social-facebook
+
+    .small-12.columns.no-padding
+      .copyright
+        TM + © 2014 Fauna, Inc. All rights reserved. 
+      
+      %ul.inline-list.legal-links
+        %li= link_to "About", "#"
+        %li= link_to "Contact", "#"
+        %li= link_to "TOS", "#"
+        %li= link_to "Privacy", "#"

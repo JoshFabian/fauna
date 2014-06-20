@@ -1,23 +1,65 @@
 .row
   .page-title
     %h3 Manage Listings
+  .listing-nav.small-12.columns
+    %ul.pills{:'data-tab' => ""}
+      %li.tab-title.active
+        %a{:href => "#active-listings"} Active Listings
+      %li.tab-title
+        %a{:href => "#sold-listings"} Sold Listings
+    .listing-search
+      .search
+        %form.search-form{"accept-charset" => "UTF-8", :action => "/listings/search", :method => "post"}
+          %div{:style => "margin:0;padding:0;display:inline"}
+            %input{:name => "utf8", :type => "hidden", :value => "✓"}
+              %input{:name => "authenticity_token", :type => "hidden", :value => "L0V8zrryY0oVAfKd24EMQaok+d2qGvjlYNu3bZ25IP4="}/
+          %input#_query{:name => "query", :placeholder => "Search ...", :type => "text"}
+            %i.icon.ion-ios7-search-strong
+  .listing-subhead
+    %header.global-subhead
+      .row
+        %ul.inline-list
+          %li
+            %a{:href => "/listings/pythons"} Pythons
+          %li
+            %a{:href => "/listings/boas"} Boas
+          %li
+            %a{:href => "/listings/colubrids"} Colubrids
+          %li
+            %a{:href => "/listings/venomous"} Venomous
+          %li
+            %a{:href => "/listings/crocodilians"} Crocodilians
+          %li
+            %a{:href => "/listings/lizards"} Lizards
+          %li
+            %a{:href => "/listings/amphibians"} Amphibians
+          %li
+            %a{:href => "/listings/turtles-tortoises"} Turtles &amp; Tortoises
+
   .small-12.columns.no-padding
-    .rounded-panel
-      %table.floating-table.small-12.columns
-        %tbody
-          %tr
-            %th
-            %th Name
-            %th Price
-            %th List Start
-            %th List End
-            %th Status
-          %tr
-            %td.thumb-cell
-              = image_tag "http://www.placehold.it/40/40"
-            %td
-              %a{:href => "/plans/6"} Bearded Dragon
-            %td $300.00
-            %td Active
-            %td
-            %td
+    .pills-content
+      #active-listings.content.active
+        .rounded-panel
+          %table.floating-table.small-12.columns
+            %tbody
+              %tr
+                %th
+                %th Name
+                %th Price
+                %th List Date
+                %th
+              - 5.times do 
+                %tr
+                  %td.thumb-cell
+                    = image_tag "http://www.placehold.it/40/40"
+                  %td.name-cell
+                    %a{:href => "/plans/6"} Bearded Dragon
+                  %td $300.00
+                  %td 03/04/2014
+                  %td.text-right
+                    %a{:href => "#"} Edit Listing
+                    %a.mark-sold{:href => "#"} Mark as Sold
+
+      #sold-listings.content
+          
+    

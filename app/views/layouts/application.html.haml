@@ -40,7 +40,8 @@
   - if user_signed_in?
     = render partial: "layouts/header"
   = yield
-  = render partial: "layouts/footer"
+  - if user_signed_in?
+    = render partial: "layouts/footer"
 
   // GoSquared
   :javascript

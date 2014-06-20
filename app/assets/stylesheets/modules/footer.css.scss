@@ -1,0 +1,30 @@
+.global-footer {
+  background: #fff;
+  border-top: 1px solid #e2e2e2;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: #acb1b4;
+  font-size: 11px;
+  margin-top: 50px;
+
+  .copyright {
+    float: left;
+  }
+  .legal-links {
+    float: right;
+    margin-bottom: 0;
+    a {
+      font-size: 13px;
+    }
+  }
+  .footer-logo {
+    width: 105px;
+    margin-bottom: 20px;
+    float: left;
+  }
+  .social-icons {
+    float: right;
+    font-size: 30px;
+    margin-bottom: 0;
+  }
+}
