@@ -9,7 +9,7 @@ Tegu::Application.routes.draw do
     match "/(*path)" => redirect {|params, req| "//www.fauna.net/#{params[:path]}"},  via: [:get, :post]
   end
 
-  root 'listings#index'
+  root 'landing#index'
 
   # vanity user scopes
   get ':handle' => "users#show", as: :user, constraints: HandleRoute.new
