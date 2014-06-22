@@ -38,7 +38,7 @@ $(document).ready ->
       (data, callback) ->
         # console.log data
         # replace empty image in document
-        $("li.empty:first").replaceWith(data)
+        Tegu.ListingForm.replace_empty_image(data)
         # init cloudinary
         Tegu.ListingForm.init_cloudinary()
     ]

@@ -29,12 +29,15 @@ class Tegu.ListingForm
       success: (data) ->
         callback(null, data) if callback
 
-  @replace_images: (data) ->
-    $(".image-grid").html(data)
-
   @get_new_image: (callback=null) ->
     $.ajax "/listing_forms/new_image.js",
       type: 'GET'
       dataType: 'html'
       success: (data) ->
         callback(null, data) if callback
+
+  @replace_empty_image: (data) ->
+    $(".image-grid li.empty:first").replaceWith(data)
+
+  @replace_images: (data) ->
+    $(".image-grid").html(data)
