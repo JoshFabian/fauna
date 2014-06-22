@@ -39,8 +39,7 @@ $(document).ready ->
         # console.log data
         # replace empty image in document
         $("li.empty:first").replaceWith(data)
-        for li in $(".image-grid li")
-          # initialize cloudinary
-          $(li).find("input.cloudinary-fileupload[type=file]").cloudinary_fileupload()
+        # init cloudinary
+        Tegu.ListingForm.init_cloudinary()
     ]
     

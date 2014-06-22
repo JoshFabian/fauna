@@ -35,9 +35,11 @@ Tegu::Application.routes.draw do
     get :recent, on: :collection
   end
   resources :listing_forms, only: [] do
-    get :subcategories, on: :collection
+    get :images, on: :member
     get :new_image, on: :collection
+    get :subcategories, on: :collection
   end
+
   match 'listings/search' => "listings#by_search", as: :listing_search, via: [:get, :post]
   get 'listings/:category(/:subcategory)' => "listings#by_category", constraints: {category: /[a-z-]+/},
     as: :listing_category

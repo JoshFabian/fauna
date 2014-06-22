@@ -25,6 +25,14 @@ class Tegu.ListingApi
       success: (data) ->
         callback(null, data) if callback
 
+  @delete_image: (listing_id, image_id, token, callback = null) ->
+    api = "/api/v1/listings/#{listing_id}/images/#{image_id}?token=#{token}"
+    $.ajax api,
+      type: 'DELETE'
+      dataType: 'json'
+      success: (data) ->
+        callback(null, data) if callback
+
   @put_event: (id, event, token, callback = null) ->
     api = "/api/v1/listings/#{id}/event/#{event}?token=#{token}"
     $.ajax api,

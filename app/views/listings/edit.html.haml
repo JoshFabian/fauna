@@ -12,7 +12,7 @@
         %hr
         .listing-field
           %label Title
-          = f.text_field :title, autofocus: false, required: true, class: "", placeholder: "Try to describe your reptile the way a buyer would."
+          = f.text_field :title, autofocus: false, required: true, class: nil, placeholder: "Try to describe your reptile the way a buyer would."
         %hr
         .listing-field
           %label Photos
@@ -20,19 +20,11 @@
             %li Use up to 5 different images to better increase the chances of selling.
             %li Recommended image size is 600 x 400.
           %ul.image-grid.small-block-grid-5
-            - i = 0
-            - @images.each_with_index do |image, index|
-              = render(partial: "listings/edit_current_image", locals: {image: image})
-              - i += 1
-            = render(partial: "listings/edit_new_image")
-            - i += 1
-            - while i < 5
-              = render(partial: "listings/edit_empty_image")
-              - i += 1
+            = render(partial: "listings/edit_images")
         %hr
         .listing-field
           %label Description
-          = f.text_area :description, autofocus: false, required: true, class: "", placeholder: "Try to answer the questions buyers will have. Tell the reptile's story and explain why it's special."
+          = f.text_area :description, autofocus: false, required: true, class: nil, placeholder: "Try to answer the questions buyers will have. Tell the reptile's story and explain why it's special."
         %hr 
         .listing-field
           %label Price

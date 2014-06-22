@@ -12,10 +12,25 @@ class Tegu.ListingForm
         number = numeral(number/100).format('$0,0.00')
         $(this).val(number)
       catch
-      
+
+  @init_cloudinary: () ->
+    for li in $(".image-grid li")
+      # initialize cloudinary
+      $(li).find("input.cloudinary-fileupload[type=file]").cloudinary_fileupload()
+
   @init_currency: () ->
     if $("input.numeral").length > 0
       Tegu.ListingForm.format_currency()
+
+  @get_images: (listing_id, callback=null) ->
+    $.ajax "/listing_forms/#{listing_id}/images.js",
+      type: 'GET'
+      dataType: 'html'
+      success: (data) ->
+        callback(null, data) if callback
+
+  @replace_images: (data) ->
+    $(".image-grid").html(data)
 
   @get_new_image: (callback=null) ->
     $.ajax "/listing_forms/new_image.js",

@@ -4,7 +4,7 @@ $(document).ready ->
     e.preventDefault()
     return if $(this).hasClass('active')
     image_transform_url = Tegu.CloudinaryHelper.transform($(this).data('image-url'), $(this).data('transform'))
-    console.log "image transform to #{image_transform_url}"
+    console.log "image load #{image_transform_url}"
     # remove active class
     $(".listing-images .image-grid li").removeClass('active')
     # add active class

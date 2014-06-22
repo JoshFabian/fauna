@@ -91,6 +91,14 @@ module Endpoints
         {listing: @listing}
       end
 
+      desc "Delete listing image"
+      delete ':listing_id/images/:id' do
+        @listing = current_user.listings.find(params.listing_id)
+        @image = @listing.images.find(params.id)
+        @listing.images.destroy(@image)
+        {listing: @listing.as_json(), event: 'delete'}
+      end
+
       desc "Create listing review"
       post ':id/reviews' do
         authenticate!
