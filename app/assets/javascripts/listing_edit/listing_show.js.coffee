@@ -1,15 +1,13 @@
 $(document).ready ->
 
-  $("a.remove-button, a.mark-sold").on 'click', (e) ->
+  $(".listing-images .image-grid li").on 'click', (e) ->
     e.preventDefault()
-    listing_id = $(this).data('listing-id')
-    console.log "listing:#{listing_id} marking as sold ..."
-    async.waterfall [
-      (callback) ->
-        # update listing state
-        Tegu.ListingApi.put_event(listing_id, 'sold', auth_token, callback)
-      (data, callback) ->
-        console.log data
-        # reload page
-        window.location.reload(true)
-    ]
+    return if $(this).hasClass('active')
+    image_transform_url = Tegu.CloudinaryHelper.transform($(this).data('image-url'), $(this).data('transform'))
+    console.log "image transform to #{image_transform_url}"
+    # remove active class
+    $(".listing-images .image-grid li").removeClass('active')
+    # add active class
+    $(this).addClass('active')
+    # replace image
+    $(".listing-images .main-image img").attr('src', image_transform_url)
