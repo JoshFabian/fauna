@@ -1,9 +1,9 @@
 $(document).ready ->
 
-  $("a.remove-button").on 'click', (e) ->
+  $("a.remove-button, a.mark-sold").on 'click', (e) ->
     e.preventDefault()
     listing_id = $(this).data('listing-id')
-    console.log "mark listing:#{listing_id} as sold"
+    console.log "listing:#{listing_id} marking as sold ..."
     async.waterfall [
       (callback) ->
         # update listing state

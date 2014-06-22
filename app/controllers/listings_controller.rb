@@ -25,8 +25,17 @@ class ListingsController < ApplicationController
     end
   end
 
-  # GET /listings/manage
+  # GET /:handle/listings/manage
+  # GET /:handle/listings/manage?category_id=1&state=approved
   def manage
+    @state = params[:state].present? ? params[:state] : 'approved'
+    @category_id = params[:category_id]
+    @user = User.find_by_handle(params[:handle])
+    @listings = @user.listings.where(state: @state)
+    if @category_id.present?
+      @listings = @listings.search(filter: {term: {category_ids: @category_id}}).records
+    end
+    # @listings = Listing.search(filter: {term: {user_id: @user.id}}).records.where(state: @state)
   end
 
   # GET /listings/:category
@@ -34,8 +43,6 @@ class ListingsController < ApplicationController
   def by_category
     @token = params[:category].titleize.split.first
     @subtoken = params[:subcategory].to_s.titleize.split.first
-    # @categories = Category.search(query: {match: {name: @token}}, filter: {term: {level: 1}}).records
-    # @category = @categories.first
     @category = Category.roots.find_by_match(@token)
     @subcategory = @category.children.find_by_match(@subtoken) if @subtoken.present?
     @category_ids = @subcategory.present? ? @subcategory.id : @category.id

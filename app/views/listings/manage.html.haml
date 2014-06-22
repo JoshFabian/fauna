@@ -3,38 +3,25 @@
     %h3 Manage Listings
   .listing-nav.small-12.columns
     %ul.pills{:'data-tab' => ""}
-      %li.tab-title.active
-        %a{:href => "#active-listings"} Active Listings
-      %li.tab-title
-        %a{:href => "#sold-listings"} Sold Listings
-    .listing-search
-      .search
-        %form.search-form{"accept-charset" => "UTF-8", :action => "/listings/search", :method => "post"}
-          %div{:style => "margin:0;padding:0;display:inline"}
-            %input{:name => "utf8", :type => "hidden", :value => "✓"}
-              %input{:name => "authenticity_token", :type => "hidden", :value => "L0V8zrryY0oVAfKd24EMQaok+d2qGvjlYNu3bZ25IP4="}/
-          %input#_query{:name => "query", :placeholder => "Search ...", :type => "text"}
-            %i.icon.ion-ios7-search-strong
+      %li.tab-title{class: [@state == 'approved' ? 'active' : nil]}
+        %a{href: url_for(state: 'approved')} Active Listings
+      %li.tab-title{class: [@state == 'sold' ? 'active' : nil]}
+        %a{href: url_for(state: 'sold')} Sold Listings
+    -# .listing-search
+      -# .search
+      -#   %form.search-form{"accept-charset" => "UTF-8", :action => "/listings/search", :method => "post"}
+      -#     %div{:style => "margin:0;padding:0;display:inline"}
+      -#       %input{:name => "utf8", :type => "hidden", :value => "✓"}
+      -#         %input{:name => "authenticity_token", :type => "hidden", :value => "L0V8zrryY0oVAfKd24EMQaok+d2qGvjlYNu3bZ25IP4="}/
+      -#     %input#_query{:name => "query", :placeholder => "Search ...", :type => "text"}
+      -#       %i.icon.ion-ios7-search-strong
+
   .listing-subhead
     %header.global-subhead
       .row
         %ul.inline-list
-          %li
-            %a{:href => "/listings/pythons"} Pythons
-          %li
-            %a{:href => "/listings/boas"} Boas
-          %li
-            %a{:href => "/listings/colubrids"} Colubrids
-          %li
-            %a{:href => "/listings/venomous"} Venomous
-          %li
-            %a{:href => "/listings/crocodilians"} Crocodilians
-          %li
-            %a{:href => "/listings/lizards"} Lizards
-          %li
-            %a{:href => "/listings/amphibians"} Amphibians
-          %li
-            %a{:href => "/listings/turtles-tortoises"} Turtles &amp; Tortoises
+          - Category.roots.order("position asc").each do |category|
+            %li{class: [@category_id == category.id ? 'active' : nil]}= link_to category.name, url_for(category_id: category.id, state: @state)
 
   .small-12.columns.no-padding
     .pills-content
@@ -48,17 +35,18 @@
                 %th Price
                 %th List Date
                 %th
-              - 5.times do 
+              - @listings.each do |listing|
                 %tr
                   %td.thumb-cell
-                    = image_tag "http://www.placehold.it/40/40"
+                    = image_tag cloudinary_url(listing.primary_image.full_public_id, transformation: [{height: 40, width: 40, crop: 'fill'}])
                   %td.name-cell
-                    %a{:href => "/plans/6"} Bearded Dragon
-                  %td $300.00
-                  %td 03/04/2014
+                    = link_to listing.title, user_listing_path(@user, listing)
+                  %td= number_to_currency(listing.price/100.0)
+                  %td= listing.created_at.to_s(:date_dow_ddmmyyyy)
                   %td.text-right
-                    %a{:href => "#"} Edit Listing
-                    %a.mark-sold{:href => "#"} Mark as Sold
+                    - if listing.approved?
+                      = link_to 'Edit Listing', edit_listing_path(listing)
+                      = link_to 'Mark as Sold', '#', class: 'mark-sold', :'data-listing-id' => listing.id
 
       #sold-listings.content
           
