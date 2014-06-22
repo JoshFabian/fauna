@@ -11,3 +11,7 @@ $(document).ready ->
     $(this).addClass('active')
     # replace image
     $(".listing-images .main-image img").attr('src', image_transform_url)
+
+  if $(".listing-images .image-grid li").length > 0
+    # console.log "init image carousel"
+    $(".listing-images .image-grid li:first").trigger 'click'
