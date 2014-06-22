@@ -36,6 +36,7 @@
               Sell
         %ul#drop1.f-dropdown{"data-dropdown-content" => ""}
           %li= link_to 'My Profile', user_path(current_user)
+          %li= link_to 'Manage Listings', user_manage_listings_path(current_user)
           %li= link_to 'My Purchases', user_purchases_path(current_user)
           %li= link_to 'Accounts Settings', plans_path
           - if current_user.roles?(:admin)

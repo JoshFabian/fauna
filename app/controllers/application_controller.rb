@@ -25,6 +25,20 @@ class ApplicationController < ActionController::Base
     login_path
   end
 
+  def acl_manage!(options={})
+    raise CanCan::AccessDenied, "Unauthorized" if !acl_manage?(options)
+  end
+
+  def acl_manage?(options={})
+    return true if current_user.roles?(:admin)
+    if options[:on].present?
+      current_user == options[:on]
+    end
+    false
+  rescue Exception => e
+    false
+  end
+
   def admin_role_required!
     raise CanCan::AccessDenied, "Unauthorized" unless user_signed_in? and current_user.roles?(:admin)
   end

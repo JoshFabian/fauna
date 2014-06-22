@@ -31,6 +31,7 @@ class ListingsController < ApplicationController
     @state = params[:state].present? ? params[:state] : 'approved'
     @category_id = params[:category_id]
     @user = User.find_by_handle(params[:handle])
+    acl_manage!(on: @user)
     @listings = @user.listings.where(state: @state)
     if @category_id.present?
       @listings = @listings.search(filter: {term: {category_ids: @category_id}}).records
