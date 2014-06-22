@@ -109,7 +109,7 @@ class ListingsController < ApplicationController
     @root2_categories = []
 
     respond_to do |format|
-      format.html
+      format.html { render(action: :edit) }
     end
   end
 
@@ -127,7 +127,7 @@ class ListingsController < ApplicationController
     @root2_categories = Category.where(level: 2, parent_id: @category.try(:id))
 
     respond_to do |format|
-      format.html { render(action: :new) }
+      format.html
     end
   end
 
