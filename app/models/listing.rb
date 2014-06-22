@@ -50,6 +50,10 @@ class Listing < ActiveRecord::Base
     categories.collect{ |o| o.name.downcase }
   end
 
+  def is_editable?
+    approved? and (self.created_at > 3.days.ago)
+  end
+
   def price=(s)
     write_attribute(:price, to_cents(s))
   end

@@ -7,11 +7,11 @@ class ListingTest < ActiveSupport::TestCase
     end
 
     it "should create with required attributes" do
-      @listing = @user.listings.create!(title: "Title", price: 100)
+      @listing = @user.listings.create!(title: "Title 1", price: 100)
     end
 
     it "should start in approved state" do
-      @listing = @user.listings.create!(title: "Title", price: 100)
+      @listing = @user.listings.create!(title: "Title 2", price: 100)
       @listing.state.must_equal 'approved'
     end
   end
@@ -31,6 +31,20 @@ class ListingTest < ActiveSupport::TestCase
       @listing.update_attributes(title: "Tegu Lizard")
       @listing.reload
       @listing.slug.must_equal "tegu-lizard"
+    end
+  end
+
+  describe "editable" do
+    before do
+      @user = Fabricate(:user)
+      @listing = Fabricate(:listing, user: @user)
+    end
+
+    it "should be editable for 3 days after approval" do
+      @listing.update_attributes(created_at: 71.hours.ago)
+      @listing.is_editable?.must_equal true
+      @listing.update_attributes(created_at: 73.hours.ago)
+      @listing.is_editable?.must_equal false
     end
   end
 

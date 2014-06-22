@@ -25,6 +25,10 @@ class ApplicationController < ActionController::Base
     login_path
   end
 
+  def acl_editable!(options={})
+    raise CanCan::AccessDenied, "Unauthorized" if !options[:on].is_editable?
+  end
+
   def acl_manage!(options={})
     raise CanCan::AccessDenied, "Unauthorized" if !acl_manage?(options)
   end
@@ -32,9 +36,14 @@ class ApplicationController < ActionController::Base
   def acl_manage?(options={})
     return true if current_user.roles?(:admin)
     if options[:on].present?
-      current_user == options[:on]
+      if options[:on].is_a?(Listing)
+        current_user.id == options[:on].user_id
+      elsif options[:on].is_a?(User)
+        current_user == options[:on]
+      else
+        false
+      end
     end
-    false
   rescue Exception => e
     false
   end
