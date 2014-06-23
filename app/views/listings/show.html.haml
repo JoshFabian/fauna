@@ -24,10 +24,10 @@
           %li.tab-title{:'data-pill' => 'shipping'}
             %a{href: "#"} Shipping
         .pills-content
-          #description.content.active
+          #description.content
             %p= @listing.description
           #reviews.content.hide
-            %p Reviews content goes here...
+            = render(partial: "reviews/review", locals: {reviews: @reviews})
           #shipping.content.hide
             %p Shipping content goes here...
 

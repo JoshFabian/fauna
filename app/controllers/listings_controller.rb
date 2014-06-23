@@ -93,6 +93,7 @@ class ListingsController < ApplicationController
     @subcategory = @categories.select{ |o| o.level == 2 }.first
     @all_images = @listing.images.order("position asc")
     @main_image = @all_images.first
+    @reviews = @listing.reviews
 
     @other_listings = current_user.listings.approved.order("id desc").limit(2)
   end
