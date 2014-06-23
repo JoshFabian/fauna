@@ -17,19 +17,19 @@
               = image_tag cloudinary_url(image.full_public_id, transformation: [{width: 110, height: 80, crop: 'fill'}])
       .small-12.columns
         %ul.pills{:'data-tab' => ""}
-          %li.tab-title.active
-            %a{:href => "#description"} Description
-          %li.tab-title
-            %a{:href => "#reviews"} Reviews
-          %li.tab-title
-            %a{:href => "#shipping"} Shipping
+          %li.tab-title.active{:'data-pill' => 'description'}
+            %a{href: "#"} Description
+          %li.tab-title{:'data-pill' => 'reviews'}
+            %a{href: "#"} Reviews
+          %li.tab-title{:'data-pill' => 'shipping'}
+            %a{href: "#"} Shipping
         .pills-content
           #description.content.active
             %p= @listing.description
-          #reviews.content
-            %p Second panel content goes here...
-          #shipping.content
-            %p Third panel content goes here...
+          #reviews.content.hide
+            %p Reviews content goes here...
+          #shipping.content.hide
+            %p Shipping content goes here...
 
     .listing-aside.small-5.columns
       .category-breadcrumbs
