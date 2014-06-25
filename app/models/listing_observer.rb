@@ -1,6 +1,11 @@
 class ListingObserver < ActiveRecord::Observer
   include Loggy
 
+  def after_create(listing)
+    SegmentListing.track_listing_created(listing)
+  rescue Exception => e
+  end
+
   def after_save(listing)
     if listing.sold?
       listing.__elasticsearch__.delete_document

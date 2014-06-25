@@ -47,6 +47,7 @@ end
 gem 'aasm'
 gem 'acts_as_list'
 gem 'acts_as_tree'
+gem 'analytics-ruby', require: 'segment/analytics'
 gem 'attachinary'
 gem 'bitmask_attributes'
 gem 'cancan'
