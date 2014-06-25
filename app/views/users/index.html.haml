@@ -5,6 +5,9 @@
       %th Email
       %th Handle
       %th Roles
+      %th Plans
+      %th Credits
+      %th Actions
 
     - @users.each do |user|
       %tr
@@ -12,3 +15,8 @@
         %td= user.email
         %td= user.handle
         %td= user.roles.map(&:to_s).join(',')
+        %td= user.subscriptions.collect(&:name).join(', ')
+        %td
+          = user.listing_credits
+          %span.right= link_to '+1', '#', class: 'listing-credits-add', :'data-user-id' => user.id
+        %td

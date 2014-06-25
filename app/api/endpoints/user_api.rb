@@ -107,6 +107,13 @@ module Endpoints
         logger.post("tegu.api", log_data.merge({event: 'user.cover_images.update', user_id: @user.id}))
         {user: {id: @user.id, cover_images: @images.as_json(only: [:id, :position])}}
       end
+
+      desc "Add user listing credits"
+      put ':id/credits/add/:number' do
+        @user = User.find(params.id)
+        @user.increment!(:listing_credits, 1)
+        {user: @user.as_json(only: [:id, :listing_credits])}
+      end
     end
 
   end

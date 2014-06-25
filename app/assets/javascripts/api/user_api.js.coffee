@@ -1,4 +1,12 @@
 class Tegu.UserApi
+  @add_credits: (user_id, token, callback=null) ->
+    api = "/api/v1/users/#{user_id}/credits/add/1?token=#{token}"
+    $.ajax api,
+      type: 'PUT'
+      dataType: 'json'
+      success: (data) ->
+        callback(null, data) if callback
+
   @get_verified: (user_id, token, callback=null) ->
     api = "/api/v1/users/#{user_id}/verified?token=#{token}"
     $.ajax api,
