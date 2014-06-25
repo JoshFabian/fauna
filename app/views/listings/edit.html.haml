@@ -343,7 +343,12 @@
                   .input-group.price-input
                     %label $
                     %input.money.text.text-small{:type => "text", :placeholder => "0.00"}       
-                  
+                
+          %input#checkbox1{:type => "checkbox"}
+            %label{:for => "checkbox1"} 
+              Allow Free Local Pickup 
+              %span.has-tip.tip-top{"data-tooltip" => "", :title => "Allows buyers to come to you and pick up the animal in person."} 
+                %i.icon.ion-help-circled
     
         %hr
         = f.submit @save_title, class: 'button'
