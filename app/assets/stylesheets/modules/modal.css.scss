@@ -1,4 +1,34 @@
 .reveal-modal {
   border-radius: 5px;
   box-shadow: none;
+  textarea {
+    height: 100px;
+    box-shadow: none;
+    border-radius: 3px;
+  }
+  .orange-button {
+    margin-bottom: 0;
+  }
+}
+
+#welcomeModal {
+  padding: 0;
+  overflow: hidden;
+  border: none;
+  .modal-image {
+    width: 275px;
+    float: left;
+  }
+  .modal-content {
+    text-align: center;
+    position: relative;
+    top: 85px;
+    .modal-logo {
+      width: 150px;
+      margin-bottom: 15px;
+    }
+    .social-links {
+      .twitter-share-button { width: 80px !important; }
+    }
+  }
 }

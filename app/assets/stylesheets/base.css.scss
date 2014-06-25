@@ -5,6 +5,12 @@ body {
   min-width: 1075px;
 }
 
+textarea {
+  height: 100px;
+  box-shadow: none;
+  border-radius: 3px;
+}
+
 .floating-table {
   border: none;
   padding: 0 !important;
