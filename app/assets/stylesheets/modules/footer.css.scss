@@ -26,5 +26,17 @@
     float: right;
     font-size: 30px;
     margin-bottom: 0;
+    .ion-social-twitter {
+      color: #55acee;
+      &:hover {
+        color: darken(#55acee, 10);
+      }
+    }
+    .ion-social-facebook {
+      color: #3b5998;
+      &:hover {
+        color: darken(#3b5998, 10);
+      }
+    }
   }
 }
