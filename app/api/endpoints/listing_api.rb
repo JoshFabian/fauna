@@ -9,7 +9,10 @@ module Endpoints
     resource :listings do
       helpers do
         def listing_params
-          ActionController::Parameters.new(params).require(:listing).permit(:description, :price, :title)
+          ActionController::Parameters.new(params).require(:listing).permit(:description, :price, :shipping_from,
+            :shipping_time, :title).tap do |whitelisted|
+              whitelisted[:shipping_prices] = params[:listing][:shipping_prices]
+          end
         end
 
         def listing_image_params(hash)
@@ -47,6 +50,7 @@ module Endpoints
             @listing.categories.delete(category_id)
           end
         end
+        logger.post("tegu.api", log_data.merge({event: 'listing.create', listing_id: @listing.id}))
         {listing: @listing}
       end
 
@@ -76,6 +80,7 @@ module Endpoints
             @listing.categories.delete(category_id)
           end
         end
+        logger.post("tegu.api", log_data.merge({event: 'listing.update', listing_id: @listing.id}))
         {listing: @listing}
       end
 
@@ -86,8 +91,9 @@ module Endpoints
           @listing.send("#{params.event}")
           @listing.save
         rescue Exception => e
-          
         end
+        logger.post("tegu.api", log_data.merge({event: 'listing.event', listing_id: @listing.id,
+          event: params.event}))
         {listing: @listing}
       end
 
@@ -110,6 +116,7 @@ module Endpoints
             @review.ratings.create(name: name, rating: rating)
           end
         end
+        logger.post("tegu.api", log_data.merge({event: 'listing.review', listing_id: @listing.id}))
         {review: @review.as_json().merge(ratings: @review.ratings)}
       end
 

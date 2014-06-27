@@ -37,6 +37,7 @@ Tegu::Application.routes.draw do
   resources :listing_forms, only: [] do
     get :images, on: :member
     get :new_image, on: :collection
+    get :shipping_table, on: :member
     get :subcategories, on: :collection
   end
 

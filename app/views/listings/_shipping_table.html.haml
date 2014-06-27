@@ -1,0 +1,29 @@
+%table.shipping-table
+  - if @countries.present?
+    %thead
+      %tr
+        %th.ship-to Ships to
+        %th Cost
+
+    %tbody
+      - @countries.each do |country|
+        %tr
+          %td.country
+            .input-group-location= country.try(:name)
+          %td
+            .input-group.price-input
+              %label $
+              %input.money.text.text-small{type: "text", placeholder: "0.00", name: "listing[shipping_prices][#{country.try(:code)}]", value: @shipping_prices[country.try(:code)]}
+
+      -# special everywhere else
+      %tr
+        %td.country
+          .input-group-location
+            Everywhere Else
+            %span.has-tip.tip-top{"data-tooltip" => "", title: "Sets the shipping costs for EVERY country not covered by country specific shipping costs. <br>This is optional."} 
+              %i.icon.ion-help-circled
+
+        %td
+          .input-group.price-input
+            %label $
+            %input.money.text.text-small{type: "text", placeholder: "0.00", name: "listing[shipping_prices][everywhere]", value: @shipping_prices['everywhere']}

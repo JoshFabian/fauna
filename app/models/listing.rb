@@ -19,6 +19,10 @@ class Listing < ActiveRecord::Base
 
   belongs_to :user
 
+  serialize :shipping_prices, Hash
+
+  store :data, accessors: [:shipping_from, :shipping_time]
+
   # friendly_id :title, use: :slugged
   friendly_id :title, use: :scoped, scope: :user
 
