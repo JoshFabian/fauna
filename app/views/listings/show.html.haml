@@ -39,47 +39,13 @@
             - if @subcategory.present?
               %i.icon.ion-ios7-arrow-forward
               = link_to @subcategory.name, listing_category_path(@category.name.parameterize, @subcategory.name.parameterize)
+
       %h4= @listing.title
       %h1= number_to_currency(@listing.price.to_f/100.0, precision: 2)
-
-      - if @listing.sold?
-        .button.sold-button
-          This reptile has sold
-      - elsif current_user.try(:id) == @user.id
-        = link_to 'Edit Listing', user_edit_listing_path(@user, @listing.id), class: ['button', 'edit-listing', @listing.editable? ? nil : 'disabled']
-        = link_to 'Mark as Sold', user_edit_listing_path(@user, @listing.id), class: 'button edit-listing remove-button', :'data-listing-id' => @listing.id
-      - else
-        = link_to 'Checkout with Paypal', paypal_start_path(listing_id: @listing.id), class: 'button buy-button'
-        %a.remove-link{"data-reveal-id" => "myModal", :href => "#"} Report Listing
-        #myModal.reveal-modal.small{"data-reveal" => ""}
-          %h2 Report Listing
-          %p.lead Why are you reporting this?
-          %textarea
-          %a.button.orange-button.right{:href => "#"} Report
-          %a.close-reveal-modal ×
-
-      .social-links
-        .fb-share-button{"data-type" => "button_count"}
-        %a.twitter-share-button{"data-lang" => "en", :href => "https://twitter.com/share"} Tweet
-        :javascript
-          !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
-
-      .user-widget
-        .author-image.small-2.columns
-          = image_tag user_avatar_image_thumbnail(@user.avatar_image)
-        .author-name.small-10.columns
-          %h5= link_to @user.handle, user_path(@user)
-          %p Chicago, IL
-        .author-bio.small-12.columns
-          %p= @user.about
-
-        - if @other_listings.present?
-          .more-from-author.small-12.columns
-            %span More from <strong>#{@user.handle}</strong>
-            .more-listings
-              %ul.small-block-grid-2
-                - @other_listings.each do |other_listing|
-                  = render(partial: "listings/listing_tile", locals: {listing: other_listing, user: other_listing.user})
+      -# = render partial: "listings/listing_sidebar"
+      = render partial: "listings/listing_sidebar_checkout"
+      
+      
 
     #fb-root
     :javascript

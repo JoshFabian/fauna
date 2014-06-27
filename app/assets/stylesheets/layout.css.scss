@@ -55,6 +55,17 @@
     margin: 0 5px;
   }
 }
+.shipping-price {
+  font-size: 24px;
+  color: #969ba1;
+  margin-top: -10px;
+  margin-bottom: 20px;
+}
+.shipping-selector {
+  display: inline;
+  width: 250px;
+  margin-left: 5px;
+}
 .user-widget {
   @extend .clearfix;
   border: 3px solid #eeeeee;

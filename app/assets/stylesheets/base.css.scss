@@ -11,6 +11,10 @@ textarea {
   border-radius: 3px;
 }
 
+ul {
+  list-style-type: none;
+}
+
 .floating-table {
   border: none;
   padding: 0 !important;
@@ -40,43 +44,6 @@ textarea {
 
 .highlight {
   color: $orange;
-}
-
-.button {
-  border-radius: 3px;
-  &.btn-outline {
-    background: transparent;
-    border: 2px solid;
-    padding-top: 14px;
-    padding-bottom: 14px;
-    &:hover {
-      background: rgba(255,255,255,.1);
-    }
-  }
-  &.secondary {
-    background: #7f8c8d !important;
-    &:hover {
-      color: #fff !important;
-      background: darken(#7f8c8d, 10) !important;
-    }
-  }
-  &.btn-white {
-    background: #fff;
-    color: #222;
-    &:hover {
-      background: darken(#fff, 15);
-      color: #222;
-    }
-  }
-  &.buy-button {
-    background-color: #16a085;
-    color: #fff;
-    padding: 15px 70px;
-    border-radius: 2px;
-    &:hover {
-      background-color: darken(#16a085, 10);
-    }
-  }
 }
 
 .form-button {
