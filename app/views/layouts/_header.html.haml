@@ -24,7 +24,7 @@
           = link_to "#" do
             %i.icon.ion-android-inbox
         .header-cta
-          %a.button{:href => new_listing_path}
+          = link_to new_listing_path, class: 'button' do
             .credit-count
               - if current_user.subscriptions_count > 0
                 -# subscriptions have infinite credits

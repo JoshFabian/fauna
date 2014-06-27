@@ -42,9 +42,9 @@ class ListingTest < ActiveSupport::TestCase
 
     it "should be editable for 3 days after approval" do
       @listing.update_attributes(created_at: 71.hours.ago)
-      @listing.is_editable?.must_equal true
+      @listing.editable?.must_equal true
       @listing.update_attributes(created_at: 73.hours.ago)
-      @listing.is_editable?.must_equal false
+      @listing.editable?.must_equal false
     end
   end
 

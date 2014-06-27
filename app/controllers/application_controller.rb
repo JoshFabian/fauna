@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def acl_editable!(options={})
-    raise CanCan::AccessDenied, "Unauthorized" if !options[:on].is_editable?
+    raise CanCan::AccessDenied, "Unauthorized" if !options[:on].editable?
   end
 
   def acl_manage!(options={})

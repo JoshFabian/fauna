@@ -45,7 +45,7 @@
                   %td= listing.created_at.to_s(:date_dow_ddmmyyyy)
                   %td.text-right
                     - if listing.approved?
-                      = link_to 'Edit Listing', edit_listing_path(listing) if listing.is_editable?
+                      = link_to 'Edit Listing', edit_listing_path(listing) if listing.editable?
                       = link_to 'Mark as Sold', '#', class: 'mark-sold', :'data-listing-id' => listing.id
 
       #sold-listings.content

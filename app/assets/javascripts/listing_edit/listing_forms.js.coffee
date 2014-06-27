@@ -36,6 +36,11 @@ class Tegu.ListingForm
       success: (data) ->
         callback(null, data) if callback
 
+  @add_uploaded_image: (image_box, image_url, image_width, image_height) ->
+    $(image_box).find("div:first").addClass('hide')
+    $(image_box).append("<img src='#{image_url}'></img>")
+    $(image_box).siblings('.dimensions').html("#{image_width} x #{image_height}")
+
   @replace_empty_image: (data) ->
     $(".image-grid li.empty:first").replaceWith(data)
 

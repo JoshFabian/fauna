@@ -2,3 +2,5 @@
   .image-box
     = image_tag listing_image_thumbnail(image)
   = link_to "remove", "#", :'data-listing-id' => @listing.id, :'data-image-id' => image.id, class: 'image-delete'
+  .dimensions
+    = listing_image_dimensions(image)

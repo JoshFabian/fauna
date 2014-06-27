@@ -1,13 +1,13 @@
 %li
   .image-box.add
     %div
-      = cl_image_upload_tag(:image, :html => {:class => 'optional hide'})
-      .progress.round.center.hide{:style => 'padding: 0px; width: 10%;'}
+      = cl_image_upload_tag(:image, html: {class: 'optional hide'})
+      .progress.round.center.hide{style: 'padding: 0px; width: 10%;'}
         %span.meter
-      = hidden_field :image_params, nil, :name => 'image_params[]', :class => 'image-params'
+      = hidden_field :image_params, nil, name: 'image_params[]', class: 'image-params'
       .add-images-button
         .button-add
         %span Add Photo
-      %a.remove{:href => "#"}
-  .dimensions
+      %a.remove{href: "#"}
+  .dimensions.margin-top
     600x400

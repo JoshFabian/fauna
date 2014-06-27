@@ -50,7 +50,7 @@ class Listing < ActiveRecord::Base
     categories.collect{ |o| o.name.downcase }
   end
 
-  def is_editable?
+  def editable?
     approved? and (self.created_at > 3.days.ago)
   end
 

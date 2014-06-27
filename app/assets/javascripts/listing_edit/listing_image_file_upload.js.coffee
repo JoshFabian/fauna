@@ -26,13 +26,13 @@ $(document).ready ->
     $(this).siblings(".image-params").val(JSON.stringify(data.result))
     # hide progress bar
     # $(this).siblings(".progress").hide()
-    # show image preview
+    # get transformed image
     image_url = Tegu.CloudinaryHelper.transform(data.result.url, "c_fit,w_200,h_200")
     image_box = $(this).closest(".image-box")
-    $(image_box).find("div:first").addClass('hide')
-    $(image_box).append("<img src='#{image_url}'></img>")
     async.waterfall [
       (callback) ->
+        # show image preview
+        Tegu.ListingForm.add_uploaded_image(image_box, image_url, data.result.width, data.result.height)
         # get new image partial
         Tegu.ListingForm.get_new_image(callback)
       (data, callback) ->
