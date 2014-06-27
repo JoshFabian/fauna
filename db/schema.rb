@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140618211830) do
+ActiveRecord::Schema.define(version: 20140627174310) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -75,14 +75,16 @@ ActiveRecord::Schema.define(version: 20140618211830) do
 
   create_table "listings", force: true do |t|
     t.integer  "user_id"
-    t.string   "state",        limit: 20
-    t.string   "title",        limit: 100
-    t.string   "slug",         limit: 100
+    t.string   "state",           limit: 20
+    t.string   "title",           limit: 100
+    t.string   "slug",            limit: 100
     t.text     "description"
     t.integer  "price"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "images_count",             default: 0
+    t.integer  "images_count",                default: 0
+    t.text     "shipping_prices"
+    t.text     "data"
   end
 
   add_index "listings", ["created_at"], name: "index_listings_on_created_at"

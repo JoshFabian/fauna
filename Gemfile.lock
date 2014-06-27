@@ -63,6 +63,11 @@ GEM
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.1.0)
+    carmen (1.0.1)
+      unicode_utils (~> 1.4.0)
+    carmen-rails (1.0.1)
+      carmen (~> 1.0.0)
+      rails
     celluloid (0.15.2)
       timers (~> 1.1.0)
     clamp (0.6.3)
@@ -377,6 +382,7 @@ GEM
     uglifier (2.5.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    unicode_utils (1.4.0)
     unicorn (4.8.3)
       kgio (~> 2.6)
       rack
@@ -405,6 +411,8 @@ DEPENDENCIES
   bitmask_attributes
   byebug
   cancan
+  carmen
+  carmen-rails
   cloudinary
   coffee-rails (~> 4.0.0)
   configliere

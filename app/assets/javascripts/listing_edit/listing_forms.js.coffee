@@ -36,6 +36,13 @@ class Tegu.ListingForm
       success: (data) ->
         callback(null, data) if callback
 
+  @get_shipping_table: (listing_id, shipping_from, callback=null) ->
+    $.ajax "/listing_forms/#{listing_id}/shipping_table.js?shipping_from=#{shipping_from}",
+      type: 'GET'
+      dataType: 'html'
+      success: (data) ->
+        callback(null, data) if callback
+
   @add_uploaded_image: (image_box, image_url, image_width, image_height) ->
     $(image_box).find("div:first").addClass('hide')
     $(image_box).append("<img src='#{image_url}'></img>")

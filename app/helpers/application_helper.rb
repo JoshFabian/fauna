@@ -16,6 +16,11 @@ module ApplicationHelper
     "http://www.placehold.it/#{size}/#{size}"
   end
 
+  def listing_shipping_times(options={})
+    ['1 business day', '1-2 business days', '1-3 business days', '3-5 business days', '1-2 weeks',
+     '2-3 weeks', '3-4 weeks']
+  end
+
   def user_avatar_image_profile(image, size=100)
     cloudinary_url(image.full_public_id, transformation: [{width: 200, height: 200, crop: 'fill'}])
   rescue Exception => e
