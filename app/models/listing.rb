@@ -21,9 +21,8 @@ class Listing < ActiveRecord::Base
 
   serialize :shipping_prices, Hash
 
-  store :data, accessors: [:shipping_from, :shipping_time]
+  store :data, accessors: [:shipping_from, :shipping_time, :local_pickup]
 
-  # friendly_id :title, use: :slugged
   friendly_id :title, use: :scoped, scope: :user
 
   aasm column: 'state' do

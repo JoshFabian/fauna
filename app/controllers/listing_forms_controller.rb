@@ -23,7 +23,6 @@ class ListingFormsController < ApplicationController
   def shipping_table
     @listing = Listing.find(params[:id])
     @shipping_prices = @listing.shipping_prices
-
     @countries = []
     @countries.push(Country.coded(params[:shipping_from] || @listing.shipping_from))
 

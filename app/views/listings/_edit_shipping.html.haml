@@ -12,8 +12,9 @@
 
 = render(partial: "listings/shipping_table")
 
-%input#checkbox1{:type => "checkbox"}
-  %label{:for => "checkbox1"} 
-    Allow Free Local Pickup 
-    %span.has-tip.tip-top{"data-tooltip" => "", :title => "Allows buyers to come to you and pick up the animal in person."} 
-      %i.icon.ion-help-circled
+= check_box "listing", "local_pickup", {checked: @listing.local_pickup.to_i == 1}, 1, 0
+
+%label{for: "listing_local_pickup"}
+  Allow Free Local Pickup
+  %span.has-tip.tip-top{"data-tooltip" => "", :title => "Allows buyers to come to you and pick up the animal in person."} 
+    %i.icon.ion-help-circled
