@@ -1,0 +1,316 @@
+%h5 Shipping
+%label 
+  Processing Time
+  %span.has-tip.tip-top{"data-tooltip" => "", :title => "Processing time is the estimated time between an animal's purchase date and when it will be shipped. <br>Processing times can be changed at any time for current listings."} 
+    %i.icon.ion-help-circled
+%select#processing-time-id{:name => "processing_time_id"}
+  %option{:value => ""} Ready to ship in...
+  %optgroup{:label => "----------------------------"}
+  %option.range-1-1{:value => "1"} 1 business day
+  %option.range-1-2{:value => "2"} 1-2 business days
+  %option.range-1-3{:value => "3"} 1-3 business days
+  %option.range-3-5{:value => "4"} 3-5 business days
+  %option.range-5-10{:value => "6"} 1-2 weeks
+  %option.range-10-15{:value => "8"} 2-3 weeks
+  %option.range-15-20{:value => "9"} 3-4 weeks
+  %option.range-20-30{:value => "10"} 4-6 weeks
+  %option.range-30-40{:value => "11"} 6-8 weeks
+  
+
+%hr
+%label Ships from
+%select{:name => "ship_from_country"}
+  %option{:value => ""} Select a location...
+  %optgroup{:label => "----------------"}
+    %option{:value => "61"} Australia
+    %option{:value => "79"} Canada
+    %option{:value => "103"} France
+    %option{:value => "91"} Germany
+    %option{:value => "112"} Greece
+    %option{:value => "123"} Ireland
+    %option{:value => "128"} Italy
+    %option{:value => "131"} Japan
+    %option{:value => "167"} New Zealand
+    %option{:value => "177"} Portugal
+    %option{:value => "181"} Russia
+    %option{:value => "99"} Spain
+    %option{:value => "164"} The Netherlands
+    %option{:value => "105"} United Kingdom
+    %option{:value => "209"} United States
+  %optgroup{:label => "----------------"}
+    %option{:value => "55"} Afghanistan
+    %option{:value => "57"} Albania
+    %option{:value => "95"} Algeria
+    %option{:value => "250"} American Samoa
+    %option{:value => "228"} Andorra
+    %option{:value => "56"} Angola
+    %option{:value => "251"} Anguilla
+    %option{:value => "252"} Antigua and Barbuda
+    %option{:value => "59"} Argentina
+    %option{:value => "60"} Armenia
+    %option{:value => "253"} Aruba
+    %option{:value => "61"} Australia
+    %option{:value => "62"} Austria
+    %option{:value => "63"} Azerbaijan
+    %option{:value => "229"} Bahamas
+    %option{:value => "232"} Bahrain
+    %option{:value => "68"} Bangladesh
+    %option{:value => "237"} Barbados
+    %option{:value => "71"} Belarus
+    %option{:value => "65"} Belgium
+    %option{:value => "72"} Belize
+    %option{:value => "66"} Benin
+    %option{:value => "225"} Bermuda
+    %option{:value => "76"} Bhutan
+    %option{:value => "73"} Bolivia
+    %option{:value => "70"} Bosnia and Herzegovina
+    %option{:value => "77"} Botswana
+    %option{:value => "254"} Bouvet Island
+    %option{:value => "74"} Brazil
+    %option{:value => "255"} British Indian Ocean Territory
+    %option{:value => "231"} British Virgin Islands
+    %option{:value => "75"} Brunei
+    %option{:value => "69"} Bulgaria
+    %option{:value => "67"} Burkina Faso
+    %option{:value => "64"} Burundi
+    %option{:value => "135"} Cambodia
+    %option{:value => "84"} Cameroon
+    %option{:value => "79"} Canada
+    %option{:value => "222"} Cape Verde
+    %option{:value => "247"} Cayman Islands
+    %option{:value => "78"} Central African Republic
+    %option{:value => "196"} Chad
+    %option{:value => "81"} Chile
+    %option{:value => "82"} China
+    %option{:value => "257"} Christmas Island
+    %option{:value => "258"} Cocos (Keeling) Islands
+    %option{:value => "86"} Colombia
+    %option{:value => "259"} Comoros
+    %option{:value => "85"} Congo, Republic of
+    %option{:value => "260"} Cook Islands
+    %option{:value => "87"} Costa Rica
+    %option{:value => "118"} Croatia
+    %option{:value => "88"} Cuba
+    %option{:value => "338"} Curaçao
+    %option{:value => "89"} Cyprus
+    %option{:value => "90"} Czech Republic
+    %option{:value => "93"} Denmark
+    %option{:value => "92"} Djibouti
+    %option{:value => "261"} Dominica
+    %option{:value => "94"} Dominican Republic
+    %option{:value => "96"} Ecuador
+    %option{:value => "97"} Egypt
+    %option{:value => "187"} El Salvador
+    %option{:value => "111"} Equatorial Guinea
+    %option{:value => "98"} Eritrea
+    %option{:value => "100"} Estonia
+    %option{:value => "101"} Ethiopia
+    %option{:value => "262"} Falkland Islands (Malvinas)
+    %option{:value => "241"} Faroe Islands
+    %option{:value => "234"} Fiji
+    %option{:value => "102"} Finland
+    %option{:value => "103"} France
+    %option{:value => "115"} French Guiana
+    %option{:value => "263"} French Polynesia
+    %option{:value => "264"} French Southern Territories
+    %option{:value => "104"} Gabon
+    %option{:value => "109"} Gambia
+    %option{:value => "106"} Georgia
+    %option{:value => "91"} Germany
+    %option{:value => "107"} Ghana
+    %option{:value => "226"} Gibraltar
+    %option{:value => "112"} Greece
+    %option{:value => "113"} Greenland
+    %option{:value => "245"} Grenada
+    %option{:value => "265"} Guadeloupe
+    %option{:value => "266"} Guam
+    %option{:value => "114"} Guatemala
+    %option{:value => "108"} Guinea
+    %option{:value => "110"} Guinea-Bissau
+    %option{:value => "116"} Guyana
+    %option{:value => "119"} Haiti
+    %option{:value => "267"} Heard Island and McDonald Islands
+    %option{:value => "268"} Holy See (Vatican City State)
+    %option{:value => "117"} Honduras
+    %option{:value => "219"} Hong Kong
+    %option{:value => "120"} Hungary
+    %option{:value => "126"} Iceland
+    %option{:value => "122"} India
+    %option{:value => "121"} Indonesia
+    %option{:value => "124"} Iran
+    %option{:value => "125"} Iraq
+    %option{:value => "123"} Ireland
+    %option{:value => "269"} Isle of Man
+    %option{:value => "127"} Israel
+    %option{:value => "128"} Italy
+    %option{:value => "83"} Ivory Coast
+    %option{:value => "129"} Jamaica
+    %option{:value => "131"} Japan
+    %option{:value => "130"} Jordan
+    %option{:value => "132"} Kazakhstan
+    %option{:value => "133"} Kenya
+    %option{:value => "270"} Kiribati
+    %option{:value => "271"} Kosovo
+    %option{:value => "137"} Kuwait
+    %option{:value => "134"} Kyrgyzstan
+    %option{:value => "138"} Laos
+    %option{:value => "146"} Latvia
+    %option{:value => "139"} Lebanon
+    %option{:value => "143"} Lesotho
+    %option{:value => "140"} Liberia
+    %option{:value => "141"} Libya
+    %option{:value => "272"} Liechtenstein
+    %option{:value => "144"} Lithuania
+    %option{:value => "145"} Luxembourg
+    %option{:value => "273"} Macao
+    %option{:value => "151"} Macedonia
+    %option{:value => "149"} Madagascar
+    %option{:value => "158"} Malawi
+    %option{:value => "159"} Malaysia
+    %option{:value => "238"} Maldives
+    %option{:value => "152"} Mali
+    %option{:value => "227"} Malta
+    %option{:value => "274"} Marshall Islands
+    %option{:value => "275"} Martinique
+    %option{:value => "157"} Mauritania
+    %option{:value => "239"} Mauritius
+    %option{:value => "276"} Mayotte
+    %option{:value => "150"} Mexico
+    %option{:value => "277"} Micronesia, Federated States of
+    %option{:value => "148"} Moldova
+    %option{:value => "278"} Monaco
+    %option{:value => "154"} Mongolia
+    %option{:value => "155"} Montenegro
+    %option{:value => "279"} Montserrat
+    %option{:value => "147"} Morocco
+    %option{:value => "156"} Mozambique
+    %option{:value => "153"} Myanmar (Burma)
+    %option{:value => "160"} Namibia
+    %option{:value => "280"} Nauru
+    %option{:value => "166"} Nepal
+    %option{:value => "243"} Netherlands Antilles
+    %option{:value => "233"} New Caledonia
+    %option{:value => "167"} New Zealand
+    %option{:value => "163"} Nicaragua
+    %option{:value => "161"} Niger
+    %option{:value => "162"} Nigeria
+    %option{:value => "281"} Niue
+    %option{:value => "282"} Norfolk Island
+    %option{:value => "283"} Northern Mariana Islands
+    %option{:value => "176"} North Korea
+    %option{:value => "165"} Norway
+    %option{:value => "168"} Oman
+    %option{:value => "169"} Pakistan
+    %option{:value => "284"} Palau
+    %option{:value => "285"} Palestinian Territory, Occupied
+    %option{:value => "170"} Panama
+    %option{:value => "173"} Papua New Guinea
+    %option{:value => "178"} Paraguay
+    %option{:value => "171"} Peru
+    %option{:value => "172"} Philippines
+    %option{:value => "174"} Poland
+    %option{:value => "177"} Portugal
+    %option{:value => "175"} Puerto Rico
+    %option{:value => "179"} Qatar
+    %option{:value => "304"} Reunion
+    %option{:value => "180"} Romania
+    %option{:value => "181"} Russia
+    %option{:value => "182"} Rwanda
+    %option{:value => "286"} Saint Helena
+    %option{:value => "287"} Saint Kitts and Nevis
+    %option{:value => "244"} Saint Lucia
+    %option{:value => "288"} Saint Martin (French part)
+    %option{:value => "289"} Saint Pierre and Miquelon
+    %option{:value => "249"} Saint Vincent and the Grenadines
+    %option{:value => "290"} Samoa
+    %option{:value => "291"} San Marino
+    %option{:value => "292"} Sao Tome and Principe
+    %option{:value => "183"} Saudi Arabia
+    %option{:value => "185"} Senegal
+    %option{:value => "189"} Serbia
+    %option{:value => "293"} Seychelles
+    %option{:value => "186"} Sierra Leone
+    %option{:value => "220"} Singapore
+    %option{:value => "337"} Sint Maarten (Dutch part)
+    %option{:value => "191"} Slovakia
+    %option{:value => "192"} Slovenia
+    %option{:value => "242"} Solomon Islands
+    %option{:value => "188"} Somalia
+    %option{:value => "215"} South Africa
+    %option{:value => "294"} South Georgia and the South Sandwich Islands
+    %option{:value => "136"} South Korea
+    %option{:value => "339"} South Sudan
+    %option{:value => "99"} Spain
+    %option{:value => "142"} Sri Lanka
+    %option{:value => "184"} Sudan
+    %option{:value => "190"} Suriname
+    %option{:value => "295"} Svalbard and Jan Mayen
+    %option{:value => "194"} Swaziland
+    %option{:value => "193"} Sweden
+    %option{:value => "80"} Switzerland
+    %option{:value => "195"} Syria
+    %option{:value => "204"} Taiwan
+    %option{:value => "199"} Tajikistan
+    %option{:value => "205"} Tanzania
+    %option{:value => "198"} Thailand
+    %option{:value => "164"} The Netherlands
+    %option{:value => "296"} Timor-Leste
+    %option{:value => "197"} Togo
+    %option{:value => "297"} Tokelau
+    %option{:value => "298"} Tonga
+    %option{:value => "201"} Trinidad
+    %option{:value => "202"} Tunisia
+    %option{:value => "203"} Turkey
+    %option{:value => "200"} Turkmenistan
+    %option{:value => "299"} Turks and Caicos Islands
+    %option{:value => "300"} Tuvalu
+    %option{:value => "206"} Uganda
+    %option{:value => "207"} Ukraine
+    %option{:value => "58"} United Arab Emirates
+    %option{:value => "105"} United Kingdom
+    %option{:value => "209"} United States
+    %option{:value => "302"} United States Minor Outlying Islands
+    %option{:value => "208"} Uruguay
+    %option{:value => "248"} U.S. Virgin Islands
+    %option{:value => "210"} Uzbekistan
+    %option{:value => "221"} Vanuatu
+    %option{:value => "211"} Venezuela
+    %option{:value => "212"} Vietnam
+    %option{:value => "224"} Wallis and Futuna
+    %option{:value => "213"} Western Sahara
+    %option{:value => "214"} Yemen
+    %option{:value => "216"} Zaire (Democratic Republic of Congo)
+    %option{:value => "217"} Zambia
+    %option{:value => "218"} Zimbabwe
+
+%table
+  %thead
+    %tr
+      %th.ship-to Ships to
+      %th Cost
+
+  %tbody
+    %tr
+      %td.country
+        .input-group-location United States      
+      %td
+        .input-group.price-input
+          %label $
+          %input.money.text.text-small{:type => "text", :placeholder => "0.00"}       
+    %tr
+      %td.country
+        .input-group-location 
+          Everywhere Else
+          %span.has-tip.tip-top{"data-tooltip" => "", :title => "Sets the shipping costs for EVERY country not covered by country specific shipping costs. <br>This is optional."} 
+            %i.icon.ion-help-circled
+
+      %td
+        .input-group.price-input
+          %label $
+          %input.money.text.text-small{:type => "text", :placeholder => "0.00"}       
+      
+%input#checkbox1{:type => "checkbox"}
+  %label{:for => "checkbox1"} 
+    Allow Free Local Pickup 
+    %span.has-tip.tip-top{"data-tooltip" => "", :title => "Allows buyers to come to you and pick up the animal in person."} 
+      %i.icon.ion-help-circled
