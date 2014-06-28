@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140627174310) do
+ActiveRecord::Schema.define(version: 20140628015117) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -111,15 +111,18 @@ ActiveRecord::Schema.define(version: 20140627174310) do
   create_table "payments", force: true do |t|
     t.integer  "listing_id"
     t.integer  "buyer_id"
-    t.string   "state",         limit: 20
-    t.string   "key",           limit: 100
+    t.string   "state",          limit: 20
+    t.string   "key",            limit: 100
     t.string   "payment_url"
     t.string   "error_message"
     t.datetime "canceled_at"
     t.datetime "completed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "reviewed",                  default: false
+    t.boolean  "reviewed",                   default: false
+    t.integer  "listing_price",              default: 0
+    t.integer  "shipping_price",             default: 0
+    t.string   "shipping_to",    limit: 20
   end
 
   add_index "payments", ["buyer_id"], name: "index_payments_on_buyer_id"
@@ -128,7 +131,10 @@ ActiveRecord::Schema.define(version: 20140627174310) do
   add_index "payments", ["created_at"], name: "index_payments_on_created_at"
   add_index "payments", ["key"], name: "index_payments_on_key"
   add_index "payments", ["listing_id"], name: "index_payments_on_listing_id"
+  add_index "payments", ["listing_price"], name: "index_payments_on_listing_price"
   add_index "payments", ["reviewed"], name: "index_payments_on_reviewed"
+  add_index "payments", ["shipping_price"], name: "index_payments_on_shipping_price"
+  add_index "payments", ["shipping_to"], name: "index_payments_on_shipping_to"
   add_index "payments", ["state"], name: "index_payments_on_state"
 
   create_table "phone_tokens", force: true do |t|

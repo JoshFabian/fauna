@@ -32,7 +32,7 @@ class Listing < ActiveRecord::Base
     state :sold
 
     event :sold do
-      transitions to: :sold, :from => [:approved]
+      transitions to: :sold, :from => [:approved, :sold]
     end
   end
 
@@ -83,6 +83,12 @@ class Listing < ActiveRecord::Base
     reviews.where(user_id: user.id).exists?
   rescue Exception => e
     false
+  end
+
+  def shipping_price(options)
+    return 0 if options[:to].to_s.match(/local/)
+    raise Exception, "invalid location" if shipping_prices[options[:to]].blank?
+    (shipping_prices[options[:to]].to_f * 100).to_i
   end
 
   # used by friendly_id

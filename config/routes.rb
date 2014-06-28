@@ -70,7 +70,6 @@ Tegu::Application.routes.draw do
   post 'signup/create/password', to: "signup#create_password", as: :create_password_signup
 
   # paypal adaptive pay routes
-  get 'paypal/pay/:listing_id/start', to: "paypal#start", as: :paypal_start
   post 'paypal/pay/:payment_id/ipn_notify', to: "paypal#ipn_notify", as: :paypal_ipn_notify
   get 'paypal/pay/:payment_id/:status', to: "paypal#status", as: :paypal_status
   get 'paypal/verify_email', to: "paypal#verify_email", as: :paypal_verify_email

@@ -48,6 +48,22 @@ class ListingTest < ActiveSupport::TestCase
     end
   end
 
+  describe "shipping prices" do
+    before do
+      @user = Fabricate(:user)
+      @listing = Fabricate(:listing, user: @user, price: 15000)
+      @listing.shipping_prices = {'US' => '57.0', 'everywhere' => '120.50'}
+      @listing.save
+      @listing.reload
+    end
+
+    it "should calculate shipping price to location" do
+      @listing.shipping_price(to: 'US').must_equal 5700
+      @listing.shipping_price(to: 'everywhere').must_equal 12050
+      @listing.shipping_price(to: 'local').must_equal 0
+    end
+  end
+
   describe "search" do
     before do
       @user = Fabricate(:user)

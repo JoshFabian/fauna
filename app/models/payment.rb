@@ -1,11 +1,14 @@
 class Payment < ActiveRecord::Base
   include AASM
 
-  validates :listing, presence: true
   validates :buyer, presence: true
+  validates :listing, presence: true
+  validates :listing_price, presence: true
+  validates :shipping_price, presence: true
+  validates :shipping_to, presence: true
 
-  belongs_to :listing
   belongs_to :buyer, class_name: 'User', foreign_key: 'buyer_id'
+  belongs_to :listing
 
   aasm column: 'state' do
     state :init, initial: true
@@ -19,7 +22,7 @@ class Payment < ActiveRecord::Base
     end
 
     event :cancel do
-      transitions to: :canceled, :from => [:created, :init]
+      transitions to: :canceled, :from => [:created, :init, :canceled]
     end
 
     event :error do
@@ -44,7 +47,7 @@ class Payment < ActiveRecord::Base
 
   # use paypal pay method to pay the seller
   def paypal_pay(options={})
-    amount = (listing.price/100.0)
+    amount = ((listing.price+shipping_price)/100.0)
     seller = listing.user
     receiver_email = options[:seller_email].present? ? options[:seller_email] : seller.paypal_email
     mash = Hashie::Mash.new(

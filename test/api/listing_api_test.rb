@@ -56,28 +56,28 @@ class ListingApiSpec < ActionDispatch::IntegrationTest
     end
 
     it "should get shipping price to US" do
-      get "/api/v1/listings/#{@listing.id}/price/shipping/US?token=#{@user.auth_token}"
+      get "/api/v1/listings/#{@listing.id}/shipping/to/US?token=#{@user.auth_token}"
       response.success?.must_equal true
       body = JSON.parse(response.body)
       body['listing'].must_include('price' => 10000, 'shipping_price' => 5700, 'total_price' => 15700)
     end
 
     it "should get shipping price to everywhere" do
-      get "/api/v1/listings/#{@listing.id}/price/shipping/everywhere?token=#{@user.auth_token}"
+      get "/api/v1/listings/#{@listing.id}/shipping/to/everywhere?token=#{@user.auth_token}"
       response.success?.must_equal true
       body = JSON.parse(response.body)
       body['listing'].must_include('price' => 10000, 'shipping_price' => 12050, 'total_price' => 22050)
     end
 
     it "should get local pickup price" do
-      get "/api/v1/listings/#{@listing.id}/price/local_pickup?token=#{@user.auth_token}"
+      get "/api/v1/listings/#{@listing.id}/shipping/to/local?token=#{@user.auth_token}"
       response.success?.must_equal true
       body = JSON.parse(response.body)
       body['listing'].must_include('price' => 10000, 'shipping_price' => 0, 'total_price' => 10000)
     end
 
     it "should not get shipping price to invalid location" do
-      get "/api/v1/listings/#{@listing.id}/price/shipping/xxx?token=#{@user.auth_token}"
+      get "/api/v1/listings/#{@listing.id}/shipping/to/xxx?token=#{@user.auth_token}"
       response.status.must_equal 404
     end
   end

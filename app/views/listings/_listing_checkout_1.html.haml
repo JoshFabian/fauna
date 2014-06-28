@@ -1,7 +1,7 @@
 - if @listing.sold?
   .button.sold-button
     This reptile has sold
-- elsif false#current_user.try(:id) == @user.id
+- elsif current_user.try(:id) == @user.id
   = link_to 'Edit Listing', user_edit_listing_path(@user, @listing.id), class: ['button', 'edit-listing', @listing.editable? ? nil : 'disabled']
   = link_to 'Mark as Sold', user_edit_listing_path(@user, @listing.id), class: 'button edit-listing remove-button', :'data-listing-id' => @listing.id
 - else

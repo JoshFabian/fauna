@@ -1,5 +1,7 @@
 $(document).ready ->
 
+  shipping_to = 'na'
+
   $(".checkout-1").on 'click', (e) ->
     e.preventDefault()
     $(".listing-checkout-1").addClass('hide')
@@ -16,7 +18,7 @@ $(document).ready ->
     async.waterfall [
       (callback) ->
         # get listing local pickup price
-        Tegu.ListingApi.get_local_pickup_price(listing_id, auth_token, callback)
+        Tegu.ListingApi.get_shipping_price(listing_id, 'local', auth_token, callback)
       (data, callback) ->
         console.log data
         # update checkout form
@@ -37,4 +39,20 @@ $(document).ready ->
         # update checkout form
         $(".checkout-shipping .price").html(data.listing.shipping_price_string)
         $(".checkout-total .price").html(data.listing.total_price_string)
+    ]
+
+  $("a.checkout").on 'click', (e) ->
+    e.preventDefault()
+    return if $(this).hasClass('disabled')
+    $(this).addClass('disabled').text("Checking out ...")
+    listing_id = $(this).data('listing-id')
+    console.log "listing:#{listing_id}, shipping_to:#{shipping_to}"
+    async.waterfall [
+      (callback) ->
+        # start payment
+        Tegu.ListingApi.start_payment(listing_id, shipping_to, auth_token, callback)
+      (data, callback) ->
+        console.log data
+        if data.payment_url
+          window.location.href = data.payment_url
     ]

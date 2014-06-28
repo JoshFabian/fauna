@@ -122,28 +122,43 @@ module Endpoints
         {review: @review.as_json().merge(ratings: @review.ratings)}
       end
 
-      desc "Get listing price with shipping"
-      get ':id/price/shipping/:country_code' do
+      desc "Get listing shipping price"
+      get ':id/shipping/to/:country_code' do
         authenticate!
-        @listing = Listing.find(params.id)
-        error!('Not Found', 404) if @listing.shipping_prices[params.country_code].blank?
-        @shipping_price = ((@listing.shipping_prices[params.country_code].to_f) * 100).to_i
-        @shipping_price_string = ActionController::Base.helpers.number_to_currency(@shipping_price/100.0)
-        @total_price = @listing.price + @shipping_price
-        @total_price_string = ActionController::Base.helpers.number_to_currency(@total_price/100.0)
+        begin
+          @listing = Listing.find(params.id)
+          @shipping_price = @listing.shipping_price(to: params.country_code)
+          @total_price = @listing.price + @shipping_price
+          @shipping_price_string = ActionController::Base.helpers.number_to_currency(@shipping_price/100.0)
+          @total_price_string = ActionController::Base.helpers.number_to_currency(@total_price/100.0)
+        rescue Exception => e
+          error!('Not Found', 404)
+        end
         logger.post("tegu.api", log_data.merge({event: 'listing.price.shipping', listing_id: @listing.id}))
         {listing: {id: @listing.id, price: @listing.price, shipping_price: @shipping_price, total_price: @total_price,
           shipping_price_string: @shipping_price_string, total_price_string: @total_price_string}}
       end
 
-      desc "Get local pickup price"
-      get ':id/price/local_pickup' do
+      desc "Create listing payment, and return the paypal pay link"
+      put ':id/shipping/to/:country_code/pay/start' do
         authenticate!
-        @listing = Listing.find(params.id)
-        @listing_price_string = ActionController::Base.helpers.number_to_currency(@listing.price/100.0)
-        logger.post("tegu.api", log_data.merge({event: 'listing.price.local_pickup', listing_id: @listing.id}))
-        {listing: {id: @listing.id, price: @listing.price, shipping_price: 0, total_price: @listing.price,
-          shipping_price_string: "$0.00", total_price_string: @listing_price_string}}
+        begin
+          @listing = Listing.find(params.id)
+          @shipping_price = @listing.shipping_price(to: params.country_code)
+          @payment = Payment.create!(listing: @listing, buyer: current_user, listing_price: @listing.price,
+            shipping_price: @shipping_price, shipping_to: params.country_code)
+          @payment.paypal_pay(
+            cancel_url: Rails.application.routes.url_helpers.paypal_status_url(host: api_host, payment_id: @payment.id, status: 'cancel'),
+            return_url: Rails.application.routes.url_helpers.paypal_status_url(host: api_host, payment_id: @payment.id, status: 'success'),
+            ipn_notify_url: Rails.application.routes.url_helpers.paypal_ipn_notify_url(host: api_host, payment_id: @payment.id))
+          logger.post("tegu.api", log_data.merge({event: 'listing.pay.start', listing_id: @listing.id,
+            payment_id: @payment.id, buyer_id: current_user.id}))
+          {listing: @listing.as_json(), payment_url: @payment.payment_url}
+        rescue Exception => e
+          logger.post("tegu.api", log_data.merge({event: 'listing.pay.exception', listing_id: @listing.id,
+            exception: e.message}))
+          {listing: @listing.as_json(), exception: e.message}
+        end
       end
 
       desc "Get listing route"

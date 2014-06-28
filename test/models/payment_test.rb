@@ -5,23 +5,25 @@ class PaymentTest < ActiveSupport::TestCase
     @buyer = Fabricate(:user)
     @seller = Fabricate(:user)
     @listing = @seller.listings.create!(title: "Title", price: 100)
+    @mash = Hashie::Mash.new(buyer: @buyer, listing: @listing, listing_price: @listing.price, shipping_price: 1000,
+      shipping_to: 'US')
   end
 
   describe "payment create" do
     it "should start in init state" do
-      @payment = Payment.create!(listing: @listing, buyer: @buyer)
+      @payment = Payment.create!(@mash)
       @payment.state.must_equal 'init'
     end
 
     it "should default reviewed to false" do
-      @payment = Payment.create!(listing: @listing, buyer: @buyer)
+      @payment = Payment.create!(@mash)
       @payment.reviewed?.must_equal false
     end
   end
 
   describe "payment state machine" do
     it "should transition to exception state on error event" do
-      @payment = Payment.create!(listing: @listing, buyer: @buyer)
+      @payment = Payment.create!(@mash)
       @payment.error_message = "this didn't work"
       @payment.error!
       @payment.reload
@@ -30,7 +32,7 @@ class PaymentTest < ActiveSupport::TestCase
     end
 
     it "should associate completed payments with buyer purchases" do
-      @payment = Payment.create!(listing: @listing, buyer: @buyer)
+      @payment = Payment.create!(@mash)
       @buyer.payments.count.must_equal 1
       @buyer.purchases.count.must_equal 0
       @payment.complete!
@@ -41,7 +43,7 @@ class PaymentTest < ActiveSupport::TestCase
 
   describe "purchase reviews" do
     before do
-      @payment = Payment.create!(listing: @listing, buyer: @buyer)
+      @payment = Payment.create!(@mash)
       @payment.complete!
     end
 

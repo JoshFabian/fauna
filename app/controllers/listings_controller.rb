@@ -87,6 +87,8 @@ class ListingsController < ApplicationController
       @listing = Listing.friendly.find(params[:id])
     end
 
+    @status = params[:status]
+
     @user = @listing.user
     @categories = @listing.categories
     @category = @categories.select{ |o| o.level == 1 }.first
@@ -95,7 +97,7 @@ class ListingsController < ApplicationController
     @main_image = @all_images.first
     @reviews = @listing.reviews
 
-    @other_listings = current_user.listings.approved.order("id desc").limit(2)
+    @other_listings = current_user.listings.approved.where.not(id: @listing.id).order("id desc").limit(2)
   end
 
   # GET /listings/new

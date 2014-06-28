@@ -51,17 +51,18 @@ class Tegu.ListingApi
         callback(null, data) if callback
 
   @get_shipping_price: (listing_id, country_code, token, callback = null) ->
-    api = "/api/v1/listings/#{listing_id}/price/shipping/#{country_code}?token=#{token}"
+    api = "/api/v1/listings/#{listing_id}/shipping/to/#{country_code}?token=#{token}"
     $.ajax api,
       type: 'GET'
       dataType: 'json'
       success: (data) ->
         callback(null, data) if callback
 
-  @get_local_pickup_price: (listing_id, token, callback = null) ->
-    api = "/api/v1/listings/#{listing_id}/price/local_pickup?token=#{token}"
+  @start_payment: (listing_id, shipping_to, token, callback = null) ->
+    api = "/api/v1/listings/#{listing_id}/shipping/to/#{shipping_to}/pay/start?token=#{token}"
     $.ajax api,
-      type: 'GET'
+      type: 'PUT'
       dataType: 'json'
       success: (data) ->
         callback(null, data) if callback
+    

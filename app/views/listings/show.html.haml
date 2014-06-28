@@ -2,13 +2,19 @@
   = render partial: "listings/guest_message"
 
 .row
+  - if @status.present?
+    - if @status == 'canceled'
+      %div.alert-box.alert{:'data-alert' => ''}
+        Your payment was canceled
+    - elsif @status == 'sold'
+      %div.alert-box.success{:'data-alert' => ''}
+        Your payment is complete
+
   .list-panel
     .listing-images.small-7.columns
       .main-image
         -# image is filled via js
-        = image_tag '#'
-        -# = image_tag "http://placehold.it/600/400"
-        -# = image_tag cloudinary_url(@main_image.full_public_id, transformation: [{width: 600, crop: 'fit'}])
+        = image_tag nil
 
       .more-images
         %ul.image-grid.small-block-grid-5
