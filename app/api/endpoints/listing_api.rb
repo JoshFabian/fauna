@@ -102,6 +102,8 @@ module Endpoints
         @listing = current_user.listings.find(params.listing_id)
         @image = @listing.images.find(params.id)
         @listing.images.destroy(@image)
+        logger.post("tegu.api", log_data.merge({event: 'listing.image.delete', listing_id: @listing.id,
+          image_id: @image.id}))
         {listing: @listing.as_json(), event: 'delete'}
       end
 
@@ -118,6 +120,30 @@ module Endpoints
         end
         logger.post("tegu.api", log_data.merge({event: 'listing.review', listing_id: @listing.id}))
         {review: @review.as_json().merge(ratings: @review.ratings)}
+      end
+
+      desc "Get listing price with shipping"
+      get ':id/price/shipping/:country_code' do
+        authenticate!
+        @listing = Listing.find(params.id)
+        error!('Not Found', 404) if @listing.shipping_prices[params.country_code].blank?
+        @shipping_price = ((@listing.shipping_prices[params.country_code].to_f) * 100).to_i
+        @shipping_price_string = ActionController::Base.helpers.number_to_currency(@shipping_price/100.0)
+        @total_price = @listing.price + @shipping_price
+        @total_price_string = ActionController::Base.helpers.number_to_currency(@total_price/100.0)
+        logger.post("tegu.api", log_data.merge({event: 'listing.price.shipping', listing_id: @listing.id}))
+        {listing: {id: @listing.id, price: @listing.price, shipping_price: @shipping_price, total_price: @total_price,
+          shipping_price_string: @shipping_price_string, total_price_string: @total_price_string}}
+      end
+
+      desc "Get local pickup price"
+      get ':id/price/local_pickup' do
+        authenticate!
+        @listing = Listing.find(params.id)
+        @listing_price_string = ActionController::Base.helpers.number_to_currency(@listing.price/100.0)
+        logger.post("tegu.api", log_data.merge({event: 'listing.price.local_pickup', listing_id: @listing.id}))
+        {listing: {id: @listing.id, price: @listing.price, shipping_price: 0, total_price: @listing.price,
+          shipping_price_string: "$0.00", total_price_string: @listing_price_string}}
       end
 
       desc "Get listing route"

@@ -33,16 +33,16 @@ class Tegu.ListingApi
       success: (data) ->
         callback(null, data) if callback
 
-  @put_event: (id, event, token, callback = null) ->
-    api = "/api/v1/listings/#{id}/event/#{event}?token=#{token}"
+  @put_event: (listing_id, event, token, callback = null) ->
+    api = "/api/v1/listings/#{listing_id}/event/#{event}?token=#{token}"
     $.ajax api,
       type: 'PUT'
       dataType: 'json'
       success: (data) ->
         callback(null, data) if callback
 
-  @update: (id, params, token, callback = null) ->
-    api = "/api/v1/listings/#{id}?token=#{token}"
+  @update: (listing_id, params, token, callback = null) ->
+    api = "/api/v1/listings/#{listing_id}?token=#{token}"
     $.ajax api,
       type: 'PUT'
       dataType: 'json'
@@ -50,3 +50,18 @@ class Tegu.ListingApi
       success: (data) ->
         callback(null, data) if callback
 
+  @get_shipping_price: (listing_id, country_code, token, callback = null) ->
+    api = "/api/v1/listings/#{listing_id}/price/shipping/#{country_code}?token=#{token}"
+    $.ajax api,
+      type: 'GET'
+      dataType: 'json'
+      success: (data) ->
+        callback(null, data) if callback
+
+  @get_local_pickup_price: (listing_id, token, callback = null) ->
+    api = "/api/v1/listings/#{listing_id}/price/local_pickup?token=#{token}"
+    $.ajax api,
+      type: 'GET'
+      dataType: 'json'
+      success: (data) ->
+        callback(null, data) if callback

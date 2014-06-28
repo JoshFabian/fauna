@@ -1,11 +1,11 @@
 - if @listing.sold?
   .button.sold-button
     This reptile has sold
-- elsif current_user.try(:id) == @user.id
+- elsif false#current_user.try(:id) == @user.id
   = link_to 'Edit Listing', user_edit_listing_path(@user, @listing.id), class: ['button', 'edit-listing', @listing.editable? ? nil : 'disabled']
   = link_to 'Mark as Sold', user_edit_listing_path(@user, @listing.id), class: 'button edit-listing remove-button', :'data-listing-id' => @listing.id
 - else
-  = link_to 'Checkout with Paypal', paypal_start_path(listing_id: @listing.id), class: 'button buy-button'
+  = link_to 'Checkout with Paypal', '#', class: 'button buy-button checkout-1'
   %a.remove-link{"data-reveal-id" => "myModal", :href => "#"} Report Listing
   #myModal.reveal-modal.small{"data-reveal" => ""}
     %h2 Report Listing

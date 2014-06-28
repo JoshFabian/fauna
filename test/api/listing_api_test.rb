@@ -45,4 +45,40 @@ class ListingApiSpec < ActionDispatch::IntegrationTest
         {'name' => 'description', 'rating' => 4.0}])
     end
   end
+
+  describe "listing shipping price" do
+    before do
+      @user = Fabricate(:user)
+      @listing = @user.listings.create!(title: "Title", price: 10000)
+      @listing.shipping_prices = {'US' => '57.0', 'everywhere' => '120.50'}
+      @listing.save
+      @listing.reload
+    end
+
+    it "should get shipping price to US" do
+      get "/api/v1/listings/#{@listing.id}/price/shipping/US?token=#{@user.auth_token}"
+      response.success?.must_equal true
+      body = JSON.parse(response.body)
+      body['listing'].must_include('price' => 10000, 'shipping_price' => 5700, 'total_price' => 15700)
+    end
+
+    it "should get shipping price to everywhere" do
+      get "/api/v1/listings/#{@listing.id}/price/shipping/everywhere?token=#{@user.auth_token}"
+      response.success?.must_equal true
+      body = JSON.parse(response.body)
+      body['listing'].must_include('price' => 10000, 'shipping_price' => 12050, 'total_price' => 22050)
+    end
+
+    it "should get local pickup price" do
+      get "/api/v1/listings/#{@listing.id}/price/local_pickup?token=#{@user.auth_token}"
+      response.success?.must_equal true
+      body = JSON.parse(response.body)
+      body['listing'].must_include('price' => 10000, 'shipping_price' => 0, 'total_price' => 10000)
+    end
+
+    it "should not get shipping price to invalid location" do
+      get "/api/v1/listings/#{@listing.id}/price/shipping/xxx?token=#{@user.auth_token}"
+      response.status.must_equal 404
+    end
+  end
 end

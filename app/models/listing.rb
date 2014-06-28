@@ -23,6 +23,8 @@ class Listing < ActiveRecord::Base
 
   store :data, accessors: [:shipping_from, :shipping_time, :local_pickup]
 
+  attr_accessor :shipping_to
+
   friendly_id :title, use: :scoped, scope: :user
 
   aasm column: 'state' do

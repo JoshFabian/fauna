@@ -16,9 +16,15 @@ module ApplicationHelper
     "http://www.placehold.it/#{size}/#{size}"
   end
 
+  def listing_shipping_prices_options(listing, options={})
+    listing.shipping_prices.collect do |hash|
+      ["#{hash[0]} $#{hash[1]}", hash[0], :'data-shipping-price' => hash[1]]
+    end
+  end
+
   def listing_shipping_times(options={})
-    ['1 business day', '1-2 business days', '1-3 business days', '3-5 business days', '1-2 weeks',
-     '2-3 weeks', '3-4 weeks']
+    ['1 business day', '1-2 business days', '1-3 business days', '3-5 business days', '1-2 weeks', '2-3 weeks',
+     '3-4 weeks']
   end
 
   def user_avatar_image_profile(image, size=100)
