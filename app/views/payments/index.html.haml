@@ -1,8 +1,11 @@
 .row
   .text-center
-    %h3 #{Payment.count} Payments
+    %h5
+      #{Payment.count} Payments
+      &nbsp;:&nbsp;
+      #{Payment.completed.count} Completed
 
-  %table.small-12.columns
+  %table.small-12.columns.tiny
     %tr
       %th Id
       %th Buyer
@@ -11,6 +14,8 @@
       %th Listing
       %th Key
       %th Timestamp
+      %th Listing Price
+      %th Shipping Price
 
     - @payments.each do |payment|
       - buyer = payment.buyer
@@ -24,3 +29,5 @@
         %td= link_to listing.title, user_listing_path(seller, listing)
         %td= payment.exception? ? payment.error_message : payment.key
         %td #{time_ago_in_words(payment.completed? ? payment.completed_at : payment.created_at) rescue ''} ago
+        %td= number_to_currency(payment.listing_price/100.0)
+        %td= number_to_currency(payment.shipping_price/100.0)
