@@ -1,11 +1,11 @@
 require 'test_helper'
 
 class ListingTest < ActiveSupport::TestCase
-  describe "create" do
-    before do
-      @user = Fabricate(:user)
-    end
+  before do
+    @user = Fabricate(:user, listing_credits: 3)
+  end
 
+  describe "create" do
     it "should create with required attributes" do
       @listing = @user.listings.create!(title: "Title 1", price: 100)
     end
@@ -14,13 +14,16 @@ class ListingTest < ActiveSupport::TestCase
       @listing = @user.listings.create!(title: "Title 2", price: 100)
       @listing.state.must_equal 'approved'
     end
+
+    it "should decrement user listing_credits" do
+      @user.listing_credits.must_equal 3
+      @listing = @user.listings.create!(title: "Title 2", price: 100)
+      @user.reload
+      @user.listing_credits.must_equal 2
+    end
   end
 
   describe "slug" do
-    before do
-      @user = Fabricate(:user)
-    end
-
     it "should auto create slug from title" do
       @listing = @user.listings.create!(title: "Listing 1", price: 100)
       @listing.slug.must_equal 'listing-1'
@@ -36,7 +39,6 @@ class ListingTest < ActiveSupport::TestCase
 
   describe "editable" do
     before do
-      @user = Fabricate(:user)
       @listing = Fabricate(:listing, user: @user)
     end
 
@@ -50,7 +52,6 @@ class ListingTest < ActiveSupport::TestCase
 
   describe "shipping prices" do
     before do
-      @user = Fabricate(:user)
       @listing = Fabricate(:listing, user: @user, price: 15000)
       @listing.shipping_prices = {'US' => '57.0', 'everywhere' => '120.50'}
       @listing.save
@@ -65,10 +66,6 @@ class ListingTest < ActiveSupport::TestCase
   end
 
   describe "search" do
-    before do
-      @user = Fabricate(:user)
-    end
-
     describe "by category name" do
       before do
         @lizards = Category.create!(name: 'Lizards')

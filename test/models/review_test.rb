@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ReviewTest < ActiveSupport::TestCase
   before do
-    @user = Fabricate(:user)
+    @user = Fabricate(:user, listing_credits: 3)
     @listing = Fabricate(:listing, user: @user)
   end
 
@@ -35,7 +35,7 @@ class ReviewTest < ActiveSupport::TestCase
 
   describe "listing review ratings" do
     before do
-      @user = Fabricate(:user)
+      @user = Fabricate(:user, listing_credits: 3)
       @listing1 = Fabricate(:listing, user: @user)
       @listing2 = Fabricate(:listing, user: @user)
       @reviewer = Fabricate(:user)

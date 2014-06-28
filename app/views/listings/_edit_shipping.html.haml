@@ -8,7 +8,7 @@
 
 %hr
 %label Ships from
-= country_select("listing", "shipping_from", {selected: @listing.shipping_from}, {class: 'required', :'data-listing-id' => @listing.id})
+= country_select("listing", "shipping_from", {selected: @listing.shipping_from || 'US'}, {class: 'required', :'data-listing-id' => @listing.id})
 
 = render(partial: "listings/shipping_table")
 

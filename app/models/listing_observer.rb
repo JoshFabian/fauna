@@ -2,6 +2,10 @@ class ListingObserver < ActiveRecord::Observer
   include Loggy
 
   def after_create(listing)
+    # update user listing credits
+    user = listing.user
+    user.decrement!(:listing_credits, 1)
+    # track listing
     SegmentListing.track_listing_created(listing)
   rescue Exception => e
   end

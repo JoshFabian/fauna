@@ -54,7 +54,7 @@ describe Category do
 
   describe "listings" do
     before do
-      @user = Fabricate(:user)
+      @user = Fabricate(:user, listing_credits: 3)
       @listing = Fabricate(:listing, user: @user)
     end
 

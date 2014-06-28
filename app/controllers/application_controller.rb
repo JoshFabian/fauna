@@ -52,18 +52,8 @@ class ApplicationController < ActionController::Base
     raise CanCan::AccessDenied, "Unauthorized" unless user_signed_in? and current_user.roles?(:admin)
   end
 
-  def seller_credits!
-    redirect_to plans_path if current_user.listing_credits == 0
-    true
-  end
-
   def seller_paid!
-    redirect_to plans_path if current_user.listing_credits == 0 and current_user.subscriptions_count == 0 
-    true
-  end
-
-  def seller_subscribed!
-    redirect_to plans_path if current_user.subscriptions_count == 0
+    redirect_to plans_path if !current_user.sellable?
     true
   end
 

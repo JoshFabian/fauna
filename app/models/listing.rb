@@ -43,6 +43,12 @@ class Listing < ActiveRecord::Base
   # set search index name
   index_name "listings.#{Rails.env}"
 
+  before_validation(on: :create) do
+    if user.present? and !user.sellable?
+      self.errors[:base].push("not allowed")
+    end
+  end
+
   def as_indexed_json(options={})
     as_json(methods: [:category_ids, :category_names, :user_handle])
   end

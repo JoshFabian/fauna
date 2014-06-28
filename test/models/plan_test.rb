@@ -67,4 +67,31 @@ class PlanTest < ActiveSupport::TestCase
       @sub.stripe_id.must_equal 'x_y_z'
     end
   end
+
+  describe "user sellable?" do
+    before do
+      @user = Fabricate(:user, email: "user@gmail.com")
+    end
+
+    it "should return false when user has no credits or subscriptions" do
+      @user.listing_credits.must_equal 0
+      @user.subscriptions_count.must_equal 0
+      @user.sellable?.must_equal false
+    end
+
+    it "should return true when user has listing credits" do
+      @user.update_attributes(listing_credits: 1)
+      @user.reload
+      @user.listing_credits.must_equal 1
+      @user.sellable?.must_equal true
+    end
+
+    it "should return true when user has a subscription" do
+      @plan = Plan.create!(name: "name", amount: 5000, subscription: true, interval: 'month')
+      @user.subscriptions.create(plan: @plan)
+      @user.reload
+      @user.subscriptions_count.must_equal 1
+      @user.sellable?.must_equal true
+    end
+  end
 end

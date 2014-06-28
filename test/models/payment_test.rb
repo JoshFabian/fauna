@@ -3,7 +3,7 @@ require 'test_helper'
 class PaymentTest < ActiveSupport::TestCase
   before do
     @buyer = Fabricate(:user)
-    @seller = Fabricate(:user)
+    @seller = Fabricate(:user, listing_credits: 3)
     @listing = @seller.listings.create!(title: "Title", price: 100)
     @mash = Hashie::Mash.new(buyer: @buyer, listing: @listing, listing_price: @listing.price, shipping_price: 1000,
       shipping_to: 'US')
