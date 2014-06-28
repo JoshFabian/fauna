@@ -3,7 +3,8 @@ $(document).ready ->
   $("select#listing_shipping_from").on 'change', (e) ->
     listing_id = $(this).data('listing-id')
     shipping_from = $(this).find("option:selected").val()
-    console.log "shipping from: #{shipping_from}"
+    return if !listing_id
+    console.log "listing:#{listing_id}:shipping from: #{shipping_from}"
     async.waterfall [
       (callback) ->
         # update listing state
