@@ -181,15 +181,15 @@ web_tools_ssl_port: 8443
 #         to_port: "#{graphite_server_port}"
 #
 security_groups:
-  default:
-    description: The default security group
-    rules:
-      - source_group_name: default
-        source_group_account: "#{cloud_providers.aws.account}"
-      - protocol: tcp
-        from_port: 22
-        to_port: 22
-        source_ips: [0.0.0.0/0]
+  # default:
+  #   description: The default security group
+  #   rules:
+  #     - source_group_name: default
+  #       source_group_account: "#{cloud_providers.aws.account}"
+  #     - protocol: tcp
+  #       from_port: 22
+  #       to_port: 22
+  #       source_ips: [0.0.0.0/0]
   web:
     description: "To open up port #{web_port}/#{web_ssl_port} for http server on web role"
     rules:
