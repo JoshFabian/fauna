@@ -48,7 +48,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /:handle/messages
+  # GET /:handle/messages/:label
   def messages
     @user = User.find_by_handle(params[:handle])
     @edit = @user.id == current_user.id
@@ -58,6 +58,10 @@ class UsersController < ApplicationController
     end
 
     @tab = 'messages'
+
+    # mailbox conversations
+    @mailbox_label = params[:label]
+    @mailbox_conversations = @user.mailbox.send(UserMailbox.mailbox_name(@mailbox_label)).limit(10)
 
     respond_to do |format|
       format.html { render(action: :show) }

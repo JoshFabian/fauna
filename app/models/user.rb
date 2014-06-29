@@ -35,6 +35,9 @@ class User < ActiveRecord::Base
 
   bitmask :roles, :as => [:admin, :basic]
 
+  # private messaging
+  acts_as_messageable
+
   before_validation(on: :create) do
     self.auth_token ||= generate_authentication_token
     self.handle ||= self.email
@@ -99,6 +102,10 @@ class User < ActiveRecord::Base
 
   def phone_verified?
     phone_tokens.verified.count > 0
+  end
+
+  def sellable?
+    listing_credits > 0 or subscriptions_count > 0
   end
 
   # return true if the required fields are verified

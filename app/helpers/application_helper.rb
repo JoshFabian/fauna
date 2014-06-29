@@ -27,6 +27,18 @@ module ApplicationHelper
      '3-4 weeks']
   end
 
+  def today_time(time_at)
+    if time_at > Time.zone.now.beginning_of_day
+      "Today at #{time_at.to_s(:time_ampm)}"
+    elsif time_at > 1.day.ago.beginning_of_day
+      "Yesterday at #{time_at.to_s(:time_ampm)}"
+    else
+      time_at.to_s(:datetime_tiny)
+    end
+  rescue Exception => e
+    ''
+  end
+
   def user_avatar_image_profile(image, size=100)
     cloudinary_url(image.full_public_id, transformation: [{width: 200, height: 200, crop: 'fill'}])
   rescue Exception => e

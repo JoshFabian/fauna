@@ -5,14 +5,14 @@ class UserTest < ActiveSupport::TestCase
     @user = User.create!(email: "user@gmail.com", password: "x", password_confirmation: "x")
   end
 
-  describe "auth token" do
+  describe "user auth token" do
     it "should create token" do
       @user = Fabricate(:user, email: "sanjay@gmail.com")
       @user.auth_token.present?.must_equal true
     end
   end
 
-  describe "handle" do
+  describe "user handle" do
     it "should allow letter, digits" do
       @user = Fabricate(:user, email: "brian@gmail.com", handle: 'brian0')
       @user.handle.must_equal "brian0"
@@ -45,7 +45,7 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  describe "roles" do
+  describe "user roles" do
     before do
       @user = Fabricate(:user, email: "user@gmail.com")
     end
@@ -72,7 +72,7 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  describe "location" do
+  describe "user location" do
     before do
       @user = Fabricate(:user, email: "user@gmail.com")
     end
@@ -93,7 +93,7 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  describe "avatar image" do
+  describe "user avatar image" do
     before do
       @user = Fabricate(:user, email: "user@gmail.com")
     end
@@ -105,7 +105,7 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  describe "cover images" do
+  describe "user cover images" do
     before do
       @user = Fabricate(:user, email: "user@gmail.com")
     end
@@ -123,6 +123,48 @@ class UserTest < ActiveSupport::TestCase
       @user.reload
       @cover.position.must_equal 3
       @user.cover_images.must_equal [@cover]
+    end
+  end
+
+  describe "user messages" do
+    before do
+      @user1 = Fabricate(:user, email: "user1@gmail.com")
+      @user2 = Fabricate(:user, email: "user2@gmail.com")
+    end
+
+    it "should add message to user2 inbox" do
+      @receipt1 = @user1.send_message(@user2, "body 1", "test 1")
+      @user2.mailbox.conversations.collect(&:subject).must_equal ['test 1']
+      @user2.mailbox.inbox.collect(&:subject).must_equal ['test 1']
+      @conversation = @user2.mailbox.inbox.first
+      @conversation.participants.count.must_equal 2
+      @conversation.is_read?(@user1).must_equal true
+      @conversation.is_read?(@user2).must_equal false
+    end
+
+    it "should mark conversation as read for user2" do
+      @receipt1 = @user1.send_message(@user2, "body 1", "test 1")
+      @conversation = @user1.mailbox.sentbox.first
+      @conversation.is_read?(@user2).must_equal false
+      @conversation.mark_as_read(@user2)
+      @conversation.is_read?(@user2).must_equal true
+    end
+
+    it "should move message to user2 trash" do
+      @receipt1 = @user1.send_message(@user2, "body 1", "test 1")
+      @user2.mailbox.trash.count.must_equal 0
+      @conversation = @user2.mailbox.inbox.first
+      @conversation.move_to_trash(@user2)
+      @user2.mailbox.trash.count.must_equal 1
+    end
+
+    it "should add message to user1 sent folder" do
+      @receipt1 = @user1.send_message(@user2, "body 1", "test 1")
+      @user1.mailbox.sentbox.count.must_equal 1
+      @conversation = @user1.mailbox.sentbox.first
+      @conversation.participants.count.must_equal 2
+      @conversation.is_read?(@user1).must_equal true
+      @conversation.is_read?(@user2).must_equal false
     end
   end
 end

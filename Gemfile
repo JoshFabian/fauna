@@ -66,6 +66,7 @@ gem 'geokit-rails'
 gem 'grape'
 gem 'haml'
 gem 'logging'
+gem 'mailboxer'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'open4' # required by rubber
