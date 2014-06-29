@@ -83,6 +83,7 @@ gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1
 
 group :development, :test do
   gem 'awesome_print'
+  gem 'capistrano'
   gem 'database_cleaner'
   gem 'byebug', :platforms => [:ruby_20]
   gem 'debugger', :platforms => [:ruby_19]
@@ -101,5 +102,3 @@ end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development

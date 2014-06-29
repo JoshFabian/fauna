@@ -422,6 +422,7 @@ DEPENDENCIES
   bitmask_attributes
   byebug
   cancan
+  capistrano
   carmen
   carmen-rails
   cloudinary
