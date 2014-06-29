@@ -19,8 +19,7 @@ Tegu::Application.routes.draw do
   get ':handle/listings/:id/edit' => "listings#edit", as: :user_edit_listing
   get ':handle/listings/:id' => "listings#show", as: :user_listing
   get ':handle/listings' => "users#listings", as: :user_listings
-  get ':handle/messages/:label/:id' => "messages#show", as: :user_message
-  get ':handle/messages/:label' => "users#messages", as: :user_messages
+  get ':handle/messages' => "users#messages", as: :user_messages
   get ':handle/purchases' => "users#purchases", as: :user_purchases
   get ':handle/reviews' => "users#reviews", as: :user_reviews
   get ':handle/verify' => "users#verify", as: :user_verify
@@ -69,9 +68,6 @@ Tegu::Application.routes.draw do
   post 'signup/create/facebook', to: "signup#create_facebook", as: :create_facebook_signup
   post 'signup/create/password', to: "signup#create_password", as: :create_password_signup
 
-  # paypal adaptive pay routes
-  # post 'paypal/pay/:payment_id/ipn_notify', to: "paypal#ipn_notify", as: :paypal_ipn_notify
-  # get 'paypal/pay/:payment_id/:status', to: "paypal#status", as: :paypal_status
   # paypal verify email
   get 'paypal/verify_email', to: "paypal#verify_email", as: :paypal_verify_email
   # payments
@@ -84,7 +80,11 @@ Tegu::Application.routes.draw do
   match 'sms/verify_phone'=> "twilio#sms_verify_phone", as: :twilio_sms_verify_phone, via: [:get]
   match 'sms/list'=> "twilio#sms_list", as: :twilio_sms_list, via: [:get]
 
-  resources :messages, only: [:index]
+  # messages
+  get ':handle/messages/:label/:id' => "messages#show"
+  get ':handle/messages/:label' => "messages#index"
+
+  # plans
   resources :plans, only: [:index, :show] do
     get :manage, on: :collection
   end

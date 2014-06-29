@@ -34,7 +34,7 @@
         %li= link_to "Listings", user_listings_path(@user), class: [@tab == 'listings' ? 'active' : nil]
         %li= link_to "Reviews", user_reviews_path(@user), class: [@tab == 'reviews' ? 'active' : nil]
         - if feature(:user_messaging)
-          %li= link_to "Messages", user_messages_path(@user, 'inbox'), class: [@tab == 'messages' ? 'active' : nil]
+          %li= link_to "Messages", user_messages_path(@user), class: [@tab == 'messages' ? 'active' : nil]
         - if false
           %li= link_to "Followers", "#"
           %li= link_to "Following", "#"
@@ -44,6 +44,6 @@
   - elsif @tab == 'listings'
     = render(partial: "listings/listing_tiles")
   - elsif @tab == 'messages'
-    = render(partial: "messages/messages", locals: {label: @label, conversations: @conversations})
+    = render(partial: "users/user_messages")
   - elsif @tab == 'reviews'
     = render(partial: "reviews/review", locals: {reviews: @reviews})

@@ -1,0 +1,7 @@
+.row
+  .message-wrapper.rounded-panel
+    .message-sidebar.small-2.columns
+      = render(partial: 'messages/message_sidebar', locals: {label: @label})
+
+    -# messages are filled in via js
+    .message-list.empty.small-10.columns{:'data-label' => @label}

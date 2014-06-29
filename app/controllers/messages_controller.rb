@@ -4,29 +4,12 @@ class MessagesController < ApplicationController
   def index
     @user = current_user
     @label = params[:label]
+    @conversations = @user.mailbox.send(@label).limit(10)
 
     respond_to do |format|
-      format.html { render(template: "messages/_index") }
+      format.js
     end
   end
-
-  # GET /:handle/messages/labels?current=inbox
-  # def labels
-  #   @current_label = params[:current]
-  # 
-  #   respond_to do |format|
-  #     format.js
-  #   end
-  # end
-
-  # GET /:handle/messages/:label
-  # def label
-  #   @label = params[:label]
-  # 
-  #   respond_to do |format|
-  #     format.js
-  #   end
-  # end
 
   # GET /:handle/messages/:label/:id
   def show

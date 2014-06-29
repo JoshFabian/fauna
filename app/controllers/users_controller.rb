@@ -57,11 +57,11 @@ class UsersController < ApplicationController
       @cover_images.select{ |o| o.position == i }.first or i
     end
 
-    @tab = 'messages'
+    # mailbox label
+    @label = 'inbox'
+    # @conversations = @user.mailbox.send(@label).limit(10)
 
-    # mailbox conversations
-    @label = params[:label]
-    @conversations = @user.mailbox.send(@label).limit(10)
+    @tab = 'messages'
 
     respond_to do |format|
       format.html { render(action: :show) }
