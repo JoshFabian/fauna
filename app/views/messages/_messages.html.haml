@@ -24,7 +24,7 @@
               .message-actions
                 %input{type: "checkbox", :'data-conversation-id' => conversation.id}
 
-              .participant= participant.try(:full_name)
+              .participant= participant.try(:handle)
               .time-stamp= today_time(message.created_at)
               %h6
                 %i.icon.ion-ios7-star{class: nil}

@@ -10,7 +10,7 @@
   -#       %i.icon.ion-star
   -#     Starred
   %li{class: label.match(/sent/i) ? 'active' : nil}
-    = link_to user_messages_path(@user, 'sent') do
+    = link_to user_messages_path(@user, 'sentbox') do
       %span.help-icon.email
         %i.icon.ion-email
       Sent

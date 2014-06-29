@@ -61,7 +61,7 @@ class UsersController < ApplicationController
 
     # mailbox conversations
     @label = params[:label]
-    @conversations = @user.mailbox.send(UserMailbox.mailbox_name(@label)).limit(10)
+    @conversations = @user.mailbox.send(@label).limit(10)
 
     respond_to do |format|
       format.html { render(action: :show) }
