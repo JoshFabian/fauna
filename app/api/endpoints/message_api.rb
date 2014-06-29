@@ -7,7 +7,6 @@ module Endpoints
     end
 
     resource :conversations do
-      
       desc "Mark conversations as read"
       put ':ids/read' do
         authenticate!
@@ -47,6 +46,22 @@ module Endpoints
         logger.post("tegu.api", log_data.merge({event: "conversations.#{params.label}", conversation_ids: ids.join(',')}))
         {conversations: objects}
       end
-    end
+
+      desc "Create conversation"
+      post 'to/:user_id' do
+        authenticate!
+        to = User.find(params.user_id)
+        receipt = current_user.send_message(to, params.message.body, params.message.subject)
+        {receipt: receipt}
+      end
+
+      desc "Reply to conversation"
+      post ':id/reply' do
+        authenticate!
+        conversation = Conversation.find(params.id)
+        receipt = current_user.reply_to_conversation(conversation, params.message.body)
+        {receipt: receipt}
+      end
+    end # conversations
   end
 end
