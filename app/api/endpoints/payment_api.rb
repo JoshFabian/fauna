@@ -12,9 +12,9 @@ module Endpoints
           @payment = Payment.create!(listing: @listing, buyer: current_user, listing_price: @listing.price,
             shipping_price: @shipping_price, shipping_to: params.country_code)
           @payment.paypal_pay(
-            cancel_url: "#{api_host}/api/v1/payments/#{@payment.id}/paypal/cancel",
-            return_url: "#{api_host}/api/v1/payments/#{@payment.id}/paypal/success",
-            ipn_notify_url: "#{api_host}/api/v1/payments/#{@payment.id}/paypal/ipn_notify")
+            cancel_url: "#{Settings[Rails.env][:api_root]}/payments/#{@payment.id}/paypal/cancel",
+            return_url: "#{Settings[Rails.env][:api_root]}/payments/#{@payment.id}/paypal/success",
+            ipn_notify_url: "#{Settings[Rails.env][:api_root]}/payments/#{@payment.id}/paypal/ipn_notify")
           # @payment.paypal_pay(
           #   cancel_url: Rails.application.routes.url_helpers.paypal_status_url(host: api_host, payment_id: @payment.id, status: 'cancel'),
           #   return_url: Rails.application.routes.url_helpers.paypal_status_url(host: api_host, payment_id: @payment.id, status: 'success'),
@@ -23,8 +23,7 @@ module Endpoints
             payment_id: @payment.id, buyer_id: current_user.id}))
           {payment: {id: @payment.id, state: @payment.state, payment_url: @payment.payment_url}}
         rescue Exception => e
-          logger.post("tegu.api", log_data.merge({event: 'payment.exception', listing_id: @listing.id,
-            exception: e.message}))
+          logger.post("tegu.api", log_data.merge({event: 'payment.exception', exception: e.message}))
           {payment: {id: @payment.try(:id), exception: e.message}}
         end
       end

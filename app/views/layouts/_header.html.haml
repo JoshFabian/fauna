@@ -40,10 +40,10 @@
           %li= link_to 'My Purchases', user_purchases_path(current_user)
           %li= link_to 'Accounts Settings', plans_path
           - if current_user.roles?(:admin)
-            %li= link_to 'Manage Waitlist', waitlists_path
+            %li= link_to 'Manage Payments', payments_path
             %li= link_to 'Manage Plans', manage_plans_path
             %li= link_to 'Manage Users', users_path
-            %li= link_to 'Manage Payments', payments_path
+            %li= link_to 'Manage Waitlist', waitlists_path
           %li= link_to 'Logout', logout_path
           %li
             %a{"data-reveal-id" => "welcomeModal", :href => "#"} Welcome Modal

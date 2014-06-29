@@ -10,11 +10,11 @@ class PaymentApiSpec < ActionDispatch::IntegrationTest
 
     it "should create payment" do
       payment = flexmock(Payment, create!: flexmock("object", id: 1, paypal_pay: {},
-        payment_url: 'http://www.paypal.com', state: 'created'))
+        payment_url: 'http://sandbox.paypal.com', state: 'created'))
       post "/api/v1/payments/#{@listing.id}/shipping/to/US?token=#{@user.auth_token}"
       response.success?.must_equal true
       body = JSON.parse(response.body)
-      body['payment'].must_include({'id' => 1, 'state' => 'created', 'payment_url' => 'http://www.paypal.com'})
+      body['payment'].must_include({'id' => 1, 'state' => 'created', 'payment_url' => 'http://sandbox.paypal.com'})
     end
   end
 end
