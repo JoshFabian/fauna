@@ -14,6 +14,13 @@ test:
   enhance_image_tag: true
   static_image_support: false
   secure: true
+staging:
+  cloud_name: tegu
+  api_key: '572228335418156'
+  api_secret: dRLXZPoVLjY1ZhNOxuXGMAWRpKE
+  enhance_image_tag: true
+  static_image_support: false
+  secure: true
 production:
   cloud_name: tegu
   api_key: '572228335418156'
