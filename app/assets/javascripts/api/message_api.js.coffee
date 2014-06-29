@@ -22,3 +22,13 @@ class Tegu.MessageApi
       dataType: 'json'
       success: (data) ->
         callback(null, data) if callback
+
+  @reply_conversation: (conversation_id, params, token, callback = null) ->
+    api = "/api/v1/conversations/#{conversation_id}/reply?token=#{token}"
+    $.ajax api,
+      type: 'POST'
+      dataType: 'json'
+      data: params
+      success: (data) ->
+        callback(null, data) if callback
+

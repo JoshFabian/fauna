@@ -60,8 +60,8 @@ class UsersController < ApplicationController
     @tab = 'messages'
 
     # mailbox conversations
-    @mailbox_label = params[:label]
-    @mailbox_conversations = @user.mailbox.send(UserMailbox.mailbox_name(@mailbox_label)).limit(10)
+    @label = params[:label]
+    @conversations = @user.mailbox.send(UserMailbox.mailbox_name(@label)).limit(10)
 
     respond_to do |format|
       format.html { render(action: :show) }

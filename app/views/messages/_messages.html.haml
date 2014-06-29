@@ -1,0 +1,45 @@
+.row
+  .message-wrapper.rounded-panel
+    .message-sidebar.small-2.columns
+      = render(partial: 'messages/message_sidebar', locals: {label: label})
+
+    .message-list.small-10.columns
+      = render(partial: 'messages/message_selectors', locals: {label: label})
+
+      %ul
+        - conversations.each do |conversation|
+          - if label.match(/sent/i)
+            -# show last message user sent in conversation
+            - receipt = conversation.receipts_for(current_user).select{ |o| o.mailbox_type == 'sentbox'}.last
+            - message = receipt.message
+            - participant = message.recipients.select{ |o| o.id != current_user.id }.first
+          - else
+            -# show last message user received in conversation
+            - receipt = conversation.receipts_for(current_user).select{ |o| o.mailbox_type == 'inbox'}.first
+            - message = receipt.message
+            - participant = message.sender
+
+          %li.message-summary.clearfix{class: [message.is_read?(current_user) ? 'read' : 'new']}
+            = link_to user_message_path(current_user, label, conversation.id), class: 'small-12 columns message-show', :'data-conversation-id' => conversation.id, :'data-label' => label do
+              .message-actions
+                %input{type: "checkbox", :'data-conversation-id' => conversation.id}
+
+              .participant= participant.try(:full_name)
+              .time-stamp= today_time(message.created_at)
+              %h6
+                %i.icon.ion-ios7-star{class: nil}
+                = message.subject
+              %p= message.body
+
+        - 0.times do
+          %li.message-summary.clearfix
+            %a.small-12.columns{:href => "#"}
+              .message-actions
+                %input#checkbox1{:type => "checkbox"}
+
+              .participant Josh Fabian
+              .time-stamp Today, 12:52pm
+              %h6
+                %i.icon.ion-ios7-star
+                Baby Leatherback Bearded Dragon
+              %p Hey, I was just wondering if you could give me some info on shipping. I'm available Wednesdays and Thursdays but ...

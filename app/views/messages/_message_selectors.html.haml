@@ -1,0 +1,22 @@
+.list-header.small-12.columns.no-padding
+  = link_to "javascript:void(0)" do
+    .message-selector.select-all
+      %input#checkbox1{type: "checkbox"}
+      Select All
+
+  -# %a{ :href => "#"}
+  -#   .message-selector
+  -#     %i.icon.ion-alert-circled
+  -#     Report Spam
+
+  - unless label.match(/sent/i)
+    = link_to '#' do
+      .message-selector.delete
+        %i.icon.ion-ios7-trash
+        Delete
+
+  - if label.match(/trash/i)
+    = link_to '#' do
+      .message-selector.undelete
+        %i.icon.ion-alert-circled
+        Move to Inbox

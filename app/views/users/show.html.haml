@@ -44,6 +44,6 @@
   - elsif @tab == 'listings'
     = render(partial: "listings/listing_tiles")
   - elsif @tab == 'messages'
-    = render(partial: "messages/index", locals: {label: @mailbox_label, conversations: @mailbox_conversations})
+    = render(partial: "messages/messages", locals: {label: @label, conversations: @conversations})
   - elsif @tab == 'reviews'
     = render(partial: "reviews/review", locals: {reviews: @reviews})

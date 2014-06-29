@@ -46,7 +46,7 @@ module ApplicationHelper
   end
 
   def user_avatar_image_thumbnail(image, size=120)
-    cloudinary_url(image.full_public_id, transformation: [{width: 120, height: 120, crop: 'fill'}])
+    cloudinary_url(image.full_public_id, transformation: [{width: size, height: size, crop: 'fill'}])
   rescue Exception => e
     "http://www.placehold.it/#{size}/#{size}"
   end

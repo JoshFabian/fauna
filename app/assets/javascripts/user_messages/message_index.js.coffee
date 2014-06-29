@@ -1,10 +1,10 @@
 $(document).ready ->
 
-  $(".message-actions input").on 'click', (e) ->
+  $(document).on 'click', ".message-actions input", (e) ->
     # console.log "message action click"
     e.stopPropagation()
 
-  $(".message-selector.select-all").on 'click', (e) ->
+  $(document).on 'click', ".message-selector.select-all", (e) ->
     # console.log "message select all click"
     e.stopPropagation()
     if $(".message-selector.select-all input").prop('checked')
@@ -17,12 +17,7 @@ $(document).ready ->
       for object in $(".message-list .message-actions input:checkbox")
         $(object).attr('checked', false)
 
-  $(".message-expand").on 'click', (e) ->
-    e.preventDefault()
-    conversation_id = $(this).data('conversation-id')
-    console.log "conversation:#{conversation_id} expanding ..."
-
-  $(".message-selector.delete").on 'click', (e) ->
+  $(document).on 'click', ".message-selector.delete", (e) ->
     e.preventDefault()
     conv_ids = ($(object).data('conversation-id') for object in $(".message-actions input:checked"))
     return if conv_ids.length == 0
@@ -37,7 +32,7 @@ $(document).ready ->
         window.location.reload(true)
     ]
 
-  $(".message-selector.undelete").on 'click', (e) ->
+  $(document).on 'click', ".message-selector.undelete", (e) ->
     e.preventDefault()
     conv_ids = ($(object).data('conversation-id') for object in $(".message-actions input:checked"))
     return if conv_ids.length == 0
@@ -46,6 +41,37 @@ $(document).ready ->
       (callback) ->
         # move conversations to inbox
         Tegu.MessageApi.untrash_conversations(conv_ids.join(','), auth_token, callback)
+      (data, callback) ->
+        console.log data
+        # reload page
+        window.location.reload(true)
+    ]
+
+  $(document).on 'click', ".message-show", (e) ->
+    e.preventDefault()
+    label = $(this).data('label')
+    conversation_id = $(this).data('conversation-id')
+    console.log "conversation:#{conversation_id} show ..."
+    async.waterfall [
+      (callback) ->
+        # get message
+        Tegu.MessageView.get_conversation(current_user_handle, label, conversation_id, auth_token, callback)
+      (data, callback) ->
+        # console.log data
+        $(".message-list").replaceWith(data)
+    ]
+
+  $(document).on 'click', ".message-reply .submit-message", (e) ->
+    e.preventDefault()
+    conversation_id = $(this).closest('.message-reply').data('conversation-id')
+    message_body = $(this).closest('.message-reply').find("textarea.message-body").val()
+    return if !message_body
+    console.log "send reply: #{conversation_id}:#{message_body}"
+    data = {message: {body: message_body}}
+    async.waterfall [
+      (callback) ->
+        # send reply
+        Tegu.MessageApi.reply_conversation(conversation_id, data, auth_token, callback)
       (data, callback) ->
         console.log data
         # reload page
