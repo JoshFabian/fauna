@@ -87,7 +87,7 @@ class ListingsController < ApplicationController
       @listing = Listing.friendly.find(params[:id])
     end
 
-    @status = params[:status]
+    @message = params[:message]
 
     @user = @listing.user
     @categories = @listing.categories

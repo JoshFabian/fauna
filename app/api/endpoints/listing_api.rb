@@ -139,28 +139,6 @@ module Endpoints
           shipping_price_string: @shipping_price_string, total_price_string: @total_price_string}}
       end
 
-      desc "Create listing payment, and return the paypal pay link"
-      put ':id/shipping/to/:country_code/pay/start' do
-        authenticate!
-        begin
-          @listing = Listing.find(params.id)
-          @shipping_price = @listing.shipping_price(to: params.country_code)
-          @payment = Payment.create!(listing: @listing, buyer: current_user, listing_price: @listing.price,
-            shipping_price: @shipping_price, shipping_to: params.country_code)
-          @payment.paypal_pay(
-            cancel_url: Rails.application.routes.url_helpers.paypal_status_url(host: api_host, payment_id: @payment.id, status: 'cancel'),
-            return_url: Rails.application.routes.url_helpers.paypal_status_url(host: api_host, payment_id: @payment.id, status: 'success'),
-            ipn_notify_url: Rails.application.routes.url_helpers.paypal_ipn_notify_url(host: api_host, payment_id: @payment.id))
-          logger.post("tegu.api", log_data.merge({event: 'listing.pay.start', listing_id: @listing.id,
-            payment_id: @payment.id, buyer_id: current_user.id}))
-          {listing: @listing.as_json(), payment_url: @payment.payment_url}
-        rescue Exception => e
-          logger.post("tegu.api", log_data.merge({event: 'listing.pay.exception', listing_id: @listing.id,
-            exception: e.message}))
-          {listing: @listing.as_json(), exception: e.message}
-        end
-      end
-
       desc "Get listing route"
       get ':id/show/route' do
         listing = Listing.find(params[:id])

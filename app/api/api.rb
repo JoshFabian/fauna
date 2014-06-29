@@ -1,13 +1,3 @@
-module ApiHelper
-  def api_host
-    if Rails.env.production?
-      "http://www.fauna.net"
-    else
-      "http://tegu.lvh.me:7777"
-    end
-  end
-end
-
 module AuthHelper
   def current_user
     @current_user ||= User.find_by_authentication_token(params[:token])
@@ -36,11 +26,11 @@ end
 class Api < Grape::API
   prefix 'api'
   version 'v1', using: :path
-  helpers ApiHelper
   helpers AuthHelper
   helpers LoggerHelper
   mount Endpoints::ListingApi
   mount Endpoints::MessageApi
+  mount Endpoints::PaymentApi
   mount Endpoints::PaypalApi
   mount Endpoints::PingApi
   mount Endpoints::SmsApi

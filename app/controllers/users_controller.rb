@@ -152,4 +152,12 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /users/1/become
+  def become
+    @user = User.find(params[:id])
+    sign_in(:user, @user)
+    # @gflash = {success: {value: "You are now logged in as #{@user.handle}", time: 3000}}
+    redirect_to(root_path) and return
+  end
+
 end

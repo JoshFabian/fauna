@@ -57,12 +57,4 @@ class Tegu.ListingApi
       dataType: 'json'
       success: (data) ->
         callback(null, data) if callback
-
-  @start_payment: (listing_id, shipping_to, token, callback = null) ->
-    api = "/api/v1/listings/#{listing_id}/shipping/to/#{shipping_to}/pay/start?token=#{token}"
-    $.ajax api,
-      type: 'PUT'
-      dataType: 'json'
-      success: (data) ->
-        callback(null, data) if callback
     

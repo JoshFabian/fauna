@@ -24,3 +24,4 @@
           = user.listing_credits
           %span.right= link_to '+1', '#', class: 'listing-credits-add', :'data-user-id' => user.id
         %td
+          = link_to('become', become_user_path(user.id)) if user.id != current_user.id
