@@ -8,13 +8,3 @@
   encoding: utf8
   database: "/mnt/tegu-#{Rubber.env}/shared/db/tegu.#{Rubber.env}.sqlite3"
   pool: 5
-
-# mysql
-# <%= Rubber.env %>:
-#   adapter: <%= YAML::load(File.open("#{Rubber.root}/config/database.yml"))[Rubber.env]["adapter"] %>
-#   encoding: utf8
-#   database: <%= rubber_env.db_name %>
-#   username: <%= rubber_env.db_user %>
-#   password: <%= rubber_env.db_pass %>
-#   host: <%= rubber_instances.for_role('db', 'primary' => true).first.full_name %>
-#   pool: 5
