@@ -8,6 +8,7 @@
       %th Id
       %th Email
       %th Handle
+      %th Facebook
       %th Roles
       %th Plans
       %th Credits
@@ -18,10 +19,11 @@
         %td= user.id
         %td= user.email
         %td= user.handle
+        %td= user.oauths.present? ? 'yes' : 'no'
         %td= user.roles.map(&:to_s).join(',')
         %td= user.subscriptions.collect(&:name).join(', ')
         %td
           = user.listing_credits
           %span.right= link_to '+1', '#', class: 'listing-credits-add', :'data-user-id' => user.id
         %td
-          = link_to('become', become_user_path(user.id)) if user.id != current_user.id
+          = user.id == current_user.id ? 'me' : link_to('become', become_user_path(user.id))
