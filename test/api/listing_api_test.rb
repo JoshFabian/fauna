@@ -3,7 +3,7 @@ require 'test_helper'
 class ListingApiSpec < ActionDispatch::IntegrationTest
   describe "listing event" do
     before do
-      @user = Fabricate(:user)
+      @user = Fabricate(:user, listing_credits: 3)
       @listing = @user.listings.create!(title: "Title", price: 100)
     end
 
@@ -20,7 +20,7 @@ class ListingApiSpec < ActionDispatch::IntegrationTest
 
   describe "listing review" do
     before do
-      @user = Fabricate(:user)
+      @user = Fabricate(:user, listing_credits: 3)
       @listing = @user.listings.create!(title: "Title", price: 100)
       @reviewer = Fabricate(:user)
     end
@@ -48,7 +48,7 @@ class ListingApiSpec < ActionDispatch::IntegrationTest
 
   describe "listing shipping price" do
     before do
-      @user = Fabricate(:user)
+      @user = Fabricate(:user, listing_credits: 3)
       @listing = @user.listings.create!(title: "Title", price: 10000)
       @listing.shipping_prices = {'US' => '57.0', 'everywhere' => '120.50'}
       @listing.save
