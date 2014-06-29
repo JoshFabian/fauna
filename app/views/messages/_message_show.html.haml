@@ -19,11 +19,11 @@
         .message-form
           = image_tag user_avatar_image_thumbnail(@user.avatar_image, 30)
           me to
-          = link_to receiver.handle, '#', class: 'disabled'
+          = link_to receiver.handle, 'javascript:void(0)', class: 'disabled'
       - else
         .message-from
           = image_tag user_avatar_image_thumbnail(sender.avatar_image, 30)
-          = link_to sender.handle, "#", class: 'disabled'
+          = link_to sender.handle, "javascript:void(0)", class: 'disabled'
           to me
       .time-date
         = today_time(message.created_at)

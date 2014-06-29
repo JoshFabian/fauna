@@ -11,10 +11,9 @@ class MessagesController < ApplicationController
     end
   end
 
-  # GET /:handle/messages/:label/:id
+  # GET /:handle/messages/:id
   def show
     @user = current_user
-    @label = params[:label]
     @conversation = Conversation.find(params[:id])
     @receipts = @conversation.receipts_for(current_user)
     @participants = @conversation.participants

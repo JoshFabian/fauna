@@ -59,7 +59,6 @@ class UsersController < ApplicationController
 
     # mailbox label
     @label = 'inbox'
-    # @conversations = @user.mailbox.send(@label).limit(10)
 
     @tab = 'messages'
 

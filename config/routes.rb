@@ -81,7 +81,7 @@ Tegu::Application.routes.draw do
   match 'sms/list'=> "twilio#sms_list", as: :twilio_sms_list, via: [:get]
 
   # messages
-  get ':handle/messages/:label/:id' => "messages#show"
+  get ':handle/messages/:id' => "messages#show", constraints: {id: /[0-9]+/}
   get ':handle/messages/:label' => "messages#index"
 
   # plans

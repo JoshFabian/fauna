@@ -6,8 +6,8 @@ class Tegu.MessageView
       success: (data) ->
         callback(null, data) if callback
 
-  @get_conversation: (handle, label, conversation_id, token, callback=null) ->
-    $.ajax "/#{handle}/messages/#{label}/#{conversation_id}?token=#{token}",
+  @get_conversation: (handle, conversation_id, token, callback=null) ->
+    $.ajax "/#{handle}/messages/#{conversation_id}?token=#{token}",
       type: 'GET'
       dataType: 'html'
       success: (data) ->
