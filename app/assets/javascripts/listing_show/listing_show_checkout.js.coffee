@@ -49,10 +49,10 @@ $(document).ready ->
     console.log "listing:#{listing_id}, shipping_to:#{shipping_to}"
     async.waterfall [
       (callback) ->
-        # start payment
-        Tegu.ListingApi.start_payment(listing_id, shipping_to, auth_token, callback)
+        # create payment
+        Tegu.PaymentApi.create_payment(listing_id, shipping_to, auth_token, callback)
       (data, callback) ->
         console.log data
-        if data.payment_url
-          window.location.href = data.payment_url
+        if data.payment.payment_url
+          window.location.href = data.payment.payment_url
     ]

@@ -2,11 +2,11 @@
   = render partial: "listings/guest_message"
 
 .row
-  - if @status.present?
-    - if @status == 'canceled'
+  - if @message.present?
+    - if @message == 'canceled'
       %div.alert-box.alert{:'data-alert' => ''}
         Your payment was canceled
-    - elsif @status == 'sold'
+    - elsif @message == 'sold'
       %div.alert-box.success{:'data-alert' => ''}
         Your payment is complete
 

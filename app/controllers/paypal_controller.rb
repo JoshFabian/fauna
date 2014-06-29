@@ -20,6 +20,7 @@ class PaypalController < ApplicationController
   #   raise
   # end
 
+  # deprecated
   # GET /paypal/pay/:payment_id/:status
   def status
     @payment = Payment.find(params[:payment_id])
@@ -42,6 +43,7 @@ class PaypalController < ApplicationController
     redirect_to @goto and return if @goto.present?
   end
 
+  # deprecated
   # POST /paypal/pay/:payment_id/ipn_notify
   def ipn_notify
     @payment = Payment.find(params[:payment_id])
