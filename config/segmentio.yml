@@ -1,6 +1,9 @@
 development:
   write_key: 86164it2xf
 
+staging:
+  write_key: 86164it2xf
+
 production:
   write_key: 67nb98vf02
 
