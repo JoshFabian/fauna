@@ -6,7 +6,7 @@ class ListingsController < ApplicationController
 
   # GET /listings
   def index
-    @listings = Listing.active.all
+    @listings = Listing.active.order('id desc').limit(20)
 
     respond_to do |format|
       format.html { render(action: :index) }
@@ -25,20 +25,6 @@ class ListingsController < ApplicationController
     end
   end
 
-  # GET /:handle/listings/manage
-  # GET /:handle/listings/manage?category_id=1&state=active
-  def manage
-    @state = params[:state].present? ? params[:state] : 'active'
-    @category_id = params[:category_id]
-    @user = User.find_by_handle(params[:handle])
-    acl_manage!(on: @user)
-    @listings = @user.listings.where(state: @state)
-    if @category_id.present?
-      @listings = @listings.search(filter: {term: {category_ids: @category_id}}).records
-    end
-    # @listings = Listing.search(filter: {term: {user_id: @user.id}}).records.where(state: @state)
-  end
-
   # GET /listings/:category
   # GET /listings/:category/:subcategory
   def by_category
@@ -47,7 +33,7 @@ class ListingsController < ApplicationController
     @category = Category.roots.find_by_match(@token)
     @subcategory = @category.children.find_by_match(@subtoken) if @subtoken.present?
     @category_ids = @subcategory.present? ? @subcategory.id : @category.id
-    @listings = Listing.search(filter: {term: {category_ids: @category_ids}}).records
+    @listings = Listing.search(filter: {term: {category_ids: @category_ids}}).records.active
 
     @subcategories = @category.children
 
@@ -59,7 +45,7 @@ class ListingsController < ApplicationController
   # GET /listings/search
   def by_search
     @query = params[:query].to_s
-    @listings = Listing.search(@query).records
+    @listings = Listing.search(@query).records.active
 
     respond_to do |format|
       format.html { render(action: :index) }
@@ -69,7 +55,7 @@ class ListingsController < ApplicationController
   # GET /:handle/listings
   def by_user
     @user = User.find_by_handle(params[:handle])
-    @listings = Listing.search(filter: {term: {user_id: @user.id}}).records
+    @listings = Listing.search(filter: {term: {user_id: @user.id}}).records.active
 
     respond_to do |format|
       format.html { render(action: :index) }

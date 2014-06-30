@@ -48,7 +48,18 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /:handle/messages/:label
+  # GET /:handle/listings/manage
+  # GET /:handle/listings/manage?category_id=1&state=active
+  def manage_listings
+    @user = User.find_by_handle(params[:handle])
+    acl_manage!(on: @user)
+    @state = params[:state].present? ? params[:state] : 'active'
+    @category_id = params[:category_id]
+    @terms = {user_id: @user.id, category_ids: @category_id}
+    @listings = Listing.search(filter: {term: @terms}).records.where(state: @state)
+  end
+
+  # GET /:handle/messages
   def messages
     @user = User.find_by_handle(params[:handle])
     @edit = @user.id == current_user.id
