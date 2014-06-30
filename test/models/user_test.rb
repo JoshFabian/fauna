@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   it "should create user with required attributes" do
-    @user = User.create!(email: "user@gmail.com", password: "x", password_confirmation: "x")
+    @user = User.create!(email: "user#{rand(100)}@gmail.com", password: "x", password_confirmation: "x")
   end
 
   describe "user auth token" do
@@ -47,7 +47,7 @@ class UserTest < ActiveSupport::TestCase
 
   describe "user roles" do
     before do
-      @user = Fabricate(:user, email: "user@gmail.com")
+      @user = Fabricate(:user)
     end
 
     it "should initialize role to basic" do
@@ -74,7 +74,7 @@ class UserTest < ActiveSupport::TestCase
 
   describe "user location" do
     before do
-      @user = Fabricate(:user, email: "user@gmail.com")
+      @user = Fabricate(:user)
     end
 
     it "should display city and state" do
@@ -95,7 +95,7 @@ class UserTest < ActiveSupport::TestCase
 
   describe "user avatar image" do
     before do
-      @user = Fabricate(:user, email: "user@gmail.com")
+      @user = Fabricate(:user)
     end
 
     it "should create avatar image" do
@@ -107,7 +107,7 @@ class UserTest < ActiveSupport::TestCase
 
   describe "user cover images" do
     before do
-      @user = Fabricate(:user, email: "user@gmail.com")
+      @user = Fabricate(:user)
     end
 
     it "should create cover image" do
