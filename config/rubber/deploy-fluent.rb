@@ -11,8 +11,9 @@ namespace :rubber do
 
     desc "Configure fluentd"
     task :configure, :roles => :app do
-      run "mkdir -p /etc/fluent"
-      run "cp #{deploy_to}/current/config/rubber/common/fluent.#{rails_env}.conf /etc/fluent/fluent.conf"
+      # file copy not required when common/fluent.conf present
+      # run "mkdir -p /etc/fluent"
+      # run "cp #{deploy_to}/current/config/rubber/common/fluent.#{rails_env}.conf /etc/fluent/fluent.conf"
       # run "sudo cp #{deploy_to}/current/config/fluentd/init.d/init /etc/init.d/td-agent"
       # run "sudo cp #{deploy_to}/current/config/fluentd/plugins/out_file_alternative.rb /etc/td-agent/plugin/"
     end

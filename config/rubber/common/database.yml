@@ -6,5 +6,5 @@
 <%= Rubber.env %>:
   adapter: sqlite3
   encoding: utf8
-  database: "/mnt/tegu-#{Rubber.env}/shared/db/tegu.#{Rubber.env}.sqlite3"
+  database: /mnt/tegu-<%=Rubber.env%>/shared/db/tegu.<%=Rubber.env%>.sqlite3
   pool: 5
