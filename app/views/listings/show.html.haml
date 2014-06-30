@@ -50,6 +50,7 @@
       %h1= number_to_currency(@listing.price.to_f/100.0, precision: 2)
       .listing-checkout-1
         = render partial: "listings/listing_checkout_1"
+        = render(partial: 'listings/listing_report_modal')
       .listing-checkout-2.hide
         = render partial: "listings/listing_checkout_2"
 

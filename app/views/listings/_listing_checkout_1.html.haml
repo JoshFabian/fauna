@@ -6,13 +6,7 @@
   = link_to 'Mark as Sold', user_edit_listing_path(@user, @listing.id), class: 'button edit-listing remove-button', :'data-listing-id' => @listing.id
 - else
   = link_to 'Checkout with Paypal', '#', class: 'button buy-button checkout-1'
-  %a.remove-link{"data-reveal-id" => "myModal", :href => "#"} Report Listing
-  #myModal.reveal-modal.small{"data-reveal" => ""}
-    %h2 Report Listing
-    %p.lead Why are you reporting this?
-    %textarea
-    %a.button.orange-button.right{:href => "#"} Report
-    %a.close-reveal-modal ×
+  = link_to 'Report Listing', '#', class: 'remove-link', :'data-reveal-id' => 'listing-report-modal'
 
 .social-links
   .fb-share-button{"data-type" => "button_count"}
