@@ -29,4 +29,7 @@ Tegu::Application.configure do
 
   # Automatically inject JavaScript needed for LiveReload
   config.middleware.insert_after(ActionDispatch::Static, Rack::LiveReload)
+
+  # Lograge
+  config.lograge.enabled = true
 end
