@@ -21,7 +21,7 @@ $(document).ready ->
 
   # pills
 
-  $(".pills .tab-title").on 'click', (e) ->
+  $(".listing-images .pills .tab-title").on 'click', (e) ->
     e.preventDefault()
     pill = $(this).data('pill')
     console.log "pill:#{pill} click ..."
