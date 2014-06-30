@@ -3,8 +3,8 @@
     %h3 Manage Listings
   .listing-nav.small-12.columns
     %ul.pills{:'data-tab' => ""}
-      %li.tab-title{class: [@state == 'approved' ? 'active' : nil]}
-        %a{href: url_for(state: 'approved')} Active Listings
+      %li.tab-title{class: [@state == 'active' ? 'active' : nil]}
+        %a{href: url_for(state: 'active')} Active Listings
       %li.tab-title{class: [@state == 'sold' ? 'active' : nil]}
         %a{href: url_for(state: 'sold')} Sold Listings
     -# .listing-search
@@ -44,7 +44,7 @@
                   %td= number_to_currency(listing.price/100.0)
                   %td= listing.created_at.to_s(:date_dow_ddmmyyyy)
                   %td.text-right
-                    - if listing.approved?
+                    - if listing.active?
                       = link_to 'Edit Listing', edit_listing_path(listing) if listing.editable?
                       = link_to 'Mark as Sold', '#', class: 'mark-sold', :'data-listing-id' => listing.id
 

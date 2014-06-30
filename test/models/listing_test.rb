@@ -10,9 +10,9 @@ class ListingTest < ActiveSupport::TestCase
       @listing = @user.listings.create!(title: "Title 1", price: 100)
     end
 
-    it "should start in approved state" do
+    it "should start in active state" do
       @listing = @user.listings.create!(title: "Title 2", price: 100)
-      @listing.state.must_equal 'approved'
+      @listing.state.must_equal 'active'
     end
 
     it "should decrement user listing_credits" do
@@ -127,8 +127,8 @@ class ListingTest < ActiveSupport::TestCase
         Listing.import
       end
 
-      it "should find approved listings" do
-        @listing1.state.must_equal 'approved'
+      it "should find active listings" do
+        @listing1.state.must_equal 'active'
         Listing.search('lizard').results.size.must_equal 1
       end
 

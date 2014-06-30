@@ -28,11 +28,11 @@ class Listing < ActiveRecord::Base
   friendly_id :title, use: :scoped, scope: :user
 
   aasm column: 'state' do
-    state :approved, initial: true
+    state :active, initial: true
     state :sold
 
     event :sold do
-      transitions to: :sold, :from => [:approved, :sold]
+      transitions to: :sold, :from => [:active, :sold]
     end
   end
 
@@ -62,7 +62,7 @@ class Listing < ActiveRecord::Base
   end
 
   def editable?
-    approved? and (self.created_at > 3.days.ago)
+    active? and (self.created_at > 3.days.ago)
   end
 
   def price=(s)

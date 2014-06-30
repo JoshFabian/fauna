@@ -6,7 +6,7 @@ class ListingsController < ApplicationController
 
   # GET /listings
   def index
-    @listings = Listing.approved.all
+    @listings = Listing.active.all
 
     respond_to do |format|
       format.html { render(action: :index) }
@@ -15,9 +15,9 @@ class ListingsController < ApplicationController
 
   # GET /listings/recent
   def recent
-    @recent_general = Listing.approved.order("id desc").limit(8)
+    @recent_general = Listing.active.order("id desc").limit(8)
     @recent_categories = Category.roots.map do |category|
-      mash = Hashie::Mash.new(category: category, listings: category.listings.approved.order('id desc').limit(4))
+      mash = Hashie::Mash.new(category: category, listings: category.listings.active.order('id desc').limit(4))
     end
 
     respond_to do |format|
@@ -26,9 +26,9 @@ class ListingsController < ApplicationController
   end
 
   # GET /:handle/listings/manage
-  # GET /:handle/listings/manage?category_id=1&state=approved
+  # GET /:handle/listings/manage?category_id=1&state=active
   def manage
-    @state = params[:state].present? ? params[:state] : 'approved'
+    @state = params[:state].present? ? params[:state] : 'active'
     @category_id = params[:category_id]
     @user = User.find_by_handle(params[:handle])
     acl_manage!(on: @user)
@@ -97,7 +97,7 @@ class ListingsController < ApplicationController
     @main_image = @all_images.first
     @reviews = @listing.reviews
 
-    @other_listings = current_user.listings.approved.where.not(id: @listing.id).order("id desc").limit(2)
+    @other_listings = current_user.listings.active.where.not(id: @listing.id).order("id desc").limit(2)
   end
 
   # GET /listings/new

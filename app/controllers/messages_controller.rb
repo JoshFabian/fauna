@@ -17,7 +17,7 @@ class MessagesController < ApplicationController
     @conversation = Conversation.find(params[:id])
     @receipts = @conversation.receipts_for(current_user)
     @participants = @conversation.participants
-    @listing = Listing.first
+    @listing = ListingConversation.find_listing(@conversation.id)
 
     respond_to do |format|
       format.js

@@ -8,7 +8,7 @@ class ListingApiSpec < ActionDispatch::IntegrationTest
     end
 
     it "should mark listing as sold" do
-      @listing.state.must_equal 'approved'
+      @listing.state.must_equal 'active'
       put "/api/v1/listings/#{@listing.id}/event/sold?token=#{@user.auth_token}"
       response.success?.must_equal true
       body = JSON.parse(response.body)
