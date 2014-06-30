@@ -43,7 +43,7 @@
                     = link_to listing.title, user_listing_path(@user, listing)
                   %td= number_to_currency(listing.price/100.0)
                   %td= listing.created_at.to_s(:date_dow_ddmmyyyy)
-                  %td.text-right.no-padding
+                  %td.text-right
                     %small{style: 'font-size: 0.85em;'}
                       - if listing.active?
                         - if listing.editable?

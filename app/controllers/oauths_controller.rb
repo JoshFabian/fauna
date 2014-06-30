@@ -6,6 +6,7 @@ class OauthsController < ApplicationController
     session["omniauth.auth"] = env["omniauth.auth"].except(:extra)
     # build oauth object
     @oauth = Oauth.from_omniauth(session["omniauth.auth"])
+    logger.post("tegu.app", log_data.merge({event: 'facebook.oauth', oauth: @oauth}))
     if @oauth.persisted?
       if user_signed_in?
         logger.post("tegu.app", log_data.merge({event: 'facebook.connect'}))
