@@ -20,7 +20,6 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
   before :each do
-    Category.delete_all
     DatabaseCleaner.start
     # ElasticIndex.delete_all
     # ElasticIndex.create_all

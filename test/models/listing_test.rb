@@ -68,6 +68,7 @@ class ListingTest < ActiveSupport::TestCase
   describe "search" do
     describe "by category name" do
       before do
+        Category.delete_all
         @lizards = Category.create!(name: 'Lizards')
         @geckos = Category.create!(name: 'Geckos')
         @listing1 = @user.listings.create!(title: "Lizard", price: 100)
@@ -106,6 +107,7 @@ class ListingTest < ActiveSupport::TestCase
 
     describe "by category id" do
       before do
+        Category.delete_all
         @lizards = Category.create!(name: 'Lizards')
         @listing1 = @user.listings.create!(title: "Lizard", price: 100)
         @listing1.categories.push(@lizards)
@@ -143,6 +145,7 @@ class ListingTest < ActiveSupport::TestCase
 
     describe "by title" do
       before do
+        Listing.destroy_all
         @listing1 = @user.listings.create!(title: "Lizard", price: 100)
         @listing2 = @user.listings.create!(title: "Tegu", price: 100)
         Listing.import

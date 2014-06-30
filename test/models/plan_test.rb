@@ -70,7 +70,7 @@ class PlanTest < ActiveSupport::TestCase
 
   describe "user sellable?" do
     before do
-      @user = Fabricate(:user, email: "user@gmail.com")
+      @user = Fabricate(:user)
     end
 
     it "should return false when user has no credits or subscriptions" do
