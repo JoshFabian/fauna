@@ -21,8 +21,13 @@ class ListingFormsController < ApplicationController
 
   # GET /listing_forms/1/shipping_table?shipping_from=US
   def shipping_table
-    @listing = Listing.find(params[:id])
-    @shipping_prices = @listing.shipping_prices
+    begin
+      @listing = Listing.find(params[:id])
+      @shipping_prices = @listing.shipping_prices
+    rescue Exception => e
+      @shipping_prices = {}
+    end
+
     @countries = []
     @countries.push(Country.coded(params[:shipping_from] || @listing.shipping_from))
 

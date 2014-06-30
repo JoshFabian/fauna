@@ -8,9 +8,9 @@
 
 %hr
 %label Ships from
-= country_select("listing", "shipping_from", {selected: @listing.shipping_from || 'US'}, {class: 'required', :'data-listing-id' => @listing.id})
+= country_select("listing", "shipping_from", {selected: @listing.shipping_from || 'US'}, {class: 'required', :'data-listing-id' => @listing.id.to_i})
 
-= render(partial: "listings/shipping_table")
+= render(partial: "listings/listing_shipping_table")
 
 = check_box "listing", "local_pickup", {checked: @listing.local_pickup.to_i == 1}, 1, 0
 

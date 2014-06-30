@@ -43,10 +43,12 @@
                     = link_to listing.title, user_listing_path(@user, listing)
                   %td= number_to_currency(listing.price/100.0)
                   %td= listing.created_at.to_s(:date_dow_ddmmyyyy)
-                  %td.text-right
-                    - if listing.active?
-                      = link_to 'Edit Listing', edit_listing_path(listing) if listing.editable?
-                      = link_to 'Mark as Sold', '#', class: 'mark-sold', :'data-listing-id' => listing.id
+                  %td.text-right.no-padding
+                    %small{style: 'font-size: 0.85em;'}
+                      - if listing.active?
+                        - if listing.editable?
+                          = link_to 'Edit Listing', edit_listing_path(listing)
+                        = link_to 'Mark as Sold', '#', class: 'mark-sold', :'data-listing-id' => listing.id
 
       #sold-listings.content
           
