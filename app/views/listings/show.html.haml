@@ -47,10 +47,14 @@
               = link_to @subcategory.name, listing_category_path(@category.name.parameterize, @subcategory.name.parameterize)
 
       %h4= @listing.title
-      %h1= number_to_currency(@listing.price.to_f/100.0, precision: 2)
+      %h1.relative
+        = number_to_currency(@listing.price.to_f/100.0, precision: 2)
+        %a.button.ask-question Ask a question
+        = link_to 'Ask a question', '#', class: 'button ask-question', :'data-reveal-id' => 'listing-message-modal'
       .listing-checkout-1
         = render partial: "listings/listing_checkout_1"
         = render(partial: 'listings/listing_report_modal')
+        = render(partial: 'listings/listing_message_modal')
       .listing-checkout-2.hide
         = render partial: "listings/listing_checkout_2"
 

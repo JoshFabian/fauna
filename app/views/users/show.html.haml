@@ -23,9 +23,11 @@
         %div{class: @edit ? ['edit-hide'] : ['follow', 'hide']}
           - link_name = @edit ? 'Edit' : 'Follow'
           = link_to link_name, '#', class: ['button']
+          = link_to "message", '#', class: 'button active', :'data-reveal-id' => 'profile-message-modal'
         .edit-show
           = link_to 'Cancel', '#', class: 'button active'
           = link_to 'Save', '#', class: 'button', :'data-user-id' => @user.id
+        = render(partial: 'users/profile_message_modal')
 
   .sub-user-bar
     .row
