@@ -21,7 +21,7 @@
             = current_user.handle
             %i.icon.ion-arrow-down-b
         .header-inbox
-          = link_to "#" do
+          = link_to user_messages_path(current_user) do
             %i.icon.ion-android-inbox
         .header-cta
           = link_to new_listing_path, class: 'button' do
