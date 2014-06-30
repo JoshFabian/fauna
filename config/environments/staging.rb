@@ -81,4 +81,5 @@ Tegu::Application.configure do
 
   # Lograge
   config.lograge.enabled = true
+  config.lograge.formatter = Lograge::Formatters::Logstash.new
 end
