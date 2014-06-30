@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+require "rubygems"
+
+file = ARGV[0]
+['app1.tegu.com'].each do |host|
+  puts "*** scp to host:#{host}"
+  cmd  = "scp #{file} root@#{host}:/mnt/tegu-production/current/#{file}"
+  system cmd
+end
