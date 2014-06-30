@@ -2,11 +2,10 @@
 
 .message-wrapper {
   padding: 0;
-}
-.message-sidebar {
   background: lighten(#eee, 4);
-  margin-bottom: -999em;
-  padding-bottom: 999em;
+}
+
+.message-sidebar {
   padding-top: 20px;
   overflow: hidden;
   border-top-left-radius: 3px;
@@ -41,6 +40,7 @@
       }
     }
   }
+
   .help-icon {
     width: 34px;
     display: inline-block;
@@ -52,24 +52,21 @@
     padding: 4px 4px;
     margin-right: 5px;
     transition: .2s ease-in;
-    // &.star {
-    //   font-size: 21px;
-    // }
-    // &.email {
-    //   font-size: 20px;
-    // }
   }
 }
+
 .message-list {
-  padding: 0;
+  padding: 0 !important;
   border-left: 1px solid #ddd;
+  background: #fff;
+  
   ul {
     list-style-type: none;
     margin-left: 0;
-    overflow-y: scroll;
+    margin-bottom: 0;
     width: 100%;
-    max-height: 700px;
   }
+
   .list-header {
     border-bottom: 1px solid #ddd;
     padding: 10px 0 10px 10px;
