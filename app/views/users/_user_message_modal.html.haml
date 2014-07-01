@@ -1,0 +1,8 @@
+#user-message-modal.reveal-modal.small{"data-reveal" => "", :'data-user-id' => @user.id}
+  %h5
+    Send a message to
+    %span.highlight= @user.handle
+  %input.rounded-input.message-subject{placeholder: "Message Subject"}
+  %textarea.message-body{placeholder: "Message Body"}
+  = link_to 'Send Message', '#', class: 'button orange-button right'
+  %a.close-reveal-modal ×

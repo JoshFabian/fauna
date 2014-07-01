@@ -18,7 +18,7 @@
       %tr
         %td= user.id
         %td= user.email
-        %td= user.handle
+        %td= link_to user.handle, user_path(user)
         %td= user.oauths.present? ? 'yes' : 'no'
         %td= user.roles.map(&:to_s).join(',')
         %td= user.subscriptions.collect(&:name).join(', ')

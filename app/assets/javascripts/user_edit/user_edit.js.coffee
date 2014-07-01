@@ -5,9 +5,9 @@ $(document).ready ->
   $(".edit-hide .button, .edit-show .button").on 'click', (e) ->
     e.preventDefault()
     $("body").toggleClass('editing')
-    user_id = $(this).data('user-id')
     button_name = $(this).text()
     if button_name.match(/save/i)
+      # trigger form submit
       $("form.user-edit").submit()
 
   # user edit form
