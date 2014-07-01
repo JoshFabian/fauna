@@ -1,9 +1,9 @@
 module ApplicationHelper
 
-  def category_cover_image(category, size=1440)
+  def category_cover_image(category, width=1440)
     cloudinary_url(category.cover_image.path)
   rescue Exception => e
-    "http://www.placehold.it/#{size}/#{size}"
+    "http://www.placehold.it/#{width}x440"
   end
 
   def listing_image_dimensions(image)
@@ -13,13 +13,13 @@ module ApplicationHelper
   def listing_image_thumbnail(image, size=200)
     cloudinary_url(image.full_public_id, transformation: [{width: size, height: size, crop: 'fill'}])
   rescue Exception => e
-    "http://www.placehold.it/#{size}/#{size}"
+    "http://www.placehold.it/#{size}x#{size}"
   end
 
   def listing_image_tile(image)
     cloudinary_url(image.full_public_id, transformation: [{width: 235, height: 200, crop: 'fill'}])
   rescue Exception => e
-    "http://www.placehold.it/235/235"
+    "http://www.placehold.it/235x200"
   end
 
   def listing_shipping_prices_options(listing, options={})
