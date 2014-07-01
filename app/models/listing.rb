@@ -62,7 +62,7 @@ class Listing < ActiveRecord::Base
   end
 
   def editable?
-    active? and (self.created_at > 3.days.ago)
+    active? and (self.created_at.blank? or self.created_at > 3.days.ago)
   end
 
   def price=(s)
