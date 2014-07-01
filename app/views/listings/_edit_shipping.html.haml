@@ -1,7 +1,7 @@
 %h5 Shipping
 %label 
   Processing Time
-  %span.has-tip.tip-top{"data-tooltip" => "", :title => "Processing time is the estimated time between an animal's purchase date and when it will be shipped. <br>Processing times can be changed at any time for current listings."} 
+  %span.has-tip.tip-top{"data-tooltip" => "", :title => "Processing time is the estimated time between an animal's purchase date and when it will be shipped."} 
     %i.icon.ion-help-circled
 
 = select_tag "listing", options_for_select(listing_shipping_times, selected: @listing.shipping_time, disabled: 0), id: "listing_shipping_time", name: "listing[shipping_time]", class: "required", prompt: 'Ready to ship in ...', :'data-listing-id' => @listing.id
@@ -12,9 +12,9 @@
 
 = render(partial: "listings/listing_shipping_table")
 
-= check_box "listing", "local_pickup", {checked: @listing.local_pickup.to_i == 1}, 1, 0
+-# = check_box "listing", "local_pickup", {checked: @listing.local_pickup.to_i == 1}, 1, 0
 
-%label{for: "listing_local_pickup"}
-  Allow Free Local Pickup
-  %span.has-tip.tip-top{"data-tooltip" => "", :title => "Allows buyers to come to you and pick up the animal in person."} 
-    %i.icon.ion-help-circled
+-# %label{for: "listing_local_pickup"}
+-#   Allow Free Local Pickup
+-#   %span.has-tip.tip-top{"data-tooltip" => "", :title => "Allows buyers to come to you and pick up the animal in person."} 
+-#     %i.icon.ion-help-circled
