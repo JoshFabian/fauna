@@ -319,7 +319,11 @@
   select {
     width: 300px;
   }
-  
+  .input-group-location {
+    input {
+      margin-bottom: 0;
+    }
+  }
   .price-input {
     label {
       float: left;
@@ -329,11 +333,12 @@
     }
     input { 
       width: 80px;
+      margin-bottom: 0;
     }
   }
   tbody {
     .country {
-      min-width: 171px;
+      min-width: 175px;
     }
   }
   .has-tip {
