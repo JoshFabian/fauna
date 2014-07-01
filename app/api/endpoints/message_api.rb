@@ -52,7 +52,18 @@ module Endpoints
         authenticate!
         to = User.find(params.user_id)
         receipt = current_user.send_message(to, params.message.body, params.message.subject)
-        {receipt: receipt}
+        conversation = receipt.message.conversation
+        if params.listing.present?
+          begin
+            listing = Listing.find(params.listing.id)
+            object = ListingConversation.create!(conversation: conversation, listing: listing)
+          rescue Exception => e
+          end
+        end
+        logger.post("tegu.api", log_data.merge({event: 'conversation.create'}))
+        result = {receipt: receipt}
+        result = result.merge(listing: {id: listing.try(:id)}) if listing.present?
+        result
       end
 
       desc "Reply to conversation"
@@ -60,6 +71,7 @@ module Endpoints
         authenticate!
         conversation = Conversation.find(params.id)
         receipt = current_user.reply_to_conversation(conversation, params.message.body)
+        logger.post("tegu.api", log_data.merge({event: 'conversation.reply', to: params.user_id}))
         {receipt: receipt}
       end
     end # conversations

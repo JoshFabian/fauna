@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140628141653) do
+ActiveRecord::Schema.define(version: 20140701153715) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -60,6 +60,17 @@ ActiveRecord::Schema.define(version: 20140628141653) do
 
   add_index "listing_categories", ["category_id"], name: "index_listing_categories_on_category_id"
   add_index "listing_categories", ["listing_id"], name: "index_listing_categories_on_listing_id"
+
+  create_table "listing_conversations", force: true do |t|
+    t.integer  "conversation_id"
+    t.integer  "listing_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "listing_conversations", ["conversation_id"], name: "index_listing_conversations_on_conversation_id"
+  add_index "listing_conversations", ["created_at"], name: "index_listing_conversations_on_created_at"
+  add_index "listing_conversations", ["listing_id"], name: "index_listing_conversations_on_listing_id"
 
   create_table "listing_images", force: true do |t|
     t.integer  "listing_id"
