@@ -5,7 +5,7 @@
       .progress.round.center.hide{style: 'padding: 0px; width: 10%;'}
         %span.meter
       = hidden_field :image_params, nil, name: 'image_params[]', class: 'image-params'
-      .add-images-button
+      .add-images-button{class: [@listing.editable? ? 'editable' : nil]}
         .button-add
         %span Add Photo
       %a.remove{href: "#"}

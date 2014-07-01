@@ -1,1 +1,1 @@
-= select_tag "categories", options_for_select(categories.map{ |o| [o.name, o.id]}, selected: selected.try(:id), disabled: 0), id: "listing_categories_#{level}", name: "listing[categories][]", class: "required", prompt: prompt
+= select_tag "categories", options_for_select(categories.map{ |o| [o.name, o.id]}, selected: selected.try(:id), disabled: 0), id: "listing_categories_#{level}", name: "listing[categories][]", class: "required", disabled: !@listing.editable?, prompt: prompt

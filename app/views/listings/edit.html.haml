@@ -12,7 +12,7 @@
         %hr
         .listing-field
           %label Title
-          = f.text_field :title, autofocus: false, required: true, class: nil, placeholder: "Try to describe your reptile the way a buyer would."
+          = f.text_field :title, autofocus: false, required: true, class: nil, placeholder: "Try to describe your reptile the way a buyer would.", disabled: !@listing.editable?
         %hr
         .listing-field
           %label Photos
@@ -24,12 +24,12 @@
         %hr
         .listing-field
           %label Description
-          = f.text_area :description, autofocus: false, required: true, class: nil, placeholder: "Try to answer the questions buyers will have. Tell the reptile's story and explain why it's special."
+          = f.text_area :description, autofocus: false, required: true, class: nil, disabled: !@listing.editable?, placeholder: "Try to answer the questions buyers will have. Tell the reptile's story and explain why it's special."
         %hr 
         .listing-field
           %label Price
           .small-3.columns{:style => "padding: 0;"}
-            = f.text_field :price, autofocus: false, required: true, class: "numeral price", placeholder: "$0.00", :'data-number' => @listing.price
+            = f.text_field :price, autofocus: false, required: true, class: "numeral price", disabled: !@listing.editable?, placeholder: "$0.00", :'data-number' => @listing.price
 
         %hr 
         .listing-field

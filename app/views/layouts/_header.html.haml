@@ -44,8 +44,9 @@
             %li= link_to 'Manage Plans', manage_plans_path
             %li= link_to 'Manage Users', users_path
             %li= link_to 'Manage Waitlist', waitlists_path
+            - if !Rails.env.production?
+              %li= link_to 'Welcome Modal', '#', class: 'open-welcome-message-modal'
           %li= link_to 'Logout', logout_path
-          %li= link_to 'Welcome Modal', '#', class: 'open-welcome-message-modal'
 
 = render(partial: "shared/welcome_modal")
 
