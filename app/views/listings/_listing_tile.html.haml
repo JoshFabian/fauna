@@ -10,7 +10,7 @@
       - elsif review == :pending
         .review-button
           = link_to 'Post Review', new_listing_review_path(user, listing)
-      = image_tag cloudinary_url(image.full_public_id, transformation: [{width: 235, height: 200, crop: 'fill'}])
+      = image_tag listing_image_tile(image)
       .listing-info
         .title
           = listing.title

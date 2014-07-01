@@ -16,6 +16,12 @@ module ApplicationHelper
     "http://www.placehold.it/#{size}/#{size}"
   end
 
+  def listing_image_tile(image)
+    cloudinary_url(image.full_public_id, transformation: [{width: 235, height: 200, crop: 'fill'}])
+  rescue Exception => e
+    "http://www.placehold.it/200/200"
+  end
+
   def listing_shipping_prices_options(listing, options={})
     listing.shipping_prices.collect do |hash|
       ["#{hash[0]} $#{hash[1]}", hash[0], :'data-shipping-price' => hash[1]]
