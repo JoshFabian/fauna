@@ -21,6 +21,7 @@
 
 $(document).ready(function() {
   $(document).foundation();
+  $(document).trigger('foundation-initialized');
 
   // initialize form validation
   $('.form-validation').each(function() {

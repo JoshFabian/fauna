@@ -19,7 +19,7 @@ module ApplicationHelper
   def listing_image_tile(image)
     cloudinary_url(image.full_public_id, transformation: [{width: 235, height: 200, crop: 'fill'}])
   rescue Exception => e
-    "http://www.placehold.it/200/200"
+    "http://www.placehold.it/235/235"
   end
 
   def listing_shipping_prices_options(listing, options={})

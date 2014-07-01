@@ -45,8 +45,7 @@
             %li= link_to 'Manage Users', users_path
             %li= link_to 'Manage Waitlist', waitlists_path
           %li= link_to 'Logout', logout_path
-          %li
-            %a{"data-reveal-id" => "welcomeModal", :href => "#"} Welcome Modal
+          %li= link_to 'Welcome Modal', '#', class: 'open-welcome-message-modal'
 
 = render(partial: "shared/welcome_modal")
 

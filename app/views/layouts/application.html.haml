@@ -57,4 +57,5 @@
     var current_user_handle = "#{current_user.handle rescue ''}";
     var current_roles = #{current_user.roles.map(&:to_s) rescue []};
     var auth_token = "#{current_user.auth_token rescue ''}";
+    var welcome_message = #{current_user.welcome_message.to_i rescue 0};
 
