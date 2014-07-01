@@ -83,7 +83,7 @@ class ListingsController < ApplicationController
     @main_image = @all_images.first
     @reviews = @listing.reviews
 
-    @other_listings = current_user.listings.active.where.not(id: @listing.id).order("id desc").limit(2)
+    @other_listings = Listing.active.where(user_id: @user.id).where.not(id: @listing.id).order("id desc").limit(2)
   end
 
   # GET /listings/new
