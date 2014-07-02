@@ -53,7 +53,7 @@ class ListingTest < ActiveSupport::TestCase
   describe "shipping prices" do
     before do
       @listing = Fabricate(:listing, user: @user, price: 15000)
-      @listing.shipping_prices = {'US' => '57.0', 'everywhere' => '120.50'}
+      @listing.shipping_prices = {'US' => '57.0', 'everywhere' => '120.50', 'local' => '0'}
       @listing.save
       @listing.reload
     end
