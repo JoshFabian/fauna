@@ -83,7 +83,7 @@ class ListingsController < ApplicationController
     @main_image = @all_images.first
     @reviews = @listing.reviews
 
-    @other_listings = current_user.listings.active.where.not(id: @listing.id).order("id desc").limit(2)
+    @other_listings = Listing.active.where(user_id: @user.id).where.not(id: @listing.id).order("id desc").limit(2)
   end
 
   # GET /listings/new
@@ -106,7 +106,6 @@ class ListingsController < ApplicationController
   def edit
     @listing = current_user.listings.friendly.find(params[:id])
     acl_manage!(on: @listing)
-    acl_editable!(on: @listing)
     @category = @listing.categories.where(level: 1).first
     @subcategory = @listing.categories.where(level: 2).first
     @images = @listing.images.order("position asc")

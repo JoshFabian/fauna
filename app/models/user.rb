@@ -35,6 +35,8 @@ class User < ActiveRecord::Base
 
   bitmask :roles, :as => [:admin, :basic]
 
+  store :data, accessors: [:welcome_message]
+
   # private messaging
   acts_as_messageable
 

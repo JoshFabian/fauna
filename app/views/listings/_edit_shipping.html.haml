@@ -4,11 +4,11 @@
   %span.has-tip.tip-top{"data-tooltip" => "", :title => "Processing time is the estimated time between an animal's purchase date and when it will be shipped."} 
     %i.icon.ion-help-circled
 
-= select_tag "listing", options_for_select(listing_shipping_times, selected: @listing.shipping_time, disabled: 0), id: "listing_shipping_time", name: "listing[shipping_time]", class: "required", prompt: 'Ready to ship in ...', :'data-listing-id' => @listing.id
+= select_tag "listing", options_for_select(listing_shipping_times, selected: @listing.shipping_time, disabled: 0), id: "listing_shipping_time", name: "listing[shipping_time]", class: "required", disabled: !@listing.editable?, prompt: 'Ready to ship in ...', :'data-listing-id' => @listing.id
 
 %hr
 %label Ships from
-= country_select("listing", "shipping_from", {selected: @listing.shipping_from || 'US'}, {class: 'required', :'data-listing-id' => @listing.id.to_i})
+= country_select("listing", "shipping_from", {selected: @listing.shipping_from || 'US'}, {class: ['required', @listing.editable? ? 'editable' : nil], :'data-listing-id' => @listing.id.to_i})
 
 = render(partial: "listings/listing_shipping_table")
 

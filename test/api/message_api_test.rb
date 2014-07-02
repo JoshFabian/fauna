@@ -46,16 +46,28 @@ class MessageApiSpec < ActionDispatch::IntegrationTest
 
   describe "conversation create" do
     before do
-      @user1 = Fabricate(:user)
+      @user1 = Fabricate(:user, listing_credits: 3)
+      @listing1 = @user1.listings.create!(title: "A Listing", price: 100)
       @user2 = Fabricate(:user)
     end
 
-    it "should create conversation from user1 to user2" do
+    it "should create conversation from user2 to user1" do
       data = {message: {subject: "subject 1", body: "body 1"}}
-      post "/api/v1/conversations/to/#{@user2.id}?token=#{@user1.auth_token}", data
+      post "/api/v1/conversations/to/#{@user1.id}?token=#{@user2.auth_token}", data
       response.success?.must_equal true
       body = JSON.parse(response.body)
-      body['receipt'].must_include({'mailbox_type' => 'sentbox', 'receiver_id' => @user1.id, 'receiver_type' => 'User'})
+      body['receipt'].must_include({'mailbox_type' => 'sentbox', 'receiver_id' => @user2.id, 'receiver_type' => 'User'})
+      body['to'].must_include({'user_id' => @user1.id, 'inbox_unread_count' => 1})
+    end
+
+    it "should create conversation from user2 to user1 re: listing" do
+      data = {message: {subject: "subject 1, re your listing", body: "body 1"}, listing: {id: @listing1.id}}
+      post "/api/v1/conversations/to/#{@user1.id}?token=#{@user2.auth_token}", data
+      response.success?.must_equal true
+      body = JSON.parse(response.body)
+      body['receipt'].must_include({'mailbox_type' => 'sentbox', 'receiver_id' => @user2.id, 'receiver_type' => 'User'})
+      body['listing'].must_include({'id' => @listing1.id})
+      body['to'].must_include({'user_id' => @user1.id, 'inbox_unread_count' => 1})
     end
   end
 
@@ -73,6 +85,7 @@ class MessageApiSpec < ActionDispatch::IntegrationTest
       response.success?.must_equal true
       body = JSON.parse(response.body)
       body['receipt'].must_include({'mailbox_type' => 'sentbox', 'receiver_id' => @user2.id, 'receiver_type' => 'User'})
+      body['to'].must_include({'user_id' => @user1.id, 'inbox_unread_count' => 1})
     end
   end
 end

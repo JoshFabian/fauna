@@ -319,6 +319,11 @@
   select {
     width: 300px;
   }
+  .input-group-location {
+    input {
+      margin-bottom: 0;
+    }
+  }
   .price-input {
     label {
       float: left;
@@ -328,11 +333,12 @@
     }
     input { 
       width: 80px;
+      margin-bottom: 0;
     }
   }
   tbody {
     .country {
-      min-width: 171px;
+      min-width: 175px;
     }
   }
   .has-tip {
@@ -749,4 +755,14 @@ input.verification {
     margin-left: 5px;
     margin-right: 5px;
   }
+}
+.rounded-input { 
+  width: 100%;
+  border-radius: 3px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  font-size: 0.875rem;
+  border: 1px solid #ccc;
+  margin: 0 0 1rem 0;
+  padding: 0.5rem;
 }

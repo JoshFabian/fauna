@@ -2,7 +2,7 @@
   .button.sold-button
     This reptile has sold
 - elsif current_user.try(:id) == @user.id
-  = link_to 'Edit Listing', user_edit_listing_path(@user, @listing.id), class: ['button', 'edit-listing', @listing.editable? ? nil : 'disabled']
+  = link_to 'Edit Listing', user_edit_listing_path(@user, @listing.id), class: ['button', 'edit-listing']
   = link_to 'Mark as Sold', user_edit_listing_path(@user, @listing.id), class: 'button edit-listing remove-button', :'data-listing-id' => @listing.id
 - else
   = link_to 'Checkout with Paypal', '#', class: 'button buy-button checkout-1'

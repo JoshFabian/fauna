@@ -42,6 +42,10 @@ ul {
 
 }
 
+.relative {
+  position: relative;
+}
+
 .highlight {
   color: $orange;
 }
@@ -86,5 +90,11 @@ hr {
     display: inline-block;
     list-style: none;
     margin-left: 1.375rem;
+  }
+}
+
+.inline-list {
+  li.hide {
+    display: none;
   }
 }

@@ -3,9 +3,10 @@
     %h4
       %i.icon.ion-star
       = @conversation.subject
-  .listing-notify.small-12.columns
-    This message is in regard to your listing
-    = link_to @listing.title, user_listing_path(@listing.user, @listing)
+  - if @listing.present?
+    .listing-notify.small-12.columns
+      This message is in regard to your listing
+      = link_to @listing.title, user_listing_path(@listing.user, @listing)
 
   %hr
 

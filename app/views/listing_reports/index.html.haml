@@ -1,0 +1,22 @@
+.row
+  .text-center
+    %h5
+      #{ListingReport.count} Reports
+
+  %table.tiny.small-12.columns
+    %tr
+      %th Id
+      %th User
+      %th Listing
+      %th Message
+      %th Timestamp
+
+    - @reports.each do |report|
+      - user = report.user
+      - listing = report.listing
+      %tr
+        %td= report.id
+        %td= link_to user.handle, user_path(user)
+        %td= link_to listing.title, user_listing_path(listing.user, listing)
+        %td= report.message
+        %td= today_time(report.created_at)

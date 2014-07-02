@@ -1,7 +1,10 @@
-class ListingConversation
+class ListingConversation < ActiveRecord::Base
+  include Loggy
 
-  def self.find_listing(conversation_id)
-    Listing.active.first
-  end
+  validates :conversation, presence: true
+  validates :listing, presence: true
+
+  belongs_to :conversation
+  belongs_to :listing
 
 end

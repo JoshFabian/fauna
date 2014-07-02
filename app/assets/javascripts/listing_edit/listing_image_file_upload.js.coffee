@@ -3,6 +3,7 @@ $(document).ready ->
   # click on upload button
   $(document).on "click", ".image-box.add .add-images-button", (e) ->
     e.preventDefault()
+    return if !$(this).hasClass('editable')
     console.log "image upload click"
     # show file select dialog
     $(this).siblings(".cloudinary-fileupload").trigger('click')

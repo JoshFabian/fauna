@@ -20,9 +20,10 @@
         .edit-show
           = f.text_field :handle, value: @user.handle, placeholder: "Profile name"
       .profile-follow
-        %div{class: @edit ? ['edit-hide'] : ['follow', 'hide']}
-          - link_name = @edit ? 'Edit' : 'Follow'
-          = link_to link_name, '#', class: ['button']
+        %div{class: @edit ? ['edit-hide'] : ['follow']}
+          = link_to (@edit ? 'Edit' : 'Follow'), '#', class: ['button', 'follow-button'], :'data-user-id' => @user.id
+          = link_to "Message", '#', class: ['button', 'message-button', 'active'], :'data-user-id' => @user.id, :'data-reveal-id' => 'user-message-modal'
+          = render(partial: 'users/user_message_modal')
         .edit-show
           = link_to 'Cancel', '#', class: 'button active'
           = link_to 'Save', '#', class: 'button', :'data-user-id' => @user.id
@@ -34,7 +35,7 @@
         %li= link_to "Listings", user_listings_path(@user), class: [@tab == 'listings' ? 'active' : nil]
         %li= link_to "Reviews", user_reviews_path(@user), class: [@tab == 'reviews' ? 'active' : nil]
         - if feature(:user_messaging)
-          %li= link_to "Messages", user_messages_path(@user), class: [@tab == 'messages' ? 'active' : nil]
+          %li.edit.owner.hide{:'data-user-id' => @user.id}= link_to "Messages", user_messages_path(@user), class: [@tab == 'messages' ? 'active' : nil]
         - if false
           %li= link_to "Followers", "#"
           %li= link_to "Following", "#"

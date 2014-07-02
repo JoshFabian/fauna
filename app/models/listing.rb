@@ -12,6 +12,7 @@ class Listing < ActiveRecord::Base
 
   has_many :images, class_name: "ListingImage", dependent: :destroy
   has_many :payments, dependent: :destroy
+  has_many :reports, class_name: "ListingReport", dependent: :destroy
   has_many :reviews, dependent: :destroy
 
   has_many :listing_categories, dependent: :destroy
@@ -62,7 +63,7 @@ class Listing < ActiveRecord::Base
   end
 
   def editable?
-    active? and (self.created_at > 3.days.ago)
+    active? and (self.created_at.blank? or self.created_at > 3.days.ago)
   end
 
   def price=(s)

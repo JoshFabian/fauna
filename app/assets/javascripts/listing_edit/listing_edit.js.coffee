@@ -50,6 +50,7 @@ $(document).ready ->
 
   $(document).on 'click', 'a.image-delete', (e) ->
     e.preventDefault()
+    return if !$(this).hasClass('editable')
     listing_id = $(this).data('listing-id')
     image_id = $(this).data('image-id')
     console.log "listing:#{listing_id}:image:#{image_id} delete ..."

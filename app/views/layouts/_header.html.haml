@@ -42,11 +42,12 @@
           - if current_user.roles?(:admin)
             %li= link_to 'Manage Payments', payments_path
             %li= link_to 'Manage Plans', manage_plans_path
+            %li= link_to 'Manage Reports', listing_reports_path
             %li= link_to 'Manage Users', users_path
             %li= link_to 'Manage Waitlist', waitlists_path
+            - if !Rails.env.production?
+              %li= link_to 'Welcome Modal', '#', class: 'open-welcome-message-modal'
           %li= link_to 'Logout', logout_path
-          %li
-            %a{"data-reveal-id" => "welcomeModal", :href => "#"} Welcome Modal
 
 = render(partial: "shared/welcome_modal")
 

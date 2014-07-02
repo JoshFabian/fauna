@@ -141,3 +141,19 @@ input.button {
     }
   }
 }
+
+.ask-question {
+  position: absolute;
+  right: 15px;
+  top: 17px;
+  font-size: 12px;
+  padding: 5px 15px;
+  color: #5a5552;
+  background: #e7e5e5;
+  border: 1px solid;
+  border-color: #d8d5d2 #CFCBC8 #c4c0bc;
+  &:hover {
+    background: darken(#e7e5e5, 5);
+    color: #5a5552;
+  }
+}
