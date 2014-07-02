@@ -50,19 +50,23 @@ module Endpoints
       desc "Create conversation"
       post 'to/:user_id' do
         authenticate!
-        to = User.find(params.user_id)
-        receipt = current_user.send_message(to, params.message.body, params.message.subject)
+        user_to = User.find(params.user_id)
+        # create conversation
+        receipt = current_user.send_message(user_to, params.message.body, params.message.subject)
         conversation = receipt.message.conversation
         if params.listing.present?
           begin
+            # add listing to conversation
             listing = Listing.find(params.listing.id)
             object = ListingConversation.create!(conversation: conversation, listing: listing)
           rescue Exception => e
           end
         end
-        logger.post("tegu.api", log_data.merge({event: 'conversation.create'}))
-        result = {receipt: receipt}
+        # update user's inbox unread count
+        user_to.update_attributes(inbox_unread_count: user_to.mailbox.inbox.unread(user_to).count)
+        result = {receipt: receipt, to: {user_id: user_to.id, inbox_unread_count: user_to.inbox_unread_count}}
         result = result.merge(listing: {id: listing.try(:id)}) if listing.present?
+        logger.post("tegu.api", log_data.merge({event: 'conversation.create'}))
         result
       end
 
@@ -70,9 +74,13 @@ module Endpoints
       post ':id/reply' do
         authenticate!
         conversation = Conversation.find(params.id)
+        participants = conversation.participants
         receipt = current_user.reply_to_conversation(conversation, params.message.body)
-        logger.post("tegu.api", log_data.merge({event: 'conversation.reply', to: params.user_id}))
-        {receipt: receipt}
+        user_to = (participants - [current_user]).first
+        # update user's inbox unread count
+        user_to.update_attributes(inbox_unread_count: user_to.mailbox.inbox.unread(user_to).count)
+        logger.post("tegu.api", log_data.merge({event: 'conversation.reply'}))
+        {receipt: receipt, to: {user_id: user_to.id, inbox_unread_count: user_to.inbox_unread_count}}
       end
     end # conversations
   end

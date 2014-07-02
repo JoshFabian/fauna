@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140702004613) do
+ActiveRecord::Schema.define(version: 20140702021109) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -371,6 +371,7 @@ ActiveRecord::Schema.define(version: 20140702004613) do
     t.integer  "charges_count",                                                 default: 0
     t.integer  "subscriptions_count",                                           default: 0
     t.integer  "pending_listing_reviews",                                       default: 0
+    t.integer  "inbox_unread_count",                                            default: 0
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true
@@ -379,6 +380,7 @@ ActiveRecord::Schema.define(version: 20140702004613) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["first_name"], name: "index_users_on_first_name"
   add_index "users", ["handle"], name: "index_users_on_handle"
+  add_index "users", ["inbox_unread_count"], name: "index_users_on_inbox_unread_count"
   add_index "users", ["last_name"], name: "index_users_on_last_name"
   add_index "users", ["listing_credits"], name: "index_users_on_listing_credits"
   add_index "users", ["paypal_email"], name: "index_users_on_paypal_email"

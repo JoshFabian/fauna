@@ -57,6 +57,7 @@ class MessageApiSpec < ActionDispatch::IntegrationTest
       response.success?.must_equal true
       body = JSON.parse(response.body)
       body['receipt'].must_include({'mailbox_type' => 'sentbox', 'receiver_id' => @user2.id, 'receiver_type' => 'User'})
+      body['to'].must_include({'user_id' => @user1.id, 'inbox_unread_count' => 1})
     end
 
     it "should create conversation from user2 to user1 re: listing" do
@@ -66,6 +67,7 @@ class MessageApiSpec < ActionDispatch::IntegrationTest
       body = JSON.parse(response.body)
       body['receipt'].must_include({'mailbox_type' => 'sentbox', 'receiver_id' => @user2.id, 'receiver_type' => 'User'})
       body['listing'].must_include({'id' => @listing1.id})
+      body['to'].must_include({'user_id' => @user1.id, 'inbox_unread_count' => 1})
     end
   end
 
@@ -83,6 +85,7 @@ class MessageApiSpec < ActionDispatch::IntegrationTest
       response.success?.must_equal true
       body = JSON.parse(response.body)
       body['receipt'].must_include({'mailbox_type' => 'sentbox', 'receiver_id' => @user2.id, 'receiver_type' => 'User'})
+      body['to'].must_include({'user_id' => @user1.id, 'inbox_unread_count' => 1})
     end
   end
 end
