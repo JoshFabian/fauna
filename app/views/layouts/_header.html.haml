@@ -20,10 +20,10 @@
           = link_to '#', :'data-dropdown' => 'drop1' do
             = current_user.handle
             %i.icon.ion-arrow-down-b
-        .header-inbox
+        .header-inbox{class: current_user.inbox_unread_count > 0 ? 'active' : nil}
           = link_to user_messages_path(current_user) do
             %i.icon.ion-android-inbox
-            %span.counter 01
+            %span.counter= current_user.inbox_unread_count
         .header-cta
           = link_to new_listing_path, class: 'button' do
             .credit-count
