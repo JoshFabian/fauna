@@ -53,7 +53,7 @@ class SignupController < ApplicationController
     # create user
     @user = User.create(user_params)
     # track invite
-    current_invite.signup!(@user) if current_invite
+    # current_invite.signup!(@user) if current_invite
     # sign user in
     sign_in(:user, @user)
     respond_with @user, location: after_sign_in_path_for(@user)
