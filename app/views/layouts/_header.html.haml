@@ -23,6 +23,7 @@
         .header-inbox
           = link_to user_messages_path(current_user) do
             %i.icon.ion-android-inbox
+            %span.counter 01
         .header-cta
           = link_to new_listing_path, class: 'button' do
             .credit-count
