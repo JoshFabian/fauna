@@ -39,6 +39,7 @@ Tegu::Application.routes.draw do
     get :shipping_table, on: :member
     get :subcategories, on: :collection
   end
+  resources :listing_reports, only: [:index]
 
   match 'listings/search' => "listings#by_search", as: :listing_search, via: [:get, :post]
   get 'listings/:category(/:subcategory)' => "listings#by_category", constraints: {category: /[a-z-]+/},

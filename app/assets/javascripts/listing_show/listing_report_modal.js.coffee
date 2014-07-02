@@ -8,7 +8,16 @@ $(document).ready ->
     e.preventDefault()
     modal = $(this).closest('.reveal-modal')
     listing_id = $(modal).data('listing-id')
-    report_body = $(modal).find("textarea").val()
+    report_message = $(modal).find("textarea").val()
     console.log "listing:#{listing_id} report ..."
-    Tegu.ListingReportModal.close()
+    data = {report: {message: report_message}}
+    async.waterfall [
+      (callback) ->
+        # create report
+        Tegu.ReportApi.create(listing_id, data, auth_token, callback)
+      (data, callback) ->
+        console.log data
+        Tegu.ListingReportModal.close()
+    ]
+
 
