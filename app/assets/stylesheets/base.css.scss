@@ -98,3 +98,18 @@ hr {
     display: none;
   }
 }
+
+.error-state {
+  color: #e74c3c;
+  .error-message {
+    display: none;
+  }
+  &.active {
+    .error-message {
+      display: inline;
+    }
+    input {
+      border-color: #e74c3c;
+    }
+  }
+}
