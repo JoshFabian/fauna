@@ -50,7 +50,7 @@ class ListingApiSpec < ActionDispatch::IntegrationTest
     before do
       @user = Fabricate(:user, listing_credits: 3)
       @listing = @user.listings.create!(title: "Title", price: 10000)
-      @listing.shipping_prices = {'US' => '57.0', 'everywhere' => '120.50'}
+      @listing.shipping_prices = {'US' => '57.0', 'international' => '120.50', 'local' => '5'}
       @listing.save
       @listing.reload
     end
@@ -62,8 +62,8 @@ class ListingApiSpec < ActionDispatch::IntegrationTest
       body['listing'].must_include('price' => 10000, 'shipping_price' => 5700, 'total_price' => 15700)
     end
 
-    it "should get shipping price to everywhere" do
-      get "/api/v1/listings/#{@listing.id}/shipping/to/everywhere?token=#{@user.auth_token}"
+    it "should get shipping price to international" do
+      get "/api/v1/listings/#{@listing.id}/shipping/to/international?token=#{@user.auth_token}"
       response.success?.must_equal true
       body = JSON.parse(response.body)
       body['listing'].must_include('price' => 10000, 'shipping_price' => 12050, 'total_price' => 22050)
@@ -73,7 +73,7 @@ class ListingApiSpec < ActionDispatch::IntegrationTest
       get "/api/v1/listings/#{@listing.id}/shipping/to/local?token=#{@user.auth_token}"
       response.success?.must_equal true
       body = JSON.parse(response.body)
-      body['listing'].must_include('price' => 10000, 'shipping_price' => 0, 'total_price' => 10000)
+      body['listing'].must_include('price' => 10000, 'shipping_price' => 500, 'total_price' => 10500)
     end
 
     it "should not get shipping price to invalid location" do

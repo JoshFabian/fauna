@@ -11,10 +11,3 @@
 = country_select("listing", "shipping_from", {selected: @listing.shipping_from || 'US'}, {class: ['required', @listing.editable? ? 'editable' : nil], :'data-listing-id' => @listing.id.to_i})
 
 = render(partial: "listings/listing_shipping_table")
-
--# = check_box "listing", "local_pickup", {checked: @listing.local_pickup.to_i == 1}, 1, 0
-
--# %label{for: "listing_local_pickup"}
--#   Allow Free Local Pickup
--#   %span.has-tip.tip-top{"data-tooltip" => "", :title => "Allows buyers to come to you and pick up the animal in person."} 
--#     %i.icon.ion-help-circled

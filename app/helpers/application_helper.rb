@@ -24,8 +24,14 @@ module ApplicationHelper
 
   def listing_shipping_prices_options(listing, options={})
     listing.shipping_prices.collect do |hash|
-      ["#{hash[0]} $#{hash[1]}", hash[0], :'data-shipping-price' => hash[1]]
-    end
+      if hash[1].present?
+        location = hash[0]
+        location = location.titleize if location == location.downcase
+        ["#{location} : $#{hash[1]}", hash[0], :'data-shipping-price' => hash[1]]
+      else
+        nil
+      end
+    end.compact
   end
 
   def listing_shipping_times(options={})

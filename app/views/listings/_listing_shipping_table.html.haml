@@ -6,44 +6,48 @@
         %th Shipping Cost
 
     %tbody
+      -# specific countries
       - @countries.each do |country|
         %tr
+          - value = @shipping_prices[country.try(:code)]
+          - checked = value.present?
           %td.country
             .input-group-location
-              %input#checkbox1{:type => "checkbox"}
-                %label{:for => "checkbox1"}
-                  = country.try(:name)
+              = check_box "listing", "shipping_prices[#{country.try(:code)}]", {checked: true, class: 'listing-shipping-from-checkbox', id: 'shipping-from-country'}, 1, 0
+              %label{for: "shipping-from-country"}= country.try(:name)
           %td
             .input-group.price-input
               %label $
-              %input.money.text.text-small{type: "text", placeholder: "0.00", name: "listing[shipping_prices][#{country.try(:code)}]", value: @shipping_prices[country.try(:code)]}
+              %input.money.text.text-small{type: "text", placeholder: "0.00", name: "listing[shipping_prices][#{country.try(:code)}]", value: value, class: [checked ? 'required' : nil]}
 
-      -# special everywhere else
+      -# international
       %tr
+        - value = @shipping_prices['international']
+        - checked = value.present?
         %td.country
           .input-group-location
-            %input#checkbox2{:type => "checkbox"}
-              %label{:for => "checkbox2"}
-                International
-            %span.has-tip.tip-top{"data-tooltip" => "", title: "Sets the shipping costs for EVERY country not covered by country specific shipping costs. <br>This is optional."} 
+            = check_box "listing", "shipping_prices[international]", {checked: checked, class: ['listing-shipping-from-checkbox'], id: 'shipping-from-international'}, 1, 0
+            %label{for: "shipping-from-international"} International
+            %span.has-tip.tip-top{"data-tooltip" => "", title: "Sets the shipping costs for EVERY country not covered by country specific shipping costs. <br>This is optional."}
               %i.icon.ion-help-circled
 
         %td
           .input-group.price-input
             %label $
-            %input.money.text.text-small{type: "text", placeholder: "0.00", name: "listing[shipping_prices][everywhere]", value: @shipping_prices['everywhere']}
+            %input.money.text.text-small{type: "text", placeholder: "0.00", name: "listing[shipping_prices][international]", value: value, class: [checked ? 'required' : nil]}
 
-
+      -# local
       %tr
+        - value = @shipping_prices['local']
+        - checked = value.present?
         %td.country
           .input-group-location
-            %input#checkbox2{:type => "checkbox"}
-              %label{:for => "checkbox2"}
-                Local Pickup
-            %span.has-tip.tip-top{"data-tooltip" => "", title: "Allows buyers to come to you and pick up the animal in person."} 
+            = check_box "listing", "shipping_prices[local]", {checked: checked, class: ['listing-shipping-from-checkbox'], id: 'shipping-from-local'}, 1, 0
+            %label{for: "shipping-from-local"} Local Pickup
+            %span.has-tip.tip-top{"data-tooltip" => "", title: "Allows buyers to come to you and pick up the animal in person."}
               %i.icon.ion-help-circled
 
         %td
           .input-group.price-input
             %label $
-            %input.money.text.text-small{type: "text", placeholder: "0.00", name: "listing[shipping_prices][everywhere]", value: @shipping_prices['everywhere']}
+            %input.money.text.text-small{type: "text", placeholder: "0.00", name: "listing[shipping_prices][local]", value: value, class: [checked ? 'required' : nil]}

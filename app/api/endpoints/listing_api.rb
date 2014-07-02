@@ -134,7 +134,7 @@ module Endpoints
         rescue Exception => e
           error!('Not Found', 404)
         end
-        logger.post("tegu.api", log_data.merge({event: 'listing.price.shipping', listing_id: @listing.id}))
+        logger.post("tegu.api", log_data.merge({event: 'listing.shipping_price', listing_id: @listing.id}))
         {listing: {id: @listing.id, price: @listing.price, shipping_price: @shipping_price, total_price: @total_price,
           shipping_price_string: @shipping_price_string, total_price_string: @total_price_string}}
       end

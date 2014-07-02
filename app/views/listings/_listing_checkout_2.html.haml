@@ -5,8 +5,8 @@
   = radio_button 'listing', 'local_pickup', 0, checked: true, class: 'shipping-country-radio'
   = select_tag "listing[shipping_to]", options_for_select(listing_shipping_prices_options(@listing)), class: 'shipping-selector', prompt: nil, :'data-listing-id' => @listing.id
 .small-12.columns.shipping-local-pickup-wrapper{:'data-listing-id' => @listing.id}
-  = radio_button 'listing', 'local_pickup', 1, checked: false, class: 'shipping-local-radio'
-  %label{for: "listing_local_pickup_1", :'data-shipping-price' => 0} Local Pickup in Chicago, IL
+  -# = radio_button 'listing', 'local_pickup', 1, checked: false, class: 'shipping-local-radio'
+  -# %label{for: "listing_local_pickup_1", :'data-shipping-price' => 0} Local Pickup in Chicago, IL
 %hr
 .small-12.columns.no-padding
   %ul

@@ -22,7 +22,7 @@ class Listing < ActiveRecord::Base
 
   serialize :shipping_prices, Hash
 
-  store :data, accessors: [:shipping_from, :shipping_time, :local_pickup]
+  store :data, accessors: [:shipping_from, :shipping_time]
 
   attr_accessor :shipping_to
 
@@ -93,7 +93,6 @@ class Listing < ActiveRecord::Base
   end
 
   def shipping_price(options)
-    return 0 if options[:to].to_s.match(/local/)
     raise Exception, "invalid location" if shipping_prices[options[:to]].blank?
     (shipping_prices[options[:to]].to_f * 100).to_i
   end
