@@ -1,7 +1,8 @@
 .row
   %h5
     - if @category.present?
-      = link_to @category.name, listing_category_path(@category.name.parameterize)
+      All 
+      = @category.name
       - if @subcategory.present?
         %i.icon.ion-ios7-arrow-forward
         = @subcategory.name
