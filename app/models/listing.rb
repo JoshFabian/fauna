@@ -30,7 +30,7 @@ class Listing < ActiveRecord::Base
 
   aasm column: 'state' do
     state :active, initial: true
-    state :sold
+    state :sold, enter: :event_state_sold
 
     event :sold do
       transitions to: :sold, :from => [:active, :sold]
@@ -64,6 +64,10 @@ class Listing < ActiveRecord::Base
 
   def editable?
     active? and (self.created_at.blank? or self.created_at > 3.days.ago)
+  end
+
+  def event_state_sold
+    self.sold_at = Time.zone.now
   end
 
   def price=(s)

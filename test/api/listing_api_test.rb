@@ -15,6 +15,7 @@ class ListingApiSpec < ActionDispatch::IntegrationTest
       body['listing'].must_include({'id' => @listing.id, 'state' => 'sold'})
       @listing.reload
       @listing.state.must_equal 'sold'
+      @listing.sold_at.present?.must_equal true
     end
   end
 

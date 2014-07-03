@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140702021109) do
+ActiveRecord::Schema.define(version: 20140703144340) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -114,12 +114,14 @@ ActiveRecord::Schema.define(version: 20140702021109) do
     t.integer  "images_count",                default: 0
     t.text     "shipping_prices"
     t.text     "data"
+    t.datetime "sold_at"
   end
 
   add_index "listings", ["created_at"], name: "index_listings_on_created_at"
   add_index "listings", ["images_count"], name: "index_listings_on_images_count"
   add_index "listings", ["price"], name: "index_listings_on_price"
   add_index "listings", ["slug"], name: "index_listings_on_slug"
+  add_index "listings", ["sold_at"], name: "index_listings_on_sold_at"
   add_index "listings", ["state"], name: "index_listings_on_state"
   add_index "listings", ["title"], name: "index_listings_on_title"
   add_index "listings", ["user_id"], name: "index_listings_on_user_id"
