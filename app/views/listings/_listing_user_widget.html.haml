@@ -1,15 +1,15 @@
 .user-widget
   .author-image.small-2.columns
-    = image_tag user_avatar_image_thumbnail(@user.avatar_image)
+    = image_tag user_avatar_image_thumbnail(@owner.avatar_image)
   .author-name.small-10.columns
-    %h5= link_to @user.handle, user_path(@user)
+    %h5= link_to @owner.handle, user_path(@owner)
     %p Chicago, IL
   .author-bio.small-12.columns
-    %p= @user.about
+    %p= @owner.about
 
   - if @other_listings.present?
     .more-from-author.small-12.columns
-      %span More from <strong>#{@user.handle}</strong>
+      %span More from <strong>#{@owner.handle}</strong>
       .more-listings
         %ul.small-block-grid-2
           - @other_listings.each do |other_listing|

@@ -1,16 +1,16 @@
 %h5
-  Ships from 
-  %span.highlight Chicago, IL
-%p Ready to Ship in 1-2 Weeks
+  Ships from
+  %span.highlight= @owner.city_state
+%p Ready to Ship in #{@listing.shipping_time}
 %table.shipping-table
   %thead.tabbed
     %tr.column-headers
       %th.shipping-destination Ship To
       %th.shipping-primary-price Cost
   %tbody
-    %tr
-      %td.shipping-destination Australia
-      %td.shipping-primary-price
-        %span.currency-symbol $
-        %span.currency-value 0.00
-        %span.currency-code USD
+    - @listing.shipping_prices.each do |hash|
+      %tr
+        %td.shipping-destination= string_titleize(hash[0])
+        %td.shipping-primary-price
+          %span.currency-value= number_to_currency(hash[1].to_f)
+          %span.currency-code USD

@@ -75,7 +75,7 @@ class ListingsController < ApplicationController
 
     @message = params[:message]
 
-    @user = @listing.user
+    @owner = @listing.user
     @categories = @listing.categories
     @category = @categories.select{ |o| o.level == 1 }.first
     @subcategory = @categories.select{ |o| o.level == 2 }.first
@@ -83,7 +83,7 @@ class ListingsController < ApplicationController
     @main_image = @all_images.first
     @reviews = @listing.reviews
 
-    @other_listings = Listing.active.where(user_id: @user.id).where.not(id: @listing.id).order("id desc").limit(2)
+    @other_listings = Listing.active.where(user_id: @owner.id).where.not(id: @listing.id).order("id desc").limit(2)
   end
 
   # GET /listings/new
