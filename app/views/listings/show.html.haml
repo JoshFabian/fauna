@@ -54,6 +54,11 @@
 
       = link_to 'Ask a question', '#', class: 'button ask-question', :'data-reveal-id' => 'listing-message-modal'
       = link_to 'Report Listing', '#', class: 'remove-link', :'data-reveal-id' => 'listing-report-modal'
+      .social-links
+        .fb-share-button{"data-type" => "button_count"}
+        %a.twitter-share-button{"data-lang" => "en", :href => "https://twitter.com/share"} Tweet
+        :javascript
+          !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 
       = render(partial: "listings/listing_user_widget")
 
@@ -79,7 +84,7 @@
 
     = render(partial: 'listings/listing_message_modal')
     = render(partial: 'listings/listing_report_modal')
-
+    
     #fb-root
     :javascript
       (function(d, s, id) {
