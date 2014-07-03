@@ -112,7 +112,7 @@ class User < ActiveRecord::Base
 
   # update inbox unread count
   def should_update_inbox_unread_count!
-    i = mailbox.inbox.unread(self).count
+    i = mailbox.inbox.unread(self).pluck("distinct conversations.id").size
     update_attributes(inbox_unread_count: i) if i != inbox_unread_count
   end
 
