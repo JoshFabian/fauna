@@ -10,7 +10,7 @@
       %strong This is the paypal that all Fauna payments will be sent to.
 
     %p We perform this verification for the safety of everyone on Fauna. Verification increases the overall security of Fauna because most buyers prefer to do business with Verified sellers.
-    .error-state.active
+    .error-state
       %p.error-message Sorry we were unable to verify this email address with paypal.
       = form_for User.new, url: '#', html: {class: "form-validation user-verify-email", :'data-user-handle' => current_user.handle} do |f|
         = text_field_tag 'to', nil, placeholder: "Enter your paypal email", class: 'required email verification'

@@ -1,3 +1,10 @@
+class Tegu.UserVerifyEmail
+  @hide_error_state: () ->
+    $(".error-state").removeClass('active')
+
+  @show_error_state: () ->
+    $(".error-state").addClass('active')
+
 $(document).ready ->
 
   # verify email form
@@ -10,11 +17,15 @@ $(document).ready ->
       async.waterfall [
         (callback) ->
           # send token
+          Tegu.UserVerifyEmail.hide_error_state()
           Tegu.PaypalApi.verify_email(email, auth_token, callback)
         (data, callback) ->
           console.log data
           if data.event == 'verified'
             window.location.href = "/#{user_handle}/verify"
+          else
+            # show error state
+            Tegu.UserVerifyEmail.show_error_state()
       ],
       # optional callback
       (err, results) ->
