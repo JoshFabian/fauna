@@ -99,5 +99,5 @@
       }(document, 'script', 'facebook-jssdk'));
   
   %ul.small-block-grid-4
-    - @recent_general.each do |listing|
+    - @other_listings.each do |listing|
       = render(partial: "listings/listing_tile", locals: {listing: listing, user: listing.user})
