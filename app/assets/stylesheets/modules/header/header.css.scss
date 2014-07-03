@@ -91,6 +91,17 @@
     }
     .header-inbox {
       margin: 0 15px;
+      .counter {
+        display: none;
+      }
+      &.active {
+        a {
+          color: $orange;
+          .counter {
+            display: inline-block;
+          }
+        }
+      }
     }
     .guest-links {
       @include grid-column(4);
