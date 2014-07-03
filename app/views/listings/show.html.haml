@@ -49,14 +49,34 @@
       %h4= @listing.title
       %h1
         = number_to_currency(@listing.price.to_f/100.0, precision: 2)
-        = select_tag "listing[shipping_to]", options_for_select(listing_shipping_prices_options(@listing)), class: 'shipping-selector shipping-dropdown', prompt: nil, :'data-listing-id' => @listing.id
-  
-      .listing-checkout-1
-        = render partial: "listings/listing_checkout_1"
-        = render(partial: 'listings/listing_message_modal')
-        = render(partial: 'listings/listing_report_modal')
-      .listing-checkout-2.hide
-        = render partial: "listings/listing_checkout_2"
+        = select_tag "listing[shipping_to]", options_for_select(listing_shipping_prices_options(@listing)), class: 'shipping-selector shipping-dropdown', prompt: "Select Shipping", :'data-listing-id' => @listing.id
+        = link_to 'Checkout with Paypal', '#', class: 'button buy-button checkout secondary disabled', :'data-listing-id' => @listing.id
+
+      = link_to 'Ask a question', '#', class: 'button ask-question', :'data-reveal-id' => 'listing-message-modal'
+      = link_to 'Report Listing', '#', class: 'remove-link', :'data-reveal-id' => 'listing-report-modal'
+
+      -# subtotal disabled
+      -# %hr
+      -# 
+      -# .small-12.columns.no-padding
+      -#   %ul
+      -#     %li.checkout-subtotal
+      -#       .small-9.columns.text-right
+      -#         subtotal:
+      -#       .small-3.columns.text-left.price
+      -#         = number_to_currency(@listing.price/100.0)
+      -#     %li.checkout-shipping
+      -#       .small-9.columns.text-right
+      -#         shipping:
+      -#       .small-3.columns.text-left.price
+      -#     %li.checkout-total
+      -#       .small-9.columns.text-right
+      -#         %strong Total:
+      -#       .small-3.columns.text-left.price
+      -#         %strong
+
+    = render(partial: 'listings/listing_message_modal')
+    = render(partial: 'listings/listing_report_modal')
 
     #fb-root
     :javascript
