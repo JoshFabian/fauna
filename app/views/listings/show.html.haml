@@ -47,8 +47,14 @@
               = link_to @subcategory.name, listing_category_path(@category.name.parameterize, @subcategory.name.parameterize)
 
       %h4= @listing.title
-      %h1.relative
+      %h1
         = number_to_currency(@listing.price.to_f/100.0, precision: 2)
+        %select.shipping-dropdown
+          %option{:value => "husker"} Select Shipping
+          %option{:value => "husker"} United States $50
+          %option{:value => "starbuck"} International $75
+          %option{:value => "hotdog"} Local Chicago Pickup $0
+  
       .listing-checkout-1
         = render partial: "listings/listing_checkout_1"
         = render(partial: 'listings/listing_message_modal')

@@ -5,7 +5,7 @@
   = link_to 'Edit Listing', user_edit_listing_path(@user, @listing.id), class: ['button', 'edit-listing']
   = link_to 'Mark as Sold', user_edit_listing_path(@user, @listing.id), class: 'button edit-listing remove-button', :'data-listing-id' => @listing.id
 - else
-  = link_to 'Checkout with Paypal', '#', class: 'button buy-button checkout-1'
+  = link_to 'Checkout with Paypal', '#', class: 'button buy-button checkout-1 secondary'
   = link_to 'Ask a question', '#', class: 'button ask-question', :'data-reveal-id' => 'listing-message-modal'
   = link_to 'Report Listing', '#', class: 'remove-link', :'data-reveal-id' => 'listing-report-modal'
 
