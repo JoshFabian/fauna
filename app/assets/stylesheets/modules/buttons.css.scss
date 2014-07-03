@@ -31,11 +31,6 @@
     color: #fff;
     padding: 15px 70px;
     border-radius: 2px;
-    &.checkout {
-      padding: 10px 20px;
-      margin-top: 15px;
-      float: right;
-    }
     &:hover {
       background-color: darken(#16a085, 10);
     }
