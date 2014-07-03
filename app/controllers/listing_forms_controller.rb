@@ -13,6 +13,7 @@ class ListingFormsController < ApplicationController
 
   # GET /listing_forms/new_image
   def new_image
+    @listing = Listing.new
 
     respond_to do |format|
       format.js
@@ -38,6 +39,7 @@ class ListingFormsController < ApplicationController
 
   # GET /listing_forms/subcategories?id=1
   def subcategories
+    @listing = Listing.new
     @category = Category.find(params[:id])
     @categories = @category.children rescue []
     @prompt = "Reptile Sub-Category"
