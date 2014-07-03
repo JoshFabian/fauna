@@ -8,16 +8,14 @@
       This message is in regard to your listing
       = link_to @listing.title, user_listing_path(@listing.user, @listing)
 
-  %hr
-
   - @receipts.each do |receipt|
     - message = receipt.message
     - sender = message.sender
     - receiver = (@participants - [sender]).first
-
+    %hr
     .sender-bar.small-12.columns
       - if receipt.mailbox_type.match(/sent/)
-        .message-form
+        .message-from
           = image_tag user_avatar_image_thumbnail(@user.avatar_image, 30)
           me to
           = link_to receiver.handle, 'javascript:void(0)', class: 'disabled'
@@ -28,7 +26,6 @@
           to me
       .time-date
         = today_time(message.created_at)
-    %hr
     .message-contents
       %p= message.body
 
@@ -38,7 +35,5 @@
     = image_tag user_avatar_image_thumbnail(@user.avatar_image, 50), class: "user-avatar"
     %textarea{placeholder: "Submit a reply ...", class: 'message-body'}
     = link_to 'Send Message', '#', class: 'button submit-message'
-
-  %hr
 
       
