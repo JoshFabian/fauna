@@ -49,11 +49,7 @@
       %h4= @listing.title
       %h1
         = number_to_currency(@listing.price.to_f/100.0, precision: 2)
-        %select.shipping-dropdown
-          %option{:value => "husker"} Select Shipping
-          %option{:value => "husker"} United States $50
-          %option{:value => "starbuck"} International $75
-          %option{:value => "hotdog"} Local Chicago Pickup $0
+        = select_tag "listing[shipping_to]", options_for_select(listing_shipping_prices_options(@listing)), class: 'shipping-selector shipping-dropdown', prompt: nil, :'data-listing-id' => @listing.id
   
       .listing-checkout-1
         = render partial: "listings/listing_checkout_1"
