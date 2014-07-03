@@ -20,8 +20,10 @@ module Endpoints
           end
           objects
         end
+        # update user's inbox unread count
+        current_user.should_update_inbox_unread_count!
         logger.post("tegu.api", log_data.merge({event: 'conversations.read', conversation_ids: ids.join(',')}))
-        {conversations: objects}
+        {conversations: objects, user: {id: current_user.id, inbox_unread_count: current_user.inbox_unread_count}}
       end
 
       desc "Mark conversation as trashed or untrashed"
@@ -63,7 +65,7 @@ module Endpoints
           end
         end
         # update user's inbox unread count
-        user_to.update_attributes(inbox_unread_count: user_to.mailbox.inbox.unread(user_to).count)
+        user_to.should_update_inbox_unread_count!
         result = {receipt: receipt, to: {user_id: user_to.id, inbox_unread_count: user_to.inbox_unread_count}}
         result = result.merge(listing: {id: listing.try(:id)}) if listing.present?
         logger.post("tegu.api", log_data.merge({event: 'conversation.create'}))
@@ -78,7 +80,7 @@ module Endpoints
         receipt = current_user.reply_to_conversation(conversation, params.message.body)
         user_to = (participants - [current_user]).first
         # update user's inbox unread count
-        user_to.update_attributes(inbox_unread_count: user_to.mailbox.inbox.unread(user_to).count)
+        user_to.should_update_inbox_unread_count!
         logger.post("tegu.api", log_data.merge({event: 'conversation.reply'}))
         {receipt: receipt, to: {user_id: user_to.id, inbox_unread_count: user_to.inbox_unread_count}}
       end

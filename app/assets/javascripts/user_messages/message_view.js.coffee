@@ -20,3 +20,5 @@ class Tegu.MessageView
   @show: (data) ->
     $(".message-list").replaceWith(data)
 
+  @update_inbox_count: (count) ->
+    $(".header-inbox .counter").html(count)

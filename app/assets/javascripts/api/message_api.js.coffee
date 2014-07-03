@@ -1,5 +1,5 @@
 class Tegu.MessageApi
-  @read_conversations: (conversation_ids, token, callback = null) ->
+  @mark_as_read: (conversation_ids, token, callback = null) ->
     api = "/api/v1/conversations/#{conversation_ids}/read?token=#{token}"
     $.ajax api,
       type: 'PUT'
