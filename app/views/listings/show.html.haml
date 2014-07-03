@@ -55,6 +55,8 @@
       = link_to 'Ask a question', '#', class: 'button ask-question', :'data-reveal-id' => 'listing-message-modal'
       = link_to 'Report Listing', '#', class: 'remove-link', :'data-reveal-id' => 'listing-report-modal'
 
+      = render(partial: "listings/listing_user_widget")
+
       -# subtotal disabled
       -# %hr
       -# 
