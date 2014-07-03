@@ -84,7 +84,8 @@ class ListingsController < ApplicationController
 
     @reviews = @owner.listing_reviews.order("id desc").limit(10)
 
-    @other_listings = Listing.active.where(user_id: @owner.id).where.not(id: @listing.id).order("id desc").limit(2)
+    @owner_listings = Listing.active.where(user_id: @owner.id).where.not(id: @listing.id).order("id desc").limit(2)
+    @other_listings = Listing.active.where.not(user_id: @owner.id).order("id desc").limit(4)
   end
 
   # GET /listings/new
