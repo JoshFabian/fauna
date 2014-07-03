@@ -22,7 +22,8 @@ $(document).ready ->
         (data, callback) ->
           console.log data
           if data.event == 'verified'
-            window.location.href = "/#{user_handle}/verify"
+            # redirect
+            Tegu.UserVerify.goto_user_verify(user_handle)
           else
             # show error state
             Tegu.UserVerifyEmail.show_error_state()

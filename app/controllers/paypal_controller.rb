@@ -5,22 +5,6 @@ class PaypalController < ApplicationController
   before_filter :authenticate_user!, only: [:start, :status]
 
   # deprecated
-  # GET /paypal/pay/:listing_id/start
-  # def start
-  #   @listing = Listing.find(params[:listing_id])
-  #   @payment = Payment.create(listing: @listing, buyer: current_user)
-  #   @payment.paypal_pay(
-  #     cancel_url: paypal_status_url(payment_id: @payment.id, status: 'cancel'),
-  #     return_url: paypal_status_url(payment_id: @payment.id, status: 'success'),
-  #     ipn_notify_url: paypal_ipn_notify_url(payment_id: @payment.id))
-  #   logger.post("tegu.app", log_data.merge({event: 'paypal.pay.start', payment_id: @payment.id, listing_id: @listing.id,
-  #     buyer_id: current_user.id}))
-  #   redirect_to @payment.payment_url and return
-  # rescue Exception => e
-  #   raise
-  # end
-
-  # deprecated
   # GET /paypal/pay/:payment_id/:status
   def status
     @payment = Payment.find(params[:payment_id])

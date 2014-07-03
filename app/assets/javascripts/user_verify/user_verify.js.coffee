@@ -1,3 +1,7 @@
+class Tegu.UserVerify
+  @goto_user_verify: (handle) ->
+    window.location.href = "/#{handle}/verify"
+
 $(document).ready ->
 
   $("a.user-verify-continue").on 'click', (e) ->

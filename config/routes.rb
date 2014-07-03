@@ -22,7 +22,8 @@ Tegu::Application.routes.draw do
   get ':handle/messages' => "users#messages", as: :user_messages
   get ':handle/purchases' => "users#purchases", as: :user_purchases
   get ':handle/reviews' => "users#reviews", as: :user_reviews
-  get ':handle/verify' => "users#verify", as: :user_verify
+  get ':handle/verify' => "verify#start", as: :user_verify
+  get ':handle/verify/email', to: "verify#email", as: :user_verify_email # paypal verify email
 
   # You can have the root of your site routed with "root"
   get '/' => redirect("/landing")
@@ -69,12 +70,10 @@ Tegu::Application.routes.draw do
   post 'signup/create/facebook', to: "signup#create_facebook", as: :create_facebook_signup
   post 'signup/create/password', to: "signup#create_password", as: :create_password_signup
 
-  # paypal verify email
-  get 'paypal/verify_email', to: "paypal#verify_email", as: :paypal_verify_email
   # payments
   resources :payments, only: [:index]
 
-  # twilio
+  # twilio sms
   get '/sms' => redirect("/sms/send")
   match 'sms/reply' => "twilio#sms_reply", as: :twilio_sms_reply, via: [:get, :post]
   match 'sms/send'=> "twilio#sms_send", as: :twilio_sms_send, via: [:get, :post]
