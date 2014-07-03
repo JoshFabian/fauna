@@ -81,11 +81,12 @@ class ListingsController < ApplicationController
     @subcategory = @categories.select{ |o| o.level == 2 }.first
     @all_images = @listing.images.order("position asc")
     @main_image = @all_images.first
-
     @reviews = @owner.listing_reviews.order("id desc").limit(10)
 
+    # find owner's other listing and other listings
     @owner_listings = Listing.active.where(user_id: @owner.id).where.not(id: @listing.id).order("id desc").limit(2)
-    @other_listings = Listing.active.where.not(user_id: @owner.id).order("id desc").limit(4)
+    # @other_listings = Listing.active.where.not(user_id: @owner.id).order("id desc").limit(4)
+    @other_listings = Listing.active.limit(4)
   end
 
   # GET /listings/new

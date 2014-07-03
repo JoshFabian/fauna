@@ -7,10 +7,10 @@
   .author-bio.small-12.columns
     %p= @owner.about
 
-  - if @other_listings.present?
+  - if @owner_listings.present?
     .more-from-author.small-12.columns
       %span More from <strong>#{@owner.handle}</strong>
       .more-listings
         %ul.small-block-grid-2
-          - @other_listings.each do |other_listing|
+          - @owner_listings.each do |other_listing|
             = render(partial: "listings/listing_tile", locals: {listing: other_listing, user: other_listing.user})

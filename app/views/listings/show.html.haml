@@ -85,19 +85,20 @@
       -#       .small-3.columns.text-left.price
       -#         %strong
 
-    = render(partial: 'listings/listing_message_modal')
-    = render(partial: 'listings/listing_report_modal')
+  .more-listings
+    %ul.small-block-grid-4
+      - @other_listings.each do |listing|
+        = render(partial: "listings/listing_tile", locals: {listing: listing, user: listing.user})
 
-    #fb-root
-    :javascript
-      (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-  
-  %ul.small-block-grid-4
-    - @other_listings.each do |listing|
-      = render(partial: "listings/listing_tile", locals: {listing: listing, user: listing.user})
+  = render(partial: 'listings/listing_message_modal')
+  = render(partial: 'listings/listing_report_modal')
+
+  #fb-root
+  :javascript
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
