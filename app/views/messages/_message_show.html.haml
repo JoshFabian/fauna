@@ -1,4 +1,4 @@
-.message-list.small-10.columns
+.message-list.small-10.columns{:'data-conversation-id' => 1}
   .message-title.small-12.columns
     %h4
       %i.icon.ion-star
@@ -31,15 +31,6 @@
     %hr
     .message-contents
       %p= message.body
-
-  -# %hr
-  -# .sender-bar.small-12.columns
-  -#   .message-from
-  -#     = image_tag "http://www.placehold.it/30/30"
-  -#     me to
-  -#     = link_to "Sanjay Kapoor", "#"
-  -#   .time-date
-  -#     Today, 12:05pm
 
   %hr
 

@@ -110,6 +110,12 @@ class User < ActiveRecord::Base
     listing_credits > 0 or subscriptions_count > 0
   end
 
+  # xxx
+  def should_update_inbox_unread_count!
+    i = mailbox.inbox.unread(self).count
+    update_attributes(inbox_unread_count: i) if i != inbox_unread_count
+  end
+
   # return true if the required fields are verified
   def verified?
     paypal_verified? and phone_verified?

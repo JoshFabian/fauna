@@ -38,4 +38,10 @@ $(document).ready ->
       (data, callback) ->
         # console.log data
         Tegu.MessageView.show(data)
+        # mark conversation as read
+        Tegu.MessageApi.mark_as_read(conversation_id, auth_token, callback)
+      (data, callback) ->
+        # console.log data
+        if data.user and data.user.id == current_user
+          Tegu.MessageView.update_inbox_count(data.user.inbox_unread_count)
     ]

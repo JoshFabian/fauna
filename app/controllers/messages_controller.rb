@@ -19,9 +19,6 @@ class MessagesController < ApplicationController
     @participants = @conversation.participants
     @listing = ListingConversation.where(conversation_id: @conversation.id).first.try(:listing)
 
-    # mark conversation as read
-    @conversation.mark_as_read(@user)
-
     respond_to do |format|
       format.js
     end
