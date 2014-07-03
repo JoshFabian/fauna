@@ -11,7 +11,12 @@ class Subscription < ActiveRecord::Base
   validates :user, presence: true, uniqueness: {scope: :plan}
 
   aasm column: 'state' do
-    state :subscribed, initial: true
+    state :active, initial: true
+    state :expired, enter: :event_state_expired
+
+    event :expire do
+      transitions to: :expired, :from => [:active, :expired]
+    end
   end
 
   def as_json(options={})
@@ -23,6 +28,10 @@ class Subscription < ActiveRecord::Base
       options[:methods] = [:stripe_id]
     end
     super(options)
+  end
+
+  def event_state_expired
+    
   end
 
   def stripe_id

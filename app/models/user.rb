@@ -107,10 +107,10 @@ class User < ActiveRecord::Base
   end
 
   def sellable?
-    listing_credits > 0 or subscriptions_count > 0
+    listing_credits > 0 or (subscriptions_count > 0 and subscriptions.active.count > 0)
   end
 
-  # xxx
+  # update inbox unread count
   def should_update_inbox_unread_count!
     i = mailbox.inbox.unread(self).count
     update_attributes(inbox_unread_count: i) if i != inbox_unread_count

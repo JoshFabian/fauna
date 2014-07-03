@@ -12,6 +12,9 @@ class Plan < ActiveRecord::Base
 
   store :data, accessors: [:credits]
 
+  scope :onetime, -> { where(subscription: false) }
+  scope :subscription, -> { where(subscription: true) }
+
   before_validation(on: :create) do
     if self.subscription? and self.interval_count.blank?
       self.interval_count = 1

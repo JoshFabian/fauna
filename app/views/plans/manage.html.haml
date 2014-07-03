@@ -8,6 +8,7 @@
       %th Interval
       %th Interval Count
       %th # Bought
+      %th # Active
 
     - @plans.each do |plan|
       %tr
@@ -18,3 +19,4 @@
         %td= plan.subscription? ? plan.interval : "n/a"
         %td= plan.subscription? ? plan.interval_count : "n/a"
         %td= plan.subscriptions_count + plan.charges_count
+        %td= plan.subscription? ? plan.subscriptions.active.count : 'n/a'

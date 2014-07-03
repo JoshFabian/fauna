@@ -52,7 +52,7 @@ class PlanTest < ActiveSupport::TestCase
 
     it "should create subscription" do
       @sub = @user.subscriptions.create(plan: @plan)
-      @sub.state.must_equal 'subscribed'
+      @sub.state.must_equal 'active'
       @user.reload
       @user.subscriptions_count.must_equal 1
       @user.subscriptions.must_equal [@sub]
@@ -86,12 +86,23 @@ class PlanTest < ActiveSupport::TestCase
       @user.sellable?.must_equal true
     end
 
-    it "should return true when user has a subscription" do
+    it "should return true when user has an active subscription" do
       @plan = Plan.create!(name: "name", amount: 5000, subscription: true, interval: 'month')
-      @user.subscriptions.create(plan: @plan)
+      @sub = @user.subscriptions.create(plan: @plan)
+      @sub.state.must_equal 'active'
       @user.reload
       @user.subscriptions_count.must_equal 1
       @user.sellable?.must_equal true
+    end
+
+    it "should return false when user does not have an active subscription" do
+      @plan = Plan.create!(name: "name", amount: 5000, subscription: true, interval: 'month')
+      @sub = @user.subscriptions.create(plan: @plan)
+      @sub.expire!
+      @sub.state.must_equal 'expired'
+      @user.reload
+      @user.subscriptions_count.must_equal 1
+      @user.sellable?.must_equal false
     end
   end
 end
