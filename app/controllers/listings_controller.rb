@@ -85,8 +85,8 @@ class ListingsController < ApplicationController
 
     # find owner's other listing and other listings
     @owner_listings = Listing.active.where(user_id: @owner.id).where.not(id: @listing.id).order("id desc").limit(2)
-    # @other_listings = Listing.active.where.not(user_id: @owner.id).order("id desc").limit(4)
-    @other_listings = Listing.active.limit(4)
+    @other_listings = Listing.active.where.not(user_id: @owner.id).order("id desc").limit(4)
+    @other_listings = Listing.active.limit(4) if @other_listings.blank?
   end
 
   # GET /listings/new
