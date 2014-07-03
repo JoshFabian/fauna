@@ -1,5 +1,5 @@
 = select_tag "listing[shipping_to]", options_for_select(listing_shipping_prices_options(@listing)), class: 'shipping-selector shipping-dropdown', prompt: "Select Shipping", :'data-listing-id' => @listing.id
-.error-state Please select a shipping option.
+.error-state.hide Please select a shipping option.
 = link_to 'Checkout with Paypal', '#', class: 'button buy-button checkout secondary disabled', :'data-listing-id' => @listing.id
 = link_to 'Ask a question', '#', class: 'button ask-question', :'data-reveal-id' => 'listing-message-modal'
 = link_to 'Report Listing', '#', class: 'remove-link', :'data-reveal-id' => 'listing-report-modal'

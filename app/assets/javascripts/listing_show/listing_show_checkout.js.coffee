@@ -5,6 +5,12 @@ class Tegu.CheckoutForm
   @enable_button: () ->
     $("a.checkout").removeClass('secondary').removeClass('disabled')
 
+  @hide_shipping_error: () ->
+    $(".error-state").addClass('hide')
+
+  @show_shipping_error: () ->
+    $(".error-state").removeClass('hide')
+
 $(document).ready ->
 
   shipping_to = 'na'
@@ -41,7 +47,9 @@ $(document).ready ->
     shipping_to = $(this).find("option:selected").val()
     if !shipping_to
       console.log "disable checkout ..."
-      return Tegu.CheckoutForm.disable_button()
+      Tegu.CheckoutForm.show_shipping_error()
+      Tegu.CheckoutForm.disable_button()
+      return
     console.log "listing:#{listing_id}, shipping to:#{shipping_to}"
     async.waterfall [
       (callback) ->
@@ -50,6 +58,7 @@ $(document).ready ->
       (data, callback) ->
         console.log data
         # update checkout button
+        Tegu.CheckoutForm.hide_shipping_error()
         Tegu.CheckoutForm.enable_button()
         # update checkout form
         # $(".checkout-shipping .price").html(data.listing.shipping_price_string)
@@ -58,7 +67,8 @@ $(document).ready ->
 
   $("a.checkout").on 'click', (e) ->
     e.preventDefault()
-    return if $(this).hasClass('disabled')
+    if $(this).hasClass('disabled')
+      return Tegu.CheckoutForm.show_shipping_error()
     $(this).addClass('disabled').text("Checking out ...")
     listing_id = $(this).data('listing-id')
     console.log "listing:#{listing_id}, shipping_to:#{shipping_to}"
