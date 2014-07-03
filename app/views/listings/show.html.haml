@@ -49,11 +49,14 @@
       %h4= @listing.title
       %h1
         = number_to_currency(@listing.price.to_f/100.0, precision: 2)
-        = select_tag "listing[shipping_to]", options_for_select(listing_shipping_prices_options(@listing)), class: 'shipping-selector shipping-dropdown', prompt: "Select Shipping", :'data-listing-id' => @listing.id
-        = link_to 'Checkout with Paypal', '#', class: 'button buy-button checkout secondary disabled', :'data-listing-id' => @listing.id
 
-      = link_to 'Ask a question', '#', class: 'button ask-question', :'data-reveal-id' => 'listing-message-modal'
-      = link_to 'Report Listing', '#', class: 'remove-link', :'data-reveal-id' => 'listing-report-modal'
+      - if @listing.sold?
+        = render(partial: 'listings/listing_checkout_sold')
+      - elsif current_user.try(:id) == @listing.user_id
+        = render(partial: 'listings/listing_checkout_edit')
+      - else
+        = render(partial: 'listings/listing_checkout_buy')
+
       .social-links
         .fb-share-button{"data-type" => "button_count"}
         %a.twitter-share-button{"data-lang" => "en", :href => "https://twitter.com/share"} Tweet
