@@ -25,8 +25,7 @@ module ApplicationHelper
   def listing_shipping_prices_options(listing, options={})
     listing.shipping_prices.collect do |hash|
       if hash[1].present?
-        location = hash[0]
-        location = location.titleize if location == location.downcase
+        location = string_titleize(hash[0])
         ["#{location} : $#{hash[1]}", hash[0], :'data-shipping-price' => hash[1]]
       else
         nil
@@ -37,6 +36,10 @@ module ApplicationHelper
   def listing_shipping_times(options={})
     ['1 business day', '1-2 business days', '1-3 business days', '3-5 business days', '1-2 weeks', '2-3 weeks',
      '3-4 weeks']
+  end
+
+  def string_titleize(s)
+    s == s.downcase ? s.titleize : s
   end
 
   def today_time(time_at)
