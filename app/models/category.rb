@@ -21,8 +21,9 @@ class Category < ActiveRecord::Base
   end
 
   def should_update_listings_count!
-    i = listing_categories.count
-    update_attributes(listings_count: i) if i != listings_count
+    act = listing_categories.count
+    cur = listings_count
+    self.class.update_counters(self.id, listings_count: act - cur) unless act == cur
   end
 
   def self.roots

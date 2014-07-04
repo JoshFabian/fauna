@@ -111,8 +111,8 @@ class ListingApiSpec < ActionDispatch::IntegrationTest
       body = JSON.parse(response.body)
       body['listing'].must_include('category_ids' => [@geckos.id])
       @lizards.reload
-      @lizards.listings_count.must_equal 0
       @geckos.reload
+      @lizards.listings_count.must_equal 0
       @geckos.listings_count.must_equal 1
     end
   end
