@@ -82,4 +82,38 @@ class ListingApiSpec < ActionDispatch::IntegrationTest
       response.status.must_equal 404
     end
   end
+
+  describe "listing category update" do
+    before do
+      Category.delete_all
+      @user = Fabricate(:user, listing_credits: 3)
+      @listing = @user.listings.create!(title: "Title", price: 10000)
+      @lizards = Category.create!(name: 'Lizards')
+      @geckos = Category.create!(name: 'Geckos')
+    end
+
+    it "should add category to listing" do
+      data = {listing: {categories: [@lizards.id]}}
+      put "/api/v1/listings/#{@listing.id}?token=#{@user.auth_token}", data
+      response.success?.must_equal true
+      body = JSON.parse(response.body)
+      body['listing'].must_include('category_ids' => [@lizards.id])
+      @lizards.reload
+      @lizards.listings_count.must_equal 1
+    end
+
+    it "should remove category from listing" do
+      @listing.categories.push(@lizards)
+      @lizards.should_update_listings_count!
+      data = {listing: {categories: [@geckos.id]}}
+      put "/api/v1/listings/#{@listing.id}?token=#{@user.auth_token}", data
+      response.success?.must_equal true
+      body = JSON.parse(response.body)
+      body['listing'].must_include('category_ids' => [@geckos.id])
+      @lizards.reload
+      @lizards.listings_count.must_equal 0
+      @geckos.reload
+      @geckos.listings_count.must_equal 1
+    end
+  end
 end

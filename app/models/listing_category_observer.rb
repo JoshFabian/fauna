@@ -1,5 +1,4 @@
 class ListingCategoryObserver < ActiveRecord::Observer
-  include Loggy
 
   # def after_create(object)
   # rescue Exception => e
@@ -7,12 +6,8 @@ class ListingCategoryObserver < ActiveRecord::Observer
 
   def after_save(object)
     # puts "saved: #{object.inspect}, changes:#{object.changes}"
-    category = object.category
-    listing = object.listing
-    # update category counter
-    category.update_attributes(listings_count: category.listing_categories.count)
-    # update search index
-    listing.__elasticsearch__.update_document
+    object.category.touch
+    object.listing.touch
   rescue Exception => e
   end
 
@@ -20,12 +15,8 @@ class ListingCategoryObserver < ActiveRecord::Observer
   # end
 
   def after_destroy(object)
-    category = object.category
-    listing = object.listing
-    # update category counter
-    category.update_attributes(listings_count: category.listing_categories.count)
-    # update search index
-    listing.__elasticsearch__.update_document
+    object.category.touch
+    object.listing.touch
   rescue Exception => e
   end
 end

@@ -20,6 +20,11 @@ class Category < ActiveRecord::Base
     self.level = get_parent_level + 1
   end
 
+  def should_update_listings_count!
+    i = listing_categories.count
+    update_attributes(listings_count: i) if i != listings_count
+  end
+
   def self.roots
     Category.where(level: 1)
   end

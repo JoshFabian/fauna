@@ -59,25 +59,38 @@ module Endpoints
         @listing = current_user.listings.find(params[:id])
         @listing.update(listing_params)
         if params.image_params.present?
-          params.image_params.each do |s|
+          params.image_params.select{ |s| s.present? }.each do |s|
             begin
               @listing.images.create(listing_image_params(JSON.parse(s)))
             rescue Exception => e
+              logger.post("tegu.api", log_data.merge({event: 'listing.update.exception', message: e.message}))
             end
           end
         end
         if params.listing.categories.present?
-          new_categories = params.listing.categories.select{ |s| s.present? }.map(&:to_i)
-          cur_categories = @listing.categories.collect(&:id)
-          add_categories = new_categories - cur_categories
-          del_categories = (cur_categories - new_categories)
-          # add categories
-          add_categories.each do |category_id|
-            @listing.categories.push(Category.find_by_id(category_id))
-          end
-          # remove categories
-          del_categories.each do |category_id|
-            @listing.categories.destroy(category_id)
+          begin
+            new_categories = params.listing.categories.select{ |s| s.present? }.map(&:to_i)
+            cur_categories = @listing.categories.pluck(:id)
+            add_categories = new_categories - cur_categories
+            del_categories = cur_categories - new_categories
+            logger.post("tegu.api", {cur_categories: cur_categories, add_categories: add_categories,
+              del_categories: del_categories})
+            # add categories
+            add_categories.each do |category_id|
+              category = Category.find_by_id(category_id)
+              next if category.blank?
+              @listing.categories.push(category)
+              category.should_update_listings_count!
+            end
+            # remove categories
+            del_categories.each do |category_id|
+              category = Category.find_by_id(category_id)
+              next if category.blank?
+              @listing.categories.destroy(category)
+              category.should_update_listings_count!
+            end
+          rescue Exception => e
+            logger.post("tegu.api", log_data.merge({event: 'listing.update.exception', message: e.message}))
           end
         end
         logger.post("tegu.api", log_data.merge({event: 'listing.update', listing_id: @listing.id}))

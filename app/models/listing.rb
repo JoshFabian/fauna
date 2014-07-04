@@ -54,8 +54,16 @@ class Listing < ActiveRecord::Base
     as_json(methods: [:category_ids, :category_names, :user_handle])
   end
 
+  def as_json(options={})
+    options ||= {}
+    if options[:methods].blank?
+      options[:methods] = [:category_ids]
+    end
+    super(options)
+  end
+
   def category_ids
-    categories.collect(&:id)
+    categories.pluck(:id)
   end
 
   def category_names

@@ -68,6 +68,7 @@ describe Category do
       @listing.reload
       @listing.categories.collect(&:name).must_equal ['Lizards']
       @listing.category_names.must_equal ['lizards']
+      @lizards.should_update_listings_count!
       @lizards.reload
       @lizards.listings_count.must_equal 1
     end
@@ -80,6 +81,8 @@ describe Category do
       @listing.reload
       @listing.categories.collect(&:name).must_equal ['Lizards', 'Geckos']
       @listing.category_names.must_equal ['lizards', 'geckos']
+      @lizards.should_update_listings_count!
+      @geckos.should_update_listings_count!
       @lizards.reload
       @lizards.listings_count.must_equal 1
       @geckos.reload
@@ -90,12 +93,15 @@ describe Category do
       @lizards = Category.create!(name: 'Lizards')
       @pythons = Category.create!(name: 'Pythons')
       @listing.categories.push(@lizards)
+      @lizards.should_update_listings_count!
       @lizards.reload
       @lizards.listings_count.must_equal 1
       @listing.categories.destroy(@lizards)
       @listing.categories.push(@pythons)
       @listing.reload
       @listing.categories.collect(&:name).must_equal ['Pythons']
+      @lizards.should_update_listings_count!
+      @pythons.should_update_listings_count!
       @pythons.reload
       @pythons.listings_count.must_equal 1
       @lizards.reload
