@@ -8,7 +8,11 @@
 %>
 
 <%= Rubber.env %>:
-  adapter: sqlite3
+  adapter: mysql2
   encoding: utf8
-  database: /mnt/tegu-staging/shared/db/tegu.staging.sqlite3
-  pool: 5
+  database: tegu_<%= Rubber.env %>
+  host: mysql-staging.c1kqam8odmp3.us-east-1.rds.amazonaws.com
+  port: 3306
+  username: fauna
+  password: social40
+  reconnect: true
