@@ -26,5 +26,6 @@ class ListingCategoryObserver < ActiveRecord::Observer
     category.update_attributes(listings_count: category.listing_categories.count)
     # update search index
     listing.__elasticsearch__.update_document
+  rescue Exception => e
   end
 end
