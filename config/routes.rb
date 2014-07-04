@@ -14,6 +14,7 @@ Tegu::Application.routes.draw do
   # vanity user scopes
   get ':handle' => "users#show", as: :user, constraints: HandleRoute.new
   get ':handle/edit' => "users#edit", as: :user_edit
+  get ':handle/exception' => "home#exception"
   get ':handle/listings/manage' => "users#manage_listings", as: :user_manage_listings
   get ':handle/listings/:id/reviews/new' => "reviews#new", as: :new_listing_review
   get ':handle/listings/:id/edit' => "listings#edit", as: :user_edit_listing
@@ -90,6 +91,9 @@ Tegu::Application.routes.draw do
   end
   resources :reviews, only: []
   resources :waitlists, only: [:index]
+
+  # categories
+  resources :categories, only: [:index]
 
   get 'about/contact' => "about#contact", as: :about_contact
   get 'about/privacy' => "about#privacy", as: :about_privacy

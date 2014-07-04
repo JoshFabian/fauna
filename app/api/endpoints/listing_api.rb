@@ -75,9 +75,9 @@ module Endpoints
           add_categories.each do |category_id|
             @listing.categories.push(Category.find_by_id(category_id))
           end
-          # delete categories
+          # remove categories
           del_categories.each do |category_id|
-            @listing.categories.delete(category_id)
+            @listing.categories.destroy(category_id)
           end
         end
         logger.post("tegu.api", log_data.merge({event: 'listing.update', listing_id: @listing.id}))

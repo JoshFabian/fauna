@@ -1,0 +1,19 @@
+.row
+  .text-center
+    %h5 Categories
+
+  %table.tiny.small-12.columns
+    %tr
+      %th Id
+      %th Name
+      %th Level
+      %th Children
+      %th # Listings
+
+    - @categories.each do |category|
+      %tr
+        %td= category.id
+        %td= category.name
+        %td= category.level
+        %td= category.children_count
+        %td= category.listings_count

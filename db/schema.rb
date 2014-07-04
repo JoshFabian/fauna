@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140703144340) do
+ActiveRecord::Schema.define(version: 20140703215204) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -37,10 +37,12 @@ ActiveRecord::Schema.define(version: 20140703144340) do
     t.integer  "children_count",             default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "listings_count",             default: 0
   end
 
   add_index "categories", ["children_count"], name: "index_categories_on_children_count"
   add_index "categories", ["level"], name: "index_categories_on_level"
+  add_index "categories", ["listings_count"], name: "index_categories_on_listings_count"
   add_index "categories", ["name"], name: "index_categories_on_name"
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id"
   add_index "categories", ["position"], name: "index_categories_on_position"

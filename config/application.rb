@@ -28,7 +28,8 @@ module Tegu
     # config.i18n.default_locale = :de
     config.i18n.enforce_available_locales = true
 
-    config.active_record.observers = [:conversation_observer, :listing_observer, :review_observer, :waitlist_observer]
+    config.active_record.observers = [:conversation_observer, :listing_observer, :listing_category_observer,
+      :review_observer, :waitlist_observer]
 
     config.generators do |g|
       g.test_framework :mini_test, :spec => true, :fixture => false

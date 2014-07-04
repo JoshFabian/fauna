@@ -23,9 +23,4 @@ class ListingObserver < ActiveRecord::Observer
     listing.__elasticsearch__.delete_document
   rescue Exception => e
   end
-
-  def self.after_category_update(listing)
-    listing.__elasticsearch__.update_document
-  rescue Exception => e
-  end
 end

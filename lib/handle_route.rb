@@ -4,7 +4,7 @@ class HandleRoute
   # end
 
   def matches?(request)
-    return false if request.path.match(/^\/(about|auth|invites|landing|listings|listing_reports|login|logout|messages|payments|paypal|plans|reviews|signup|sms|tags|users|waitlists)/)
+    return false if request.path.match(/^\/(about|auth|categories|invites|landing|listings|listing_reports|login|logout|messages|payments|paypal|plans|reviews|signup|sms|tags|users|waitlists)/)
     true
   end
 end
