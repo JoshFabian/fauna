@@ -62,4 +62,7 @@ class ApplicationController < ActionController::Base
     true
   end
 
+  def store_location!
+    store_location_for(:user, request.path) if !user_signed_in?
+  end
 end

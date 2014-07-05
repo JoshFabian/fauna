@@ -137,7 +137,6 @@ module Endpoints
 
       desc "Get listing shipping price"
       get ':id/shipping/to/:country_code' do
-        authenticate!
         begin
           @listing = Listing.find(params.id)
           @shipping_price = @listing.shipping_price(to: params.country_code)

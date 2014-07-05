@@ -3,6 +3,7 @@ class ListingsController < ApplicationController
   before_filter :authenticate_user!, only: [:new]
   before_filter :seller_verify!, only: [:new]
   before_filter :seller_paid!, only: [:new]
+  before_filter :store_location!
 
   # GET /listings
   def index
