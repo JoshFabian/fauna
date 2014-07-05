@@ -49,8 +49,7 @@
                   %td.text-right
                     %small{style: 'font-size: 0.85em;'}
                       - if listing.active?
-                        - if listing.editable?
-                          = link_to 'Edit Listing', edit_listing_path(listing)
+                        = link_to 'Edit Listing', edit_listing_path(listing.id)
                         = link_to 'Mark as Sold', '#', class: 'mark-sold', :'data-listing-id' => listing.id
 
       #sold-listings.content

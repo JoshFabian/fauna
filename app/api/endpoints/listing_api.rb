@@ -73,8 +73,6 @@ module Endpoints
             cur_categories = @listing.categories.pluck(:id)
             add_categories = new_categories - cur_categories
             del_categories = cur_categories - new_categories
-            logger.post("tegu.api", {cur_categories: cur_categories, add_categories: add_categories,
-              del_categories: del_categories})
             # add categories
             add_categories.each do |category_id|
               category = Category.find_by_id(category_id)
@@ -93,6 +91,8 @@ module Endpoints
             logger.post("tegu.api", log_data.merge({event: 'listing.update.exception', message: e.message}))
           end
         end
+        @listing.should_update_index!
+        logger.post("tegu.api", {event: 'search.update', listing_id: @listing.id})
         logger.post("tegu.api", log_data.merge({event: 'listing.update', listing_id: @listing.id}))
         {listing: @listing}
       end

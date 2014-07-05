@@ -51,7 +51,7 @@ class Listing < ActiveRecord::Base
   end
 
   def as_indexed_json(options={})
-    as_json(methods: [:category_ids, :category_names, :user_handle])
+    as_json(methods: [:category_ids, :category_names, :user_handle], except: [:created_at, :data])
   end
 
   def as_json(options={})
@@ -112,6 +112,10 @@ class Listing < ActiveRecord::Base
   # used by friendly_id
   def should_generate_new_friendly_id?
     slug.blank? || title_changed?
+  end
+
+  def should_update_index!
+    self.__elasticsearch__.index_document rescue nil
   end
 
   def user_handle

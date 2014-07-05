@@ -116,10 +116,22 @@ class ListingTest < ActiveSupport::TestCase
       end
 
       it "should find on category match" do
-        @results = Listing.search(filter: {term: {category_ids: @lizards.id}})
-        @results.size.must_equal 1
-        @results = Listing.search(filter: {term: {category_ids: [@lizards.id]}})
-        @results.size.must_equal 1
+        results = Listing.search(filter: {term: {category_ids: @lizards.id}})
+        results.size.must_equal 1
+        results = Listing.search(filter: {term: {category_ids: [@lizards.id]}})
+        results.size.must_equal 1
+      end
+
+      it "should find when listing category is changed" do
+        @geckos = Category.create!(name: 'Geckos')
+        @listing1.categories.destroy(@lizards)
+        @listing1.categories.push(@geckos)
+        @listing1.reload
+        @listing1.categories.must_equal [@geckos]
+        @listing1.should_update_index!
+        Listing.__elasticsearch__.refresh_index!
+        results = Listing.search(filter: {term: {category_ids: @geckos.id}})
+        results.size.must_equal 1
       end
     end
 
@@ -153,22 +165,22 @@ class ListingTest < ActiveSupport::TestCase
       end
 
       it "should find on exact title match" do
-        @results = Listing.search 'lizard'
-        @results.size.must_equal 1
-        @results = Listing.search 'tegu'
-        @results.size.must_equal 1
+        results = Listing.search 'lizard'
+        results.size.must_equal 1
+        results = Listing.search 'tegu'
+        results.size.must_equal 1
       end
 
       it "should find on substring title match" do
-        @results = Listing.search 'liz*'
-        @results.size.must_equal 1
-        @results = Listing.search 'tegu*'
-        @results.size.must_equal 1
+        results = Listing.search 'liz*'
+        results.size.must_equal 1
+        results = Listing.search 'tegu*'
+        results.size.must_equal 1
       end
 
       it "should not find when title doesn't match" do
-        @results = Listing.search 'reptile'
-        @results.size.must_equal 0
+        results = Listing.search 'reptile'
+        results.size.must_equal 0
       end
     end
 
@@ -189,8 +201,8 @@ class ListingTest < ActiveSupport::TestCase
       end
 
       it "should not find when invalid handle" do
-        @results = Listing.search(filter: {term: {user_handle: "bogus"}})
-        @results.size.must_equal 0
+        results = Listing.search(filter: {term: {user_handle: "bogus"}})
+        results.size.must_equal 0
       end
     end
 

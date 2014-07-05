@@ -13,6 +13,8 @@ class Category < ActiveRecord::Base
   acts_as_tree order: :name, counter_cache: :children_count
   acts_as_list scope: [:level]
 
+  scope :with_listings, -> { where("listings_count > 0") }
+
   # set search index name
   index_name "categories.#{Rails.env}"
 

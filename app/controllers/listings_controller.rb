@@ -35,7 +35,7 @@ class ListingsController < ApplicationController
     @category_ids = @subcategory.present? ? @subcategory.id : @category.id
     @listings = Listing.search(filter: {term: {category_ids: @category_ids}}).records.active
 
-    @subcategories = @category.children.where("listings_count > 0")
+    @subcategories = @category.children.with_listings
 
     respond_to do |format|
       format.html { render(action: :index) }
