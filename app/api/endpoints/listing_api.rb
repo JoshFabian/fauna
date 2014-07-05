@@ -92,7 +92,7 @@ module Endpoints
           end
         end
         @listing.should_update_index!
-        logger.post("tegu.api", {event: 'search.update', listing_id: @listing.id})
+        logger.post("tegu.api", log_data_min.merge({event: 'search.update', listing_id: @listing.id}))
         logger.post("tegu.api", log_data.merge({event: 'listing.update', listing_id: @listing.id}))
         {listing: @listing}
       end
