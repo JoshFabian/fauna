@@ -16,7 +16,7 @@ class ListingsController < ApplicationController
   # GET /listings/recent
   def recent
     @recent_general = Listing.active.order("id desc").limit(8)
-    @recent_categories = Category.roots.map do |category|
+    @recent_categories = Category.roots.with_listings.map do |category|
       mash = Hashie::Mash.new(category: category, listings: category.listings.active.order('id desc').limit(4))
     end
 
