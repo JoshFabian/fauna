@@ -23,6 +23,7 @@ require 'rubber'
 
 Rubber::initialize(root, env)
 require 'rubber/capistrano'
+require 'honeybadger/capistrano'
 
 Dir['vendor/plugins/*/recipes/*.rb'].each { |plugin| load(plugin) }
 load 'config/deploy'

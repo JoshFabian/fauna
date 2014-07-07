@@ -1,4 +1,4 @@
-development:
+development: # same as staging
   write_key: 86164it2xf
 
 staging:

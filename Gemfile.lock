@@ -201,6 +201,8 @@ GEM
     hashie (2.1.1)
     highline (1.6.20)
     hike (1.2.3)
+    honeybadger (1.15.3)
+      json
     http_parser.rb (0.6.0)
     i18n (0.6.9)
     ice_nine (0.11.0)
@@ -452,6 +454,7 @@ DEPENDENCIES
   guard
   guard-livereload
   haml
+  honeybadger
   ionicons-rails
   jbuilder (~> 1.2)
   jquery-rails
