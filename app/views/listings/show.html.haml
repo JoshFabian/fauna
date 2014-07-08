@@ -6,9 +6,12 @@
     - if @message == 'canceled'
       %div.alert-box.alert{:'data-alert' => ''}
         Your payment was canceled
-    - elsif @message == 'sold'
+    - elsif @message.match(/purchase|sold/)
       %div.alert-box.success{:'data-alert' => ''}
         Your payment is complete
+
+    - if @message.match(/purchase/)
+      = render(partial: "listings/listing_purchased")
 
   .list-panel
     .listing-images.small-7.columns
