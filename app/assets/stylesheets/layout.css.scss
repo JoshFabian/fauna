@@ -769,3 +769,16 @@ input.verification {
   margin: 0 0 1rem 0;
   padding: 0.5rem;
 }
+
+.about-empty {
+  text-align: center;
+  .icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    color: #bbb;
+  }
+  .empty-text {
+    line-height: 25px;
+  }
+}

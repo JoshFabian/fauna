@@ -2,6 +2,8 @@
   = render(partial: 'messages/message_selectors', locals: {label: label})
 
   %ul
+    // Empty State
+    -# = render(partial: 'messages/messages_empty')
     - conversations.each do |conversation|
       - if label.match(/sent/i)
         -# show last message user sent in conversation

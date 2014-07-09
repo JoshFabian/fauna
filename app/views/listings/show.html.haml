@@ -36,7 +36,9 @@
           #description.content
             %p= @listing.description
           #reviews.content.hide
-            = render(partial: "reviews/review", locals: {reviews: @reviews})
+            = render(partial: "reviews/review_widget", locals: {reviews: @reviews})
+            // Empty State
+            -# = render(partial: "reviews/review_empty")
           #shipping.content.hide
             = render(partial: "listings/shipping_content")
 

@@ -1,4 +1,7 @@
 .row
+  // Empty State
+  -# = render(partial: "listings/category_empty")
+  // Don't show 'All Category Name' if no listings found.
   %h5
     - if @category.present?
       All 

@@ -5,7 +5,9 @@
         = render(partial: "users/user_recent_listings")
 
     .feedback
-      = render(partial: "reviews/review", locals: {reviews: @recent_reviews})
+      = render(partial: "reviews/review_widget", locals: {reviews: @recent_reviews})
+      // Empty state
+      -# = render(partial: "reviews/review_widget", locals: {reviews: @recent_reviews})
 
   .profile-sidebar.small-4.columns
     .rounded-panel
@@ -14,6 +16,8 @@
       %hr
       .padding-wrapper
         .user-info.edit-hide
+          // Empty State
+          -# = render(partial: "users/user_about_empty")
           %p= @user.about
           %ul
             %li= number_to_phone(@user.phone)

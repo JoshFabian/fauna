@@ -1,0 +1,10 @@
+.category-empty.text-center
+  %h3
+    Nobody is selling 
+    = @category.name
+    here yet!
+  %p 
+    Be the first to sell
+    = @category.name
+    on Fauna.
+    = link_to "Create a Listing", new_listing_path

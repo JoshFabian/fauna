@@ -212,3 +212,15 @@
   background: #e8f8f5;
   border-top: 1px solid darken(#d1f2eb, 30);
 }
+
+.messages-empty {
+  text-align: center;
+  .icon {
+    color: #bbb;
+    font-size: 150px;
+  }
+  .empty-text {
+    font-size: 25px;
+    margin-bottom: 35px;
+  }
+}

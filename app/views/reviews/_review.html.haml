@@ -1,29 +1,29 @@
-.rounded-panel
-  .padding-wrapper
-    %h5 Recent Feedback
-  - reviews.each do |review|
-    - listing = review.listing
-    - image = listing.primary_image
-    - reviewer = review.user
-    %hr
-    .padding-wrapper
-      .review
-        .review-header.small-12.columns
-          .listing-title
-            %strong #{listing.title} - #{number_to_currency(listing.price/100.0)}
-          .review-rating
-            - 1.upto(5).each do |i|
-              %i.icon.ion-android-star{class: i <= review.stars ? 'active' : nil}
-        .small-12.columns.no-padding
-          .small-2.columns.no-padding
-            = image_tag cloudinary_url(image.full_public_id, transformation: [{width: 90, height: 90, crop: 'fill'}])
-          .small-10.columns.no-padding-right
-            .review-bubble
-              .small-12.columns.no-padding
-                .reviewer
-                  = link_to reviewer.handle, user_path(reviewer)
-                .review-date
-                  = review.created_at.to_s(:datetime_short)
-              .small-12.columns.no-padding
-                .review
-                  %p "#{review.body}"
+.row
+  %h5 Recent Feedback
+  %ul.small-block-grid-2
+    - reviews.each do |review|
+      - listing = review.listing
+      - image = listing.primary_image
+      - reviewer = review.user
+      %li
+        .rounded-panel
+          .review
+            .review-header.small-12.columns
+              .listing-title
+                %strong #{listing.title} - #{number_to_currency(listing.price/100.0)}
+              .review-rating
+                - 1.upto(5).each do |i|
+                  %i.icon.ion-android-star{class: i <= review.stars ? 'active' : nil}
+            .small-12.columns.no-padding
+              .small-2.columns.no-padding
+                = image_tag cloudinary_url(image.full_public_id, transformation: [{width: 90, height: 90, crop: 'fill'}])
+              .small-10.columns.no-padding-right
+                .review-bubble
+                  .small-12.columns.no-padding
+                    .reviewer
+                      = link_to reviewer.handle, user_path(reviewer)
+                    .review-date
+                      = review.created_at.to_s(:datetime_short)
+                  .small-12.columns.no-padding
+                    .review
+                      %p "#{review.body}"
