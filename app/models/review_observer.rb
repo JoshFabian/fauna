@@ -23,24 +23,24 @@ class ReviewObserver < ActiveRecord::Observer
   rescue Exception => e
   end
 
-  def self.set_pending_reviews(options={})
-    # find completed payments where user has not left review after 5 days
-    mash = Hashie::Mash.new
-    Payment.completed.where(reviewed: false).where("completed_at <= ?", 5.days.ago).each do |payment|
-      mash[payment.buyer_id] = 0 if mash[payment.buyer_id].blank?
-      mash[payment.buyer_id] += 1
-    end
-    # update user counter field
-    mash.each_pair do |user_id, count|
-      # puts "user:#{user_id}:count:#{count}"
-      User.update_counters(user_id, pending_listing_reviews: count)
-    end
-    # reset user counter field
-    User.where.not(id: mash.keys.map(&:to_i)).where("pending_listing_reviews > 0").each do |user|
-      # puts "user:#{user.id}:#{user.pending_listing_reviews}"
-      user.update_attributes(pending_listing_reviews: 0)
-    end
-  end
+  # def self.update_pending_reviews(options={})
+  #   # find completed payments where user has not left review after 5 days
+  #   mash = Hashie::Mash.new
+  #   Payment.completed.where(reviewed: false).where("completed_at <= ?", 5.days.ago).each do |payment|
+  #     mash[payment.buyer_id] = 0 if mash[payment.buyer_id].blank?
+  #     mash[payment.buyer_id] += 1
+  #   end
+  #   # update user counter field
+  #   mash.each_pair do |user_id, count|
+  #     # puts "user:#{user_id}:count:#{count}"
+  #     User.update_counters(user_id, pending_listing_reviews: count)
+  #   end
+  #   # reset user counter field
+  #   User.where.not(id: mash.keys.map(&:to_i)).where("pending_listing_reviews > 0").each do |user|
+  #     # puts "user:#{user.id}:#{user.pending_listing_reviews}"
+  #     user.update_attributes(pending_listing_reviews: 0)
+  #   end
+  # end
 
   protected
 

@@ -116,7 +116,7 @@ class User < ActiveRecord::Base
     update_attributes(inbox_unread_count: i) if i != inbox_unread_count
   end
 
-  # return true if the required fields are verified
+  # return true if the user is both paypal and phone verified
   def verified?
     paypal_verified? and phone_verified?
   end
