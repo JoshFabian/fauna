@@ -1,10 +1,8 @@
 .category-empty.text-center
   %h3
-    Nobody is selling 
-    = @category.name
+    Nobody is selling
+    = @category.try(:name)
     here yet!
-  %p 
-    Be the first to sell
-    = @category.name
-    on Fauna.
+  %p
+    Be the first to sell them on Fauna.
     = link_to "Create a Listing", new_listing_path
