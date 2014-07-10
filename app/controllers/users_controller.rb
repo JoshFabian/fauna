@@ -68,8 +68,10 @@ class UsersController < ApplicationController
       @cover_images.select{ |o| o.position == i }.first or i
     end
 
-    # mailbox label
-    @label = 'inbox'
+    # optional mailbox label
+    @label = params[:label] || 'inbox'
+    # optional conversation id
+    @conversation_id = params[:conversation].to_i
 
     @tab = 'messages'
 

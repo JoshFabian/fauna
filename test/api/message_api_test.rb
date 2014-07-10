@@ -56,6 +56,7 @@ class MessageApiSpec < ActionDispatch::IntegrationTest
       post "/api/v1/conversations/to/#{@user1.id}?token=#{@user2.auth_token}", data
       response.success?.must_equal true
       body = JSON.parse(response.body)
+      body['conversation'].must_include({'subject' => 'subject 1'})
       body['receipt'].must_include({'mailbox_type' => 'sentbox', 'receiver_id' => @user2.id, 'receiver_type' => 'User'})
       body['to'].must_include({'user_id' => @user1.id, 'inbox_unread_count' => 1})
     end

@@ -25,6 +25,9 @@ $(document).ready ->
         # console.log data
         Tegu.MessageView.select_label(label)
         Tegu.MessageView.show(data)
+        if conversation_id > 0
+          console.log "init conversation: #{conversation_id}"
+          $(".message-show[data-conversation-id=#{conversation_id}]").trigger 'click'
     ]
 
   $(document).on 'click', ".message-show", (e) ->
@@ -45,3 +48,4 @@ $(document).ready ->
         if data.user and data.user.id == current_user
           Tegu.MessageView.update_inbox_count(data.user.inbox_unread_count)
     ]
+    
