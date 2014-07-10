@@ -14,5 +14,11 @@
             = f.text_field :last_name, autofocus: false, required: true, class: "", placeholder: 'last name'
           = f.text_field :handle, autofocus: false, required: true, class: "", placeholder: 'username', remote: "/users/validate_handle"
           = f.password_field :password, required: @user.new_record?, class: "", placeholder: 'password', :id => "signup_password"
+        %input#checkbox1{:type => "checkbox"}
+          %label{:for => "checkbox1"}
+            I agree to the 
+            = link_to "terms and conditions", "#"
+            and 
+            = link_to "privacy policy", "#"
           = f.submit 'Continue', class: 'button'
 

@@ -10,9 +10,6 @@
       %div.alert-box.success{:'data-alert' => ''}
         Your payment is complete
 
-    - if @message.match(/purchase/)
-      = render(partial: "listings/listing_purchased")
-
   .list-panel
     .listing-images.small-7.columns
       .main-image
@@ -36,11 +33,12 @@
           #description.content
             %p= @listing.description
           #reviews.content.hide
-            = render(partial: "reviews/review_widget", locals: {reviews: @reviews})
-            // Empty State
-            -# = render(partial: "reviews/review_empty")
+            - if @reviews.present?
+              = render(partial: "reviews/review_widget", locals: {reviews: @reviews})
+            - else
+              = render(partial: "reviews/review_empty")
           #shipping.content.hide
-            = render(partial: "listings/shipping_content")
+            = render(partial: "listings/shipping_tab")
 
     .listing-aside.small-5.columns
       .category-breadcrumbs

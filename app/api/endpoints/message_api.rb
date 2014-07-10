@@ -58,7 +58,7 @@ module Endpoints
         conversation = receipt.message.conversation
         if params.listing.present?
           begin
-            # add listing to conversation
+            # attach listing to conversation
             listing = Listing.find(params.listing.id)
             object = ListingConversation.create!(conversation: conversation, listing: listing)
           rescue Exception => e
@@ -66,9 +66,10 @@ module Endpoints
         end
         # update user's inbox unread count
         user_to.should_update_inbox_unread_count!
-        result = {receipt: receipt, to: {user_id: user_to.id, inbox_unread_count: user_to.inbox_unread_count}}
+        result = {conversation: conversation, receipt: receipt, to: {user_id: user_to.id,
+          inbox_unread_count: user_to.inbox_unread_count}}
         result = result.merge(listing: {id: listing.try(:id)}) if listing.present?
-        logger.post("tegu.api", log_data.merge({event: 'conversation.create'}))
+        logger.post("tegu.api", log_data.merge({event: 'conversation.create', conversation_id: conversation.id}))
         result
       end
 

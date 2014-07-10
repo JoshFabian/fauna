@@ -8,6 +8,7 @@ class Payment < ActiveRecord::Base
   validates :shipping_to, presence: true
 
   belongs_to :buyer, class_name: 'User', foreign_key: 'buyer_id'
+  belongs_to :conversation
   belongs_to :listing
 
   aasm column: 'state' do
@@ -86,5 +87,36 @@ class Payment < ActiveRecord::Base
     else
       # whoops
     end
+  end
+
+  def seller
+    listing.user
+  end
+
+  def start_buyer_conversation!(options={})
+    raise Exception, "not allowed" if !completed?
+    raise Exception, "already exists" if self.conversation.present?
+    # create conversation
+    body = options[:body] || default_conversation_body
+    subject = options[:subject] || default_conversation_subject
+    receipt = buyer.send_message(seller, body, subject)
+    self.conversation = receipt.message.conversation
+    self.save
+    # attach listing to conversation
+    object = ListingConversation.create!(conversation: self.conversation, listing: listing)
+    self.conversation
+  rescue Exception => e
+    nil
+  end
+
+  protected
+
+  def default_conversation_body
+    "#{buyer.handle} bought your #{listing.title}. We've started this private conversation to help you arrange a date/time
+     for shipping and answer any questions you may have for one another."
+  end
+
+  def default_conversation_subject
+    listing.title
   end
 end

@@ -1,1 +1,5 @@
-<%= render(partial: "messages/messages", locals: {conversations: @conversations, label: @label}) %>
+<% if @conversations.present? %>
+  <%= render(partial: "messages/messages", locals: {conversations: @conversations, label: @label}) %>
+<% else %>
+  <%= render(partial: "messages/messages_empty", locals: {conversations: @conversations, label: @label}) %>
+<% end %>

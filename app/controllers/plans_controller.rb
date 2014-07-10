@@ -6,7 +6,7 @@ class PlansController < ApplicationController
   # GET /plans
   def index
     @credit_plans = Plan.active.where(subscription: false).order("amount asc")
-    @subscription_plans = Plan.active.where(subscription: true).order("interval asc")
+    @subscription_plans = Plan.active.where(subscription: true).order("interval_count asc")
   end
 
   # GET /plans/manage

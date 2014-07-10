@@ -5,3 +5,6 @@
 
     -# messages are filled in via js
     .message-list.empty.small-10.columns{:'data-label' => @label}
+
+:javascript
+  var conversation_id = #{@conversation_id rescue 0};

@@ -83,7 +83,7 @@ Tegu::Application.routes.draw do
 
   # messages
   get ':handle/messages/:id' => "messages#show", constraints: {id: /[0-9]+/}
-  get ':handle/messages/:label' => "messages#index"
+  get ':handle/messages/:label' => "messages#index", constraints: {label: /[a-z]+/}
 
   # plans
   resources :plans, only: [:index, :show] do

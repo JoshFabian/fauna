@@ -29,7 +29,7 @@
               .payment-option
                 - @credit_plans.each do |plan|
                   .small-12.columns.no-padding
-                    = radio_button("plan", "id", plan.id, class: 'required plan-credits-radio', :'data-amount' => plan.amount, :'data-plan-id' => plan.id, :'data-subscription' => plan.subscription)
+                    = radio_button("plan", "id", plan.id, class: 'required plan-credits-radio', :'data-plan-amount' => plan.amount, :'data-plan-id' => plan.id, :'data-plan-subscription' => plan.subscription, :'data-plan-name' => plan.name)
                     %label{for: "plan_id_#{plan.id}"} #{plan.name} - #{number_to_currency(plan.amount/100.0, precision: 2)}
 
                 %a.button.secondary.plan-submit{:href => "#"}
@@ -53,7 +53,7 @@
               .payment-option
                 - @subscription_plans.each do |plan|
                   .small-12.columns.no-padding
-                    = radio_button("plan", "id", plan.id, class: 'required plan-subscriptions-radio', :'data-amount' => plan.amount, :'data-interval' => plan.interval, :'data-plan-id' => plan.id, :'data-subscription' => plan.subscription)
+                    = radio_button("plan", "id", plan.id, class: 'required plan-subscriptions-radio', :'data-plan-amount' => plan.amount, :'data-plan-interval' => plan.interval, :'data-plan-id' => plan.id, :'data-plan-subscription' => plan.subscription, :'data-plan-name' => plan.name)
                     %label{for: "plan_id_#{plan.id}"} #{plan.name}
 
                 -# .small-12.columns.no-padding
