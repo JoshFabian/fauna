@@ -3,7 +3,9 @@
   .category-nav
     .row
       %h1= @category.name
-      %hr
-      %ul.centered-inline-list
-        - @subcategories.each do |child|
-          %li= link_to child.name, listing_category_path(@category.name.parameterize, child.name.parameterize)
+      - if @listings.blank?
+      - else
+        %hr
+        %ul.centered-inline-list
+          - @subcategories.each do |child|
+            %li= link_to child.name, listing_category_path(@category.name.parameterize, child.name.parameterize)
