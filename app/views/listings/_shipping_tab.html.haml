@@ -9,8 +9,16 @@
       %th.shipping-primary-price Cost
   %tbody
     - @listing.shipping_prices.each do |hash|
+      - location = hash[0]
+      - price = hash[1].to_f
       %tr
         %td.shipping-destination= string_titleize(hash[0])
         %td.shipping-primary-price
-          %span.currency-value= number_to_currency(hash[1].to_f)
-          %span.currency-code USD
+          - if price > 0
+            %span.currency-value= number_to_currency(hash[1].to_f)
+            %span.currency-code USD
+          - else
+            - if location.match(/local/i)
+              %span Not available
+            - else
+              %span Does not ship here
