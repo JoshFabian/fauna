@@ -38,6 +38,7 @@ module Endpoints
       desc "Payment paypal status callback"
       get ':id/paypal/:status' do
         @payment = Payment.find(params.id)
+        @buyer = @payment.buyer
         @listing = @payment.listing
         @seller = @listing.user
         @status = params.status
@@ -45,17 +46,23 @@ module Endpoints
         if @status == 'cancel'
           @payment.cancel!
           @message = 'canceled'
+          # redirect to listing path
+          @goto = Rails.application.routes.url_helpers.user_listing_path(@seller, @listing.id, message: @message)
         elsif @status == 'success'
           @payment.complete!
           @listing.sold!
           @message = 'sold'
+          # start conversation
+          @conversation = @payment.start_buyer_conversation!
+          # redirect to post payment conversation
+          @goto = Rails.application.routes.url_helpers.user_messages_path(@buyer, label: 'sentbox',
+            conversation: @conversation.id)
         end
 
         logger.post("tegu.api", log_data.merge({event: "paypal.#{@status}", payment_id: @payment.id,
           listing_id: @listing.id, buyer_id: @payment.buyer_id}))
 
         # redirect
-        @goto = Rails.application.routes.url_helpers.user_listing_path(@seller, @listing.id, message: @message)
         redirect @goto, permanent: true
       end
 

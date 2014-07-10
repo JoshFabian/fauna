@@ -36,8 +36,20 @@ class PaymentTest < ActiveSupport::TestCase
       @buyer.payments.count.must_equal 1
       @buyer.purchases.count.must_equal 0
       @payment.complete!
+      @payment.reload
+      @payment.state.must_equal 'completed'
       @buyer.purchases.count.must_equal 1
       @buyer.purchases.must_equal [@payment]
+    end
+  end
+
+  describe "payment conversation" do
+    it "should start conversation between buyer and seller after payment completed" do
+      @payment = Payment.create!(@mash)
+      @payment.complete!
+      @conversation = @payment.start_buyer_conversation!
+      @conversation.persisted?.must_equal true
+      @payment.start_buyer_conversation!.must_equal nil
     end
   end
 
