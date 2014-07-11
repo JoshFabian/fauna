@@ -35,6 +35,13 @@ class Tegu.Plan
   @unmark_subscription_plans: () ->
     $(".plan-subscriptions input:radio").attr('checked', false)
 
+  @get_details: (plan_id, token, callback) ->
+    $.ajax "/plans/#{plan_id}/details?token=#{token}",
+      type: 'GET'
+      dataType: 'html'
+      success: (data) ->
+        callback(null, data) if callback
+
 $(document).ready ->
 
   # try
@@ -73,6 +80,16 @@ $(document).ready ->
 
   $(".plan-subscriptions").on 'click', (e) ->
     Tegu.Plan.unmark_credit_plans()
+    input = $(this).closest('form').find("input[type='radio']:checked")
+    plan_id = $(input).data('plan-id')
+    console.log "plan:#{plan_id} details ..."
+    async.waterfall [
+      (callback) ->
+        Tegu.Plan.get_details(plan_id, auth_token, callback)
+      (data, callback) ->
+        console.log data
+        $(".pro-details").html(data)
+    ]
 
   $(".plan-submit").on 'click', (e) ->
     e.preventDefault()

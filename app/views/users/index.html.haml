@@ -23,7 +23,7 @@
         %td= user.oauths.present? ? 'yes' : 'no'
         %td= user.roles.map(&:to_s).join(',')
         %td= user.listings.count
-        %td= user.subscriptions.collect(&:name).join(', ')
+        %td= user.subscriptions.collect{|o| o.plan.try(:name)}.join(', ') rescue ''
         %td
           = user.listing_credits
           %span.right= link_to '+1', '#', class: 'listing-credits-add', :'data-user-id' => user.id
