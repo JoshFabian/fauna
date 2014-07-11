@@ -2,9 +2,14 @@ namespace :rubber do
 
   namespace :backburner do
 
+    rubber.allow_optional_tasks(self)
+
+    after "deploy:restart", "rubber:backburner:restart"
+
     desc "Stops the backburner service"
     task :stop, :roles => :app, :on_error => :continue do
       rsudo "kill `cat /mnt/tegu-#{Rubber.env}/shared/pids/backburner.pid`"
+      rsudo "rm /mnt/tegu-#{Rubber.env}/shared/pids/backburner.pid"
     end
 
     desc "Starts the backburner service"
