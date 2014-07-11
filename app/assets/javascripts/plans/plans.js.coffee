@@ -33,7 +33,7 @@ $(document).ready ->
           # optional callback
           (err, results) ->
   catch e
-    
+
   $(".plan-credits").on 'click', (e) ->
     Tegu.Plan.unmark_subscription_plans()
 
@@ -48,13 +48,9 @@ $(document).ready ->
     plan_amount = $(input).data('plan-amount')
     plan_name = $(input).data('plan-name')
     plan_subscription = $(input).data('plan-subscription')
-    console.log "stripe plan:#{plan_id}:subscription:#{plan_subscription} for #{plan_amount}"
+    console.log "stripe plan:#{plan_id}:#{plan_name}:subscription:#{plan_subscription} for #{plan_amount}"
     if plan_id
-      if plan_subscription
-        # call stripe handler to charge card and return token
-        stripe_handler.open({allowRememberMe: false, amount: plan_amount, name: 'Fauna', description: plan_name})
-      else
-        # call stripe handler to charge card and return token
-        stripe_handler.open({allowRememberMe: false, amount: plan_amount, name: 'Fauna', description: plan_name})
+      # call stripe handler to charge card and return token
+      stripe_handler.open({allowRememberMe: false, amount: plan_amount, name: 'Fauna', description: plan_name})
 
  
