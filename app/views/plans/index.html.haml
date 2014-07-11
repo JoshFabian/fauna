@@ -11,11 +11,6 @@
         = image_tag "http://www.placehold.it/60/60"
       .account-header
         %h3 Hello, #{current_user.handle}!
-      -# .account-navigation
-      -#   %ul.inline-list
-      -#     %li= link_to "Personal", "#"
-      -#     %li= link_to "Listing Credits", "#", :class => "active"
-      -#     %li= link_to "Delete Account", "#"
       .account-tagline.text-center
         %h4 Pay as you go or upgrade to Pro.
         %p Take your Fauna experience to the next level. No contracts. Cancel anytime.
@@ -38,14 +33,14 @@
         .small-6.columns.no-padding-right
           .lined-panel
             %h3 Pro
-            .price
-              .dollar $
-              .amount 39
-              .period /month
-            %ul
-              %li 
-                %i.icon.ion-android-checkmark
-                Unlimited Listings
+            -# .price
+            -#   .dollar $
+            -#   .amount 39
+            -#   .period /month
+            -# %ul
+            -#   %li
+            -#     %i.icon.ion-android-checkmark
+            -#     Unlimited Listings
 
             %hr
             = form_for Payment.new, url: "#", html: {class: "form-validation plan-subscriptions"} do |f|
