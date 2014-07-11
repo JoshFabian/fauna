@@ -27,6 +27,6 @@ namespace :rubber do
     task :reload, :roles => :app do
       restart
     end
-  end
+  end # backburner
 
 end
