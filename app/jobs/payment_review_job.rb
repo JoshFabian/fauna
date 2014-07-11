@@ -22,7 +22,7 @@ class PaymentReviewJob
       # puts "user:#{user.id}:#{user.pending_listing_reviews}"
       user.update_attributes(pending_listing_reviews: 0)
     end
-    logger.post("tegu.app", log_data.merge({event: 'payment_review_job', object: object}))
+    logger.post("tegu.app", log_data.merge({event: 'job.payment_review', object: object}))
     true
   end
 end
