@@ -43,7 +43,7 @@
   - if @tab == 'home'
     = render(partial: "users/user_home", locals: {f: f})
   - elsif @tab == 'listings'
-    = render(partial: "listings/listing_tiles")
+    = render(partial: "users/user_listings")
   - elsif @tab == 'messages'
     = render(partial: "users/user_messages")
   - elsif @tab == 'reviews'
