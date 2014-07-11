@@ -23,7 +23,6 @@
         .small-6.columns.no-padding-left
           .lined-panel
             %h3 Pay as you go
-            %h6 You have <strong>#{current_user.listing_credits}</strong> listing credits.
             %hr
             = form_for Payment.new, url: "#", html: {class: "form-validation plan-credits"} do |f|
               .payment-option
@@ -63,4 +62,5 @@
                 %i.icon.ion-ios7-locked-outline
                 Upgrade
 
-
+    .policy-text.text-center
+      All sales are final.
