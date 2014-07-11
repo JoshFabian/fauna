@@ -1,8 +1,8 @@
 = content_for :stripe do
   = javascript_include_tag "https://checkout.stripe.com/checkout.js"
   :javascript
-    var stripe_payment = 1
     var stripe_publish_key = "#{Settings[Rails.env]["stripe_publish_key"]}";
+    var stripe_image = ''
 
 .row
   .account-page.small-8.small-centered.columns
