@@ -66,13 +66,20 @@ module ApplicationHelper
     "http://www.placehold.it/#{size}/#{size}"
   end
 
-  def user_cover_image_profile(image, size=350)
-    cloudinary_url(image.full_public_id, transformation: [{width: 350, height: 300, crop: 'fill'}])
+  def user_cover_image_profile(position, image, width=350, height=300)
+    cloudinary_url(image.full_public_id, transformation: [{width: width, height: height, crop: 'fill'}])
   rescue Exception => e
-    # Should show the following in order, left to right by default
-    # "http://cl.ly/image/471D0Z022l15/cover-image-1.jpg"
-    "http://cl.ly/image/3y203s0X123X/cover-image-2.jpg"
-    # "http://cl.ly/image/351w2s3i2w2k/cover-image-3.png"
+    # use default cover images
+    case position
+    when 1
+      "http://res.cloudinary.com/tegu/image/upload/c_fill,h_300,w_350/v1405175897/coverimage1.jpg"
+    when 2
+      "http://res.cloudinary.com/tegu/image/upload/c_fill,h_300,w_350/v1405175811/coverimage2.jpg"
+    when 3
+      "http://res.cloudinary.com/tegu/image/upload/c_fill,h_300,w_350/v1405175381/coverimage3.png"
+    else
+      "http://res.cloudinary.com/tegu/image/upload/c_fill,h_300,w_350/v1405175897/coverimage1.jpg"
+    end
   end
 
   def website(s)
