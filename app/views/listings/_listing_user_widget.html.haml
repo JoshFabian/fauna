@@ -3,7 +3,7 @@
     = image_tag user_avatar_image_thumbnail(@owner.avatar_image)
   .author-name.small-10.columns
     %h5= link_to @owner.handle, user_path(@owner)
-    %p Chicago, IL
+    %p= @owner.city_state
   .author-bio.small-12.columns
     %p= @owner.about
 
