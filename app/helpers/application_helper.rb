@@ -54,16 +54,10 @@ module ApplicationHelper
     ''
   end
 
-  def user_avatar_image_profile(image, size=200)
-    cloudinary_url(image.full_public_id, transformation: [{width: size, height: size, crop: 'fill'}])
-  rescue Exception => e
-    "http://cl.ly/image/0h1r0n1P2x1x/default-avatar.jpg"
-  end
-
   def user_avatar_image_thumbnail(image, size=120)
     cloudinary_url(image.full_public_id, transformation: [{width: size, height: size, crop: 'fill'}])
   rescue Exception => e
-    "http://www.placehold.it/#{size}/#{size}"
+    "http://res.cloudinary.com/tegu/image/upload/c_fill,h_#{size},w_#{size}/v1405184238/avatar_default.jpg"
   end
 
   def user_cover_image_profile(position, image, width=350, height=300)

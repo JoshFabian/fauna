@@ -8,7 +8,7 @@
   .account-page.small-8.small-centered.columns
     .rounded-panel
       .account-avatar
-        = image_tag user_avatar_image_profile(current_user.avatar_image, 60)
+        = image_tag user_avatar_image_thumbnail(current_user.avatar_image, 60)
       .account-header
         %h3 Hello, #{current_user.handle}!
       .account-tagline.text-center
