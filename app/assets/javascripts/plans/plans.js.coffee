@@ -63,16 +63,20 @@ $(document).ready ->
 
   $(".plan-submit").on 'click', (e) ->
     e.preventDefault()
+    e.stopPropagation()
     form = $(this).closest('form')
     input = $(form).find("input[type='radio']:checked")
     plan_id = $(input).data('plan-id')
-    plan_amount = $(input).data('plan-amount')
-    plan_name = $(input).data('plan-name')
-    plan_subscription = $(input).data('plan-subscription')
-    console.log "stripe plan:#{plan_id}:#{plan_name}:subscription:#{plan_subscription} for #{plan_amount}"
-    if plan_id
-      Tegu.Plan.init_stripe_handler()
-      Tegu.Plan.open_stripe_handler(plan_amount, plan_name)
+    return if !plan_id
+    console.log "plan:#{plan_id} ..."
+    Tegu.Plan.init_stripe_handler()
+    async.waterfall [
+      (callback) ->
+        Tegu.PlanApi.get(plan_id, auth_token, callback)
+      (data, callback) ->
+        # console.log data
+        Tegu.Plan.open_stripe_handler(data.plan.amount, data.plan.name)
+    ]
 
   if $(".plan-subscriptions").length > 0
     # init subscription plan
