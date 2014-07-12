@@ -21,7 +21,11 @@
           = f.text_field :handle, value: @user.handle, placeholder: "Profile name"
       .profile-follow
         %div{class: @edit ? ['edit-hide'] : ['follow']}
-          = link_to (@edit ? 'Edit' : 'Follow'), '#', class: ['button', 'follow-button'], :'data-user-id' => @user.id
+          - if @edit
+            = link_to 'Edit', '#', class: ['button'], :'data-user-id' => @user.id
+          -# disable follow button
+          -# - else
+          -#   = link_to 'Follow', '#', class: ['button', 'follow-button'], :'data-user-id' => @user.id
           = link_to "Message", '#', class: ['button', 'message-button', 'active'], :'data-user-id' => @user.id, :'data-reveal-id' => 'user-message-modal'
           = render(partial: 'users/user_message_modal')
         .edit-show

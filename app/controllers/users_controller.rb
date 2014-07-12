@@ -2,6 +2,7 @@ class UsersController < ApplicationController
 
   before_filter :authenticate_user!, except: [:validate_email, :validate_handle]
   before_filter :admin_role_required!, only: [:become, :index]
+  before_filter :manage_role_required!, only: [:messages, :purchases]
 
   # GET /users
   def index
@@ -39,7 +40,8 @@ class UsersController < ApplicationController
       @cover_images.select{ |o| o.position == i }.first or i
     end
 
-    @listings = Listing.search(filter: {term: {user_id: @user.id}}).records
+    @listings = @user.listings.active.order("id desc").limit(50)
+    # @listings = Listing.search(filter: {term: {user_id: @user.id}}).records
 
     @tab = 'listings'
 
