@@ -34,6 +34,7 @@ class Tegu.Plan
 
   @unmark_subscription_plans: () ->
     $(".plan-subscriptions input:radio").attr('checked', false)
+    $(".pro-details").html('')
 
   @get_details: (plan_id, token, callback) ->
     $.ajax "/plans/#{plan_id}/details?token=#{token}",
