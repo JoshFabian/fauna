@@ -42,11 +42,7 @@
                   .small-12.columns.no-padding
                     = radio_button("plan", "id", plan.id, class: 'required plan-subscriptions-radio', :'data-plan-amount' => plan.amount, :'data-plan-interval' => plan.interval, :'data-plan-id' => plan.id, :'data-plan-subscription' => plan.subscription, :'data-plan-name' => plan.name)
                     %label{for: "plan_id_#{plan.id}"} #{plan.name}
-
-                -# .small-12.columns.no-padding
-                -#   %input#yearly{:name => "plan", :type => "radio", :value => "yearly"}
-                -#     %label{:for => "yearly"} Pay Yearly (20% off!)
-              %a.button.plan-submit{:href => "#"} 
+              %a.button.plan-submit{href: "#"}
                 %i.icon.ion-ios7-locked-outline
                 Upgrade
 

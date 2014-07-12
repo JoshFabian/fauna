@@ -20,8 +20,8 @@ class UsersController < ApplicationController
 
     @total_listings = @user.listings.active.count
     @recent_listings = @user.listings.active.order("id desc").limit(3)
-
     @recent_reviews = @user.listing_reviews.order("id desc").limit(4)
+    @average_ratings = @user.listing_average_ratings
 
     @tab = 'home'
 

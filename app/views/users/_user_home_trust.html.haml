@@ -24,23 +24,17 @@
   %h6 Market Feedback
   %ul
     %li
-      %i.icon.ion-android-star.active
-      %i.icon.ion-android-star.active
-      %i.icon.ion-android-star.active
-      %i.icon.ion-android-star.active
-      %i.icon.ion-android-star 
+      - stars = (@average_ratings['description'] || @average_ratings['Description']).to_i
+      - 1.upto(5) do |i|
+        %i.icon.ion-android-star{class: i <= stars ? 'active' : nil}
       Matched Description
     %li
-      %i.icon.ion-android-star.active
-      %i.icon.ion-android-star.active
-      %i.icon.ion-android-star.active
-      %i.icon.ion-android-star.active
-      %i.icon.ion-android-star 
+      - stars = (@average_ratings['communication'] || @average_ratings['Communication']).to_i
+      - 1.upto(5) do |i|
+        %i.icon.ion-android-star{class: i <= stars ? 'active' : nil}
       Communication
     %li
-      %i.icon.ion-android-star.active
-      %i.icon.ion-android-star.active
-      %i.icon.ion-android-star.active
-      %i.icon.ion-android-star
-      %i.icon.ion-android-star 
+      - stars = (@average_ratings['shipping'] || @average_ratings['Shipping']).to_i
+      - 1.upto(5) do |i|
+        %i.icon.ion-android-star{class: i <= stars ? 'active' : nil}
       Shipping Time
