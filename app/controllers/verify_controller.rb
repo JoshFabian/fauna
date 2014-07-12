@@ -1,6 +1,7 @@
 class VerifyController < ApplicationController
 
   before_filter :authenticate_user!
+  before_filter :manage_role_required!
 
   # :handle/verify
   def start

@@ -52,6 +52,11 @@ class ApplicationController < ActionController::Base
     raise CanCan::AccessDenied, "Unauthorized" unless user_signed_in? and current_user.roles?(:admin)
   end
 
+  def manage_role_required!
+    raise CanCan::AccessDenied, "Unauthorized" unless user_signed_in? and
+      (current_user.handle == params[:handle] or current_user.roles?(:admin))
+  end
+
   def seller_paid!
     redirect_to plans_path if !current_user.sellable?
     true
