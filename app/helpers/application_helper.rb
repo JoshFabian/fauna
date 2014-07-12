@@ -57,7 +57,7 @@ module ApplicationHelper
   def user_avatar_image_profile(image, size=100)
     cloudinary_url(image.full_public_id, transformation: [{width: 200, height: 200, crop: 'fill'}])
   rescue Exception => e
-    "http://www.placehold.it/#{size}/#{size}"
+    "http://cl.ly/image/0h1r0n1P2x1x/default-avatar.jpg"
   end
 
   def user_avatar_image_thumbnail(image, size=120)
@@ -69,7 +69,10 @@ module ApplicationHelper
   def user_cover_image_profile(image, size=350)
     cloudinary_url(image.full_public_id, transformation: [{width: 350, height: 300, crop: 'fill'}])
   rescue Exception => e
-    "http://www.placehold.it/#{size}/#{size}"
+    # Should show the following in order, left to right by default
+    # "http://cl.ly/image/471D0Z022l15/cover-image-1.jpg"
+    "http://cl.ly/image/3y203s0X123X/cover-image-2.jpg"
+    # "http://cl.ly/image/351w2s3i2w2k/cover-image-3.png"
   end
 
   def website(s)
