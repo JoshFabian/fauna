@@ -38,6 +38,17 @@ module ApplicationHelper
      '3-4 weeks']
   end
 
+  def plan_display_name(plan)
+    s = "#{plan.name}"
+    if !plan.subscription?
+      s += " - #{number_to_currency(plan.amount/100.0, precision: 2)}"
+    end
+    if plan.savings.present?
+      s += " (save #{plan.savings})"
+    end
+    s
+  end
+
   def string_titleize(s)
     s == s.downcase ? s.titleize : s
   end

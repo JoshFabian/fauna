@@ -10,7 +10,7 @@ class Plan < ActiveRecord::Base
   validates :interval_count, presence: true, if: "subscription?"
   validates :name, presence: true, uniqueness: true
 
-  store :data, accessors: [:credits]
+  store :data, accessors: [:credits, :savings]
 
   scope :onetime, -> { where(subscription: false) }
   scope :subscription, -> { where(subscription: true) }
