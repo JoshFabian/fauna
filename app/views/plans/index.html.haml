@@ -27,7 +27,7 @@
                     %label{for: "plan_id_#{plan.id}"}
                       = plan.name
                       - if plan.savings.present?
-                        %span (save #{plan.savings})
+                        %span{style: 'color: #00f;'} (save #{plan.savings})
 
                 %a.button.secondary.plan-submit{:href => "#"}
                   %i.icon.ion-ios7-locked-outline
@@ -47,7 +47,7 @@
                     %label{for: "plan_id_#{plan.id}"}
                       = plan.name
                       - if plan.savings.present?
-                        %span (save #{plan.savings})
+                        %span{style: 'color: #00f;'} (save #{plan.savings})
 
               %a.button.plan-submit{href: "#"}
                 %i.icon.ion-ios7-locked-outline
