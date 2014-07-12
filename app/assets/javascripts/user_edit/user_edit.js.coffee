@@ -2,7 +2,7 @@ $(document).ready ->
 
   Tegu.cover_image_deletes = []
 
-  $(".edit-hide .button, .edit-show .button").on 'click', (e) ->
+  $(".edit-hide .edit-button, .edit-show .button").on 'click', (e) ->
     e.preventDefault()
     $("body").toggleClass('editing')
     button_name = $(this).text()
