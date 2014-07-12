@@ -1,11 +1,11 @@
 development: # same as staging
-  write_key: 86164it2xf
+  segmentio_write_key: 86164it2xf
 
 staging:
-  write_key: 86164it2xf
+  segmentio_write_key: 86164it2xf
 
 production:
-  write_key: 67nb98vf02
+  segmentio_write_key: 67nb98vf02
 
 test:
-  write_key: test
+  segmentio_write_key: test

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140710025551) do
+ActiveRecord::Schema.define(version: 20140712142338) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -52,6 +52,15 @@ ActiveRecord::Schema.define(version: 20140710025551) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
+
+  create_table "keys", force: true do |t|
+    t.string "env",   limit: 20
+    t.string "name",  limit: 20
+    t.string "value", limit: 100
+  end
+
+  add_index "keys", ["env"], name: "index_keys_on_env"
+  add_index "keys", ["name"], name: "index_keys_on_name"
 
   create_table "listing_categories", force: true do |t|
     t.integer  "category_id"
