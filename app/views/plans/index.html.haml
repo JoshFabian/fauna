@@ -33,15 +33,8 @@
         .small-6.columns.no-padding-right
           .lined-panel
             %h3 Pro
-            -# .price
-            -#   .dollar $
-            -#   .amount 39
-            -#   .period /month
-            -# %ul
-            -#   %li
-            -#     %i.icon.ion-android-checkmark
-            -#     Unlimited Listings
-
+            -# = render(partial: 'plans/details', locals: {plan: @subscription_plans.last})
+            .pro-details
             %hr
             = form_for Payment.new, url: "#", html: {class: "form-validation plan-subscriptions"} do |f|
               .payment-option

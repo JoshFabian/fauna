@@ -88,6 +88,7 @@ Tegu::Application.routes.draw do
   # plans
   resources :plans, only: [:index, :show] do
     get :manage, on: :collection
+    get :details, on: :member
   end
   resources :reviews, only: []
   resources :waitlists, only: [:index]

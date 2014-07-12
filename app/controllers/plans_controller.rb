@@ -20,4 +20,12 @@ class PlansController < ApplicationController
     @objects = @plan.subscription ? @plan.subscriptions : @plan.charges
   end
 
+  # GET /plans/1/details
+  def details
+    @plan = Plan.find(params[:id])
+
+    respond_to do |format|
+      format.js
+    end
+  end
 end

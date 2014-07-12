@@ -35,44 +35,30 @@ class Tegu.Plan
   @unmark_subscription_plans: () ->
     $(".plan-subscriptions input:radio").attr('checked', false)
 
-$(document).ready ->
+  @get_details: (plan_id, token, callback) ->
+    $.ajax "/plans/#{plan_id}/details?token=#{token}",
+      type: 'GET'
+      dataType: 'html'
+      success: (data) ->
+        callback(null, data) if callback
 
-  # try
-  #   plan_id = 0
-  #   plan_amount = 0
-  #   plan_subscription = false
-  #   plan_image = nil
-  #   # stripe_handler = nil
-  #   if false#stripe_payment == 1
-  #     console.log "init stripe handler"
-  #     stripe_handler = StripeCheckout.configure
-  #       key: stripe_publish_key,
-  #       image; plan_image,
-  #       token: (token, args) ->
-  #         console.log "token:#{JSON.stringify token}, args:#{JSON.stringify args}"
-  #         card_token = token.id
-  #         async.waterfall [
-  #           (callback) ->
-  #             if plan_subscription
-  #               # subscribe to plan
-  #               Tegu.StripeApi.subscribe(plan_id, card_token, auth_token, callback)
-  #             else
-  #               # buy credits with token
-  #               Tegu.StripeApi.buy_credits(plan_id, card_token, auth_token, callback)
-  #           (data, callback) ->
-  #             console.log data
-  #             if data.event == 'buy' or data.event == 'subscribe'
-  #               console.log data.event
-  #         ],
-  #         # optional callback
-  #         (err, results) ->
-  # catch e
+$(document).ready ->
 
   $(".plan-credits").on 'click', (e) ->
     Tegu.Plan.unmark_subscription_plans()
 
   $(".plan-subscriptions").on 'click', (e) ->
     Tegu.Plan.unmark_credit_plans()
+    input = $(this).closest('form').find("input[type='radio']:checked")
+    plan_id = $(input).data('plan-id')
+    console.log "plan:#{plan_id} details ..."
+    async.waterfall [
+      (callback) ->
+        Tegu.Plan.get_details(plan_id, auth_token, callback)
+      (data, callback) ->
+        # console.log data
+        $(".pro-details").html(data)
+    ]
 
   $(".plan-submit").on 'click', (e) ->
     e.preventDefault()
@@ -87,5 +73,7 @@ $(document).ready ->
       Tegu.Plan.init_stripe_handler()
       Tegu.Plan.open_stripe_handler(plan_amount, plan_name)
 
-
+  if $(".plan-subscriptions").length > 0
+    # init subscription plan
+    $(".plan-subscriptions label:first").trigger 'click'
  
