@@ -2,7 +2,7 @@
   = javascript_include_tag "https://checkout.stripe.com/checkout.js"
   :javascript
     var stripe_publish_key = "#{Settings[Rails.env]["stripe_publish_key"]}";
-    var stripe_image = "http://res.cloudinary.com/tegu/image/upload/c_scale,h_200,w_200/v1405107208/fauna_net_nfhfgx.png"
+    var stripe_image = "http://res.cloudinary.com/tegu/image/upload/c_scale,h_200,w_200/v1405107208/fauna_logo.png"
 
 .row
   .account-page.small-8.small-centered.columns
@@ -24,7 +24,10 @@
                 - @credit_plans.each do |plan|
                   .small-12.columns.no-padding
                     = radio_button("plan", "id", plan.id, class: 'required plan-credits-radio', :'data-plan-id' => plan.id)
-                    %label{for: "plan_id_#{plan.id}"}= plan_display_name(plan)
+                    %label{for: "plan_id_#{plan.id}"}
+                      = plan.name
+                      - if plan.savings.present?
+                        %span (save #{plan.savings})
 
                 %a.button.secondary.plan-submit{:href => "#"}
                   %i.icon.ion-ios7-locked-outline
@@ -41,7 +44,11 @@
                 - @subscription_plans.each do |plan|
                   .small-12.columns.no-padding
                     = radio_button("plan", "id", plan.id, class: 'required plan-subscriptions-radio', :'data-plan-id' => plan.id)
-                    %label{for: "plan_id_#{plan.id}"}= plan_display_name(plan)
+                    %label{for: "plan_id_#{plan.id}"}
+                      = plan.name
+                      - if plan.savings.present?
+                        %span (save #{plan.savings})
+
               %a.button.plan-submit{href: "#"}
                 %i.icon.ion-ios7-locked-outline
                 Upgrade
