@@ -54,8 +54,8 @@ module ApplicationHelper
     ''
   end
 
-  def user_avatar_image_profile(image, size=100)
-    cloudinary_url(image.full_public_id, transformation: [{width: 200, height: 200, crop: 'fill'}])
+  def user_avatar_image_profile(image, size=200)
+    cloudinary_url(image.full_public_id, transformation: [{width: size, height: size, crop: 'fill'}])
   rescue Exception => e
     "http://cl.ly/image/0h1r0n1P2x1x/default-avatar.jpg"
   end
