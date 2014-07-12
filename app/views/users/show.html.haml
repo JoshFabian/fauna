@@ -22,7 +22,7 @@
       .profile-follow
         %div{class: @edit ? ['edit-hide'] : ['follow']}
           - if @edit
-            = link_to 'Edit', '#', class: ['button'], :'data-user-id' => @user.id
+            = link_to 'Edit', '#', class: ['button', 'edit-button'], :'data-user-id' => @user.id
           -# disable follow button
           -# - else
           -#   = link_to 'Follow', '#', class: ['button', 'follow-button'], :'data-user-id' => @user.id
