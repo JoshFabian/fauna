@@ -1,4 +1,4 @@
-%h5 Recent Listings (<a href="#">#{@total_listings}</a>)
+%h5 Recent Listings (#{link_to @total_listings, user_listings_path(@user)})
 %ul.small-block-grid-3
   - @recent_listings.each do |listing|
     - user = listing.user

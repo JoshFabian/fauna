@@ -20,21 +20,22 @@
       - if !@user.paypal_verified?
         %span.right= link_to 'verify', user_verify_path, class: 'edit owner hide', :'data-user-id' => @user.id
 
-  %hr
-  %h6 Market Feedback
-  %ul
-    %li
-      - stars = (@average_ratings['description'] || @average_ratings['Description']).to_i
-      - 1.upto(5) do |i|
-        %i.icon.ion-android-star{class: i <= stars ? 'active' : nil}
-      Matched Description
-    %li
-      - stars = (@average_ratings['communication'] || @average_ratings['Communication']).to_i
-      - 1.upto(5) do |i|
-        %i.icon.ion-android-star{class: i <= stars ? 'active' : nil}
-      Communication
-    %li
-      - stars = (@average_ratings['shipping'] || @average_ratings['Shipping']).to_i
-      - 1.upto(5) do |i|
-        %i.icon.ion-android-star{class: i <= stars ? 'active' : nil}
-      Shipping Time
+  - if @recent_reviews.present?
+    %hr
+    %h6 Market Feedback
+    %ul
+      %li
+        - stars = (@average_ratings['description'] || @average_ratings['Description']).to_i
+        - 1.upto(5) do |i|
+          %i.icon.ion-android-star{class: i <= stars ? 'active' : nil}
+        Matched Description
+      %li
+        - stars = (@average_ratings['communication'] || @average_ratings['Communication']).to_i
+        - 1.upto(5) do |i|
+          %i.icon.ion-android-star{class: i <= stars ? 'active' : nil}
+        Communication
+      %li
+        - stars = (@average_ratings['shipping'] || @average_ratings['Shipping']).to_i
+        - 1.upto(5) do |i|
+          %i.icon.ion-android-star{class: i <= stars ? 'active' : nil}
+        Shipping Time
