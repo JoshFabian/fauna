@@ -2,7 +2,7 @@
   .account-page.small-8.small-centered.columns
     .rounded-panel
       .account-avatar
-        = image_tag "http://www.placehold.it/60/60"
+        = image_tag user_avatar_image_thumbnail(@user.avatar_image, 60)
       .account-header
         %h3 Account Verification
         %p All sellers must verify their accounts before listing on Fauna.
