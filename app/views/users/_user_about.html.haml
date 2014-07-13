@@ -1,0 +1,6 @@
+%p= @user.about
+%ul
+  %li= number_to_phone(@user.phone)
+  %li= link_to website(@user.website), @user.website, target: '_blank'
+  %li= @user.city_state
+  -# %iframe{:frameborder => "0", :height => "250", :src => "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d45876.48194058557!2d-123.0057715!3d44.056924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54c0e1abfcb2492f%3A0x60e31235d99ad11e!2sSpringfield%2C+OR+97477!5e0!3m2!1sen!2sus!4v1401306391956", :style => "border:0", :width => "100%"}
