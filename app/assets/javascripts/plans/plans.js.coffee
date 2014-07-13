@@ -1,23 +1,28 @@
 class Tegu.Plan
-  @_stripe_handler = 0
+  @stripe_handler = 0
+  @plan_id = 0
 
   @init_stripe_handler: () ->
-    if @_stripe_handler == 0
+    if @stripe_handler == 0
       console.log "init stripe handler"
-      @_stripe_handler = StripeCheckout.configure
+      @stripe_handler = StripeCheckout.configure
         key: stripe_publish_key,
+        email: stripe_email,
         image: stripe_image,
         token: (token, args) ->
-          console.log "token:#{JSON.stringify token}, args:#{JSON.stringify args}"
+          console.log "plan:#{Tegu.Plan.plan_id}, token:#{JSON.stringify token}, args:#{JSON.stringify args}"
           card_token = token.id
           async.waterfall [
             (callback) ->
-              if plan_subscription
-                # subscribe to plan
-                Tegu.StripeApi.subscribe(plan_id, card_token, auth_token, callback)
+              Tegu.PlanApi.get(Tegu.Plan.plan_id, auth_token, callback)
+            (data, callback) ->
+              # console.log data
+              if data.plan.subscription
+                # subscribe to plan with token
+                Tegu.StripeApi.subscribe(data.plan.id, card_token, auth_token, callback)
               else
                 # buy credits with token
-                Tegu.StripeApi.buy_credits(plan_id, card_token, auth_token, callback)
+                Tegu.StripeApi.buy_credits(data.plan.id, card_token, auth_token, callback)
             (data, callback) ->
               console.log data
               if data.event == 'buy' or data.event == 'subscribe'
@@ -26,8 +31,10 @@ class Tegu.Plan
           # optional callback
           (err, results) ->
 
-  @open_stripe_handler: (amount, description) ->
-    @_stripe_handler.open({allowRememberMe: false, amount: amount, name: 'Fauna', description: description})
+  @open_stripe_handler: (plan_id, amount, description) ->
+    console.log "open stripe handler"
+    @plan_id = plan_id
+    @stripe_handler.open({allowRememberMe: false, amount: amount, name: 'Fauna', description: description})
 
   @unmark_credit_plans: () ->
     $(".plan-credits input:radio").attr('checked', false)
@@ -44,6 +51,8 @@ class Tegu.Plan
         callback(null, data) if callback
 
 $(document).ready ->
+
+  plan_id = 0
 
   $(".plan-credits").on 'click', (e) ->
     Tegu.Plan.unmark_subscription_plans()
@@ -75,7 +84,7 @@ $(document).ready ->
         Tegu.PlanApi.get(plan_id, auth_token, callback)
       (data, callback) ->
         # console.log data
-        Tegu.Plan.open_stripe_handler(data.plan.amount, data.plan.name)
+        Tegu.Plan.open_stripe_handler(data.plan.id, data.plan.amount, data.plan.name)
     ]
 
   if $(".plan-subscriptions").length > 0
