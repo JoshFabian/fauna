@@ -18,11 +18,11 @@
       %hr
       .padding-wrapper
         .user-info.edit-hide
-          - if @user.about.blank? and @user.phone.blank? and @user.website.blank?
+          - if @user.about.present? or @user.city_state.present? or @user.phone.present? or @user.website.present?
+            = render(partial: "users/user_about")
+          - else
             -# empty state
             = render(partial: "users/user_about_empty")
-          - else
-            = render(partial: "users/user_about")
         .edit-show
           = f.text_area :about, placeholder: "About you"
           = f.text_field :phone, placeholder: "Phone Number", class: 'digits'
