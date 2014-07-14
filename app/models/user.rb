@@ -98,6 +98,11 @@ class User < ActiveRecord::Base
     listing_ratings.group(:name).average(:rating)
   end
 
+  # used by mailboxer to deliver message notifications
+  def mailboxer_email(object)
+    email
+  end
+
   def paypal_verified?
     paypal_email.present?
   end

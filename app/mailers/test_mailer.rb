@@ -1,4 +1,4 @@
-class MessageMailer < ActionMailer::Base
+class TestMailer < ActionMailer::Base
   default from: "tegu@fauna.net"
 
   def test_email(user)

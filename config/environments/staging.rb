@@ -89,4 +89,5 @@ Tegu::Application.configure do
     password: '473FAiZcZEGb65KJQHdDbA',
     domain: 'fauna.net'
   }
+  config.action_mailer.default_url_options = { host: "staging.fauna.net" }
 end
