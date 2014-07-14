@@ -5,10 +5,6 @@
     z-index: 1;
   }
 
-- # Show only on index
-- if !user_signed_in?
-  = render partial: "listings/guest_message"
-
 - if @category.present?
   = render partial: "listings/category_header"
 
