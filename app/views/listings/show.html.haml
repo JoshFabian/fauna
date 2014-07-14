@@ -1,3 +1,6 @@
+- content_for :facebook_meta_tags do
+  %meta{property: "og:url", content: url_for(only_path: false)}
+
 - if !user_signed_in?
   = render partial: "listings/guest_message"
 
