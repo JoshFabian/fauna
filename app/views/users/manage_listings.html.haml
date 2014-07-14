@@ -24,7 +24,14 @@
             %li{class: [@category_id == category.id ? 'active' : nil]}= link_to category.name, url_for(category_id: category.id, state: @state)
 
   - if @listings.blank?
-    -# no listings
+    .small-12.columns.no-padding
+      .rounded-panel
+        .padding-wrapper
+          .review
+            %h3.text-center No Listings Found!
+            %p.text-center 
+              Start selling on Fauna - 
+              = link_to "Create a Listing", new_listing_path 
 
   - else
     .small-12.columns.no-padding

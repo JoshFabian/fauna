@@ -66,13 +66,13 @@ module ApplicationHelper
     # use default cover images
     case position
     when 1
-      "http://res.cloudinary.com/tegu/image/upload/c_fill,h_300,w_350/v1405175897/coverimage1.jpg"
+      "http://res.cloudinary.com/tegu/image/upload/c_fit,h_300,w_480/v1405175897/coverimage1.jpg"
     when 2
-      "http://res.cloudinary.com/tegu/image/upload/c_fill,h_300,w_350/v1405175811/coverimage2.jpg"
+      "http://res.cloudinary.com/tegu/image/upload/c_fit,h_300,w_480/v1405175811/coverimage2.jpg"
     when 3
-      "http://res.cloudinary.com/tegu/image/upload/c_fill,h_300,w_350/v1405175381/coverimage3.png"
+      "http://res.cloudinary.com/tegu/image/upload/c_fit,h_300,w_480/v1405175381/coverimage3.png"
     else
-      "http://res.cloudinary.com/tegu/image/upload/c_fill,h_300,w_350/v1405175897/coverimage1.jpg"
+      "http://res.cloudinary.com/tegu/image/upload/c_fit,h_300,w_480/v1405175897/coverimage1.jpg"
     end
   end
 

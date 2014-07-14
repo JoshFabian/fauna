@@ -123,11 +123,18 @@
     margin-bottom: 0;
     position: relative;
     overflow: visible;
-    a {
-      color: #848484;
-      font-size: 14px;
-      &:hover {
-        color: $orange;
+    li {
+      a {
+        color: #848484;
+        font-size: 14px;
+        &:hover {
+          color: $orange;
+        }
+      }
+      &.active {
+        a {
+          color: $orange;
+        }
       }
     }
     &:after, &:before {

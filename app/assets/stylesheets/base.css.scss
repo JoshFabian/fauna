@@ -15,6 +15,8 @@ ul {
   list-style-type: none;
 }
 
+
+
 .floating-table {
   border: none;
   padding: 0 !important;
@@ -68,6 +70,9 @@ ul {
 .padding-wrapper {
   padding-left: 15px;
   padding-right: 15px;
+  p {
+    margin-bottom: 0;
+  }
 }
 
 hr {
