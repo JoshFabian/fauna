@@ -1,7 +1,7 @@
-class ListingPurchaseReviewJob
+class ReviewJob
   include Backburner::Queue
   include Loggy
-  queue "listings"  # defaults to 'backburner-jobs' tube
+  queue "reviews"  # defaults to 'backburner-jobs' tube
   queue_priority 1000 # most urgent priority is 0
   queue_respond_timeout 100 # number of seconds before job times out
 
@@ -11,7 +11,7 @@ class ListingPurchaseReviewJob
     object = Hashie::Mash.new
     Payment.completed.where(reviewed: false).where("completed_at <= ?", 5.days.ago).each do |payment|
       object[payment.buyer_id] = object[payment.buyer_id].to_i + 1
-      logger.post("tegu.job", log_data.merge({event: 'job.listing_purchase_review', payment_id: payment.id,
+      logger.post("tegu.job", log_data.merge({event: 'job.review', payment_id: payment.id,
         user_id: payment.buyer_id, message: 'payment is missing review', key: key}))
     end
     # update user counter field
