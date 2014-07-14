@@ -12,7 +12,7 @@ class Plan < ActiveRecord::Base
 
   store :data, accessors: [:credits, :savings]
 
-  scope :onetime, -> { where(subscription: false) }
+  scope :credit, -> { where(subscription: false) }
   scope :subscription, -> { where(subscription: true) }
 
   before_validation(on: :create) do
