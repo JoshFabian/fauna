@@ -93,6 +93,9 @@ class PaymentTest < ActiveSupport::TestCase
       ListingPurchaseReviewJob.perform({})
       @buyer.reload
       @buyer.pending_listing_reviews.must_equal 1
+      ListingPurchaseReviewJob.perform({})
+      @buyer.reload
+      @buyer.pending_listing_reviews.must_equal 1
     end
 
     it "should reset buyer pending_listing_reviews after purchase is reviewed" do

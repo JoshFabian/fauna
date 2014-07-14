@@ -10,15 +10,15 @@ class ListingPurchaseReviewJob
     key = rand(2**10)
     object = Hashie::Mash.new
     Payment.completed.where(reviewed: false).where("completed_at <= ?", 5.days.ago).each do |payment|
-      object[payment.buyer_id] = 0 if object[payment.buyer_id].blank?
-      object[payment.buyer_id] += 1
+      object[payment.buyer_id] = object[payment.buyer_id].to_i + 1
       logger.post("tegu.job", log_data.merge({event: 'job.listing_purchase_review', payment_id: payment.id,
         user_id: payment.buyer_id, message: 'payment is missing review', key: key}))
     end
     # update user counter field
     object.each_pair do |user_id, count|
-      # puts "user:#{user_id}:count:#{count}"
-      User.update_counters(user_id, pending_listing_reviews: count)
+      change = count - User.find(user_id).pending_listing_reviews
+      # puts "user:#{user_id}:count:#{count}:change:#{change}"
+      User.update_counters(user_id, pending_listing_reviews: change) if change != 0
     end
     # reset user counter field
     User.where.not(id: object.keys.map(&:to_i)).where("pending_listing_reviews > 0").each do |user|
