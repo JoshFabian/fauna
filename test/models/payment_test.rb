@@ -86,11 +86,14 @@ class PaymentTest < ActiveSupport::TestCase
 
     it "should set buyer pending_listing_reviews when purchase has not been reviewed after 5 days" do
       @payment.update_attributes!(completed_at: 4.days.ago)
-      ListingPurchaseReviewJob.perform({})
+      ReviewJob.perform({})
       @buyer.reload
       @buyer.pending_listing_reviews.must_equal 0
       @payment.update_attributes!(completed_at: 6.days.ago)
-      ListingPurchaseReviewJob.perform({})
+      ReviewJob.perform({})
+      @buyer.reload
+      @buyer.pending_listing_reviews.must_equal 1
+      ReviewJob.perform({})
       @buyer.reload
       @buyer.pending_listing_reviews.must_equal 1
     end
@@ -100,7 +103,7 @@ class PaymentTest < ActiveSupport::TestCase
       @buyer.update_attributes(pending_listing_reviews: 1)
       @buyer.pending_listing_reviews.must_equal 1
       @review = @listing.reviews.create!(user: @buyer, body: "body")
-      ListingPurchaseReviewJob.perform({})
+      ReviewJob.perform({})
       @buyer.reload
       @buyer.pending_listing_reviews.must_equal 0
     end
