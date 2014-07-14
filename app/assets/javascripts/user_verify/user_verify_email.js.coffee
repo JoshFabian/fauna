@@ -12,13 +12,15 @@ $(document).ready ->
     onsubmit: true,
     submitHandler: (form) ->
       email = $(form).find("input.email").val()
+      first_name = $(form).find("input.first-name").val()
+      last_name = $(form).find("input.last-name").val()
       user_handle = $(form).data('user-handle')
-      console.log "verifying email:#{email}"
+      console.log "verifying #{email}:#{first_name}:#{last_name}"
       async.waterfall [
         (callback) ->
           # send token
           Tegu.UserVerifyEmail.hide_error_state()
-          Tegu.PaypalApi.verify_email(email, auth_token, callback)
+          Tegu.PaypalApi.verify_email(email, first_name, last_name, auth_token, callback)
         (data, callback) ->
           console.log data
           if data.event == 'verified'

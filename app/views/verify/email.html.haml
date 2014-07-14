@@ -14,9 +14,9 @@
       %p.error-message Sorry we were unable to verify this email address with paypal.
       = form_for User.new, url: '#', html: {class: "form-validation user-verify-email", :'data-user-handle' => current_user.handle} do |f|
         .small-6.columns.no-padding-left
-          = text_field_tag 'to', nil, placeholder: "First Name", class: 'required email verification'
+          = text_field_tag 'to', nil, placeholder: "First Name", class: 'required first-name verification'
         .small-6.columns.no-padding-right
-          = text_field_tag 'to', nil, placeholder: "Last Name", class: 'required email verification'
+          = text_field_tag 'to', nil, placeholder: "Last Name", class: 'required last-name verification'
         = text_field_tag 'to', nil, placeholder: "Enter your paypal email", class: 'required email verification'
 
         %input.form-button{:type => "submit", :value => "Verify Paypal Account"}

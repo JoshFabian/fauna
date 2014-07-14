@@ -8,7 +8,8 @@ module Endpoints
         begin
           authenticate!
           api = PayPal::SDK::AdaptiveAccounts::API.new
-          data = api.build_get_verified_status({emailAddress: params.email, matchCriteria: "NONE"})
+          data = api.build_get_verified_status({emailAddress: params.email, firstName: params.first_name,
+            lastName: params.last_name, matchCriteria: "NAME"})
           response = api.get_verified_status(data)
           raise Exception, "error" if !response.success?
           current_user.update_attributes(paypal_email: params.email)

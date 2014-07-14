@@ -1,0 +1,24 @@
+development:
+  pp_mode: sandbox
+  pp_username: money-facilitator_api1.fauna.net
+  pp_password: 1405348789
+  pp_signature: AFcWxV21C7fd0v3bYYYRCpSSRl31AHMhV9FPPrxtg7arD0EiXmK8BSv0
+  pp_app_id: APP-80W284485P519543T
+test:
+  pp_mode: sandbox
+  pp_username: money-facilitator_api1.fauna.net
+  pp_password: 1405348789
+  pp_signature: AFcWxV21C7fd0v3bYYYRCpSSRl31AHMhV9FPPrxtg7arD0EiXmK8BSv0
+  pp_app_id: APP-80W284485P519543T
+staging:
+  pp_mode: sandbox
+  pp_username: money-facilitator_api1.fauna.net
+  pp_password: 1405348789
+  pp_signature: AFcWxV21C7fd0v3bYYYRCpSSRl31AHMhV9FPPrxtg7arD0EiXmK8BSv0
+  pp_app_id: APP-80W284485P519543T
+production:
+  pp_mode: sandbox
+  pp_username: money-facilitator_api1.fauna.net
+  pp_password: 1405348789
+  pp_signature: AFcWxV21C7fd0v3bYYYRCpSSRl31AHMhV9FPPrxtg7arD0EiXmK8BSv0
+  pp_app_id: APP-80W284485P519543T
