@@ -21,7 +21,7 @@
       .row
         %ul.inline-list
           - Category.roots.order("position asc").each do |category|
-            %li{class: [@category_id == category.id ? 'active' : nil]}= link_to category.name, url_for(category_id: category.id, state: @state)
+            %li{class: [@category_id.to_i == category.id ? 'active' : nil]}= link_to category.name, url_for(category_id: category.id, state: @state)
 
   - if @listings.blank?
     .small-12.columns.no-padding
