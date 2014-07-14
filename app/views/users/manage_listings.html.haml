@@ -23,35 +23,39 @@
           - Category.roots.order("position asc").each do |category|
             %li{class: [@category_id == category.id ? 'active' : nil]}= link_to category.name, url_for(category_id: category.id, state: @state)
 
-  .small-12.columns.no-padding
-    .pills-content
-      #active-listings.content.active
-        .rounded-panel
-          %table.floating-table.small-12.columns
-            %tbody
-              %tr
-                %th
-                %th Name
-                %th Price
-                %th List Date
-                %th Sold Date
-                %th
-              - @listings.each do |listing|
-                - image = listing.primary_image
-                %tr
-                  %td.thumb-cell
-                    = image_tag listing_image_thumbnail(image, 40)
-                  %td.name-cell
-                    = link_to listing.title, user_listing_path(@user, listing)
-                  %td= number_to_currency(listing.price/100.0)
-                  %td= listing.created_at.to_s(:date_dow_ddmmyyyy)
-                  %td= listing.sold_at.to_s(:date_dow_ddmmyyyy) rescue 'n/a'
-                  %td.text-right
-                    %small{style: 'font-size: 0.85em;'}
-                      - if listing.active?
-                        = link_to 'Edit Listing', edit_listing_path(listing.id)
-                        = link_to 'Mark as Sold', '#', class: 'mark-sold', :'data-listing-id' => listing.id
+  - if @listings.blank?
+    -# no listings
 
-      #sold-listings.content
-          
+  - else
+    .small-12.columns.no-padding
+      .pills-content
+        #active-listings.content.active
+          .rounded-panel
+            %table.floating-table.small-12.columns
+              %tbody
+                %tr
+                  %th
+                  %th Name
+                  %th Price
+                  %th List Date
+                  %th Sold Date
+                  %th
+                - @listings.each do |listing|
+                  - image = listing.primary_image
+                  %tr
+                    %td.thumb-cell
+                      = image_tag listing_image_thumbnail(image, 40)
+                    %td.name-cell
+                      = link_to listing.title, user_listing_path(@user, listing)
+                    %td= number_to_currency(listing.price/100.0)
+                    %td= listing.created_at.to_s(:date_dow_ddmmyyyy)
+                    %td= listing.sold_at.to_s(:date_dow_ddmmyyyy) rescue 'n/a'
+                    %td.text-right
+                      %small{style: 'font-size: 0.85em;'}
+                        - if listing.active?
+                          = link_to 'Edit Listing', edit_listing_path(listing.id)
+                          = link_to 'Mark as Sold', '#', class: 'mark-sold', :'data-listing-id' => listing.id
+
+        #sold-listings.content
+
     
