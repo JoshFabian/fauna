@@ -1,5 +1,11 @@
 - content_for :facebook_meta_tags do
+  %meta{property: "og:title", content: @listing.title}
+  %meta{property: "og:site_name", content: "Fauna"}
   %meta{property: "og:url", content: url_for(only_path: false)}
+  %meta{property: "og:description", content: @listing.description}
+  %meta{property: "og:image", content: cloudinary_url(@main_image.full_public_id)}
+  %meta{property: "fb:app_id", content: FACEBOOK_APP_ID}
+
 
 - if !user_signed_in?
   = render partial: "listings/guest_message"
@@ -17,7 +23,7 @@
     .listing-images.small-7.columns
       .main-image
         -# image is filled via js
-        = image_tag nil
+        = image_tag nil, "itemprop" => "image"
 
       .more-images
         %ul.image-grid.small-block-grid-5
@@ -34,7 +40,7 @@
             %a{href: "#"} Shipping
         .pills-content
           #description.content
-            %p= @listing.description
+            %p{:itemprop=>"description"}= @listing.description
           #reviews.content.hide
             - if @reviews.present?
               = render(partial: "reviews/review_widget", locals: {reviews: @reviews})
@@ -52,7 +58,7 @@
               %i.icon.ion-ios7-arrow-forward
               = link_to @subcategory.name, listing_category_path(@category.name.parameterize, @subcategory.name.parameterize)
 
-      %h4= @listing.title
+      %h4{:itemprop=>"alternateName"}= @listing.title
       %h1
         = number_to_currency(@listing.price.to_f/100.0, precision: 2)
 
