@@ -12,7 +12,7 @@ class PaypalApiSpec < ActionDispatch::IntegrationTest
       api_response = flexmock('response', success?: true)
       api = flexmock(PayPal::SDK::AdaptiveAccounts::API).new_instances.should_receive(
         build_get_verified_status: {}, get_verified_status: api_response)
-      put "/api/v1/paypal/verify/email?email=#{@email}&token=#{@user.auth_token}"
+      put "/api/v1/paypal/verify/email?email=#{@email}&first_name=joe&last_name=bloggs&token=#{@user.auth_token}"
       response.success?.must_equal true
       body = JSON.parse(response.body)
       body.must_include({'event' => 'verified'})

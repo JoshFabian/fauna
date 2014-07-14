@@ -4,7 +4,7 @@
   %meta{property: "og:url", content: url_for(only_path: false)}
   %meta{property: "og:description", content: @listing.description}
   %meta{property: "og:image", content: cloudinary_url(@main_image.full_public_id)}
-  %meta{property: "fb:app_id", content: FACEBOOK_APP_ID}
+  %meta{property: "fb:app_id", content: Settings[Rails.env][:fb_app_id]}
 
 
 - if !user_signed_in?
@@ -23,7 +23,7 @@
     .listing-images.small-7.columns
       .main-image
         -# image is filled via js
-        = image_tag nil, "itemprop" => "image"
+        = image_tag nil, itemprop: "image"
 
       .more-images
         %ul.image-grid.small-block-grid-5
@@ -40,7 +40,7 @@
             %a{href: "#"} Shipping
         .pills-content
           #description.content
-            %p{:itemprop=>"description"}= @listing.description
+            %p{itemprop: "description"}= @listing.description
           #reviews.content.hide
             - if @reviews.present?
               = render(partial: "reviews/review_widget", locals: {reviews: @reviews})
@@ -76,26 +76,6 @@
           !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 
       = render(partial: "listings/listing_user_widget")
-
-      -# subtotal disabled
-      -# %hr
-      -# 
-      -# .small-12.columns.no-padding
-      -#   %ul
-      -#     %li.checkout-subtotal
-      -#       .small-9.columns.text-right
-      -#         subtotal:
-      -#       .small-3.columns.text-left.price
-      -#         = number_to_currency(@listing.price/100.0)
-      -#     %li.checkout-shipping
-      -#       .small-9.columns.text-right
-      -#         shipping:
-      -#       .small-3.columns.text-left.price
-      -#     %li.checkout-total
-      -#       .small-9.columns.text-right
-      -#         %strong Total:
-      -#       .small-3.columns.text-left.price
-      -#         %strong
 
   .more-listings
     %h5 More Listings

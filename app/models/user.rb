@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
   end
 
   def city_state
-    [city, state_code].compact.join(', ')
+    [city, state_code].reject{|s| s.blank? }.compact.join(', ')
   end
 
   def city_state_zip
