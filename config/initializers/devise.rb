@@ -1,14 +1,14 @@
-case Rails.env
-when 'production'
-  FACEBOOK_APP_ID = "1511829219040276"
-  FACEBOOK_SECRET = "262508575c363ff9c5ffd41f0a895fcc"
-when 'staging'
-  FACEBOOK_APP_ID = "789615747750545"
-  FACEBOOK_SECRET = "09d829ef8d5895f148b92edf65f43995"
-else
-  FACEBOOK_APP_ID = "1415072012110008"
-  FACEBOOK_SECRET = "e76b0e0c412a87547030ce7b72341693"
-end
+# case Rails.env
+# when 'production'
+#   FACEBOOK_APP_ID = "1511829219040276"
+#   FACEBOOK_SECRET = "262508575c363ff9c5ffd41f0a895fcc"
+# when 'staging'
+#   FACEBOOK_APP_ID = "789615747750545"
+#   FACEBOOK_SECRET = "09d829ef8d5895f148b92edf65f43995"
+# else
+#   FACEBOOK_APP_ID = Settings[Rails.env][:fb_app_id]
+#   FACEBOOK_SECRET = Settings[Rails.env][:fb_secret]
+# end
 
 class CustomFailure < Devise::FailureApp
   def redirect_url
@@ -257,7 +257,8 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
-  config.omniauth :facebook, FACEBOOK_APP_ID, FACEBOOK_SECRET, :scope => 'email,publish_actions'
+  config.omniauth :facebook, Settings[Rails.env][:fb_app_id], Settings[Rails.env][:fb_secret],
+    :scope => 'email,publish_actions'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

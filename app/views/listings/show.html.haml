@@ -4,7 +4,7 @@
   %meta{property: "og:url", content: url_for(only_path: false)}
   %meta{property: "og:description", content: @listing.description}
   %meta{property: "og:image", content: cloudinary_url(@main_image.full_public_id)}
-  %meta{property: "fb:app_id", content: FACEBOOK_APP_ID}
+  %meta{property: "fb:app_id", content: Settings[Rails.env][:fb_app_id]}
 
 
 - if !user_signed_in?

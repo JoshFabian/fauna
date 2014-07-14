@@ -1,0 +1,14 @@
+development:
+  fb_app_id: 1415072012110008
+  fb_secret: e76b0e0c412a87547030ce7b72341693
+test:
+  fb_app_id: 1415072012110008
+  fb_secret: e76b0e0c412a87547030ce7b72341693
+staging:
+  fb_app_id: 789615747750545
+  fb_secret: 09d829ef8d5895f148b92edf65f43995
+production:
+  fb_app_id: 1511829219040276
+  fb_secret: 262508575c363ff9c5ffd41f0a895fcc
+
+  
