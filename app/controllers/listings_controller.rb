@@ -33,8 +33,8 @@ class ListingsController < ApplicationController
     @subtoken = params[:subcategory].to_s.titleize.split.first
     @category = Category.roots.find_by_match(@token)
     @subcategory = @category.children.find_by_match(@subtoken) if @subtoken.present?
-    @category_ids = @subcategory.present? ? @subcategory.id : @category.id
-    @listings = Listing.search(filter: {term: {category_ids: @category_ids}}).records.active
+    @term = {term: {category_ids: @subcategory.present? ? @subcategory.id : @category.id}}
+    @listings = Listing.search(filter: @term).records.active
 
     @subcategories = @category.children.with_listings
 
@@ -56,7 +56,8 @@ class ListingsController < ApplicationController
   # GET /:handle/listings
   def by_user
     @user = User.find_by_handle(params[:handle])
-    @listings = Listing.search(filter: {term: {user_id: @user.id}}).records.active
+    @term = {term: {user_id: @user.id}}
+    @listings = Listing.search(filter: @term).records.active
 
     respond_to do |format|
       format.html { render(action: :index) }

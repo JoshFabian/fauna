@@ -115,11 +115,30 @@ class ListingTest < ActiveSupport::TestCase
         Listing.__elasticsearch__.refresh_index!
       end
 
-      it "should find on category match" do
+      it "should find on category filter match" do
         results = Listing.search(filter: {term: {category_ids: @lizards.id}})
         results.size.must_equal 1
         results = Listing.search(filter: {term: {category_ids: [@lizards.id]}})
         results.size.must_equal 1
+      end
+
+      it "should find on category filter bool match" do
+        results = Listing.search(filter: {bool: {must: {term: {category_ids: [@lizards.id]}}}})
+        results.size.must_equal 1
+      end
+
+      it "should find on multiple term filter match" do
+        terms = [{term: {category_ids: @lizards.id}}, {term: {user_id: @user.id}}]
+        results = Listing.search(filter: {bool: {must: terms}})
+        results.size.must_equal 1
+      end
+
+      it "should not find on multiple term filter match" do
+        @dummy = Fabricate(:user, listing_credits: 3)
+        @listing2 = @dummy.listings.create!(title: "Dummy Listing", price: 100)
+        results = Listing.search(filter: {bool: {must: [{term: {category_ids: @lizards.id}},
+          {term: {user_id: @dummy.id}}]}})
+        results.size.must_equal 0
       end
 
       it "should find when listing category is changed" do
