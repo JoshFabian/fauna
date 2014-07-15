@@ -9,7 +9,8 @@ Tegu::Application.routes.draw do
     match "/(*path)" => redirect {|params, req| "//www.fauna.net/#{params[:path]}"},  via: [:get, :post]
   end
 
-  root 'landing#index'
+  root to: "home#index"
+  get '/' => redirect("/listings/recent")
 
   # vanity user scopes
   get ':handle' => "users#show", as: :user, constraints: HandleRoute.new
@@ -26,10 +27,10 @@ Tegu::Application.routes.draw do
   get ':handle/verify' => "verify#start", as: :user_verify
   get ':handle/verify/email', to: "verify#email", as: :user_verify_email # paypal verify email
 
-  # You can have the root of your site routed with "root"
-  get '/' => redirect("/landing")
+  # landing routes - in the process of being deprecated
   get 'landing/success/:code' => 'landing#success', as: :landing_success
-  get 'landing(/:code)' => 'landing#index', as: :landing
+  # get 'landing(/:code)' => 'landing#index', as: :landing
+  get 'landing(/:code)' => redirect("/listings/recent"), as: :landing
 
   get 'listings' => redirect("/listings/recent")
   resources :listings, except: [:show] do

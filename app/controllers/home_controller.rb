@@ -2,6 +2,7 @@ class HomeController < ApplicationController
 
   # GET /
   def index
+    redirect_to recent_listings_path
   end
 
   # GET /exception
