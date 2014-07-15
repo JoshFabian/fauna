@@ -2,7 +2,16 @@ class Tegu.UserMessageModal
   @close: () ->
     $('#user-message-modal').foundation('reveal', 'close')
 
+  @open: () ->
+    $('#user-message-modal').foundation('reveal', 'open')
+
 $(document).ready ->
+
+  $("a.message-button").on 'click', (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    return if current_user == 0
+    Tegu.UserMessageModal.open()
 
   $("#user-message-modal a.button").on 'click', (e) ->
     e.preventDefault()
