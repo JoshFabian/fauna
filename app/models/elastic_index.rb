@@ -8,14 +8,20 @@ class ElasticIndex
   end
 
   def self.delete_all
-    # klasses.each do |klass|
-    #   klass.index.delete rescue nil
-    # end
+    klasses.each do |klass|
+      klass.__elasticsearch__.delete_index! rescue nil
+    end
   end
 
   def self.index_all
     klasses.each do |klass|
       klass.import
+    end
+  end
+
+  def self.refresh_all
+    klasses.each do |klass|
+      klass.__elasticsearch__.refresh_index!
     end
   end
 
