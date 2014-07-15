@@ -89,6 +89,12 @@ module Endpoints
         {event: event, message: message, user: current_user.as_json(only: [:id]).merge(
           subscription: subscription.as_json())}
       end
+
+      desc "Stripe webhook callback"
+      post 'callback' do
+        logger.post("tegu.api", log_data.merge({event: 'stripe.callback'}))
+        {}
+      end
     end # stripe
   end
 end
