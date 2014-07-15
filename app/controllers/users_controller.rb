@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_filter :authenticate_user!, except: [:validate_email, :validate_handle]
+  before_filter :authenticate_user!, except: [:show, :validate_email, :validate_handle]
   before_filter :admin_role_required!, only: [:become, :index]
   before_filter :manage_role_required!, only: [:messages, :purchases]
 
@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   # GET /:handle
   def show
     @user = params[:handle].present? ? User.find_by_handle(params[:handle]) : User.find_by_id(params[:id])
-    @edit = @user.id == current_user.id
+    @edit = @user.id == current_user.try(:id)
     @cover_images = @user.cover_images.order("position asc").first(3)
     @cover_set = 1.upto(3).map do |i|
       @cover_images.select{ |o| o.position == i }.first or i
