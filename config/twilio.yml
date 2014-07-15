@@ -1,20 +1,10 @@
 development:
-  twilio_sid: AC45d9087a7355b3e9c072504e8e6acdec
-  twilio_token: b90acd4e43ac5f0a35f2e1c47a913ba9
-  twilio_from: +16502855967
-
-staging:
-  twilio_sid: AC45d9087a7355b3e9c072504e8e6acdec
-  twilio_token: b90acd4e43ac5f0a35f2e1c47a913ba9
-  twilio_from: +16502855967
-
-production:
-  twilio_sid: AC45d9087a7355b3e9c072504e8e6acdec
-  twilio_token: b90acd4e43ac5f0a35f2e1c47a913ba9
-  twilio_from: +16502855967
+  twilio_sid: test
+  twilio_token: test
+  twilio_from: +13125551212
 
 test:
   twilio_sid: test
   twilio_token: test
-  twilio_from: +16502855967
+  twilio_from: +13125551212
 
