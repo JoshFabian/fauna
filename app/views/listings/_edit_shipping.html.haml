@@ -10,4 +10,6 @@
 %label Ships from
 = country_select("listing", "shipping_from", {selected: @listing.shipping_from || 'US'}, {class: ['required', @listing.editable? ? 'editable' : nil], :'data-listing-id' => @listing.id.to_i})
 
+%label
+  %strong At least 1 shipping to location is required.
 = render(partial: "listings/listing_shipping_table")
