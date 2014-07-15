@@ -43,7 +43,7 @@ $(document).ready ->
             # console.log data
             Tegu.ListingApi.get_show_route(listing_id, auth_token, callback)
           (data, callback) ->
-            # console.log data
+            console.log data
             Tegu.ListingForm.enable_form()
             window.location.href = data.route
         ]
