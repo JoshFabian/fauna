@@ -73,6 +73,20 @@ class PlanTest < ActiveSupport::TestCase
       @user = Fabricate(:user)
     end
 
+    it "should return true when user has a trial" do
+      @user.trial_ends_at.must_equal nil
+      @user.trial?.must_equal false
+      @user.sellable?.must_equal false
+      @user.update_attributes(trial_ends_at: 1.second.ago)
+      @user.reload
+      @user.trial?.must_equal false
+      @user.sellable?.must_equal false
+      @user.update_attributes(trial_ends_at: 1.minute.from_now)
+      @user.trial?.must_equal true
+      @user.reload
+      @user.sellable?.must_equal true
+    end
+
     it "should return false when user has no credits or subscriptions" do
       @user.listing_credits.must_equal 0
       @user.subscriptions_count.must_equal 0

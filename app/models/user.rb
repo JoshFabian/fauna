@@ -112,7 +112,11 @@ class User < ActiveRecord::Base
   end
 
   def sellable?
-    listing_credits > 0 or (subscriptions_count > 0 and subscriptions.active.count > 0)
+    trial? or listing_credits > 0 or (subscriptions_count > 0 and subscriptions.active.count > 0)
+  end
+
+  def trial?
+    self.trial_ends_at.present? and self.trial_ends_at > Time.zone.now
   end
 
   # update inbox unread count

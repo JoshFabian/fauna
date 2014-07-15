@@ -11,6 +11,7 @@
       %th Facebook
       %th Roles
       %th Listings
+      %th Trial
       %th Plans
       %th Credits
       %th Actions
@@ -23,6 +24,7 @@
         %td= user.oauths.present? ? 'yes' : 'no'
         %td= user.roles.map(&:to_s).join(',')
         %td= user.listings.count
+        %td= user.trial? ? 'yes' : 'no'
         %td= user.subscriptions.collect{|o| o.plan.try(:name)}.join(', ') rescue ''
         %td
           = user.listing_credits
