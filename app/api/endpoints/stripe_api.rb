@@ -75,7 +75,7 @@ module Endpoints
           plan = Plan.find(params[:plan_id])
           subscription = current_user.subscriptions.where(plan_id: plan.id).first
           raise Exception, "invalid subscription" if subscription.blank?
-          # remove stripe subscription
+          # get stripe customer and subscription, and remove stripe subscription
           customer = Customer.find_or_create(current_user)
           customer.subscriptions.retrieve(subscription.stripe_id).delete()
           # remove subscription object
@@ -91,8 +91,8 @@ module Endpoints
       end
 
       desc "Stripe webhook callback"
-      post 'callback' do
-        logger.post("tegu.api", log_data.merge({event: 'stripe.callback'}))
+      post 'webhook' do
+        logger.post("tegu.api", log_data.merge({event: 'stripe.webhook'}))
         {}
       end
     end # stripe

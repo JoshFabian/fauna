@@ -70,8 +70,8 @@ class StripeApiSpec < ActionDispatch::IntegrationTest
   end
 
   describe "webhooks" do
-    it "should capture event callback" do
-      post "/api/v1/stripe/callback", {event: "some.event"}
+    it "should capture event" do
+      post "/api/v1/stripe/webhook", {event: "some.event"}
       response.success?.must_equal true
     end
   end
