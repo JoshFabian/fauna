@@ -15,7 +15,7 @@
     .view-listing
       = link_to "view full listing", user_listing_path(@user, @listing)
   .small-6.columns
-    = form_for Review.new, url: '#', html: {class: 'form-validation listing-review', :'data-listing-id' => @listing.id} do |f|
+    = form_for Review.new, url: '#', html: {class: 'form-validation listing-review', :'data-listing-id' => @listing.id, :'data-user-id' => @listing.user_id} do |f|
       .rounded-panel
         %h6
           Review

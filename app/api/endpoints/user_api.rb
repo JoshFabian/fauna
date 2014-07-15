@@ -33,14 +33,23 @@ module Endpoints
 
       desc "List users"
       get '' do
-        @users = User.order('id desc').page(@page).per(@per)
+        users = User.order('id desc').page(@page).per(@per)
         logger.post("tegu.api", log_data.merge({event: 'users.list'}))
-        {total: User.count, users: @users.map{ |o| {id: o.id, handle: o.handle} }}
+        {total: User.count, users: users.map{ |o| {id: o.id, handle: o.handle} }}
       end
 
-      desc "Returns user verified status"
+      desc "Get user"
+      get ':id' do
+        authenticate!
+        user = User.find(params.id)
+        logger.post("tegu.api", log_data.merge({event: 'user.get'}))
+        {user: user}
+      end
+
+      desc "Get user verified status"
       get ':id/verified(/:name)' do
-        user = User.find(params[:id])
+        authenticate!
+        user = User.find(params.id)
         if params.name.blank?
           verified = user.verified?
         else
@@ -51,6 +60,7 @@ module Endpoints
 
       desc "Update user"
       put ':id' do
+        authenticate!
         # puts "[params]:#{params}"
         @user = User.find(params.id)
         error! '', 401 if @user != current_user
@@ -92,6 +102,7 @@ module Endpoints
 
       desc "Update cover image positions"
       put ':id/cover_images/sort' do
+        authenticate!
         @user = User.find(params.id)
         if params.cover_images.present?
           params.cover_images.each do |object|
@@ -110,9 +121,10 @@ module Endpoints
 
       desc "Add user listing credits"
       put ':id/credits/add/:number' do
-        @user = User.find(params.id)
-        @user.increment!(:listing_credits, 1)
-        {user: @user.as_json(only: [:id, :listing_credits])}
+        authenticate!
+        user = User.find(params.id)
+        user.increment!(:listing_credits, 1)
+        {user: user.as_json(only: [:id, :listing_credits])}
       end
     end
 
