@@ -57,8 +57,12 @@ class UsersController < ApplicationController
     acl_manage!(on: @user)
     @state = params[:state].present? ? params[:state] : 'active'
     @category_id = params[:category_id]
-    @terms = {user_id: @user.id, category_ids: @category_id}
-    @listings = Listing.search(filter: {term: @terms}).records.where(state: @state)
+    @terms = [{term: {user_id: @user.id}}]
+    if @category_id.present?
+      @terms.push({term: {category_ids: @category_id}})
+    end
+    @filter = {filter: {bool: {must: @terms}}}
+    @listings = Listing.search(@filter).records.where(state: @state)
   end
 
   # GET /:handle/messages

@@ -6,10 +6,6 @@
   %meta{property: "og:image", content: cloudinary_url(@main_image.full_public_id)}
   %meta{property: "fb:app_id", content: Settings[Rails.env][:fb_app_id]}
 
-
-- if !user_signed_in?
-  = render partial: "listings/guest_message"
-
 .row
   - if @message.present?
     - if @message == 'canceled'
