@@ -44,6 +44,7 @@ class User < ActiveRecord::Base
     self.auth_token ||= generate_authentication_token
     self.handle ||= self.email
     self.roles = [:basic]
+    self.trial_ends_at ||= 30.days.from_now
   end
 
   def city_state

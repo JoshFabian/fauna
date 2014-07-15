@@ -70,10 +70,12 @@ class PlanTest < ActiveSupport::TestCase
 
   describe "user sellable?" do
     before do
-      @user = Fabricate(:user)
+      @user = Fabricate(:user, trial_ends_at: nil)
     end
 
     it "should return true when user has a trial" do
+      @user.update_attributes(trial_ends_at: nil)
+      @user.reload
       @user.trial_ends_at.must_equal nil
       @user.trial?.must_equal false
       @user.sellable?.must_equal false
@@ -88,12 +90,14 @@ class PlanTest < ActiveSupport::TestCase
     end
 
     it "should return false when user has no credits or subscriptions" do
+      @user.update_attributes(trial_ends_at: nil)
       @user.listing_credits.must_equal 0
       @user.subscriptions_count.must_equal 0
       @user.sellable?.must_equal false
     end
 
     it "should return true when user has listing credits" do
+      @user.update_attributes(trial_ends_at: nil)
       @user.update_attributes(listing_credits: 1)
       @user.reload
       @user.listing_credits.must_equal 1
@@ -110,6 +114,7 @@ class PlanTest < ActiveSupport::TestCase
     end
 
     it "should return false when user does not have an active subscription" do
+      @user.update_attributes(trial_ends_at: nil)
       @plan = Plan.create!(name: "name", amount: 5000, subscription: true, interval: 'month')
       @sub = @user.subscriptions.create(plan: @plan)
       @sub.expire!

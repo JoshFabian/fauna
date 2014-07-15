@@ -128,8 +128,8 @@ class UserTest < ActiveSupport::TestCase
 
   describe "user messages" do
     before do
-      @user1 = Fabricate(:user, email: "user1@gmail.com")
-      @user2 = Fabricate(:user, email: "user2@gmail.com")
+      @user1 = Fabricate(:user)
+      @user2 = Fabricate(:user)
     end
 
     it "should add message to user2 inbox" do
@@ -165,6 +165,18 @@ class UserTest < ActiveSupport::TestCase
       @conversation.participants.count.must_equal 2
       @conversation.is_read?(@user1).must_equal true
       @conversation.is_read?(@user2).must_equal false
+    end
+  end
+
+  describe "user trial" do
+    before do
+      @user = Fabricate(:user)
+    end
+
+    it "should start with trial" do
+      @user.reload
+      @user.trial_ends_at.present?.must_equal true
+      @user.trial?.must_equal true
     end
   end
 end

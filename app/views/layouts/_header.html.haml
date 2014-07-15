@@ -27,7 +27,7 @@
         .header-cta
           = link_to new_listing_path, class: 'button' do
             .credit-count
-              - if current_user.subscriptions_count > 0
+              - if current_user.subscriptions_count > 0 or current_user.trial?
                 -# subscriptions have infinite credits
                 %i.icon.ion-ios7-infinite
               - else
