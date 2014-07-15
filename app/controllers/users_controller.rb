@@ -91,7 +91,7 @@ class UsersController < ApplicationController
     @user = User.find_by_handle(params[:handle])
 
     @user_purchases = @user.purchases
-    @user_reviews = @user.listing_reviews
+    @user_reviews = @user.authored_reviews
 
     respond_to do |format|
       format.html

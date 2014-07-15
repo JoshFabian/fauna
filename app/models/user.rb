@@ -85,10 +85,12 @@ class User < ActiveRecord::Base
     [first_name.first(1), last_name.first(1)].compact.join('') rescue ''
   end
 
+  # reviews for user's listing
   def listing_reviews
     Review.where(listing_id: listings.select(:id).collect(&:id))
   end
 
+  # raitings for user's listings
   def listing_ratings
     review_ids = Review.where(listing_id: listings.select(:id).collect(&:id)).select(&:id).collect(&:id)
     ReviewRating.where(review_id: review_ids)
