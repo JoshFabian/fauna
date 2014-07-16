@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   acts_as_mappable lat_column_name: :lat, lng_column_name: :lng, default_units: :miles
 
   validates :email, presence: true, uniqueness: true
-  validates :handle, presence: true, uniqueness: true, format: {with: /[a-z0-9]/}
+  validates :handle, presence: true, uniqueness: {case_sensitive: false}, format: {with: /[a-z0-9]/}
 
   has_many :oauths, dependent: :destroy
   has_many :facebook_oauths, -> { where(provider: 'facebook') }, :class_name => 'Oauth'
@@ -139,6 +139,12 @@ class User < ActiveRecord::Base
       user.email = auth.info.email
       user.handle = auth.info.nickname || auth.info.name
     end
+  end
+
+  def self.by_handle(s, options={})
+    user = User.where("lower(handle) = ?", s.to_s.downcase).first
+    user = User.find_by_id(s) if s.to_s.match(/^\d+$/) and user.blank?
+    user
   end
 
   protected

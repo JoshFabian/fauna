@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /:handle
   def show
-    @user = params[:handle].present? ? User.find_by_handle(params[:handle]) : User.find_by_id(params[:id])
+    @user = User.by_handle(params[:handle].present? ? params[:handle] : params[:id])
     @edit = @user.id == current_user.try(:id)
     @cover_images = @user.cover_images.order("position asc").first(3)
     @cover_set = 1.upto(3).map do |i|
