@@ -1,15 +1,3 @@
-# case Rails.env
-# when 'production'
-#   FACEBOOK_APP_ID = "1511829219040276"
-#   FACEBOOK_SECRET = "262508575c363ff9c5ffd41f0a895fcc"
-# when 'staging'
-#   FACEBOOK_APP_ID = "789615747750545"
-#   FACEBOOK_SECRET = "09d829ef8d5895f148b92edf65f43995"
-# else
-#   FACEBOOK_APP_ID = Settings[Rails.env][:fb_app_id]
-#   FACEBOOK_SECRET = Settings[Rails.env][:fb_secret]
-# end
-
 class CustomFailure < Devise::FailureApp
   def redirect_url
     # default

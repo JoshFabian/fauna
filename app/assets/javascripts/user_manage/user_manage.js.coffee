@@ -22,4 +22,4 @@ $(document).ready ->
       msgText: "<span style='font-size: 0.7em;'>loading more ...<span>"
       finishedMsg: "<span style='font-size: 0.7em;'>no more users<span>"
     }
-    debug: true
+    debug: false
