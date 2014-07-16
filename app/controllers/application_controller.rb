@@ -70,4 +70,11 @@ class ApplicationController < ActionController::Base
   def store_location!
     store_location_for(:user, request.path) if !user_signed_in?
   end
+
+  def user_handle_normalize!
+    if params[:handle].present? and params[:handle].to_s != params[:handle].to_s.downcase
+      redirect_to url_for(handle: params[:handle].to_s.downcase)
+    end
+    true
+  end
 end

@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_filter :authenticate_user!, except: [:show, :validate_email, :validate_handle]
   before_filter :admin_role_required!, only: [:become, :index]
   before_filter :manage_role_required!, only: [:messages, :purchases]
+  before_filter :user_handle_normalize!, only: [:show]
 
   # GET /users
   def index
@@ -12,7 +13,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /:handle
   def show
-    @user = User.by_handle(params[:handle].present? ? params[:handle] : params[:id])
+    @user = User.by_handle(params[:handle]) || User.find_by_id(params[:id])
     raise ActiveRecord::RecordNotFound if @user.blank?
     @edit = @user.id == current_user.try(:id)
     @cover_images = @user.cover_images.order("position asc").first(3)
