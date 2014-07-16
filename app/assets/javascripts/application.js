@@ -15,6 +15,7 @@
 //= require foundation
 //= require jquery.validate
 //= require cloudinary
+//= require jquery.infinitescroll
 //= require async
 //= require numeral
 //= require_tree .
