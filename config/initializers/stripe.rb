@@ -1,2 +1,2 @@
 # test key
-Stripe.api_key = "sk_test_zr1112gWDa1TzEwRrKVS6oiB"
+Stripe.api_key = Settings[Rails.env][:stripe_secret_key]

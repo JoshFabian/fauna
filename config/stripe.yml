@@ -1,6 +1,9 @@
 development:
   stripe_publish_key: pk_test_bLS8ZuoDP3jkmMHDJyW4rTp1
+  stripe_secret_key: sk_test_zr1112gWDa1TzEwRrKVS6oiB
 staging:
   stripe_publish_key: pk_test_bLS8ZuoDP3jkmMHDJyW4rTp1
+  stripe_secret_key: sk_test_zr1112gWDa1TzEwRrKVS6oiB
 production:
   stripe_publish_key: pk_test_bLS8ZuoDP3jkmMHDJyW4rTp1
+  stripe_secret_key: sk_test_zr1112gWDa1TzEwRrKVS6oiB
