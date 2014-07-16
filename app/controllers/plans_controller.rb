@@ -23,6 +23,7 @@ class PlansController < ApplicationController
   # GET /plans/1/details
   def details
     @plan = Plan.find(params[:id])
+    @monthly = @plan.interval == 'year' ? @plan.amount/12/100 : @plan.amount/100
 
     respond_to do |format|
       format.js
