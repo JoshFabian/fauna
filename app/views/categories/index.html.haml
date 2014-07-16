@@ -8,7 +8,8 @@
       %th Name
       %th Level
       %th Children
-      %th # Listings
+      %th Total Listings
+      %th Active Listings
 
     - @categories.each do |category|
       %tr
@@ -17,3 +18,4 @@
         %td= category.level
         %td= category.children_count
         %td= category.listings_count
+        %td= category.listings.active.count
