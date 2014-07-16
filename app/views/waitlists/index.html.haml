@@ -11,7 +11,7 @@
     .text-center
       %h3 #{@both_count} Both
 
-  %table.tiny.small-12.columns
+  %table.tiny.small-12.columns#waitlist
     %tr
       %th Id
       %th Email
@@ -21,10 +21,12 @@
       %th Referer
 
     - @waitlists.each do |waitlist|
-      %tr
+      %tr.user
         %td= waitlist.id
         %td= waitlist.email
         %td= waitlist.role
         %td= waitlist.signup_count
         %td= waitlist.code
         %td= waitlist.referer
+
+  = paginate @waitlists
