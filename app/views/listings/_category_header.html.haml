@@ -3,8 +3,7 @@
   .category-nav
     .row
       %h1= @category.name
-      - if @listings.blank?
-      - else
+      - if @subcategories.present?
         %hr
         %ul.centered-inline-list
           - @subcategories.each do |child|

@@ -14,6 +14,7 @@
       %th Trial
       %th Plans
       %th Credits
+      %th Signup At
       %th Actions
 
     - @users.each do |user|
@@ -29,5 +30,6 @@
         %td
           = user.listing_credits
           %span.right= link_to '+1', '#', class: 'listing-credits-add', :'data-user-id' => user.id
+        %td #{time_ago_in_words(user.created_at)} ago
         %td
           = user.id == current_user.id ? 'me' : link_to('become', become_user_path(user.id))
