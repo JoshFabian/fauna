@@ -99,7 +99,7 @@ class User < ActiveRecord::Base
     Review.where(listing_id: listings.select(:id).collect(&:id))
   end
 
-  # raitings for user's listings
+  # ratings for user's listings
   def listing_ratings
     review_ids = Review.where(listing_id: listings.select(:id).collect(&:id)).select(&:id).collect(&:id)
     ReviewRating.where(review_id: review_ids)
