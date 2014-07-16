@@ -10,7 +10,7 @@ class Tegu.Plan
         email: stripe_email,
         image: stripe_image,
         token: (token, args) ->
-          console.log "plan:#{Tegu.Plan.plan_id}, token:#{JSON.stringify token}, args:#{JSON.stringify args}"
+          # console.log "plan:#{Tegu.Plan.plan_id}, token:#{JSON.stringify token}, args:#{JSON.stringify args}"
           card_token = token.id
           async.waterfall [
             (callback) ->

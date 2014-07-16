@@ -10,12 +10,10 @@ namespace :plans do
       puts "#{Time.now}: hash:#{hash}"
       Plan.create(hash)
     end
-    objects = [{'name' => "Monthly", 'amount' => 4000, 'subscription' => true, 'interval' => 'month',
+    objects = [{'name' => "Monthly - $39/month", 'amount' => 3900, 'subscription' => true, 'interval' => 'month',
                 'interval_count' => 1},
-               {'name' => "6 Months", 'amount' => 20000, 'subscription' => true, 'interval' => 'month',
-                'interval_count' => 6},
-               {'name' => "Yearly", 'amount' => 36000, 'subscription' => true, 'interval' => 'month',
-                'interval_count' => 12}]
+               {'name' => "Yearly - $29/monnth", 'amount' => 34800, 'subscription' => true, 'interval' => 'year',
+                'interval_count' => 1}]
     objects.each do |hash|
       puts "#{Time.now}: hash:#{hash}"
       Plan.create(hash)
