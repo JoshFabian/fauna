@@ -1,6 +1,19 @@
 require 'test_helper'
 
 class UserApiSpec < ActionDispatch::IntegrationTest
+  describe "user get" do
+    before do
+      @user = Fabricate(:user, handle: "User1")
+    end
+
+    it "should get user json" do
+      get "/api/v1/users/#{@user.id}?token=#{@user.auth_token}"
+      response.success?.must_equal true
+      body = JSON.parse(response.body)
+      body['user'].must_include({'id' => @user.id, 'handle' => 'User1', 'handle_lower' => 'user1'})
+    end
+  end
+
   describe "user verified" do
     before do
       @user = Fabricate(:user)

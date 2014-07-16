@@ -18,6 +18,17 @@ class UserTest < ActiveSupport::TestCase
       @user.handle.must_equal "brian0"
     end
 
+    it "should be case insensitive" do
+      @user = Fabricate(:user, email: "brian@gmail.com", handle: 'BFicho')
+      @user.handle.must_equal "BFicho"
+      lambda { Fabricate(:user, email: "bficho@gmail.com", handle: 'bficho') }.must_raise ActiveRecord::RecordInvalid
+    end
+
+    it "should return lowerscase for handle_lower" do
+      @user = Fabricate(:user, email: "brian@gmail.com", handle: 'BFicho')
+      @user.handle_lower.must_equal "bficho"
+    end
+
     it "should not allow random characters" do
       @user = Fabricate(:user, email: "brian@gmail.com", handle: 'brian-*')
       @user.handle.must_equal "brian"

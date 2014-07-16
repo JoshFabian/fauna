@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
 
   has_many :authored_reviews, class_name: "Review", dependent: :destroy
 
-  friendly_id :handle
+  friendly_id :handle_lower
 
   bitmask :roles, :as => [:admin, :basic]
 
@@ -45,6 +45,13 @@ class User < ActiveRecord::Base
     self.handle ||= self.email
     self.roles = [:basic]
     self.trial_ends_at ||= 30.days.from_now
+  end
+
+  def as_json(options={})
+    options ||= {}
+    options[:methods] = [] if options[:methods].blank?
+    options[:methods] << :handle_lower if !options[:methods].include?(:handle_lower)
+    super(options)
   end
 
   def city_state
@@ -80,6 +87,10 @@ class User < ActiveRecord::Base
       s = s + Faker::Number.number(3)
     end
     write_attribute(:handle, s)
+  end
+
+  def handle_lower
+    self.handle.to_s.downcase
   end
 
   def initials

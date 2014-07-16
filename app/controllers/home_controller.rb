@@ -5,7 +5,7 @@ class HomeController < ApplicationController
     redirect_to recent_listings_path
   end
 
-  # GET /exception
+  # GET /:handle/exception
   def exception
     raise Exception, "exception"
   end
