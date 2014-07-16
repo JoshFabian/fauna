@@ -1,6 +1,24 @@
 require 'test_helper'
 
 class ListingApiSpec < ActionDispatch::IntegrationTest
+  describe "listing create" do
+    before do
+      Category.delete_all
+      @user = Fabricate(:user, listing_credits: 3)
+      @lizards = Category.create!(name: 'Lizards')
+    end
+
+    it "should create listing with category" do
+      data = {listing: {title: "Listing", price: 5000, categories: [@lizards.id]}}
+      post "/api/v1/listings?token=#{@user.auth_token}", data
+      response.success?.must_equal true
+      body = JSON.parse(response.body)
+      body['listing'].must_include('title' => 'Listing', 'category_ids' => [@lizards.id])
+      @lizards.reload
+      @lizards.listings_count.must_equal 1
+    end
+  end
+
   describe "listing event" do
     before do
       @user = Fabricate(:user, listing_credits: 3)

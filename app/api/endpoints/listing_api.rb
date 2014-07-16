@@ -43,11 +43,17 @@ module Endpoints
           del_categories = (cur_categories - new_categories)
           # add categories
           add_categories.each do |category_id|
-            @listing.categories.push(Category.find_by_id(category_id))
+            category = Category.find_by_id(category_id)
+            next if category.blank?
+            @listing.categories.push(category)
+            category.should_update_listings_count!
           end
           # delete categories
           del_categories.each do |category_id|
-            @listing.categories.delete(category_id)
+            category = Category.find_by_id(category_id)
+            next if category.blank?
+            @listing.categories.destroy(category)
+            category.should_update_listings_count!
           end
         end
         logger.post("tegu.api", log_data.merge({event: 'listing.create', listing_id: @listing.id}))
