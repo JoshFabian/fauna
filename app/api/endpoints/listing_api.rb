@@ -56,6 +56,7 @@ module Endpoints
             category.should_update_listings_count!
           end
         end
+        @listing.should_update_index!
         logger.post("tegu.api", log_data.merge({event: 'listing.create', listing_id: @listing.id}))
         {listing: @listing}
       end
