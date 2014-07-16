@@ -13,6 +13,7 @@ class UsersController < ApplicationController
   # GET /:handle
   def show
     @user = User.by_handle(params[:handle].present? ? params[:handle] : params[:id])
+    raise ActiveRecord::RecordNotFound if @user.blank?
     @edit = @user.id == current_user.try(:id)
     @cover_images = @user.cover_images.order("position asc").first(3)
     @cover_set = 1.upto(3).map do |i|
