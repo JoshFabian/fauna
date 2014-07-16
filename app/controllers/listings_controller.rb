@@ -45,8 +45,12 @@ class ListingsController < ApplicationController
 
   # GET /listings/search
   def by_search
-    @query = params[:query].to_s
-    @listings = Listing.search(@query).records.active
+    begin
+      @query = params[:query].to_s
+      @listings = Listing.search(@query).records.active
+    rescue Exception => e
+      @listings = []
+    end
 
     respond_to do |format|
       format.html { render(action: :index) }
