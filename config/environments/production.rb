@@ -77,16 +77,8 @@ Tegu::Application.configure do
   # config.autoflush_log = false
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = ::Logger::Formatter.new
-
-  # Smtp
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address: 'smtp.mandrillapp.com',
-    port: 587,
-    user_name: 'sanjay+team@jarna.com',
-    password: '473FAiZcZEGb65KJQHdDbA',
-    domain: 'fauna.net'
-  }
-  config.action_mailer.default_url_options = { host: "www.fauna.net" }
+  # config.log_formatter = ::Logger::Formatter.new
+  # Lograge
+  config.lograge.enabled = true
+  config.lograge.formatter = Lograge::Formatters::Logstash.new
 end
