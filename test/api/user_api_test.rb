@@ -10,7 +10,7 @@ class UserApiSpec < ActionDispatch::IntegrationTest
       get "/api/v1/users/#{@user.id}?token=#{@user.auth_token}"
       response.success?.must_equal true
       body = JSON.parse(response.body)
-      body['user'].must_include({'id' => @user.id, 'handle' => 'User1', 'handle_lower' => 'user1'})
+      body['user'].must_include({'id' => @user.id, 'handle' => 'User1', 'slug' => 'user1'})
     end
   end
 

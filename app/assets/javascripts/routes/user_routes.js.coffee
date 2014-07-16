@@ -4,7 +4,7 @@ class Tegu.UserRoutes
       (cb) ->
         Tegu.UserApi.get(user_id, token, cb)
       (data, cb) ->
-        callback(null, "/#{data.user.handle_lower}/listings")
+        callback(null, "/#{data.user.slug}/listings")
     ]
 
   @user_reviews_route: (user_id, token, callback) ->
@@ -12,5 +12,5 @@ class Tegu.UserRoutes
       (cb) ->
         Tegu.UserApi.get(user_id, token, cb)
       (data, cb) ->
-        callback(null, "/#{data.user.handle_lower}/reviews")
+        callback(null, "/#{data.user.slug}/reviews")
     ]

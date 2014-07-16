@@ -24,11 +24,6 @@ class UserTest < ActiveSupport::TestCase
       lambda { Fabricate(:user, email: "bficho@gmail.com", handle: 'bficho') }.must_raise ActiveRecord::RecordInvalid
     end
 
-    it "should return lowerscase for handle_lower" do
-      @user = Fabricate(:user, email: "brian@gmail.com", handle: 'BFicho')
-      @user.handle_lower.must_equal "bficho"
-    end
-
     it "should not allow random characters" do
       @user = Fabricate(:user, email: "brian@gmail.com", handle: 'brian-*')
       @user.handle.must_equal "brian"
@@ -53,6 +48,18 @@ class UserTest < ActiveSupport::TestCase
       @user.handle = 'brian'
       @user.save
       @user.reload.handle.must_equal 'brian'
+    end
+  end
+
+  describe "user slug" do
+    it "should set slug" do
+      @user = Fabricate(:user, email: "brian@gmail.com", handle: 'brian0')
+      @user.slug.must_equal "brian0"
+    end
+
+    it "should set slug to lowercase handle" do
+      @user = Fabricate(:user, email: "brian@gmail.com", handle: 'BFicho')
+      @user.slug.must_equal "bficho"
     end
   end
 
