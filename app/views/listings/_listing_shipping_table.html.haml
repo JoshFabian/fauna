@@ -37,7 +37,7 @@
         %td
           .input-group.price-input
             %label $
-            %input.money.text.text-small{type: "text", placeholder: "0.00", name: "listing[shipping_prices][international]", value: value, class: [checked ? 'required' : nil]}
+            %input.money.text.text-small{type: "text", placeholder: "0.00", name: "listing[shipping_prices][international]", value: value, class: [checked ? 'required' : nil], title: 'Cost is required'}
 
       -# local
       %tr
@@ -53,4 +53,4 @@
         %td
           .input-group.price-input
             %label $
-            %input.money.text.text-small{type: "text", placeholder: "0.00", name: "listing[shipping_prices][local]", value: value, class: [checked ? 'required' : nil]}
+            %input.money.text.text-small{type: "text", placeholder: "0.00", name: "listing[shipping_prices][local]", value: value, class: [checked ? 'required' : nil], title: 'Cost is required'}
