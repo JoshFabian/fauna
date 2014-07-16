@@ -34,7 +34,7 @@ class UsersController < ApplicationController
 
   # GET /:handle/listings
   def listings
-    @user = User.find_by_handle(params[:handle])
+    @user = User.by_handle(params[:handle])
     @edit = @user.id == current_user.id
     @cover_images = @user.cover_images.order("position asc").first(3)
     @cover_set = 1.upto(3).map do |i|
@@ -54,7 +54,7 @@ class UsersController < ApplicationController
   # GET /:handle/listings/manage
   # GET /:handle/listings/manage?category_id=1&state=active
   def manage_listings
-    @user = User.find_by_handle(params[:handle])
+    @user = User.by_handle(params[:handle])
     acl_manage!(on: @user)
     @state = params[:state].present? ? params[:state] : 'active'
     @category_id = params[:category_id]
@@ -68,7 +68,7 @@ class UsersController < ApplicationController
 
   # GET /:handle/messages
   def messages
-    @user = User.find_by_handle(params[:handle])
+    @user = User.by_handle(params[:handle])
     @edit = @user.id == current_user.id
     @cover_images = @user.cover_images.order("position asc").first(3)
     @cover_set = 1.upto(3).map do |i|
@@ -89,7 +89,7 @@ class UsersController < ApplicationController
 
   # GET /:handle/purchases
   def purchases
-    @user = User.find_by_handle(params[:handle])
+    @user = User.by_handle(params[:handle])
 
     @user_purchases = @user.purchases
     @user_reviews = @user.authored_reviews
@@ -101,7 +101,7 @@ class UsersController < ApplicationController
 
   # GET /:handle/reviews
   def reviews
-    @user = User.find_by_handle(params[:handle])
+    @user = User.by_handle(params[:handle])
     @edit = @user.id == current_user.id
     @cover_images = @user.cover_images.order("position asc").first(3)
     @cover_set = 1.upto(3).map do |i|
@@ -120,7 +120,7 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   # GET /:handle/edit
   def edit
-    @user = User.find_by_handle(params[:handle]) || User.find(params[:id])
+    @user = User.by_handle(params[:handle]) || User.find(params[:id])
     @url = user_path(@user)
     @title = "My Profile"
 

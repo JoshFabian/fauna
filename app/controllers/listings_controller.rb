@@ -59,7 +59,7 @@ class ListingsController < ApplicationController
 
   # GET /:handle/listings
   def by_user
-    @user = User.find_by_handle(params[:handle])
+    @user = User.by_handle(params[:handle])
     @term = {term: {user_id: @user.id}}
     @listings = Listing.search(filter: @term).records.active
 

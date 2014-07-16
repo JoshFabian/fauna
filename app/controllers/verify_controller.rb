@@ -5,12 +5,12 @@ class VerifyController < ApplicationController
 
   # :handle/verify
   def start
-    @user = User.find_by_handle(params[:handle])
+    @user = User.by_handle(params[:handle])
   end
 
   # :handle/verify/email
   def email
-    @user = User.find_by_handle(params[:handle])
+    @user = User.by_handle(params[:handle])
   end
 
 end
