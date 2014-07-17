@@ -31,6 +31,14 @@ class User < ActiveRecord::Base
 
   has_many :authored_reviews, class_name: "Review", dependent: :destroy
 
+  # following
+  has_many :user_follows, dependent: :destroy
+  has_many :following, through: :user_follows, source: :following
+
+  # followers
+  has_many :user_followers, class_name: "UserFollow", foreign_key: 'following_id', dependent: :destroy
+  has_many :followers, through: :user_followers, source: :user
+
   friendly_id :slug
 
   bitmask :roles, :as => [:admin, :basic]

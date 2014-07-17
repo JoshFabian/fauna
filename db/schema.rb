@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140716185733) do
+ActiveRecord::Schema.define(version: 20140717164112) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -346,6 +346,19 @@ ActiveRecord::Schema.define(version: 20140716185733) do
   add_index "user_cover_images", ["position"], name: "index_user_cover_images_on_position"
   add_index "user_cover_images", ["user_id"], name: "index_user_cover_images_on_user_id"
 
+  create_table "user_follows", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "following_id"
+    t.datetime "following_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_follows", ["created_at"], name: "index_user_follows_on_created_at"
+  add_index "user_follows", ["following_at"], name: "index_user_follows_on_following_at"
+  add_index "user_follows", ["following_id"], name: "index_user_follows_on_following_id"
+  add_index "user_follows", ["user_id"], name: "index_user_follows_on_user_id"
+
   create_table "users", force: true do |t|
     t.string   "email",                                                         default: "", null: false
     t.string   "encrypted_password",                                            default: "", null: false
@@ -389,6 +402,7 @@ ActiveRecord::Schema.define(version: 20140716185733) do
     t.integer  "inbox_unread_count",                                            default: 0
     t.datetime "trial_ends_at"
     t.string   "slug",                    limit: 100
+    t.integer  "followers_count",                                               default: 0
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true
@@ -396,6 +410,7 @@ ActiveRecord::Schema.define(version: 20140716185733) do
   add_index "users", ["customer_id"], name: "index_users_on_customer_id"
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["first_name"], name: "index_users_on_first_name"
+  add_index "users", ["followers_count"], name: "index_users_on_followers_count"
   add_index "users", ["handle"], name: "index_users_on_handle"
   add_index "users", ["inbox_unread_count"], name: "index_users_on_inbox_unread_count"
   add_index "users", ["last_name"], name: "index_users_on_last_name"
