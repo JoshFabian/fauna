@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
 
   def manage_role_required!
     raise CanCan::AccessDenied, "Unauthorized" unless user_signed_in? and
-      (current_user.handle == params[:handle] or current_user.roles?(:admin))
+      (current_user.slug == params[:handle] or current_user.roles?(:admin))
   end
 
   def seller_paid!
