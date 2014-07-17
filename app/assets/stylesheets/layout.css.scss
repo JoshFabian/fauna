@@ -405,7 +405,12 @@
     }
   }
 }
-
+.welcome-message {
+  background: #ddd;
+  border-radius: 3px;
+  padding: 15px;
+  text-align: center;
+}
 .profile-sidebar {
   padding-left: 0 !important;
   padding-right: 0 !important;

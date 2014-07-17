@@ -1,4 +1,9 @@
 .row
+  .small-12.columns.no-padding
+    %p.welcome-message
+      %strong Welcome to Fauna! 
+      You're almost done, just
+      = link_to "complete your profile", "#", :class => "edit-link"
   .review-column.small-8.columns.no-padding-left
     .recent-listing
       - if @total_listings > 0
