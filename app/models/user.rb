@@ -149,8 +149,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.by_handle(s, options={})
-    user = User.where("lower(handle) = ?", s.to_s.downcase).first
+  def self.by_slug(s, options={})
+    user = User.where("slug = ?", s.to_s.downcase).first
     user = User.find_by_id(s) if s.to_s.match(/^\d+$/) and user.blank?
     user
   end

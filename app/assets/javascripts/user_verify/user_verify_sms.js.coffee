@@ -22,7 +22,6 @@ $(document).ready ->
     onsubmit: true,
     submitHandler: (form) ->
       sms_code = $(form).find("#sms_code").val()
-      user_handle = $(form).data('user-handle')
       console.log "verifying sms code: #{sms_code}"
       async.waterfall [
         (callback) ->
@@ -30,7 +29,7 @@ $(document).ready ->
           Tegu.SmsApi.verify_token(sms_code, auth_token, callback)
         (data, callback) ->
           if data.event == 'verified'
-            Tegu.UserVerify.goto_user_verify(user_handle)
+            Tegu.UserVerify.goto_user_verify(current_user_slug)
       ],
       # optional callback
       (err, results) ->

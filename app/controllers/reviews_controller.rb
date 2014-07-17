@@ -8,9 +8,9 @@ class ReviewsController < ApplicationController
     
   end
 
-  # GET /:handle/listings/:id/reviews/new
+  # GET /:slug/listings/:id/reviews/new
   def new
-    @user = User.by_handle(params[:handle])
+    @user = User.by_slug(params[:slug])
     @listing = @user.listings.friendly.find(params[:id])
 
     @reviewed = @listing.reviews.where(user_id: current_user.id).exists?

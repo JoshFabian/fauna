@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
 
   def manage_role_required!
     raise CanCan::AccessDenied, "Unauthorized" unless user_signed_in? and
-      (current_user.slug == params[:handle] or current_user.roles?(:admin))
+      (current_user.slug == params[:slug] or current_user.roles?(:admin))
   end
 
   def seller_paid!
@@ -71,9 +71,9 @@ class ApplicationController < ActionController::Base
     store_location_for(:user, request.path) if !user_signed_in?
   end
 
-  def user_handle_normalize!
-    if params[:handle].present? and params[:handle].to_s != params[:handle].to_s.downcase
-      redirect_to url_for(handle: params[:handle].to_s.downcase)
+  def user_slug_normalize!
+    if params[:slug].present? and params[:slug].to_s != params[:slug].to_s.downcase
+      redirect_to url_for(slug: params[:slug].to_s.downcase)
     end
     true
   end

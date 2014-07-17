@@ -13,19 +13,22 @@ Tegu::Application.routes.draw do
   get '/' => redirect("/listings/recent")
 
   # vanity user scopes
-  get ':handle' => "users#show", as: :user, constraints: HandleRoute.new
-  get ':handle/edit' => "users#edit", as: :user_edit
-  get ':handle/exception' => "home#exception"
-  get ':handle/listings/manage' => "users#manage_listings", as: :user_manage_listings
-  get ':handle/listings/:id/reviews/new' => "reviews#new", as: :new_listing_review
-  get ':handle/listings/:id/edit' => "listings#edit", as: :user_edit_listing
-  get ':handle/listings/:id' => "listings#show", as: :user_listing
-  get ':handle/listings' => "users#listings", as: :user_listings
-  get ':handle/messages' => "users#messages", as: :user_messages
-  get ':handle/purchases' => "users#purchases", as: :user_purchases
-  get ':handle/reviews' => "users#reviews", as: :user_reviews
-  get ':handle/verify' => "verify#start", as: :user_verify
-  get ':handle/verify/email', to: "verify#email", as: :user_verify_email # paypal verify email
+  get ':slug' => "users#show", as: :user, constraints: HandleRoute.new
+  get ':slug/edit' => "users#edit", as: :user_edit
+  get ':slug/exception' => "home#exception"
+  get ':slug/listings/manage' => "users#manage_listings", as: :user_manage_listings
+  get ':slug/listings/:id/reviews/new' => "reviews#new", as: :new_listing_review
+  get ':slug/listings/:id/edit' => "listings#edit", as: :user_edit_listing
+  get ':slug/listings/:id' => "listings#show", as: :user_listing
+  get ':slug/listings' => "users#listings", as: :user_listings
+  get ':slug/messages' => "users#messages", as: :user_messages
+  get ':slug/purchases' => "users#purchases", as: :user_purchases
+  get ':slug/reviews' => "users#reviews", as: :user_reviews
+  get ':slug/verify' => "verify#start", as: :user_verify
+  get ':slug/verify/email', to: "verify#email", as: :user_verify_email # paypal verify email
+  # messages
+  get ':slug/messages/:id' => "messages#show", constraints: {id: /[0-9]+/}
+  get ':slug/messages/:label' => "messages#index", constraints: {label: /[a-z]+/}
 
   # landing routes - in the process of being deprecated
   get 'landing/success/:code' => 'landing#success', as: :landing_success
@@ -81,10 +84,6 @@ Tegu::Application.routes.draw do
   match 'sms/send'=> "twilio#sms_send", as: :twilio_sms_send, via: [:get, :post]
   match 'sms/verify_phone'=> "twilio#sms_verify_phone", as: :twilio_sms_verify_phone, via: [:get]
   match 'sms/list'=> "twilio#sms_list", as: :twilio_sms_list, via: [:get]
-
-  # messages
-  get ':handle/messages/:id' => "messages#show", constraints: {id: /[0-9]+/}
-  get ':handle/messages/:label' => "messages#index", constraints: {label: /[a-z]+/}
 
   # plans
   resources :plans, only: [:index, :show] do

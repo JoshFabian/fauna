@@ -14,7 +14,6 @@ $(document).ready ->
       email = $(form).find("input.email").val()
       first_name = $(form).find("input.first-name").val()
       last_name = $(form).find("input.last-name").val()
-      user_handle = $(form).data('user-handle')
       console.log "verifying #{email}:#{first_name}:#{last_name}"
       async.waterfall [
         (callback) ->
@@ -25,7 +24,7 @@ $(document).ready ->
           console.log data
           if data.event == 'verified'
             # redirect
-            Tegu.UserVerify.goto_user_verify(user_handle)
+            Tegu.UserVerify.goto_user_verify(current_user_slug)
           else
             # show error state
             Tegu.UserVerifyEmail.show_error_state()

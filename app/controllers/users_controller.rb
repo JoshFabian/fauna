@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_filter :authenticate_user!, except: [:show, :validate_email, :validate_handle]
   before_filter :admin_role_required!, only: [:become, :index]
   before_filter :manage_role_required!, only: [:messages, :purchases]
-  before_filter :user_handle_normalize!, only: [:show]
+  before_filter :user_slug_normalize!, only: [:show]
 
   # GET /users
   def index
@@ -15,9 +15,9 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1
-  # GET /:handle
+  # GET /:slug
   def show
-    @user = User.by_handle(params[:handle]) || User.find_by_id(params[:id])
+    @user = User.by_slug(params[:slug]) || User.find_by_id(params[:id])
     raise ActiveRecord::RecordNotFound if @user.blank?
     @edit = @user.id == current_user.try(:id)
     @cover_images = @user.cover_images.order("position asc").first(3)
@@ -37,9 +37,9 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /:handle/listings
+  # GET /:slug/listings
   def listings
-    @user = User.by_handle(params[:handle])
+    @user = User.by_slug(params[:slug])
     @edit = @user.id == current_user.id
     @cover_images = @user.cover_images.order("position asc").first(3)
     @cover_set = 1.upto(3).map do |i|
@@ -56,10 +56,10 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /:handle/listings/manage
-  # GET /:handle/listings/manage?category_id=1&state=active
+  # GET /:slug/listings/manage
+  # GET /:slug/listings/manage?category_id=1&state=active
   def manage_listings
-    @user = User.by_handle(params[:handle])
+    @user = User.by_slug(params[:slug])
     acl_manage!(on: @user)
     @state = params[:state].present? ? params[:state] : 'active'
     @category_id = params[:category_id]
@@ -71,9 +71,9 @@ class UsersController < ApplicationController
     @listings = Listing.search(@filter).records.where(state: @state)
   end
 
-  # GET /:handle/messages
+  # GET /:slug/messages
   def messages
-    @user = User.by_handle(params[:handle])
+    @user = User.by_slug(params[:slug])
     @edit = @user.id == current_user.id
     @cover_images = @user.cover_images.order("position asc").first(3)
     @cover_set = 1.upto(3).map do |i|
@@ -92,9 +92,9 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /:handle/purchases
+  # GET /:slug/purchases
   def purchases
-    @user = User.by_handle(params[:handle])
+    @user = User.by_slug(params[:slug])
 
     @user_purchases = @user.purchases
     @user_reviews = @user.authored_reviews
@@ -104,9 +104,9 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /:handle/reviews
+  # GET /:slug/reviews
   def reviews
-    @user = User.by_handle(params[:handle])
+    @user = User.by_slug(params[:slug])
     @edit = @user.id == current_user.id
     @cover_images = @user.cover_images.order("position asc").first(3)
     @cover_set = 1.upto(3).map do |i|
@@ -123,9 +123,9 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1/edit
-  # GET /:handle/edit
+  # GET /:slug/edit
   def edit
-    @user = User.by_handle(params[:handle]) || User.find(params[:id])
+    @user = User.by_slug(params[:slug]) || User.find(params[:id])
     @url = user_path(@user)
     @title = "My Profile"
 

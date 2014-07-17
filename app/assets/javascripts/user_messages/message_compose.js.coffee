@@ -13,7 +13,7 @@ $(document).ready ->
       (data, callback) ->
         console.log data
         # get message
-        Tegu.MessageView.get_conversation(current_user_handle, conversation_id, auth_token, callback)
+        Tegu.MessageView.get_conversation(current_user_slug, conversation_id, auth_token, callback)
       (data, callback) ->
         Tegu.MessageView.show(data)
     ]

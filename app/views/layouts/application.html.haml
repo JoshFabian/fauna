@@ -56,7 +56,7 @@
 
   :javascript
     var current_user = #{current_user.id rescue 0};
-    var current_user_handle = "#{current_user.slug rescue ''}";
+    var current_user_slug = "#{current_user.slug rescue ''}";
     var current_roles = #{current_user.roles.map(&:to_s) rescue []};
     var auth_token = "#{current_user.auth_token rescue ''}";
     var welcome_message = #{current_user.welcome_message.to_i rescue 0};

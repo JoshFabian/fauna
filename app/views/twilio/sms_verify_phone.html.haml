@@ -5,7 +5,7 @@
     %br
     %p After receiving the text message, enter the verification code.
 
-    = form_for User.new, url: '#', html: {class: "form-validation user-sms-verify", :'data-user-handle' => current_user.handle} do |f|
+    = form_for User.new, url: '#', html: {class: "form-validation user-sms-verify"} do |f|
       = text_field_tag 'to', nil, placeholder: "Enter Verification Code", class: 'required verification', id: "sms_code"
       %input.form-button{:type => "submit", :value => "Verify Phone Number"}
     %p.verify-help 

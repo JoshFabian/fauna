@@ -57,9 +57,9 @@ class ListingsController < ApplicationController
     end
   end
 
-  # GET /:handle/listings
+  # GET /:slug/listings
   def by_user
-    @user = User.by_handle(params[:handle])
+    @user = User.by_slug(params[:slug])
     @term = {term: {user_id: @user.id}}
     @listings = Listing.search(filter: @term).records.active
 
@@ -69,11 +69,11 @@ class ListingsController < ApplicationController
   end
 
   # GET /listings/1
-  # GET /:handle/listings/1
+  # GET /:slug/listings/1
   def show
-    if params[:handle].present?
+    if params[:slug].present?
       # find user listing
-      @listing = User.friendly.find(params[:handle]).listings.friendly.find(params[:id])
+      @listing = User.friendly.find(params[:slug]).listings.friendly.find(params[:id])
     else
       # deprecated
       @listing = Listing.friendly.find(params[:id])

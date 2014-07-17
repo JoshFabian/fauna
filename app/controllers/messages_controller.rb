@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
 
-  # GET /:handle/messages/:label
+  # GET /:slug/messages/:label
   def index
     @user = current_user
     @label = params[:label]
@@ -11,7 +11,7 @@ class MessagesController < ApplicationController
     end
   end
 
-  # GET /:handle/messages/:id
+  # GET /:slug/messages/:id
   def show
     @user = current_user
     @conversation = Conversation.find(params[:id])

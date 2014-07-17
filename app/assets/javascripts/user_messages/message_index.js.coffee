@@ -7,7 +7,7 @@ $(document).ready ->
     async.waterfall [
       (callback) ->
         # get conversations
-        Tegu.MessageView.get_conversations(current_user_handle, label, auth_token, callback)
+        Tegu.MessageView.get_conversations(current_user_slug, label, auth_token, callback)
       (data, callback) ->
         # console.log data
         Tegu.MessageView.select_label(label)
@@ -20,7 +20,7 @@ $(document).ready ->
     async.waterfall [
       (callback) ->
         # get conversations
-        Tegu.MessageView.get_conversations(current_user_handle, label, auth_token, callback)
+        Tegu.MessageView.get_conversations(current_user_slug, label, auth_token, callback)
       (data, callback) ->
         # console.log data
         Tegu.MessageView.select_label(label)
@@ -37,7 +37,7 @@ $(document).ready ->
     async.waterfall [
       (callback) ->
         # get message
-        Tegu.MessageView.get_conversation(current_user_handle, conversation_id, auth_token, callback)
+        Tegu.MessageView.get_conversation(current_user_slug, conversation_id, auth_token, callback)
       (data, callback) ->
         # console.log data
         Tegu.MessageView.show(data)

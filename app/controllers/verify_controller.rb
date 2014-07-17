@@ -3,14 +3,14 @@ class VerifyController < ApplicationController
   before_filter :authenticate_user!
   before_filter :manage_role_required!
 
-  # :handle/verify
+  # :slug/verify
   def start
-    @user = User.by_handle(params[:handle])
+    @user = User.by_slug(params[:slug])
   end
 
-  # :handle/verify/email
+  # :slug/verify/email
   def email
-    @user = User.by_handle(params[:handle])
+    @user = User.by_slug(params[:slug])
   end
 
 end
