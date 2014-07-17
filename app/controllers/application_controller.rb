@@ -17,11 +17,15 @@ class ApplicationController < ActionController::Base
     redirect_to root_url, :alert => exception.message
   end
 
-  def after_sign_in_path_for(resource)
-    stored_location_for(resource) || recent_listings_path
+  def after_sign_in_path_for(user)
+    if !user.profile_complete?
+      user_path(user)
+    else
+      stored_location_for(user) || recent_listings_path
+    end
   end
 
-  def after_sign_out_path_for(resource)
+  def after_sign_out_path_for(user)
     login_path
   end
 

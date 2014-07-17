@@ -130,6 +130,10 @@ class User < ActiveRecord::Base
     phone_tokens.verified.count > 0
   end
 
+  def profile_complete?
+    self.about.present?
+  end
+
   def sellable?
     trial? or listing_credits > 0 or (subscriptions_count > 0 and subscriptions.active.count > 0)
   end
