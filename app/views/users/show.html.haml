@@ -23,9 +23,8 @@
         %div{class: @edit ? ['edit-hide'] : ['follow']}
           - if @edit
             = link_to 'Edit', '#', class: ['button', 'edit-button'], :'data-user-id' => @user.id
-          -# disable follow button
-          -# - else
-          -#   = link_to 'Follow', '#', class: ['button', 'follow-button'], :'data-user-id' => @user.id
+          - else
+            = link_to 'Follow', '#', class: ['button', 'follow-button'], :'data-follow-id' => @user.id
           = link_to "Message", '#', class: ['button', 'message-button', 'active'], :'data-user-id' => @user.id
           = render(partial: 'users/user_message_modal')
         .edit-show

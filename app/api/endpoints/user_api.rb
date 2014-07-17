@@ -126,6 +126,42 @@ module Endpoints
         user.increment!(:listing_credits, 1)
         {user: user.as_json(only: [:id, :listing_credits])}
       end
+
+      # user follow
+
+      desc "Get users following list"
+      get ':id/following' do
+        following = @user.following
+        logger.post("tegu.api", log_data.merge({event: 'user.following', user_id: @user.id}))
+        {user: @user.as_json(only: [:id]).merge(following: following.as_json)}
+      end
+
+      desc "Get users followers list"
+      get ':id/followers' do
+        followers = @user.followers
+        logger.post("tegu.api", log_data.merge({event: 'user.followers', user_id: @user.id}))
+        {user: @user.as_json(only: [:id]).merge(followers: followers.as_json)}
+      end
+
+      desc "Get user following state"
+      get ':id/following/:follow_ids', requirements: {follow_ids: /([0-9]+)(,[0-9]+)*/}  do
+        follow_ids = params[:follow_ids].split(',').map(&:to_i)
+        states = follow_ids.inject([]) do |states, follow_id|
+          state = UserFollow.following?(@user, follow_id) ? 'following' : 'not-following'
+          states.push({follow_id: follow_id, follow_state: state})
+          states
+        end
+        logger.post("tegu.api", log_data.merge({event: 'user.following', user_id: @user.id, follow_ids: follow_ids}))
+        {user: @user.as_json(only: [:id]).merge(following: states)}
+      end
+
+      desc "Toggle user following state"
+      put ':id/toggle_follow/:follow_id', requirements: {} do
+        mash = UserFollow.toggle_follow!(@user, params[:follow_id])
+        logger.post("tegu.api", log_data.merge({event: 'user.toggle_follow', user_id: @user.id, event: mash.event}))
+        {user: @user.as_json(only: [:id]).merge(follow_id: params[:follow_id].to_i, follow_event: mash.event,
+          follow_count: mash[:count])}
+      end
     end
 
   end

@@ -9,9 +9,10 @@
       %th Email
       %th Handle
       %th Roles
+      %th Followers
       %th Verified
-      %th # Listings
-      %th # Sold
+      %th Listings
+      %th Sold
       %th Trial
       %th Plans
       %th Credits
@@ -21,12 +22,13 @@
     - @users.each do |user|
       %tr.user
         %td= user.id
-        %td
+        %td{style: 'width: 100px !important;'}
           = user.email
           %br
           = user.oauths.present? ? "facebook: yes" : "facebook: no"
-        %td= link_to user.handle, user_path(user)
+        %td{style: 'width: 90px !important;'}= link_to user.handle, user_path(user)
         %td= user.roles.map(&:to_s).join(',')
+        %td= user.followers_count
         %td= user.verified? ? 'yes' : 'no'
         %td= user.listings.active.count
         %td= user.listings.sold.count
@@ -35,7 +37,7 @@
         %td
           = user.listing_credits
           %span.right= link_to '+1', '#', class: 'listing-credits-add', :'data-user-id' => user.id
-        %td #{time_ago_in_words(user.created_at)} ago
+        %td{style: 'width: 100px !important;'} #{time_ago_in_words(user.created_at)} ago
         %td
           = user.id == current_user.id ? 'me' : link_to('become', become_user_path(user.id))
 
