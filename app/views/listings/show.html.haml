@@ -36,7 +36,7 @@
             %a{href: "#"} Shipping
         .pills-content
           #description.content
-            %p{itemprop: "description"}= @listing.description
+            %p{itemprop: "description"}= raw @listing.description
           #reviews.content.hide
             - if @reviews.present?
               = render(partial: "reviews/review_widget", locals: {reviews: @reviews})

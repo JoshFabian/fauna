@@ -18,6 +18,7 @@
 //= require jquery.infinitescroll
 //= require async
 //= require numeral
+//= require redactor
 //= require_tree .
 
 $(document).ready(function() {

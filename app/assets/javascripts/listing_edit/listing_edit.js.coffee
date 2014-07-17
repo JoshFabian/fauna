@@ -2,6 +2,10 @@ $(document).ready ->
 
   Tegu.ListingForm.init_currency()
 
+  $("#listing_description").redactor({
+    buttons: ['bold', 'italic', 'unorderedlist', 'orderedlist', 'link', 'horizontalrule']
+  })
+
   $("input.numeral").on 'blur', (e) ->
     try
       if !$(this).val().match(/^\$/)
