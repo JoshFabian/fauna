@@ -8,9 +8,10 @@
       %th Id
       %th Email
       %th Handle
-      %th Facebook
       %th Roles
-      %th Listings
+      %th Verified
+      %th # Listings
+      %th # Sold
       %th Trial
       %th Plans
       %th Credits
@@ -20,11 +21,15 @@
     - @users.each do |user|
       %tr.user
         %td= user.id
-        %td= user.email
+        %td
+          = user.email
+          %br
+          = user.oauths.present? ? "facebook: yes" : "facebook: no"
         %td= link_to user.handle, user_path(user)
-        %td= user.oauths.present? ? 'yes' : 'no'
         %td= user.roles.map(&:to_s).join(',')
-        %td= user.listings.count
+        %td= user.verified? ? 'yes' : 'no'
+        %td= user.listings.active.count
+        %td= user.listings.sold.count
         %td= user.trial? ? 'yes' : 'no'
         %td= user.subscriptions.collect{|o| o.plan.try(:name)}.join(', ') rescue ''
         %td
