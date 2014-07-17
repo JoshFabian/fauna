@@ -19,7 +19,7 @@ $(document).ready ->
           Tegu.ListingApi.create_review(listing_id, form_data, auth_token, callback)
         (data, callback) ->
           # get user reviews route
-          Tegu.UserRoutes.user_reviews_route(user_id, auth_token, callback)
+          Tegu.UserRoute.user_reviews_route(user_id, auth_token, callback)
         (url, callback) ->
           # console.log url
           window.location.href = url

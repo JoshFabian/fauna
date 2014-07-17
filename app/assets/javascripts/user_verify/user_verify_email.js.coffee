@@ -24,7 +24,7 @@ $(document).ready ->
           console.log data
           if data.event == 'verified'
             # redirect
-            Tegu.UserVerify.goto_user_verify(current_user_slug)
+            window.location.href = Tegu.UserRoute.user_slug_route(current_user_slug, 'verify')
           else
             # show error state
             Tegu.UserVerifyEmail.show_error_state()

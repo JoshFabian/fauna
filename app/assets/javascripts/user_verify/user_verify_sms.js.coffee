@@ -29,7 +29,7 @@ $(document).ready ->
           Tegu.SmsApi.verify_token(sms_code, auth_token, callback)
         (data, callback) ->
           if data.event == 'verified'
-            Tegu.UserVerify.goto_user_verify(current_user_slug)
+            window.location.href = Tegu.UserRoute.user_slug_route(current_user_slug, 'verify')
       ],
       # optional callback
       (err, results) ->
