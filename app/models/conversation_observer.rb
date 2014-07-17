@@ -6,6 +6,7 @@ class ConversationObserver < ActiveRecord::Observer
   def after_create(object)
     if object.is_a?(Conversation)
       # conversation created
+      SegmentConversation.track_conversation_created(object)
       logger.post("tegu.app", log_data.merge({event: 'conversation.created', id: object.id}))
     end
     if object.is_a?(Message)
