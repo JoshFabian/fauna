@@ -5,7 +5,9 @@ class SegmentListing
 
   def self.track_listing_create(listing)
     raise Exception, "test environment" if Rails.env.test?
-    hash = {user_id: listing.user_id, event: 'Listing Created', properties: {category: 'Listing'}}
+    category = listing.categories.roots.first
+    hash = {user_id: listing.user_id, event: 'Listing Created', properties: {category: 'Listing',
+      label: category.try(:name)}}
     result = track(hash)
     logger.post("tegu.app", log_data.merge(hash))
     result
