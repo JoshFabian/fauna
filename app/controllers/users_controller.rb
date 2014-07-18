@@ -32,6 +32,8 @@ class UsersController < ApplicationController
 
     @tab = 'home'
 
+    @title = "#{@user.handle}"
+
     respond_to do |format|
       format.html
     end

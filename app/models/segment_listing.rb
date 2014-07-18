@@ -43,9 +43,11 @@ class SegmentListing
     product = {id: listing.id, sku: listing.id, name: listing.title, price: revenue, quantity: 1}
     properties = {id: listing.id, category: 'Listing', total: total, revenue: revenue, shipping: shipping,
       tax: 0, products: {"0" => product}}
+    # temporary event until 'Completed Order' is working
+    hash = {user_id: payment.buyer_id, event: 'Purchased Product', properties: properties}
+    result = track(hash)
     # todo: completed order doesn't seem to work
     hash = {user_id: payment.buyer_id, event: 'Completed Order', properties: properties}
-    hash = {user_id: payment.buyer_id, event: 'Purchased Product', properties: properties}
     result = track(hash)
     logger.post("tegu.app", log_data.merge(hash))
     result
