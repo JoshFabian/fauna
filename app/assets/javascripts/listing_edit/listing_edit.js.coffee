@@ -53,7 +53,7 @@ $(document).ready ->
   $("form.listing-edit input[type='submit']").on 'click', (e) ->
     listing_form = $(this).closest('form')
     image_count = $(listing_form).find(".image-grid li:not(.empty) img").length
-    console.log "images:#{image_count} ..."
+    console.log "listing images:#{image_count} ..."
     if image_count == 0
       e.preventDefault()
       # validate form to show validate errors

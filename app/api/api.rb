@@ -41,6 +41,7 @@ class Api < Grape::API
   mount Endpoints::ReportApi
   mount Endpoints::SmsApi
   mount Endpoints::StripeApi
+  mount Endpoints::TrackingApi
   mount Endpoints::UserApi
   mount Endpoints::WaitlistApi
 end

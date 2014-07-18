@@ -34,6 +34,17 @@ class SegmentListing
     result
   end
 
+  def self.track_listing_cart_remove(listing, options={})
+    raise Exception, "test environment" if Rails.env.test?
+    properties = {id: listing.id, sku: listing.id, name: listing.title, price: listing.price/100.0, quantity: 1,
+      category: 'Listing'}
+    user_id = options[:by].present? ? options[:by].id : 0
+    hash = {user_id: user_id, event: 'Removed Product', properties: properties}
+    result = track(hash)
+    logger.post("tegu.app", log_data.merge(hash))
+    result
+  end
+
   def self.track_listing_purchased(payment)
     raise Exception, "test environment" if Rails.env.test?
     listing = payment.listing

@@ -13,7 +13,7 @@ class Payment < ActiveRecord::Base
 
   aasm column: 'state' do
     state :init, initial: true
-    state :created
+    state :created, enter: :event_state_created
     state :completed, enter: :event_state_completed
     state :canceled, enter: :event_state_canceled
     state :exception, enter: :event_state_exception
@@ -35,6 +35,11 @@ class Payment < ActiveRecord::Base
     end
   end
 
+  def event_state_created
+    SegmentListing.track_listing_cart_add(listing)
+  rescue Exception => e
+  end
+
   def event_state_completed
     self.completed_at = Time.zone.now
     SegmentListing.track_listing_purchased(self)
@@ -43,6 +48,7 @@ class Payment < ActiveRecord::Base
 
   def event_state_canceled
     self.canceled_at = Time.zone.now
+    SegmentListing.track_listing_cart_remove(listing)
   end
 
   def event_state_exception
