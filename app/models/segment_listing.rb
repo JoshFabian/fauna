@@ -4,19 +4,50 @@ class SegmentListing
   # track events
 
   def self.track_listing_created(listing)
-    raise Exception, "test environment" if Rails.env.test? or Rails.env.development?
-    result = track(user_id: listing.user_id, event: 'listing_created')
-    logger.post("tegu.app", log_data.merge({event: 'segmentio.listing_created', listing_id: listing.id}))
+    raise Exception, "test environment" if Rails.env.test?
+    hash = {user_id: listing.user_id, event: 'Listing Created', properties: {category: 'Listing'}}
+    result = track(hash)
+    logger.post("tegu.app", log_data.merge(hash))
     result
   rescue Exception => e
     false
   end
 
+  def self.track_listing_viewed(listing, options={})
+    raise Exception, "test environment" if Rails.env.test?
+    properties = {id: listing.id, sku: listing.id, name: listing.title, price: listing.price/100.0, category: 'Listing'}
+    user_id = options[:by].present? ? options[:by].id : 0
+    hash = {user_id: user_id, event: 'Viewed Product', properties: properties}
+    result = track(hash)
+    logger.post("tegu.app", log_data.merge(hash))
+    result
+  end
+
+  def self.track_listing_cart_add(listing, options={})
+    raise Exception, "test environment" if Rails.env.test?
+    properties = {id: listing.id, sku: listing.id, name: listing.title, price: listing.price/100.0, quantity: 1,
+      category: 'Listing'}
+    user_id = options[:by].present? ? options[:by].id : 0
+    hash = {user_id: user_id, event: 'Added Product', properties: properties}
+    result = track(hash)
+    logger.post("tegu.app", log_data.merge(hash))
+    result
+  end
+
   def self.track_listing_purchased(payment)
-    raise Exception, "test environment" if Rails.env.test? or Rails.env.development?
-    result = track(user_id: payment.buyer_id, event: 'listing_purchased')
-    logger.post("tegu.app", log_data.merge({event: 'segmentio.listing_purchased', user_id: payment.buyer_id,
-      listing_id: payment.listing_id}))
+    raise Exception, "test environment" if Rails.env.test?
+    listing = payment.listing
+    revenue = payment.listing_price/100.0
+    shipping = payment.shipping_price/100.0
+    total = (payment.listing_price+payment.shipping_price)/100.0
+    product = {id: listing.id, sku: listing.id, name: listing.title, price: revenue, quantity: 1}
+    properties = {id: listing.id, category: 'Listing', total: total, revenue: revenue, shipping: shipping,
+      tax: 0, products: {"0" => product}}
+    # todo: completed order doesn't seem to work
+    hash = {user_id: payment.buyer_id, event: 'Completed Order', properties: properties}
+    hash = {user_id: payment.buyer_id, event: 'Purchased Product', properties: properties}
+    result = track(hash)
+    logger.post("tegu.app", log_data.merge(hash))
     result
   rescue Exception => e
     false
