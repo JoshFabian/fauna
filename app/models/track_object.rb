@@ -1,12 +1,12 @@
 class TrackObject
 
-  def self.listing_view!(listing_id, by_user_id)
-    add("user:#{by_user_id}:listings:view", listing_id)
+  def self.listing_view!(listing_id, options={})
+    add("user:#{options[:by]}:listings:view", listing_id)
   end
 
-  def self.profile_view!(user_id, by_user_id)
-    return 0 if user_id == by_user_id
-    add("user:#{by_user_id}:profiles:view", user_id)
+  def self.profile_view!(user_id, options={})
+    return 0 if options[:by].blank? or user_id == options[:by]
+    add("user:#{options[:by]}:profiles:view", user_id)
   end
 
   def self.flush

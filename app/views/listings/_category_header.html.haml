@@ -1,6 +1,6 @@
 .category-header.small-12.columns{:style => "background-image: url('#{category_cover_image(@category)}')"}
   .overlay
-  .category-nav
+  .category-nav{:'data-category-id' => @category.try(:id).to_i}
     .row
       %h1= @category.name
       - if @subcategories.present?

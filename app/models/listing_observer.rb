@@ -4,9 +4,9 @@ class ListingObserver < ActiveRecord::Observer
   def after_create(listing)
     # update user listing credits
     user = listing.user
-    user.decrement!(:listing_credits, 1)
+    user.decrement!(:listing_credits, 1) if user.listing_credits > 0
     # track listing
-    SegmentListing.track_listing_created(listing)
+    SegmentListing.track_listing_create(listing)
   rescue Exception => e
   end
 

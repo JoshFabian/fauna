@@ -3,7 +3,7 @@ class SegmentListing
 
   # track events
 
-  def self.track_listing_created(listing)
+  def self.track_listing_create(listing)
     raise Exception, "test environment" if Rails.env.test?
     hash = {user_id: listing.user_id, event: 'Listing Created', properties: {category: 'Listing'}}
     result = track(hash)
@@ -13,7 +13,17 @@ class SegmentListing
     false
   end
 
-  def self.track_listing_viewed(listing, options={})
+  def self.track_category_view(category, options={})
+    raise Exception, "test environment" if Rails.env.test?
+    properties = {id: category.id, category: 'Listing', label: category.try(:name)}
+    user_id = options[:by].present? ? options[:by].id : 0
+    hash = {user_id: user_id, event: 'Viewed Category', properties: properties}
+    result = track(hash)
+    logger.post("tegu.app", log_data.merge(hash))
+    result
+  end
+
+  def self.track_listing_view(listing, options={})
     raise Exception, "test environment" if Rails.env.test?
     category = listing.categories.roots.first
     properties = {id: listing.id, sku: listing.id, name: listing.title, price: listing.price/100.0,
@@ -49,7 +59,7 @@ class SegmentListing
     result
   end
 
-  def self.track_listing_purchased(payment)
+  def self.track_listing_purchase(payment)
     raise Exception, "test environment" if Rails.env.test?
     listing = payment.listing
     revenue = payment.listing_price/100.0

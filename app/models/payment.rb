@@ -42,7 +42,7 @@ class Payment < ActiveRecord::Base
 
   def event_state_completed
     self.completed_at = Time.zone.now
-    SegmentListing.track_listing_purchased(self)
+    SegmentListing.track_listing_purchase(self)
   rescue Exception => e
   end
 

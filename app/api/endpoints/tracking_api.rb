@@ -14,7 +14,14 @@ module Endpoints
       desc "Track listing view"
       put 'listings/:id/view' do
         listing = Listing.find(params.id)
-        SegmentListing.track_listing_viewed(listing, by: current_user)
+        SegmentListing.track_listing_view(listing, by: current_user)
+        {tracking: 1}
+      end
+
+      desc "Track category view"
+      put 'categories/:id/view' do
+        category = Category.find(params.id)
+        SegmentListing.track_category_view(category, by: current_user)
         {tracking: 1}
       end
     end
