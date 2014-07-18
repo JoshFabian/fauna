@@ -15,11 +15,20 @@ class ListingTest < ActiveSupport::TestCase
       @listing.state.must_equal 'active'
     end
 
-    it "should decrement user listing_credits" do
+    it "should decrement user listing_credits when credits gt 0" do
       @user.listing_credits.must_equal 3
       @listing = @user.listings.create!(title: "Title 2", price: 100)
       @user.reload
       @user.listing_credits.must_equal 2
+    end
+
+    it "should not decrement user listing_credits when credits lte 0" do
+      @user.update_attributes(listing_credits: 0)
+      @user.reload
+      @user.listing_credits.must_equal 0
+      @listing = @user.listings.create!(title: "Title 2", price: 100)
+      @user.reload
+      @user.listing_credits.must_equal 0
     end
   end
 

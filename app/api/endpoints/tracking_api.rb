@@ -24,6 +24,13 @@ module Endpoints
         SegmentListing.track_category_view(category, by: current_user)
         {tracking: 1}
       end
+
+      desc "Track user profile view"
+      put 'users/:id/profile/view' do
+        user = User.find(params.id)
+        SegmentUser.track_profile_view(user, by: current_user)
+        {tracking: 1}
+      end
     end
   end
 end

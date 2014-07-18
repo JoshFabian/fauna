@@ -33,6 +33,17 @@ class SegmentUser
     false
   end
 
+  def self.track_profile_view(user, options={})
+    raise Exception, "test environment" if Rails.env.test?
+    user_id = options[:by].present? ? options[:by].id : 0
+    hash = {user_id: user_id, event: 'User Profile View', properties: {category: 'User', label: user.handle}}
+    result = track(hash)
+    logger.post("tegu.app", log_data.merge(hash))
+    result
+  rescue Exception => e
+    false
+  end
+
   protected
 
   def self.track(hash)
