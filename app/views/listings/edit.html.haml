@@ -1,6 +1,15 @@
 .row
   .new-listing.small-8.columns.small-centered
     %h3.text-center= @title
+    .listing-welcome
+      %h4.text-center Guidelines
+      %p Please follow our marketplace guidelines to help maintain an exceptional experience for buyers and sellers.
+      %ul
+        %li Each listing should represent a single product just like it would on eBay or Amazon.
+        %li Every listing is linked directly to your Paypal account allowing shoppers to pay you directly with a click.
+        %li The price paid to you via Paypal will be the sum of your price and the shipping option the buyer selects, you keep 100% of the money, we DO NOT take a cut.
+        %li Do not put any contact information or links in your listing, shoppers can checkout directly via your Paypal and reach you via private message.
+
     = form_for(@listing, as: :listing, html: {class: "form-validation listing-edit", :'data-user-id' => current_user.id.to_i, :'data-listing-id' => @listing.id.to_i}) do |f|
       .rounded-panel
         .listing-field

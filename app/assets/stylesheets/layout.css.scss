@@ -253,6 +253,33 @@
   margin-top: 14px;
   text-align: center;
 }
+.listing-welcome {
+  background: #ddd;
+  border-radius: 3px;
+  margin-bottom: 15px;
+  padding: 10px 20px;
+  color: #333;
+  position: absolute;
+  right: -387px;
+  left: 690px;
+  h4 {
+    color: #333;
+  }
+  ul {
+    list-style-type: circle;
+
+    li {
+      margin-bottom: 10px;
+      border-bottom: 1px solid darken(#ddd,10);
+      padding-bottom: 10px;
+      &:last-child {
+        margin-bottom: 0;
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+    }
+  }
+}
 .listing-field {
   @extend .clearfix;
   .image-grid {
