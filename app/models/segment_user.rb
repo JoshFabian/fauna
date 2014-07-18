@@ -23,6 +23,15 @@ class SegmentUser
     false
   end
 
+  def self.track_login(user)
+    raise Exception, "test environment" if Rails.env.test?
+    result = track(user_id: user.id, event: 'user_login')
+    logger.post("tegu.app", log_data.merge({event: 'segmentio.user_login', user_id: user.id}))
+    result
+  rescue Exception => e
+    false
+  end
+
   protected
 
   def self.track(hash)

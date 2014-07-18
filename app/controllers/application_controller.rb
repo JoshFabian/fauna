@@ -18,6 +18,9 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(user)
+    # segment io events
+    SegmentUser.identify(user)
+    SegmentUser.track_login(user)
     if !user.profile_complete?
       user_path(user)
     else
