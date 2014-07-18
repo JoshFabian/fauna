@@ -9,6 +9,8 @@ class ListingsController < ApplicationController
   def index
     @listings = Listing.active.order('id desc').limit(20)
 
+    @title = "Listings"
+
     respond_to do |format|
       format.html { render(action: :index) }
     end
@@ -20,6 +22,8 @@ class ListingsController < ApplicationController
     @recent_categories = Category.roots.with_listings.map do |category|
       mash = Hashie::Mash.new(category: category, listings: category.listings.active.order('id desc').limit(4))
     end
+
+    @title = "Recent Listings"
 
     respond_to do |format|
       format.html
@@ -38,6 +42,8 @@ class ListingsController < ApplicationController
 
     @subcategories = @category.children.with_listings
 
+    @title = [@category.name, @subcategory.try(:name)].compact.join(" : ")
+
     respond_to do |format|
       format.html { render(action: :index) }
     end
@@ -52,6 +58,8 @@ class ListingsController < ApplicationController
       @listings = []
     end
 
+    @title = "Search Results : #{@query}"
+
     respond_to do |format|
       format.html { render(action: :index) }
     end
@@ -62,6 +70,8 @@ class ListingsController < ApplicationController
     @user = User.by_slug(params[:slug])
     @term = {term: {user_id: @user.id}}
     @listings = Listing.search(filter: @term).records.active
+
+    @title = "Listings by #{@user.handle}"
 
     respond_to do |format|
       format.html { render(action: :index) }

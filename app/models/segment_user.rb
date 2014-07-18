@@ -6,7 +6,7 @@ class SegmentUser
     raise Exception, "test environment" if Rails.env.test?
     hash = {user_id: user.id, traits: {name: user.full_name, email: user.email, created_at: user.created_at}}
     result = Analytics.identify(hash)
-    logger.post("tegu.app", log_data.merge({event: 'segmentio.user_identify', user_id: user.id}))
+    logger.post("tegu.app", log_data.merge(hash))
     result
   rescue Exception => e
     false
@@ -16,8 +16,9 @@ class SegmentUser
 
   def self.track_signup(user)
     raise Exception, "test environment" if Rails.env.test?
-    result = track(user_id: user.id, event: 'user_signup')
-    logger.post("tegu.app", log_data.merge({event: 'segmentio.user_signup', user_id: user.id}))
+    hash = {user_id: user.id, event: 'User Signup', properties: {category: 'User'}}
+    result = track(hash)
+    logger.post("tegu.app", log_data.merge(hash))
     result
   rescue Exception => e
     false
@@ -25,8 +26,8 @@ class SegmentUser
 
   def self.track_login(user)
     raise Exception, "test environment" if Rails.env.test?
-    result = track(user_id: user.id, event: 'user_login')
-    logger.post("tegu.app", log_data.merge({event: 'segmentio.user_login', user_id: user.id}))
+    result = track(user_id: user.id, event: 'User Login', properties: {category: 'User'})
+    logger.post("tegu.app", log_data.merge(hash))
     result
   rescue Exception => e
     false
