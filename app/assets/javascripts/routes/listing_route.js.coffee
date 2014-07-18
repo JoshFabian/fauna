@@ -1,5 +1,5 @@
 class Tegu.ListingRoute
-  @new_path: () ->
+  @new_route: () ->
     "/listings/new"
 
   @show_route: (user_slug, listing_id, token, callback) ->

@@ -26,7 +26,7 @@ class Tegu.Plan
             (data, callback) ->
               console.log data
               if data.event == 'buy' or data.event == 'subscribe'
-                window.location.href = Tegu.ListingRoute.new_path()
+                window.location.href = Tegu.ListingRoute.new_route()
           ],
           # optional callback
           (err, results) ->
