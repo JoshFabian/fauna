@@ -21,6 +21,8 @@
             %li Recommended image size is 600 (width) x 400 (height).
           %ul.image-grid.small-block-grid-5
             = render(partial: "listings/edit_images")
+          -# custom error message
+          %label.error.no-images{style: 'display: none;'} At least one image is required
         %hr
         .listing-field
           %label Description

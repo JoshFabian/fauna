@@ -25,6 +25,13 @@ module Endpoints
         end
       end
 
+      desc "Get listing"
+      get ':id' do
+        listing = Listing.find(params[:id])
+        logger.post("tegu.api", log_data.merge({event: 'listing.get', listing_id: listing.id}))
+        {listing: listing}
+      end
+
       desc "Create listing"
       post '' do
         @listing = current_user.listings.create(listing_params)
@@ -156,13 +163,6 @@ module Endpoints
         logger.post("tegu.api", log_data.merge({event: 'listing.shipping_price', listing_id: @listing.id}))
         {listing: {id: @listing.id, price: @listing.price, shipping_price: @shipping_price, total_price: @total_price,
           shipping_price_string: @shipping_price_string, total_price_string: @total_price_string}}
-      end
-
-      desc "Get listing route"
-      get ':id/show/route' do
-        listing = Listing.find(params[:id])
-        route = Rails.application.routes.url_helpers.user_listing_path(listing.user, listing)
-        {route: route}
       end
     end
   end

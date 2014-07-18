@@ -1,6 +1,6 @@
 class Tegu.ListingApi
-  @get_show_route: (listing_id, token, callback = null) ->
-    api = "/api/v1/listings/#{listing_id}/show/route?token=#{token}"
+  @get: (listing_id, token, callback = null) ->
+    api = "/api/v1/listings/#{listing_id}?token=#{token}"
     $.ajax api,
       type: 'GET'
       dataType: 'json'

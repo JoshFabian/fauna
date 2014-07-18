@@ -31,11 +31,10 @@ $(document).ready ->
             Tegu.ListingApi.create(form_data, auth_token, callback)
           (data, callback) ->
             # console.log data
-            Tegu.ListingApi.get_show_route(data.listing.id, auth_token, callback)
-          (data, callback) ->
-            # console.log data
+            Tegu.ListingRoute.show_route(current_user_slug, data.listing.id, auth_token, callback)
+          (url, callback) ->
             Tegu.ListingForm.enable_form()
-            window.location.href = data.route
+            window.location.href = url
         ]
       else
         console.log("listing:#{listing_id} update ...")
@@ -45,12 +44,25 @@ $(document).ready ->
             Tegu.ListingApi.update(listing_id, form_data, auth_token, callback)
           (data, callback) ->
             # console.log data
-            Tegu.ListingApi.get_show_route(listing_id, auth_token, callback)
-          (data, callback) ->
-            console.log data
+            Tegu.ListingRoute.show_route(current_user_slug, listing_id, auth_token, callback)
+          (url, callback) ->
             Tegu.ListingForm.enable_form()
-            window.location.href = data.route
+            window.location.href = url
         ]
+
+  $("form.listing-edit input[type='submit']").on 'click', (e) ->
+    listing_form = $(this).closest('form')
+    image_count = $(listing_form).find(".image-grid li:not(.empty) img").length
+    console.log "images:#{image_count} ..."
+    if image_count == 0
+      e.preventDefault()
+      # validate form to show validate errors
+      $(listing_form).valid()
+      # show custom error message
+      Tegu.ListingForm.show_no_images_error_message()
+    else
+      # hide error message
+      Tegu.ListingForm.hide_no_images_error_message()
 
   $(document).on 'click', 'a.image-delete', (e) ->
     e.preventDefault()

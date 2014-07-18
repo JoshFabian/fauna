@@ -53,3 +53,9 @@ class Tegu.ListingForm
 
   @replace_images: (data) ->
     $(".image-grid").html(data)
+
+  @show_no_images_error_message: () ->
+    $(".no-images").show()
+
+  @hide_no_images_error_message: () ->
+    $(".no-images").hide()

@@ -1,11 +1,11 @@
-class Tegu.ListingRoutes
+class Tegu.ListingRoute
   @new_path: () ->
     "/listings/new"
 
-  @show_path: (listing_id, token, callback) ->
+  @show_route: (user_slug, listing_id, token, callback) ->
     async.waterfall [
       (cb) ->
         Tegu.ListingApi.get(listing_id, token, cb)
       (data, cb) ->
-        callback(null, "/listings/#{data.listing.slug}")
+        callback(null, "/#{user_slug}/listings/#{data.listing.slug}")
     ]
