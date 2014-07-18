@@ -137,6 +137,9 @@
       float: left;
       font-size: 14px;
       color: #a2a3a3;
+      width: 160px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .price {
       float: right;
