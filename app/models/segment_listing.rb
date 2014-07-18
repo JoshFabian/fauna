@@ -12,6 +12,16 @@ class SegmentListing
     false
   end
 
+  def self.track_listing_purchased(payment)
+    raise Exception, "test environment" if Rails.env.test? or Rails.env.development?
+    result = track(user_id: payment.buyer_id, event: 'listing_purchased')
+    logger.post("tegu.app", log_data.merge({event: 'segmentio.listing_purchased', user_id: payment.buyer_id,
+      listing_id: payment.listing_id}))
+    result
+  rescue Exception => e
+    false
+  end
+
   protected
 
   def self.track(hash)
