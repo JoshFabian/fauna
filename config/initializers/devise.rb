@@ -272,3 +272,11 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   config.omniauth_path_prefix = '/auth'
 end
+
+# devise auth callback failure handler
+OmniAuth.config.on_failure = Proc.new do |env|
+  env['devise.mapping'] = Devise.mappings[:user]
+  controller_name  = ActiveSupport::Inflector.camelize(env['devise.mapping'].controllers[:omniauth_callbacks])
+  controller_klass = ActiveSupport::Inflector.constantize("#{controller_name}Controller")
+  controller_klass.action(:failure).call(env)
+end
