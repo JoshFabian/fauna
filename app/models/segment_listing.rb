@@ -15,7 +15,9 @@ class SegmentListing
 
   def self.track_listing_viewed(listing, options={})
     raise Exception, "test environment" if Rails.env.test?
-    properties = {id: listing.id, sku: listing.id, name: listing.title, price: listing.price/100.0, category: 'Listing'}
+    category = listing.categories.roots.first
+    properties = {id: listing.id, sku: listing.id, name: listing.title, price: listing.price/100.0,
+      category: 'Listing', label: category.try(:name)}
     user_id = options[:by].present? ? options[:by].id : 0
     hash = {user_id: user_id, event: 'Viewed Product', properties: properties}
     result = track(hash)
@@ -25,8 +27,9 @@ class SegmentListing
 
   def self.track_listing_cart_add(listing, options={})
     raise Exception, "test environment" if Rails.env.test?
+    category = listing.categories.roots.first
     properties = {id: listing.id, sku: listing.id, name: listing.title, price: listing.price/100.0, quantity: 1,
-      category: 'Listing'}
+      category: 'Listing', label: category.try(:name)}
     user_id = options[:by].present? ? options[:by].id : 0
     hash = {user_id: user_id, event: 'Added Product', properties: properties}
     result = track(hash)
@@ -36,8 +39,9 @@ class SegmentListing
 
   def self.track_listing_cart_remove(listing, options={})
     raise Exception, "test environment" if Rails.env.test?
+    category = listing.categories.roots.first
     properties = {id: listing.id, sku: listing.id, name: listing.title, price: listing.price/100.0, quantity: 1,
-      category: 'Listing'}
+      category: 'Listing', label: category.try(:name)}
     user_id = options[:by].present? ? options[:by].id : 0
     hash = {user_id: user_id, event: 'Removed Product', properties: properties}
     result = track(hash)
