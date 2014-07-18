@@ -2,12 +2,14 @@
   .text-center
     %h5
       #{User.count} Users
+      == :
+      #{Listing.active.count} Listings
 
   %table.tiny.small-12.columns#users
     %tr
       %th Id
-      %th Email
-      %th Handle
+      %th Handle:Email
+      %th Facebook
       %th Roles
       %th Followers
       %th Verified
@@ -22,11 +24,11 @@
     - @users.each do |user|
       %tr.user
         %td= user.id
-        %td{style: 'width: 100px !important;'}
-          = user.email
+        %td{style: 'width: 130px !important;'}
+          = link_to user.handle, user_path(user)
           %br
-          = user.oauths.present? ? "facebook: yes" : "facebook: no"
-        %td{style: 'width: 90px !important;'}= link_to user.handle, user_path(user)
+          = user.email
+        %td= user.oauths.present? ? "yes" : "no"
         %td= user.roles.map(&:to_s).join(',')
         %td= user.followers_count
         %td= user.verified? ? 'yes' : 'no'

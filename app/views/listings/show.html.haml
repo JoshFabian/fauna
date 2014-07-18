@@ -1,5 +1,4 @@
-- content_for :title do
-  = @listing.title
+- content_for :title, @title
 
 - content_for :facebook_meta_tags do
   %meta{property: "og:title", content: @listing.title}
