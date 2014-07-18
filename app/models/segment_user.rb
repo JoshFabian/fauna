@@ -16,7 +16,7 @@ class SegmentUser
 
   def self.track_signup(user)
     raise Exception, "test environment" if Rails.env.test?
-    hash = {user_id: user.id, event: 'User Signup', properties: {category: 'User'}}
+    hash = {user_id: user.id, event: 'User Signup', properties: {category: 'User', label: user.handle}}
     result = track(hash)
     logger.post("tegu.app", log_data.merge(hash))
     result
@@ -26,7 +26,7 @@ class SegmentUser
 
   def self.track_login(user)
     raise Exception, "test environment" if Rails.env.test?
-    result = track(user_id: user.id, event: 'User Login', properties: {category: 'User'})
+    result = track(user_id: user.id, event: 'User Login', properties: {category: 'User', label: user.handle})
     logger.post("tegu.app", log_data.merge(hash))
     result
   rescue Exception => e
