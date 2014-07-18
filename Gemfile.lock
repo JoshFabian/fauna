@@ -341,6 +341,7 @@ GEM
       ffi (>= 0.5.0)
     rdoc (4.1.1)
       json (~> 1.4)
+    redis (3.1.0)
     ref (1.0.5)
     rest-client (1.6.7)
       mime-types (>= 1.16)
@@ -488,6 +489,7 @@ DEPENDENCIES
   rails (= 4.0.2)
   rails-observers
   rb-fsevent
+  redis
   rspec-rails (~> 2.0)
   rubber
   sass-rails (~> 4.0.0)
