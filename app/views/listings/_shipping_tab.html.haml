@@ -10,12 +10,12 @@
   %tbody
     - @listing.shipping_prices.each do |hash|
       - location = hash[0]
-      - price = hash[1].to_f
+      - price = hash[1]
       %tr
-        %td.shipping-destination= string_titleize(hash[0])
+        %td.shipping-destination= string_titleize(location)
         %td.shipping-primary-price
-          - if price > 0
-            %span.currency-value= number_to_currency(hash[1].to_f)
+          - if price.present?
+            %span.currency-value= number_to_currency(price.to_f)
             %span.currency-code USD
           - else
             %span Not available
