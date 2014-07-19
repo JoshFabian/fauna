@@ -669,6 +669,11 @@ body.editing {
       &:first-child {
         margin-left: 0;
       }
+      &.active {
+        a {
+          color: #222;
+        }
+      }
     }
   }
 }
