@@ -16,9 +16,11 @@
 //= require jquery.validate
 //= require cloudinary
 //= require jquery.infinitescroll
+//= require jquery.textchange.min
 //= require async
 //= require numeral
 //= require redactor
+//= require underscore.string.min
 //= require_tree .
 
 $(document).ready(function() {
