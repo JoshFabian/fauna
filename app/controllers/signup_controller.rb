@@ -1,4 +1,5 @@
 class SignupController < ApplicationController
+  include Loggy
   respond_to :html
 
   # before_filter :check_invite!, only: [:create_facebook, :create_password]
@@ -38,9 +39,14 @@ class SignupController < ApplicationController
   def create_facebook
     # create user
     @user = User.create(user_params)
-    # build oauth and save
-    @oauth = Oauth.from_omniauth(session["omniauth.auth"].merge(user_id: @user.id))
-    @oauth.save
+    begin
+      # build oauth and save
+      @oauth = Oauth.from_omniauth(session["omniauth.auth"].merge(user_id: @user.id))
+      @oauth.save
+    rescue Exception => e
+      # log exception
+      logger.post("tegu.app", log_data.merge({event: "oauth.error", message: e.message}))
+    end
     # track invite
     # current_invite.signup!(@user) if current_invite
     # sign user in
