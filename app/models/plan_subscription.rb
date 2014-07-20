@@ -1,4 +1,4 @@
-class Subscription < ActiveRecord::Base
+class PlanSubscription < ActiveRecord::Base
   include AASM
   include Loggy
 

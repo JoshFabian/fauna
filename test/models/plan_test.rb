@@ -47,7 +47,7 @@ class PlanTest < ActiveSupport::TestCase
   describe "subscriptions" do
     before do
       @user = Fabricate(:user)
-      @plan = Plan.create!(name: "name", amount: 5000, subscription: true, interval: 'month')
+      @plan = Plan.create!(name: "$50/monthly", amount: 5000, subscription: true, interval: 'month')
     end
 
     it "should create subscription" do

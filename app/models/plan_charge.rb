@@ -8,7 +8,7 @@ class PlanCharge < ActiveRecord::Base
   store :data, accessors: [:stripe]
 
   validates :plan, presence: true
-  validates :user, presence: true, uniqueness: {scope: :plan}
+  validates :user, presence: true
 
   delegate :amount, to: :plan
 

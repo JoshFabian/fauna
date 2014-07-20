@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140717164112) do
+ActiveRecord::Schema.define(version: 20140719184629) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -232,6 +232,20 @@ ActiveRecord::Schema.define(version: 20140717164112) do
   add_index "plan_charges", ["state"], name: "index_plan_charges_on_state"
   add_index "plan_charges", ["user_id"], name: "index_plan_charges_on_user_id"
 
+  create_table "plan_subscriptions", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "plan_id"
+    t.string   "state",      limit: 20
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "plan_subscriptions", ["created_at"], name: "index_plan_subscriptions_on_created_at"
+  add_index "plan_subscriptions", ["plan_id"], name: "index_plan_subscriptions_on_plan_id"
+  add_index "plan_subscriptions", ["state"], name: "index_plan_subscriptions_on_state"
+  add_index "plan_subscriptions", ["user_id"], name: "index_plan_subscriptions_on_user_id"
+
   create_table "plans", force: true do |t|
     t.string   "name",                limit: 50
     t.string   "state",               limit: 20
@@ -295,20 +309,6 @@ ActiveRecord::Schema.define(version: 20140717164112) do
   add_index "reviews", ["created_at"], name: "index_reviews_on_created_at"
   add_index "reviews", ["listing_id"], name: "index_reviews_on_listing_id"
   add_index "reviews", ["user_id"], name: "index_reviews_on_user_id"
-
-  create_table "subscriptions", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "plan_id"
-    t.string   "state",      limit: 20
-    t.text     "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "subscriptions", ["created_at"], name: "index_subscriptions_on_created_at"
-  add_index "subscriptions", ["plan_id"], name: "index_subscriptions_on_plan_id"
-  add_index "subscriptions", ["state"], name: "index_subscriptions_on_state"
-  add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id"
 
   create_table "user_avatar_images", force: true do |t|
     t.integer  "user_id"

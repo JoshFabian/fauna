@@ -2,7 +2,7 @@ class Plan < ActiveRecord::Base
   include AASM
   include Loggy
 
-  has_many :subscriptions, dependent: :destroy
+  has_many :subscriptions,class_name: "PlanSubscription",  dependent: :destroy
   has_many :charges, class_name: "PlanCharge", dependent: :destroy
   
   validates :amount, presence: true

@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   has_many :phone_tokens
 
   has_many :charges, class_name: "PlanCharge", dependent: :destroy
-  has_many :subscriptions, dependent: :destroy
+  has_many :subscriptions, class_name: "PlanSubscription", dependent: :destroy
 
   has_many :authored_reviews, class_name: "Review", dependent: :destroy
 
