@@ -75,6 +75,8 @@ class UsersController < ApplicationController
     end
     @filter = {filter: {bool: {must: @terms}}}
     @listings = Listing.search(@filter).records.where(state: @state)
+
+    @title = "#{@user.handle} | Manage Listings"
   end
 
   # GET /:slug/messages

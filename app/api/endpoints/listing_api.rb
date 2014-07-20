@@ -117,6 +117,9 @@ module Endpoints
         begin
           @listing.send("#{params.event}")
           @listing.save
+          if params.event.match(/sold/)
+            SegmentListing.track_listing_remove(@listing)
+          end
         rescue Exception => e
         end
         logger.post("tegu.api", log_data.merge({event: 'listing.event', listing_id: @listing.id,

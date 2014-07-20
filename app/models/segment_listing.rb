@@ -15,6 +15,18 @@ class SegmentListing
     false
   end
 
+  def self.track_listing_remove(listing)
+    raise Exception, "test environment" if Rails.env.test?
+    category = listing.categories.roots.first
+    hash = {user_id: listing.user_id, event: 'Listing Removed', properties: {category: 'Listing',
+      label: category.try(:name)}}
+    result = track(hash)
+    logger.post("tegu.app", log_data.merge(hash))
+    result
+  rescue Exception => e
+    false
+  end
+
   def self.track_category_view(category, options={})
     raise Exception, "test environment" if Rails.env.test?
     properties = {id: category.id, category: 'Listing', label: category.try(:name)}
