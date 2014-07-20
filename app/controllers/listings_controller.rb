@@ -4,15 +4,16 @@ class ListingsController < ApplicationController
   before_filter :seller_verify!, only: [:new]
   before_filter :seller_paid!, only: [:new]
   before_filter :store_location!
+  before_filter :admin_role_required!, only: [:manage]
 
-  # GET /listings
-  def index
-    @listings = Listing.active.order('id desc').limit(20)
+  # GET /listings/manage
+  def manage
+    @listings = Listing.order('id desc').page(params[:page]).per(20)
 
-    @title = "Listings"
+    @title = "Manage Listings"
 
     respond_to do |format|
-      format.html { render(action: :index) }
+      format.html
     end
   end
 
