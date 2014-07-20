@@ -76,6 +76,12 @@ class UsersController < ApplicationController
     @filter = {filter: {bool: {must: @terms}}}
     @listings = Listing.search(@filter).records.where(state: @state)
 
+    if @state == 'sold'
+      # special case
+      @listings = Listing.where(state: @state, user_id: @user.id)
+      @listings = @listings.select{ |o| o.categories.collect(&:id).include?(@category_id.to_i) } if @category_id.present?
+    end
+
     @title = "#{@user.handle} | Manage Listings"
   end
 
