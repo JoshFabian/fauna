@@ -10,7 +10,7 @@ class ListingsController < ApplicationController
   def manage
     @listings = Listing.order('id desc').page(params[:page]).per(20)
 
-    @title = "Manage Listings"
+    @title = "Manage Listings | Admin"
 
     respond_to do |format|
       format.html
@@ -43,7 +43,7 @@ class ListingsController < ApplicationController
 
     @subcategories = @category.children.with_listings
 
-    @title = [@category.name, @subcategory.try(:name)].compact.join(" : ")
+    @title = [@category.name, @subcategory.try(:name)].compact.join(" : ") + " | Category"
 
     respond_to do |format|
       format.html { render(action: :index) }
@@ -59,7 +59,7 @@ class ListingsController < ApplicationController
       @listings = []
     end
 
-    @title = "Search Results : #{@query}"
+    @title = "#{@query} | Search"
 
     respond_to do |format|
       format.html { render(action: :index) }
@@ -105,7 +105,7 @@ class ListingsController < ApplicationController
     @other_listings = Listing.active.where.not(user_id: @owner.id).order("id desc").limit(4)
     @other_listings = Listing.active.limit(4) if @other_listings.blank?
 
-    @title = @listing.title
+    @title = "#{@listing.title} | Listing"
   end
 
   # GET /listings/new

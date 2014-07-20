@@ -6,6 +6,8 @@ class PaymentsController < ApplicationController
   # GET /payments
   def index
     @payments = Payment.order("id desc")
+
+    @title = "Manage Payments | Admin"
   end
 
 end

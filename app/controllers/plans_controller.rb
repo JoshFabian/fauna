@@ -7,11 +7,15 @@ class PlansController < ApplicationController
   def index
     @credit_plans = Plan.active.where(subscription: false).order("amount asc")
     @subscription_plans = Plan.active.where(subscription: true).sort_by{ |o| o.interval == 'year' ? 1 : 10}
+
+    @title = "Plans"
   end
 
   # GET /plans/manage
   def manage
     @plans = Plan.all.order("id desc")
+
+    @title = "Manage Plans | Admin"
   end
 
   # GET /plans/1

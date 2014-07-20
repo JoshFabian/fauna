@@ -1,4 +1,4 @@
-- content_for :title, "Admin Manage Listings"
+- content_for :title, @title
 
 .row
   .text-center
@@ -19,8 +19,8 @@
       - user = listing.user
       %tr.listing
         %td= listing.id
-        %td{style: 'width: 130px !important;'}= link_to user.handle, user_path(user)
-        %td= link_to listing.title, user_listing_path(user, listing)
+        %td{style: 'width: 170px !important;'}= link_to user.handle, user_path(user)
+        %td{style: 'width: 400px !important;'}= link_to listing.title.truncate(50), user_listing_path(user, listing)
         %td= listing.state
         %td{style: 'width: 100px !important;'} #{time_ago_in_words(listing.created_at)} ago
 

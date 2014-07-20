@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   def index
     @users = User.order("id desc").page(params[:page]).per(20)
 
-    @title = "Users | Index"
+    @title = "Manage Users | Admin"
 
     respond_to do |format|
       format.html { render(layout: !request.xhr?) }
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
 
     @tab = 'home'
 
-    @title = "#{@user.handle}"
+    @title = "#{@user.handle} | Profile"
 
     respond_to do |format|
       format.html
@@ -114,6 +114,8 @@ class UsersController < ApplicationController
 
     @user_purchases = @user.purchases
     @user_reviews = @user.authored_reviews
+
+    @title = "#{@user.handle} | Purchases"
 
     respond_to do |format|
       format.html
