@@ -164,6 +164,11 @@
   }
 }
 
+.f-dropdown li a.admin {
+  opacity: 1.0;
+  color: #ddd !important;
+}
+
 .review-alert {
   @include grid-column(12);
   margin-top: -31px;
