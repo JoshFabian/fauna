@@ -3,6 +3,8 @@
 .row
   .text-center
     %h5
+      #{Listing.sellers_count} Sellers
+      == :
       #{Listing.active.count} Active Listings
       == :
       #{Listing.sold.count} Sold Listings
@@ -13,6 +15,7 @@
       %th Handle
       %th Title
       %th State
+      %th Views
       %th Created
 
     - @listings.each do |listing|
@@ -22,6 +25,7 @@
         %td{style: 'width: 170px !important;'}= link_to user.handle, user_path(user)
         %td.name-cell= link_to listing.title.truncate(50), user_listing_path(user, listing)
         %td= listing.state
+        %td= listing.views_count
         %td.date-cell #{time_ago_in_words(listing.created_at)} ago
 
   = paginate @listings

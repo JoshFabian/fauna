@@ -1,12 +1,26 @@
 class TrackObject
 
-  def self.listing_view!(listing_id, options={})
-    add("user:#{options[:by]}:listings:view", listing_id)
+  def self.listing_view!(listing, options={})
+    id = listing.is_a?(Listing) ? listing.id : listing
+    by_id = options[:by].id rescue 0
+    i = add("user:#{by_id}:listings:view", id)
+    if i == 1
+      listing = listing.is_a?(Listing) ? listing : Listing.find_by_id(listing)
+      listing.increment!(:views_count)
+    end
+    i
   end
 
-  def self.profile_view!(user_id, options={})
-    return 0 if options[:by].blank? or user_id == options[:by]
-    add("user:#{options[:by]}:profiles:view", user_id)
+  def self.profile_view!(user, options={})
+    id = user.is_a?(User) ? user.id : user
+    by_id = options[:by].id rescue 0
+    return 0 if options[:by].blank? or id == by_id
+    i = add("user:#{options[:by]}:profiles:view", id)
+    if i == 1
+      user = user.is_a?(User) ? user : User.find_by_id(user)
+      user.increment!(:views_count)
+    end
+    i
   end
 
   def self.flush
@@ -19,6 +33,8 @@ class TrackObject
   def self.add(key, member)
     return 0 if redis.sismember(key, member)
     redis.sadd(key, member) ? 1 : 0
+  rescue Exception => e
+    0
   end
 
   def self.redis

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140719184629) do
+ActiveRecord::Schema.define(version: 20140721011922) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -126,6 +126,7 @@ ActiveRecord::Schema.define(version: 20140719184629) do
     t.text     "shipping_prices"
     t.text     "data"
     t.datetime "sold_at"
+    t.integer  "views_count",                 default: 0
   end
 
   add_index "listings", ["created_at"], name: "index_listings_on_created_at"
@@ -136,6 +137,7 @@ ActiveRecord::Schema.define(version: 20140719184629) do
   add_index "listings", ["state"], name: "index_listings_on_state"
   add_index "listings", ["title"], name: "index_listings_on_title"
   add_index "listings", ["user_id"], name: "index_listings_on_user_id"
+  add_index "listings", ["views_count"], name: "index_listings_on_views_count"
 
   create_table "notifications", force: true do |t|
     t.string   "type"
@@ -403,6 +405,7 @@ ActiveRecord::Schema.define(version: 20140719184629) do
     t.datetime "trial_ends_at"
     t.string   "slug",                    limit: 100
     t.integer  "followers_count",                                               default: 0
+    t.integer  "views_count",                                                   default: 0
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true
@@ -424,6 +427,7 @@ ActiveRecord::Schema.define(version: 20140719184629) do
   add_index "users", ["state_code"], name: "index_users_on_state_code"
   add_index "users", ["subscriptions_count"], name: "index_users_on_subscriptions_count"
   add_index "users", ["trial_ends_at"], name: "index_users_on_trial_ends_at"
+  add_index "users", ["views_count"], name: "index_users_on_views_count"
 
   create_table "waitlists", force: true do |t|
     t.string   "email",        limit: 50
