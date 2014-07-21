@@ -9,17 +9,6 @@ namespace :db do
     puts "#{Time.now}: index_all completed"
   end
 
-  desc "Load most recnet, reset search indices"
-  task :x => ["db:migrate"] do
-    format_class = ENV['class'] || "YamlDb::Helper"
-    helper = format_class.constantize
-    data_file = Dir["#{Rails.root}/db/data*"].sort.last
-    puts "#{Time.now}: loading file: #{data_file}"
-    SerializationHelper::Base.new(helper).load(data_file)
-    Rake::Task['db:index_all'].invoke
-    puts "#{Time.now}: completed"
-  end
-
   namespace :data do
     desc "Dump contents of database to ENV['DIR']/data.timestamp.yml or db/data.timestamp.yml"
     task :dump_to_file => :environment do
@@ -29,6 +18,18 @@ namespace :db do
       data_file = "#{data_dir}/data.#{Rails.env}.#{Time.now.to_s(:datetime_compact)}.yml"
       SerializationHelper::Base.new(helper).dump(data_file)
     end
+
+    desc "Load most recent database backup, reset search indices"
+    task :load_recent => ["db:migrate"] do
+      format_class = ENV['class'] || "YamlDb::Helper"
+      helper = format_class.constantize
+      data_file = Dir["#{Rails.root}/db/data*"].sort.last
+      puts "#{Time.now}: loading file: #{data_file}"
+      SerializationHelper::Base.new(helper).load(data_file)
+      Rake::Task['db:index_all'].invoke
+      puts "#{Time.now}: completed"
+    end
+
 
     desc "Load contents of ENV['FILE'] into database"
     task :load_from_file => :environment do
