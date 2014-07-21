@@ -29,6 +29,7 @@ module Endpoints
       desc "Track user profile view"
       put 'users/:id/profile/view' do
         user = User.find(params.id)
+        TrackObject.profile_view!(user, by: current_user)
         SegmentUser.track_profile_view(user, by: current_user)
         {tracking: 1}
       end

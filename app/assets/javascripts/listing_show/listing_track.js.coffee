@@ -13,7 +13,7 @@ $(document).ready ->
   catch e
 
   try
-    if $(".category-nav").length > 0
+    if $(".track-category-view").length > 0
       category_id = $(".category-nav").data('category-id')
       console.log "track category view: #{category_id}"
       return if category_id == 0

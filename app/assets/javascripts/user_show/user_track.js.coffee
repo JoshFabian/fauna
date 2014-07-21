@@ -1,7 +1,7 @@
 $(document).ready ->
 
   try
-    if $(".user-bar .follow-button").length > 0
+    if $(".user-bar .track-user-profile-view").length > 0
       user_id = $(".user-bar .follow-button:first").data('follow-id')
       console.log "track user view: #{user_id}"
       async.waterfall [
