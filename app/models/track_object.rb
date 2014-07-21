@@ -27,12 +27,18 @@ class TrackObject
     redis.flushdb
   end
 
+  def self.default_ttl
+    60*10
+  end
+
   protected
 
   # add the member to the set
   def self.add(key, member)
     return 0 if redis.sismember(key, member)
-    redis.sadd(key, member) ? 1 : 0
+    result = redis.sadd(key, member) ? 1 : 0
+    redis.expire(key, default_ttl)
+    result
   rescue Exception => e
     0
   end
