@@ -1,7 +1,7 @@
 $(document).ready ->
 
   try
-    if $(".track-listing-view").length > 0
+    if $(".track-listing-view").length > 0 and current_user > 0
       listing_id = $("a.checkout").data('listing-id')
       console.log "track listing view: #{listing_id}"
       async.waterfall [
@@ -13,7 +13,7 @@ $(document).ready ->
   catch e
 
   try
-    if $(".track-category-view").length > 0
+    if $(".track-category-view").length > 0 and current_user > 0
       category_id = $(".category-nav").data('category-id')
       console.log "track category view: #{category_id}"
       return if category_id == 0

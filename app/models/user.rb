@@ -45,8 +45,6 @@ class User < ActiveRecord::Base
 
   store :data, accessors: [:welcome_message]
 
-  # scope :seller, -> { includes(:listings).group("users.id").having("count(listings.id) > 0") }
-
   # private messaging
   acts_as_messageable
 
