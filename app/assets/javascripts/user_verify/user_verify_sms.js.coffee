@@ -13,6 +13,8 @@ $(document).ready ->
         (data, callback) ->
           if data.event == 'sent'
             window.location.href = "/sms/verify_phone"
+          # else
+          #   console.log "sms error: #{JSON.stringify data}"
       ],
       # optional callback
       (err, results) ->

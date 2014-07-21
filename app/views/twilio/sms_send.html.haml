@@ -7,8 +7,11 @@
 
     %p We will text message your mobile number and you'll be given a code. Once you enter this code on the next screen, we'll verify that it's the same as the one you were given and then you'll be verified.
 
-    %p We perform this verification for the safety of everyone on Fauna. Your phone number will not be publicly available, and we won't use it for any marketing or pass it on to anyone who will do so.
+    %p
+      We perform this verification for the safety of everyone on Fauna. Your phone number will not be publicly available, and we won't use it for any marketing or pass it on to anyone who will do so.
+      %br
+      %span{style: 'color: #aaa; font-size: 0.9em;'} Note: Enter digits only, optionally pre-pended with a '+' for international numbers
 
     = form_for Waitlist.new, url: twilio_sms_send_path, html: {class: "form-validation user-sms-send"} do |f|
-      = text_field_tag 'to', nil, placeholder: "Enter your mobile phone number", class: 'required digits verification', minLength: 10, maxLength: 10, id: "user_to"
+      = text_field_tag 'to', nil, placeholder: "Enter your mobile phone number", class: 'required international-phone verification', minLength: 10, maxLength: 15, id: "user_to"
       %input.form-button{:type => "submit", :value => "Send Verification Code"}
