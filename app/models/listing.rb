@@ -50,10 +50,6 @@ class Listing < ActiveRecord::Base
     end
   end
 
-  def self.sellers_count
-    self.distinct("(user_id)").pluck(:user_id).size
-  end
-
   def as_indexed_json(options={})
     as_json(methods: [:category_ids, :category_names, :user_handle], except: [:created_at, :data])
   end

@@ -3,7 +3,7 @@
 .row
   .text-center
     %h5
-      #{Listing.sellers_count} Sellers
+      #{User.with_roles(:seller).count} Sellers
       == :
       #{Listing.active.count} Active Listings
       == :

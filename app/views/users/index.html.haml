@@ -5,7 +5,7 @@
     %h5
       #{User.count} Users
       == :
-      #{Listing.sellers_count} Sellers
+      #{User.with_roles(:seller).count} Sellers
       == :
       #{Listing.active.count} Listings
 

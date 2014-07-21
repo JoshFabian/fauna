@@ -2,9 +2,14 @@ class ListingObserver < ActiveRecord::Observer
   include Loggy
 
   def after_create(listing)
-    # update user listing credits
     user = listing.user
+    # update user listing credits
     user.decrement!(:listing_credits, 1) if user.listing_credits > 0
+    if !user.roles?(:seller)
+      # add user seller role
+      user.roles << :seller
+      user.save
+    end
     # track listing
     SegmentListing.track_listing_create(listing)
   rescue Exception => e

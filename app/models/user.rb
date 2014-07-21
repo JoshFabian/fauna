@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
 
   friendly_id :slug
 
-  bitmask :roles, :as => [:admin, :basic]
+  bitmask :roles, :as => [:admin, :basic, :buyer, :seller]
 
   store :data, accessors: [:welcome_message]
 

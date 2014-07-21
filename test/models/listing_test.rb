@@ -30,6 +30,13 @@ class ListingTest < ActiveSupport::TestCase
       @user.reload
       @user.listing_credits.must_equal 0
     end
+
+    it "should add user seller role" do
+      @listing = @user.listings.create!(title: "Title 2", price: 100)
+      @user.roles?(:seller).must_equal false
+      @user.reload
+      @user.roles?(:seller).must_equal true
+    end
   end
 
   describe "slug" do
