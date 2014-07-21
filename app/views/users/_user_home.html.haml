@@ -11,12 +11,138 @@
       - if @total_listings > 0
         = render(partial: "users/user_recent_listings")
 
-    .feedback
-      - if @recent_reviews.present?
-        = render(partial: "reviews/review_widget", locals: {reviews: @recent_reviews})
-      - else
-        -# Empty state
-        = render(partial: "reviews/review_empty")
+    .user-feed
+      .panel-body.status-panel.rounded-panel
+        %textarea.status-form{:placeholder => "Write something...", :rows => "1"}
+        .panel-footer.clearfix
+          %button.btn.status-button{"data-bindattr-12" => "12", "data-ember-action" => "11"} Post
+
+      .update-panel.rounded-panel
+        .small-12.columns
+          .user-image
+            %a{:href => "#"}
+              %img{:src => "http://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_200/v1405184238/avatar_default.jpg"}
+          .user-info
+            %h4.story-title
+              %a{:href => "#"}
+                Josh
+            %p.secondary
+              %span#ember928.ember-view 2 days ago
+
+        .comment-content.small-12.columns.clearfix
+          %p.comment-text
+            Just started incubating another clutch of eggs, it's going to be a great year!
+        .panel-footer.small-12.columns
+          .footer-button
+            %a{:href => "#"}
+              %i.icon.ion-heart
+              09
+          .footer-button
+            %a{:href => "#"}
+              %i.icon.ion-reply
+              reply
+          %ul.who-liked
+            %li.liked
+              %a{:href=>"#"}
+                %img.tip-top{"data-tooltip" => "", :title => "JoshFabian", :src => "http://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_200/v1405184238/avatar_default.jpg"}
+            %li.liked
+              %a{:href=>"#"}
+                %img.tip-top{"data-tooltip" => "", :title => "JoshFabian", :src => "http://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_200/v1405184238/avatar_default.jpg"}
+            %li.more-liked
+              %span +10 more
+        .comment-section.small-12.columns
+          .panel-input
+            %input.status-form{:placeholder => "Write something...", :rows => "1"}
+          .comment.clearfix
+            .user-image
+              %a{:href => "#"}
+                %img{:src => "http://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_200/v1405184238/avatar_default.jpg"}
+            .user-info
+              %h6.story-title
+                %a{:href => "#"}
+                  Josh
+              %span.time-stamp 15 minutes ago
+              %p.secondary
+                This is a comment!
+
+
+
+      .update-panel.rounded-panel
+        .small-12.columns
+          .user-image
+            %a{:href => "#"}
+              %img{:src => "http://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_200/v1405184238/avatar_default.jpg"}
+          .user-info
+            %h4.story-title
+              %a{:href => "#"}
+                Josh
+              %span
+                Created a new listing
+            %p.secondary
+              %span#ember928.ember-view 2 days ago
+
+        .comment-content.small-12.columns.clearfix
+          .listing-embed
+            .list-panel
+              .listing-images.small-6.columns
+                .main-image
+                  %img{:itemprop => "image", :src => "https://res.cloudinary.com/tegu/image/upload/c_fit,w_600/v1405981757/kd6mxcqwyik0osh49pjj.jpg"}
+                  
+              .listing-aside.small-6.columns
+                .category-breadcrumbs
+                  %span
+                    %a{:href => "/listings/lizards"} Lizards
+                    %i.icon.ion-ios7-arrow-forward
+                    %a{:href => "/listings/lizards/chameleons"} Chameleons
+                %h5{:itemprop => "alternateName"} Orange Ambanja
+                %h2 $350.00 
+                = link_to "View Listing", "#", :class => "view-embedded-listing"
+                
+        .panel-footer.small-12.columns
+          .footer-button
+            %a{:href => "#"}
+              %i.icon.ion-heart
+              09
+          .footer-button
+            %a{:href => "#"}
+              %i.icon.ion-reply
+              reply
+
+          // Don't show this section if no users have liked story
+          / %ul.who-liked
+          /   %li.liked
+          /     %a{:href=>"#"}
+          /       %img.tip-top{"data-tooltip" => "", :title => "JoshFabian", :src => "http://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_200/v1405184238/avatar_default.jpg"}
+          /   %li.liked
+          /     %a{:href=>"#"}
+          /       %img.tip-top{"data-tooltip" => "", :title => "JoshFabian", :src => "http://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_200/v1405184238/avatar_default.jpg"}
+          /   %li.more-liked
+          /     %span +10 more
+
+        // hide by default if no comments   
+        .comment-section.small-12.columns.hide
+          .panel-input
+            %input.status-form{:placeholder => "Write something...", :rows => "1"}
+          .comment.clearfix
+            .user-image
+              %a{:href => "#"}
+                %img{:src => "http://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_200/v1405184238/avatar_default.jpg"}
+            .user-info
+              %h6.story-title
+                %a{:href => "#"}
+                  Josh
+              %span.time-stamp 15 minutes ago
+              %p.secondary
+                This is a comment!          
+
+
+    
+    / .feedback
+    /   - if @recent_reviews.present?
+    /     = render(partial: "reviews/review_widget", locals: {reviews: @recent_reviews})
+    /   - else
+    /     -# Empty state
+    /     = render(partial: "reviews/review_empty")
 
   .profile-sidebar.small-4.columns
     .rounded-panel
