@@ -30,7 +30,6 @@ namespace :db do
       puts "#{Time.now}: completed"
     end
 
-
     desc "Load contents of ENV['FILE'] into database"
     task :load_from_file => :environment do
       format_class = ENV['class'] || "YamlDb::Helper"

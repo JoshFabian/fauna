@@ -16,8 +16,8 @@ module Endpoints
         end
 
         def listing_image_params(hash)
-          ActionController::Parameters.new(hash).permit(:bytes, :etag, :format, :height, :position, :public_id,
-            :resource_type, :version, :width)
+          ActionController::Parameters.new(hash).permit(:bytes, :crop_h, :crop_w, :crop_x, :crop_y, :etag, :format,
+            :height, :position, :public_id, :resource_type, :version, :width)
         end
 
         def review_params

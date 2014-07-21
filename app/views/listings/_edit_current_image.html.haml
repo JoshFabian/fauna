@@ -4,3 +4,5 @@
   = link_to "remove", "#", :'data-listing-id' => @listing.id, :'data-image-id' => image.id, class: ['image-delete', @listing.editable? ? 'editable' : nil]
   .dimensions
     = listing_image_dimensions(image)
+  .crop
+    = link_to 'crop', '#', class: 'image-crop', :'data-image-id' => image.id

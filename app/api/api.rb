@@ -32,6 +32,7 @@ class Api < Grape::API
   version 'v1', using: :path
   helpers AuthHelper
   helpers LoggerHelper
+  mount Endpoints::ImageApi
   mount Endpoints::ListingApi
   mount Endpoints::MessageApi
   mount Endpoints::PaymentApi

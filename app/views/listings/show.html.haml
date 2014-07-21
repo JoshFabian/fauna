@@ -26,8 +26,8 @@
       .more-images
         %ul.image-grid.small-block-grid-5
           - @all_images.each do |image|
-            %li{:'data-image-url' => cloudinary_url(image.full_public_id), :'data-transform' => "c_fit,w_600"}
-              = image_tag cloudinary_url(image.full_public_id, transformation: [{width: 110, height: 80, crop: 'fill'}])
+            %li{:'data-image-url' => listing_image_show_big(image)}
+              = image_tag listing_image_show_thumb(image)
       .small-12.columns
         %ul.pills{:'data-tab' => ""}
           %li.tab-title.active{:'data-pill' => 'description'}

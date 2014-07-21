@@ -5,14 +5,13 @@ $(document).ready ->
   $(".listing-images .image-grid li").on 'click', (e) ->
     e.preventDefault()
     return if $(this).hasClass('active')
-    image_transform_url = Tegu.CloudinaryHelper.transform($(this).data('image-url'), $(this).data('transform'))
-    console.log "image load #{image_transform_url}"
+    console.log "image load #{$(this).data('image-url')}"
     # remove active class
     $(".listing-images .image-grid li").removeClass('active')
     # add active class
     $(this).addClass('active')
     # replace image
-    $(".listing-images .main-image img").attr('src', image_transform_url)
+    $(".listing-images .main-image img").attr('src', $(this).data('image-url'))
 
   if $(".listing-images .image-grid li").length > 0
     # console.log "init image carousel"
