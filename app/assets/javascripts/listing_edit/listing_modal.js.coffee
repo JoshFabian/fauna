@@ -6,3 +6,9 @@ class Tegu.ListingModal
       success: (data) ->
         callback(null, data) if callback
 
+  @close_image_crop_modal: () ->
+    $("#image-crop-modal").foundation('reveal', 'close')
+
+  @show_image_crop_modal: (data) ->
+    $("#image-crop-modal").html(data)
+    $("#image-crop-modal").foundation('reveal', 'open')
