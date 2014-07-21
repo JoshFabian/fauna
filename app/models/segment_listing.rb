@@ -8,7 +8,7 @@ class SegmentListing
     category = listing.categories.roots.first
     hash = {user_id: listing.user_id, event: 'Listing Created', properties: {category: 'Listing',
       label: category.try(:name)}}
-    result = track(hash)
+    result = Analytics.track(hash)
     logger.post("tegu.app", log_data.merge(hash))
     result
   rescue Exception => e
@@ -20,7 +20,7 @@ class SegmentListing
     category = listing.categories.roots.first
     hash = {user_id: listing.user_id, event: 'Listing Removed', properties: {category: 'Listing',
       label: category.try(:name)}}
-    result = track(hash)
+    result = Analytics.track(hash)
     logger.post("tegu.app", log_data.merge(hash))
     result
   rescue Exception => e
@@ -32,7 +32,7 @@ class SegmentListing
     properties = {id: category.id, category: 'Listing', label: category.try(:name)}
     user_id = options[:by].present? ? options[:by].id : 0
     hash = {user_id: user_id, event: 'Viewed Category', properties: properties}
-    result = track(hash)
+    result = Analytics.track(hash)
     logger.post("tegu.app", log_data.merge(hash))
     result
   end
@@ -44,7 +44,7 @@ class SegmentListing
       category: 'Listing', label: category.try(:name)}
     user_id = options[:by].present? ? options[:by].id : 0
     hash = {user_id: user_id, event: 'Viewed Product', properties: properties}
-    result = track(hash)
+    result = Analytics.track(hash)
     logger.post("tegu.app", log_data.merge(hash))
     result
   end
@@ -56,7 +56,7 @@ class SegmentListing
       category: 'Listing', label: category.try(:name)}
     user_id = options[:by].present? ? options[:by].id : 0
     hash = {user_id: user_id, event: 'Added Product', properties: properties}
-    result = track(hash)
+    result = Analytics.track(hash)
     logger.post("tegu.app", log_data.merge(hash))
     result
   end
@@ -68,7 +68,7 @@ class SegmentListing
       category: 'Listing', label: category.try(:name)}
     user_id = options[:by].present? ? options[:by].id : 0
     hash = {user_id: user_id, event: 'Removed Product', properties: properties}
-    result = track(hash)
+    result = Analytics.track(hash)
     logger.post("tegu.app", log_data.merge(hash))
     result
   end
@@ -84,19 +84,14 @@ class SegmentListing
       tax: 0, products: {"0" => product}}
     # temporary event until 'Completed Order' is working
     hash = {user_id: payment.buyer_id, event: 'Purchased Product', properties: properties}
-    result = track(hash)
+    result = Analytics.track(hash)
     # todo: completed order doesn't seem to work
     hash = {user_id: payment.buyer_id, event: 'Completed Order', properties: properties}
-    result = track(hash)
+    result = Analytics.track(hash)
     logger.post("tegu.app", log_data.merge(hash))
     result
   rescue Exception => e
     false
   end
 
-  protected
-
-  def self.track(hash)
-    Analytics.track(hash)
-  end
 end
