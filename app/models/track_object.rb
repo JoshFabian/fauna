@@ -11,6 +11,12 @@ class TrackObject
     i
   end
 
+  def self.listing_working_set(options={})
+    by_id = options[:by].id rescue 0
+    key = "user:#{by_id}:listings:view"
+    redis.smembers(key).map(&:to_i) rescue []
+  end
+
   def self.profile_view!(user, options={})
     id = user.is_a?(User) ? user.id : user
     by_id = options[:by].id rescue 0
@@ -21,6 +27,12 @@ class TrackObject
       user.increment!(:views_count)
     end
     i
+  end
+
+  def self.profile_working_set(options={})
+    by_id = options[:by].id rescue 0
+    key = "user:#{by_id}:profiles:view"
+    redis.smembers(key).map(&:to_i) rescue []
   end
 
   def self.flush

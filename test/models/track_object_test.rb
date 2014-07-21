@@ -20,6 +20,7 @@ class TrackObjectTest < ActiveSupport::TestCase
       TrackObject.listing_view!(@listing, by: @user).must_equal 1
       @listing.reload
       @listing.views_count.must_equal 1
+      TrackObject.listing_working_set(by: @user).must_equal [@listing.id]
     end
 
     it "should not increment listing view count twice within x minutes" do
