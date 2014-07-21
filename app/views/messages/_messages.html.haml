@@ -2,17 +2,18 @@
   = render(partial: 'messages/message_selectors', locals: {label: label})
 
   %ul
-    // Empty State
     -# = render(partial: 'messages/messages_empty')
     - conversations.each do |conversation|
       - if label.match(/sent/i)
         -# show last message user sent in conversation
-        - receipt = conversation.receipts_for(current_user).select{ |o| o.mailbox_type == 'sentbox'}.last
+        - receipt = conversation.receipts_for(current_user).where(mailbox_type: 'sentbox').order("receipts.id desc").limit(1).first
+        - next if receipt.blank?
         - message = receipt.message
         - participant = message.recipients.select{ |o| o.id != current_user.id }.first
       - else
         -# show last message user received in conversation
-        - receipt = conversation.receipts_for(current_user).select{ |o| o.mailbox_type == 'inbox'}.first
+        - receipt = conversation.receipts_for(current_user).where(mailbox_type: 'inbox').order("receipts.id desc").limit(1).first
+        - next if receipt.blank?
         - message = receipt.message
         - participant = message.sender
 
