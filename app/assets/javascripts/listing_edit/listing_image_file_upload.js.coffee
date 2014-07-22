@@ -24,7 +24,6 @@ $(document).ready ->
   $(document).on "fileuploaddone", '.image-box .cloudinary-fileupload', (e, data) ->
     console.log "image upload done"
     # save image
-    # $(this).siblings(".image-params").val(JSON.stringify(data.result))
     Tegu.ListingImage.new_image(data.result)
     # hide progress bar
     # $(this).siblings(".progress").hide()

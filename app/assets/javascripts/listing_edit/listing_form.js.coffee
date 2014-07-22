@@ -50,6 +50,8 @@ class Tegu.ListingForm
     $(image_box).append("<img src='#{preview_url}'></img>")
     $(image_box).siblings('.image-dimensions').html("#{image_width} x #{image_height}")
     $(image_box).siblings('.image-crop').attr("data-image-url", image_url)
+    $(image_box).siblings('.image-crop').attr("data-image-width", image_width)
+    $(image_box).siblings('.image-crop').attr("data-image-height", image_height)
 
   @replace_empty_image: (data) ->
     $(".image-grid li.empty:first").replaceWith(data)

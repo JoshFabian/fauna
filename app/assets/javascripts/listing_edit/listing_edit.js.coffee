@@ -38,6 +38,9 @@ $(document).ready ->
             # create listing
             Tegu.ListingApi.create(form_data, auth_token, callback)
           (data, callback) ->
+            # create new listing images
+            Tegu.ListingApi.update(data.listing.id, {image_params: Tegu.ListingImage.new_images()}, auth_token, callback)
+          (data, callback) ->
             # console.log data
             Tegu.ListingRoute.show_route(current_user_slug, data.listing.id, auth_token, callback)
           (url, callback) ->

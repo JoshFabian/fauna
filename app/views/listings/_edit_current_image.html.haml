@@ -4,5 +4,5 @@
   = link_to "remove", "#", :'data-listing-id' => @listing.id, :'data-image-id' => image.id, class: ['image-delete', @listing.editable? ? 'editable' : nil]
   .image-dimensions
     = listing_image_dimensions(image)
-  .image-crop{:'data-image-id' => image.id, :'data-image-url' => cloudinary_url(image.full_public_id)}
+  .image-crop{:'data-image-id' => image.id, :'data-image-url' => cloudinary_url(image.full_public_id), :'data-image-height' => image.height, :'data-image-width' => image.width}
     = link_to 'crop', '#'
