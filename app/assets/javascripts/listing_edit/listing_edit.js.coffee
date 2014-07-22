@@ -39,7 +39,7 @@ $(document).ready ->
             Tegu.ListingApi.create(form_data, auth_token, callback)
           (data, callback) ->
             # create new listing images
-            Tegu.ListingApi.update(data.listing.id, {image_params: Tegu.ListingImage.new_images()}, auth_token, callback)
+            Tegu.ListingApi.create_images(data.listing.id, {image_params: Tegu.ListingImage.new_images()}, auth_token, callback)
           (data, callback) ->
             # console.log data
             Tegu.ListingRoute.show_route(current_user_slug, data.listing.id, auth_token, callback)
@@ -55,10 +55,10 @@ $(document).ready ->
             Tegu.ListingApi.update(listing_id, form_data, auth_token, callback)
           (data, callback) ->
             # update listing images (cropping)
-            Tegu.ListingApi.update(listing_id, {images: Tegu.ListingImage.cropped_images()}, auth_token, callback)
+            Tegu.ListingApi.update_images(listing_id, {images: Tegu.ListingImage.cropped_images()}, auth_token, callback)
           (data, callback) ->
             # create new listing images
-            Tegu.ListingApi.update(listing_id, {image_params: Tegu.ListingImage.new_images()}, auth_token, callback)
+            Tegu.ListingApi.create_images(listing_id, {image_params: Tegu.ListingImage.new_images()}, auth_token, callback)
           (data, callback) ->
             # console.log data
             Tegu.ListingRoute.show_route(current_user_slug, listing_id, auth_token, callback)

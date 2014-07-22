@@ -58,7 +58,7 @@ $(document).ready ->
     image_width = $(this).data('image-width')
     image_height = $(this).data('image-height')
     image_url = $(this).data('image-url')
-    console.log "get crop modal image:#{image_id} ..."
+    console.log "image:#{image_id} get crop modal..."
     async.waterfall [
       (callback) ->
         # get modal
@@ -67,7 +67,7 @@ $(document).ready ->
         # console.log data
         # open modal
         Tegu.ImageCrop.open_modal(data.html)
-        console.log "image:#{data.image_id} waiting ..."
+        console.log "image:#{data.image_id} loading ..."
         tmp_image = new Image()
         tmp_image.src = data.image_url
         tmp_image.onload = () ->

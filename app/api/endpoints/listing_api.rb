@@ -70,37 +70,61 @@ module Endpoints
 
       desc "Update listing"
       put ':id' do
-        logger.post("tegu.api", log_data.merge({event: 'debug'}))
         @listing = current_user.listings.find(params.id)
-        if params.listing.present?
-          # update listing
-          @listing.update(listing_params)
-          # check listing categories
-          if params.listing.categories.present?
+        # update listing
+        @listing.update(listing_params)
+        # check listing categories
+        if params.listing.categories.present?
+          begin
+            new_categories = params.listing.categories.select{ |s| s.present? }.map(&:to_i)
+            cur_categories = @listing.categories.pluck(:id)
+            add_categories = new_categories - cur_categories
+            del_categories = cur_categories - new_categories
+            # add categories
+            add_categories.each do |category_id|
+              category = Category.find_by_id(category_id)
+              next if category.blank?
+              @listing.categories.push(category)
+              category.should_update_listings_count!
+            end
+            # remove categories
+            del_categories.each do |category_id|
+              category = Category.find_by_id(category_id)
+              next if category.blank?
+              @listing.categories.destroy(category)
+              category.should_update_listings_count!
+            end
+          rescue Exception => e
+            logger.post("tegu.api", log_data.merge({event: 'listing.update.exception', message: e.message}))
+          end
+        end
+        @listing.should_update_index!
+        logger.post("tegu.api", log_data.merge({event: 'listing.update', listing_id: @listing.id}))
+        {listing: @listing}
+      end
+
+      desc "Create listing images"
+      post ':id/images' do
+        @listing = current_user.listings.find(params.id)
+        if params.image_params.present?
+          params.image_params.each_pair do |id, hash|
             begin
-              new_categories = params.listing.categories.select{ |s| s.present? }.map(&:to_i)
-              cur_categories = @listing.categories.pluck(:id)
-              add_categories = new_categories - cur_categories
-              del_categories = cur_categories - new_categories
-              # add categories
-              add_categories.each do |category_id|
-                category = Category.find_by_id(category_id)
-                next if category.blank?
-                @listing.categories.push(category)
-                category.should_update_listings_count!
-              end
-              # remove categories
-              del_categories.each do |category_id|
-                category = Category.find_by_id(category_id)
-                next if category.blank?
-                @listing.categories.destroy(category)
-                category.should_update_listings_count!
-              end
+              next if hash.blank?
+              # create image
+              hash = JSON.parse(hash) if hash.is_a?(String)
+              @listing.images.create(listing_image_params(hash))
             rescue Exception => e
               logger.post("tegu.api", log_data.merge({event: 'listing.update.exception', message: e.message}))
             end
           end
         end
+        logger.post("tegu.api", log_data.merge({event: 'listing.images.create', listing_id: @listing.id}))
+        {listing: @listing}
+      end
+
+      desc "Update listing images"
+      put ':id/images' do
+        @listing = current_user.listings.find(params.id)
         if params.images.present?
             params.images.each_pair do |id, hash|
               begin
@@ -114,20 +138,8 @@ module Endpoints
               end
             end
         end
-        if params.image_params.present?
-          params.image_params.each_pair do |id, hash|
-            begin
-              next if hash.blank?
-              # create image
-              hash = JSON.parse(hash) if hash.is_a?(String)
-              @listing.images.create(listing_image_params(hash))
-            rescue Exception => e
-              logger.post("tegu.api", log_data.merge({event: 'listing.update.exception', message: e.message}))
-            end
-          end
-        end
         @listing.should_update_index!
-        # logger.post("tegu.api", log_data.merge({event: 'listing.update', listing_id: @listing.id}))
+        logger.post("tegu.api", log_data.merge({event: 'listing.images.update', listing_id: @listing.id}))
         {listing: @listing}
       end
 
