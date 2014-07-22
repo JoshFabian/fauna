@@ -23,24 +23,26 @@ $(document).ready ->
   # callback after file upload completes
   $(document).on "fileuploaddone", '.image-box .cloudinary-fileupload', (e, data) ->
     console.log "image upload done"
-    # save image params
-    $(this).siblings(".image-params").val(JSON.stringify(data.result))
+    # save image
+    # $(this).siblings(".image-params").val(JSON.stringify(data.result))
+    Tegu.ListingImage.new_image(data.result)
     # hide progress bar
     # $(this).siblings(".progress").hide()
     # get transformed image
-    image_url = Tegu.CloudinaryHelper.transform(data.result.url, "c_fit,w_200,h_200")
+    image_url = data.result.url
+    preview_url = Tegu.CloudinaryHelper.transform(data.result.url, "c_fit,w_200,h_200")
     image_box = $(this).closest(".image-box")
     async.waterfall [
       (callback) ->
         # show image preview
-        Tegu.ListingForm.add_uploaded_image(image_box, image_url, data.result.width, data.result.height)
+        Tegu.ListingForm.show_image_preview(image_box, image_url, preview_url, data.result.width, data.result.height)
         # get new image partial
         Tegu.ListingForm.get_new_image(callback)
       (data, callback) ->
         # console.log data
         # replace empty image in document
         Tegu.ListingForm.replace_empty_image(data)
-        # init cloudinary
+        # init cloudinary for newly added partial
         Tegu.ListingForm.init_cloudinary()
     ]
     

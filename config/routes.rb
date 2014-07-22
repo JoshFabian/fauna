@@ -47,7 +47,7 @@ Tegu::Application.routes.draw do
     get :subcategories, on: :collection
   end
   resources :listing_modals, only: [] do
-    get :image_crop, on: :member
+    get :crop_image, on: :collection
   end
   resources :listing_reports, only: [:index]
 

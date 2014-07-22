@@ -1,6 +1,6 @@
 .modal-header
   %h3 Adjust Image Size
-  = link_to 'Crop Image', '#', class: 'image-crop-save button orange-button', :'data-image-id' => @image.try(:id).to_i
+  = link_to 'Crop Image', '#', class: 'image-crop-save button orange-button', :'data-image-id' => @image_id
 
 - begin
   = image_tag cloudinary_url(@image.full_public_id)
