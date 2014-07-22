@@ -17,7 +17,8 @@
 //= require cloudinary
 //= require jquery.infinitescroll
 //= require jquery.textchange.min
-//= require jquery.Jcrop.min.js
+//= require jquery.Jcrop.min
+//= require jquery.royalslider.custom.min.js
 //= require async
 //= require numeral
 //= require redactor

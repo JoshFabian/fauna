@@ -2,7 +2,7 @@
   .image-box
     = image_tag listing_image_thumbnail(image)
   = link_to "remove", "#", :'data-listing-id' => @listing.id, :'data-image-id' => image.id, class: ['image-delete', @listing.editable? ? 'editable' : nil]
-  .dimensions
+  .image-dimensions
     = listing_image_dimensions(image)
-  .crop
-    = link_to 'crop', '#', class: 'image-crop', :'data-image-id' => image.id
+  .image-crop{:'data-image-id' => image.id, :'data-image-url' => cloudinary_url(image.full_public_id), :'data-image-height' => image.height, :'data-image-width' => image.width}
+    = link_to 'crop', '#'
