@@ -43,5 +43,7 @@ $(document).ready ->
         Tegu.ListingForm.replace_empty_image(data)
         # init cloudinary for newly added partial
         Tegu.ListingForm.init_cloudinary()
+        # trigger image crop
+        Tegu.ListingForm.trigger_image_crop()
     ]
     

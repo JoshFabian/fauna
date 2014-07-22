@@ -52,6 +52,10 @@ class Tegu.ListingForm
     $(image_box).siblings('.image-crop').attr("data-image-url", image_url)
     $(image_box).siblings('.image-crop').attr("data-image-width", image_width)
     $(image_box).siblings('.image-crop').attr("data-image-height", image_height)
+    $(image_box).siblings('.image-crop').addClass('new')
+
+  @trigger_image_crop: () ->
+    $(".image-crop.new:last").trigger('click')
 
   @replace_empty_image: (data) ->
     $(".image-grid li.empty:first").replaceWith(data)

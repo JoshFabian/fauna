@@ -36,7 +36,7 @@ class Tegu.ImageCrop
 
   @save_coords: (image_id) ->
     if coords.crop_h > 0 and coords.crop_w > 0
-      # console.log "saving image:#{image_id} coords:#{JSON.stringify coords} ..."
+      console.log "saving image:#{image_id} coords:#{JSON.stringify coords} ..."
       if image_id == 0
         # crop a new image
         Tegu.ListingImage.crop_new_image(coords)
