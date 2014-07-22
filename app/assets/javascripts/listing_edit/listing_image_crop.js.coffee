@@ -1,28 +1,24 @@
 class Tegu.ImageCrop
   coords = {crop_h:0, crop_w:0, crop_x:0, crop_y:0}
 
+  @coords: () ->
+    coords
+
   @init_jcrop: () ->
     $("#image-crop-modal img").Jcrop
       aspectRatio: 16 / 9
       boxWidth: 800
       minSize: [250, 27]
       onSelect: (c) ->
-        # @image_crop_coords = c
         coords.crop_h = c.h
         coords.crop_w = c.w
         coords.crop_x = c.x
         coords.crop_y = c.y
-        console.log coords
-
-  @coords: () ->
-    coords
 
   @valid_coords: () ->
     coords.crop_h > 0 and coords.crop_w > 0 ? true : false
 
 $(document).ready ->
-
-  image_crop_coords = {h:0, w:0, x:0, y:0}
 
   $(document).on 'click', '.image-crop', (e) ->
     e.preventDefault()
