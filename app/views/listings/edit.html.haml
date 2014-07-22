@@ -52,3 +52,7 @@
 
         - if @listing.editable?
           = f.submit @save_title, class: 'button'
+
+-# crop modal
+.reveal-modal.medium.listing-image-crop#image-crop-modal{:'data-reveal' => ''}
+  = render(partial: "listings/listing_image_crop_modal")

@@ -4,10 +4,11 @@
       = cl_image_upload_tag(:image, html: {class: 'optional hide'})
       .progress.round.center.hide{style: 'padding: 0px; width: 10%;'}
         %span.meter
-      = hidden_field :image_params, nil, name: 'image_params[]', class: 'image-params'
       .add-images-button{class: [@listing.try(:editable?) ? 'editable' : nil]}
         .button-add
         %span Add Photo
       %a.remove{href: "#"}
-  .dimensions.margin-top
+  .image-dimensions.margin-top
     600x400
+  .image-crop{:'data-image-id' => 0}
+    = link_to 'crop', '#', style: 'display: none;'

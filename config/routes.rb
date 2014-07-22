@@ -46,6 +46,9 @@ Tegu::Application.routes.draw do
     get :shipping_table, on: :member
     get :subcategories, on: :collection
   end
+  resources :listing_modals, only: [] do
+    get :crop_image, on: :collection
+  end
   resources :listing_reports, only: [:index]
 
   match 'listings/search' => "listings#by_search", as: :listing_search, via: [:get, :post]

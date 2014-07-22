@@ -16,8 +16,8 @@ module Endpoints
         end
 
         def listing_image_params(hash)
-          ActionController::Parameters.new(hash).permit(:bytes, :etag, :format, :height, :position, :public_id,
-            :resource_type, :version, :width)
+          ActionController::Parameters.new(hash).permit(:bytes, :crop_h, :crop_w, :crop_x, :crop_y, :etag, :format,
+            :height, :position, :public_id, :resource_type, :version, :width)
         end
 
         def review_params
@@ -35,14 +35,6 @@ module Endpoints
       desc "Create listing"
       post '' do
         @listing = current_user.listings.create(listing_params)
-        if params.image_params.present?
-          params.image_params.each do |s|
-            begin
-              @listing.images.create(listing_image_params(JSON.parse(s)))
-            rescue Exception => e
-            end
-          end
-        end
         if params.listing.categories.present?
           new_categories = params.listing.categories.select{ |s| s.present? }.map(&:to_i)
           cur_categories = @listing.categories.collect(&:id)
@@ -70,17 +62,10 @@ module Endpoints
 
       desc "Update listing"
       put ':id' do
-        @listing = current_user.listings.find(params[:id])
+        @listing = current_user.listings.find(params.id)
+        # update listing
         @listing.update(listing_params)
-        if params.image_params.present?
-          params.image_params.select{ |s| s.present? }.each do |s|
-            begin
-              @listing.images.create(listing_image_params(JSON.parse(s)))
-            rescue Exception => e
-              logger.post("tegu.api", log_data.merge({event: 'listing.update.exception', message: e.message}))
-            end
-          end
-        end
+        # check listing categories
         if params.listing.categories.present?
           begin
             new_categories = params.listing.categories.select{ |s| s.present? }.map(&:to_i)
@@ -106,8 +91,47 @@ module Endpoints
           end
         end
         @listing.should_update_index!
-        logger.post("tegu.api", log_data_min.merge({event: 'search.update', listing_id: @listing.id}))
         logger.post("tegu.api", log_data.merge({event: 'listing.update', listing_id: @listing.id}))
+        {listing: @listing}
+      end
+
+      desc "Create listing images"
+      post ':id/images' do
+        @listing = current_user.listings.find(params.id)
+        if params.image_params.present?
+          params.image_params.each_pair do |id, hash|
+            begin
+              next if hash.blank?
+              # create image
+              hash = JSON.parse(hash) if hash.is_a?(String)
+              @listing.images.create(listing_image_params(hash))
+            rescue Exception => e
+              logger.post("tegu.api", log_data.merge({event: 'listing.images.create.exception', message: e.message}))
+            end
+          end
+        end
+        logger.post("tegu.api", log_data.merge({event: 'listing.images.create', listing_id: @listing.id}))
+        {listing: @listing}
+      end
+
+      desc "Update listing images"
+      put ':id/images' do
+        @listing = current_user.listings.find(params.id)
+        if params.images.present?
+            params.images.each_pair do |id, hash|
+              begin
+                next if id.blank? or hash.blank? or (image = @listing.images.find_by_id(id)).blank?
+                # update image
+                hash = JSON.parse(hash) if hash.is_a?(String)
+                image.update(listing_image_params(hash))
+                logger.post("tegu.api", log_data_min.merge({image_id: image.id, hash: hash}))
+              rescue Exception => e
+                logger.post("tegu.api", log_data.merge({event: 'listing.images.update.exception', message: e.message}))
+              end
+            end
+        end
+        @listing.should_update_index!
+        logger.post("tegu.api", log_data.merge({event: 'listing.images.update', listing_id: @listing.id}))
         {listing: @listing}
       end
 
@@ -134,7 +158,7 @@ module Endpoints
         @listing.images.destroy(@image)
         logger.post("tegu.api", log_data.merge({event: 'listing.image.delete', listing_id: @listing.id,
           image_id: @image.id}))
-        {listing: @listing.as_json(), event: 'delete'}
+        {listing: @listing, event: 'delete'}
       end
 
       desc "Create listing review"

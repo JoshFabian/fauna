@@ -16,6 +16,22 @@ module ApplicationHelper
     "http://www.placehold.it/#{size}x#{size}"
   end
 
+  def listing_image_show_big(image)
+    transformation = [{width: 600, crop: 'fit'}]
+    if image.cropped?
+      transformation.unshift({height: image.crop_h, width: image.crop_w, x: image.crop_x, y: image.crop_y, crop: 'crop'})
+    end
+    cloudinary_url(image.full_public_id, transformation: transformation)
+  end
+
+  def listing_image_show_thumb(image)
+    transformation = [{width: 110, height: 80, crop: 'fill'}]
+    if image.cropped?
+      transformation.unshift({height: image.crop_h, width: image.crop_w, x: image.crop_x, y: image.crop_y, crop: 'crop'})
+    end
+    cloudinary_url(image.full_public_id, transformation: transformation)
+  end
+
   def listing_image_tile(image)
     cloudinary_url(image.full_public_id, transformation: [{width: 235, height: 200, crop: 'fill'}])
   rescue Exception => e

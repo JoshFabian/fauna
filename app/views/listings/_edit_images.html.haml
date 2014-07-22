@@ -2,8 +2,9 @@
 - @images.each_with_index do |image, index|
   = render(partial: "listings/edit_current_image", locals: {image: image})
   - i += 1
-= render(partial: "listings/edit_new_image")
-- i += 1
+- if i < 5
+  = render(partial: "listings/edit_new_image")
+  - i += 1
 - while i < 5
   = render(partial: "listings/edit_empty_image")
   - i += 1

@@ -1,4 +1,6 @@
 class Tegu.ListingForm
+  new_images = []
+
   @disable_form: () ->
     $("form.listing-edit input[type='submit']").addClass('disabled').attr('disabled', true).val("Saving ...")
 
@@ -43,10 +45,17 @@ class Tegu.ListingForm
       success: (data) ->
         callback(null, data) if callback
 
-  @add_uploaded_image: (image_box, image_url, image_width, image_height) ->
+  @show_image_preview: (image_box, image_url, preview_url, image_width, image_height) ->
     $(image_box).find("div:first").addClass('hide')
-    $(image_box).append("<img src='#{image_url}'></img>")
-    $(image_box).siblings('.dimensions').html("#{image_width} x #{image_height}")
+    $(image_box).append("<img src='#{preview_url}'></img>")
+    $(image_box).siblings('.image-dimensions').html("#{image_width} x #{image_height}")
+    $(image_box).siblings('.image-crop').attr("data-image-url", image_url)
+    $(image_box).siblings('.image-crop').attr("data-image-width", image_width)
+    $(image_box).siblings('.image-crop').attr("data-image-height", image_height)
+    $(image_box).siblings('.image-crop').addClass('new')
+
+  @trigger_image_crop: () ->
+    $(".image-crop.new:last").trigger('click')
 
   @replace_empty_image: (data) ->
     $(".image-grid li.empty:first").replaceWith(data)

@@ -8,6 +8,18 @@
   %meta{property: "og:image", content: cloudinary_url(@main_image.try(:full_public_id))}
   %meta{property: "fb:app_id", content: Settings[Rails.env][:fb_app_id]}
 
+:css
+  #listing-slider {
+    width: 100%;
+    -webkit-user-select: none;
+    -moz-user-select: none;  
+    user-select: none;
+  }
+  .royalSlider img {
+    width: 100%;
+    height: auto;
+  }
+
 .row
   - if @message.present?
     - if @message == 'canceled'
@@ -19,15 +31,49 @@
 
   .list-panel
     .listing-images.small-7.columns
-      .main-image
-        -# image is filled via js
-        = image_tag nil, itemprop: "image"
+      #listing-slider.royalSlider.rsDefault
+        - @all_images.each do |image|
+          %a.rsImg.bugaga{"data-rsBigImg" => "#{listing_image_show_big(image)}", :href => "#{listing_image_show_big(image)}"}
+            = image_tag listing_image_show_big(image), :class => "rsTmb"
+        / %a.rsImg{"data-rsBigImg" => "../img/paintings/2.jpg", "data-rsh" => "500", "data-rsw" => "632", :href => "../img/paintings/700x500/2.jpg"}
+        /   Vincent van Gogh - The Starry Night
+        /   %img.rsTmb{:height => "72", :src => "../img/paintings/t/2.jpg", :width => "96"}/
+        / %a.rsImg{"data-rsBigImg" => "../img/paintings/3.jpg", "data-rsh" => "500", "data-rsw" => "336", :href => "../img/paintings/700x500/3.jpg"}
+        /   Leonardo da Vinci - Mona Lisa
+        /   %img.rsTmb{:height => "72", :src => "../img/paintings/t/3.jpg", :width => "96"}/
+        / %a.rsImg{"data-rsBigImg" => "../img/paintings/4.jpg", "data-rsh" => "500", "data-rsw" => "417", :href => "../img/paintings/700x500/4.jpg"}
+        /   Grant DeVolson Wood - American Gothic
+        /   %img.rsTmb{:height => "72", :src => "../img/paintings/t/4.jpg", :width => "96"}/
+        / %a.rsImg{"data-rsBigImg" => "../img/paintings/5.jpg", "data-rsh" => "500", "data-rsw" => "601", :href => "../img/paintings/700x500/5.jpg"}
+        /   Rembrandt - The Night Watch
+        /   %img.rsTmb{:height => "72", :src => "../img/paintings/t/5.jpg", :width => "96"}/
+        / %a.rsImg{"data-rsBigImg" => "../img/paintings/6.jpg", "data-rsh" => "500", "data-rsw" => "350", :href => "../img/paintings/700x500/6.jpg"}
+        /   Johannes Vermeer - Girl with a Pearl Earring
+        /   %img.rsTmb{:height => "72", :src => "../img/paintings/t/6.jpg", :width => "96"}/
+        / %a.rsImg{"data-rsBigImg" => "../img/paintings/7.jpg", "data-rsh" => "500", "data-rsw" => "596", :href => "../img/paintings/700x500/7.jpg"}
+        /   Paul Cezanne - Card Players
+        /   %img.rsTmb{:height => "72", :src => "../img/paintings/t/7.jpg", :width => "96"}/
+        / %a.rsImg{"data-rsBigImg" => "../img/paintings/8.jpg", "data-rsh" => "414", "data-rsw" => "700", :href => "../img/paintings/700x500/8.jpg"}
+        /   Ilya Repin - Reply of the Zaporozhian Cossacks
+        /   %img.rsTmb{:height => "72", :src => "../img/paintings/t/8.jpg", :width => "96"}/
+        / %a.rsImg{"data-rsBigImg" => "../img/paintings/9.jpg", "data-rsh" => "500", "data-rsw" => "470", :href => "../img/paintings/700x500/9.jpg"}
+        /   Ivan Aivazovsky - Chesmabattle
+        /   %img.rsTmb{:height => "72", :src => "../img/paintings/t/9.jpg", :width => "96"}/
+        / %a.rsImg{"data-rsBigImg" => "../img/paintings/10.jpg", "data-rsh" => "500", "data-rsw" => "500", :href => "../img/paintings/700x500/10.jpg"}
+        /   Gustav Klimt - The Kiss
+        /   %img.rsTmb{:height => "72", :src => "../img/paintings/t/10.jpg", :width => "96"}/
+        / %a.rsImg{"data-rsBigImg" => "../img/paintings/11.jpg", "data-rsh" => "475", "data-rsw" => "700", :href => "../img/paintings/700x500/11.jpg"}
+        /   Ivan Shishkin - Morning in a Pine Forest
+        /   %img.rsTmb{:height => "72", :src => "../img/paintings/t/11.jpg", :width => "96"}/
+      / .main-image
+      /   -# image is filled via js
+      /   = image_tag nil, itemprop: "image"
 
-      .more-images
-        %ul.image-grid.small-block-grid-5
-          - @all_images.each do |image|
-            %li{:'data-image-url' => cloudinary_url(image.full_public_id), :'data-transform' => "c_fit,w_600"}
-              = image_tag cloudinary_url(image.full_public_id, transformation: [{width: 110, height: 80, crop: 'fill'}])
+      / .more-images
+      /   %ul.image-grid.small-block-grid-5
+      /     - @all_images.each do |image|
+      /       %li{:'data-image-url' => listing_image_show_big(image)}
+      /         = image_tag listing_image_show_thumb(image)
       .small-12.columns
         %ul.pills{:'data-tab' => ""}
           %li.tab-title.active{:'data-pill' => 'description'}
@@ -93,3 +139,34 @@
       js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
+
+  :javascript
+    jQuery(document).ready(function($) {
+      $('#listing-slider').royalSlider({
+        controlNavigation: 'thumbnails',
+        autoScaleSliderWidth: 600,    
+        imgWidth: 600,
+        autoScaleSlider:false,
+        imageScaleMode: 'none',
+        loopRewind: true,
+        navigateByClick: true,
+        numImagesToPreload:5,
+        arrowsNav:true,
+        arrowsNavAutoHide: true,
+        arrowsNavHideOnTouch: true,
+        keyboardNavEnabled: true,
+        fadeinLoadedSlide: true,
+        globalCaption: false,
+        globalCaptionInside: false,
+        imageScalePadding: 0,
+        imageAlignCenter:false,
+        thumbs: {
+          appendSpan: true,
+          firstMargin: true,
+          autoCenter: false,
+          spacing: 5,
+          paddingTop: 5,
+          paddingBottom: 5,
+        }
+      });
+    });

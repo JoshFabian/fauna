@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140721011922) do
+ActiveRecord::Schema.define(version: 20140721213815) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -96,8 +96,16 @@ ActiveRecord::Schema.define(version: 20140721011922) do
     t.string   "resource_type", limit: 100
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "crop_x",                    default: 0
+    t.integer  "crop_y",                    default: 0
+    t.integer  "crop_h",                    default: 0
+    t.integer  "crop_w",                    default: 0
   end
 
+  add_index "listing_images", ["crop_h"], name: "index_listing_images_on_crop_h"
+  add_index "listing_images", ["crop_w"], name: "index_listing_images_on_crop_w"
+  add_index "listing_images", ["crop_x"], name: "index_listing_images_on_crop_x"
+  add_index "listing_images", ["crop_y"], name: "index_listing_images_on_crop_y"
   add_index "listing_images", ["listing_id"], name: "index_listing_images_on_listing_id"
   add_index "listing_images", ["position"], name: "index_listing_images_on_position"
 
@@ -325,8 +333,16 @@ ActiveRecord::Schema.define(version: 20140721011922) do
     t.string   "resource_type", limit: 100
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "crop_x",                    default: 0
+    t.integer  "crop_y",                    default: 0
+    t.integer  "crop_h",                    default: 0
+    t.integer  "crop_w",                    default: 0
   end
 
+  add_index "user_avatar_images", ["crop_h"], name: "index_user_avatar_images_on_crop_h"
+  add_index "user_avatar_images", ["crop_w"], name: "index_user_avatar_images_on_crop_w"
+  add_index "user_avatar_images", ["crop_x"], name: "index_user_avatar_images_on_crop_x"
+  add_index "user_avatar_images", ["crop_y"], name: "index_user_avatar_images_on_crop_y"
   add_index "user_avatar_images", ["position"], name: "index_user_avatar_images_on_position"
   add_index "user_avatar_images", ["user_id"], name: "index_user_avatar_images_on_user_id"
 
@@ -343,8 +359,16 @@ ActiveRecord::Schema.define(version: 20140721011922) do
     t.string   "resource_type", limit: 100
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "crop_x",                    default: 0
+    t.integer  "crop_y",                    default: 0
+    t.integer  "crop_h",                    default: 0
+    t.integer  "crop_w",                    default: 0
   end
 
+  add_index "user_cover_images", ["crop_h"], name: "index_user_cover_images_on_crop_h"
+  add_index "user_cover_images", ["crop_w"], name: "index_user_cover_images_on_crop_w"
+  add_index "user_cover_images", ["crop_x"], name: "index_user_cover_images_on_crop_x"
+  add_index "user_cover_images", ["crop_y"], name: "index_user_cover_images_on_crop_y"
   add_index "user_cover_images", ["position"], name: "index_user_cover_images_on_position"
   add_index "user_cover_images", ["user_id"], name: "index_user_cover_images_on_user_id"
 
