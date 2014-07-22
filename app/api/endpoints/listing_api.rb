@@ -35,14 +35,6 @@ module Endpoints
       desc "Create listing"
       post '' do
         @listing = current_user.listings.create(listing_params)
-        if params.image_params.present?
-          params.image_params.each do |s|
-            begin
-              @listing.images.create(listing_image_params(JSON.parse(s)))
-            rescue Exception => e
-            end
-          end
-        end
         if params.listing.categories.present?
           new_categories = params.listing.categories.select{ |s| s.present? }.map(&:to_i)
           cur_categories = @listing.categories.collect(&:id)
@@ -114,7 +106,7 @@ module Endpoints
               hash = JSON.parse(hash) if hash.is_a?(String)
               @listing.images.create(listing_image_params(hash))
             rescue Exception => e
-              logger.post("tegu.api", log_data.merge({event: 'listing.update.exception', message: e.message}))
+              logger.post("tegu.api", log_data.merge({event: 'listing.images.create.exception', message: e.message}))
             end
           end
         end
@@ -134,7 +126,7 @@ module Endpoints
                 image.update(listing_image_params(hash))
                 logger.post("tegu.api", log_data_min.merge({image_id: image.id, hash: hash}))
               rescue Exception => e
-                logger.post("tegu.api", log_data.merge({event: 'listing.update.exception', message: e.message}))
+                logger.post("tegu.api", log_data.merge({event: 'listing.images.update.exception', message: e.message}))
               end
             end
         end
@@ -166,7 +158,7 @@ module Endpoints
         @listing.images.destroy(@image)
         logger.post("tegu.api", log_data.merge({event: 'listing.image.delete', listing_id: @listing.id,
           image_id: @image.id}))
-        {listing: @listing.as_json(), event: 'delete'}
+        {listing: @listing, event: 'delete'}
       end
 
       desc "Create listing review"
