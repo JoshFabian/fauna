@@ -19,11 +19,15 @@ class Tegu.ImageCrop
     $(".listing-image-crop").foundation('reveal', 'close')
 
   @init_modal: (image_id, image_width, image_height) ->
+    start_width = image_width/6
+    span_width = (image_width*4)/6
+    start_height = image_height/6
+    span_height = (image_height*4)/6
     $(".listing-image-crop img").Jcrop
       aspectRatio: 4 / 3
       boxWidth: 650
       minSize: [300, 200]
-      setSelect: [image_width/4, image_height/4, image_width/4+image_width/2, image_height/4+image_height/2]
+      setSelect: [start_width, start_height, start_width+span_width, start_height+span_height]
       onSelect: (c) ->
         coords.crop_h = c.h
         coords.crop_w = c.w
