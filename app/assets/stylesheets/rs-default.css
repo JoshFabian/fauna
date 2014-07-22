@@ -242,7 +242,7 @@
 .rsDefault .rsThumbsArrowDisabled { display: none !important; }
 
 /* Thumbnails resizing on smaller screens */
-@media screen and (min-width: 0px) and (max-width: 800px) {
+/*@media screen and (min-width: 0px) and (max-width: 800px) {
 	.rsDefault .rsThumb {
 		width: 59px;
 		height: 44px;
@@ -253,7 +253,7 @@
 	.rsDefault .rsThumbsVer {
 		width: 59px;
 	}
-}
+}*/
 
 
 
