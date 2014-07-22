@@ -5,6 +5,7 @@ class Tegu.ImageCrop
     $("#image-crop-modal img").Jcrop
       aspectRatio: 16 / 9
       minSize: [250, 27]
+      maxSize: [500, 55]
       onSelect: (c) ->
         # @image_crop_coords = c
         coords.crop_h = c.h
