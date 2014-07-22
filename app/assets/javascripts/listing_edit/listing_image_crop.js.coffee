@@ -3,7 +3,7 @@ class Tegu.ImageCrop
 
   @init_jcrop: () ->
     $("#image-crop-modal img").Jcrop
-      aspectRatio: 16 / 9
+      aspectRatio: 4 / 3
       boxWidth: 650
       minSize: [250, 27]
       onSelect: (c) ->
