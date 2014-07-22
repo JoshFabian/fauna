@@ -61,3 +61,7 @@
     var auth_token = "#{current_user.auth_token rescue ''}";
     var welcome_message = #{current_user.welcome_message.to_i rescue 0};
 
+  :javascript
+    Waves.displayEffect();
+    
+
