@@ -35,6 +35,10 @@ module Endpoints
       desc "Create listing"
       post '' do
         @listing = current_user.listings.create(listing_params)
+        if !@listing.persisted?
+          logger.post("tegu.api", log_data.merge({event: 'listing.create.exception', errors: @listing.errors.full_messages}))
+          error!("400 #{@listing.errors.full_messages.join(",")}", 400)
+        end
         if params.listing.categories.present?
           new_categories = params.listing.categories.select{ |s| s.present? }.map(&:to_i)
           cur_categories = @listing.categories.collect(&:id)
