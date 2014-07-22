@@ -4,12 +4,13 @@ class Tegu.ImageCrop
   @coords: () ->
     coords
 
-  @get_modal: (image_id, image_url, image_width, image_height, callback=null) ->
+  @get_modal: (image_id, image_width, image_height, image_url, callback=null) ->
     $.ajax "/listing_modals/crop_image.js?image_id=#{image_id}&image_url=#{image_url}",
       type: 'GET'
       dataType: 'html'
       success: (data) ->
-        callback(null, {image_id: image_id, image_width: image_width, image_height: image_height, html: data}) if callback
+        if callback
+          callback(null, {image_id: image_id, image_width: image_width, image_height: image_height, image_url: image_url, html: data})
 
   @open_modal: (data) ->
     $(".listing-image-crop").html(data)
@@ -19,6 +20,7 @@ class Tegu.ImageCrop
     $(".listing-image-crop").foundation('reveal', 'close')
 
   @init_modal: (image_id, image_width, image_height) ->
+    console.log "image:#{image_id}:#{image_width}:#{image_height} init modal"
     start_width = image_width/6
     span_width = (image_width*4)/6
     start_height = image_height/6
@@ -28,6 +30,7 @@ class Tegu.ImageCrop
       boxWidth: 650
       minSize: [300, 200]
       setSelect: [start_width, start_height, start_width+span_width, start_height+span_height]
+      trueSize: [image_width, image_height]
       onSelect: (c) ->
         coords.crop_h = c.h
         coords.crop_w = c.w
@@ -52,20 +55,25 @@ $(document).ready ->
   $(document).on 'click', '.image-crop', (e) ->
     e.preventDefault()
     image_id = $(this).data('image-id')
-    image_url = $(this).data('image-url')
     image_width = $(this).data('image-width')
     image_height = $(this).data('image-height')
+    image_url = $(this).data('image-url')
     console.log "get crop modal image:#{image_id} ..."
     async.waterfall [
       (callback) ->
         # get modal
-        Tegu.ImageCrop.get_modal(image_id, image_url, image_width, image_height, callback)
+        Tegu.ImageCrop.get_modal(image_id, image_width, image_height, image_url, callback)
       (data, callback) ->
         # console.log data
         # open modal
         Tegu.ImageCrop.open_modal(data.html)
-        # init modal
-        Tegu.ImageCrop.init_modal(data.image_id, data.image_width, data.image_height)
+        console.log "image:#{data.image_id} waiting ..."
+        tmp_image = new Image()
+        tmp_image.src = data.image_url
+        tmp_image.onload = () ->
+          console.log "image:#{data.image_id} has loaded"
+          # init modal
+          Tegu.ImageCrop.init_modal(data.image_id, data.image_width, data.image_height)
     ]
 
   $(document).on 'click', '.image-crop-save', (e) ->
