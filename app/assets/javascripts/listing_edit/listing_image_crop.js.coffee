@@ -6,7 +6,6 @@ class Tegu.ImageCrop
       aspectRatio: 16 / 9
       boxWidth: 800
       minSize: [250, 27]
-      maxSize: [500, 55]
       onSelect: (c) ->
         # @image_crop_coords = c
         coords.crop_h = c.h
