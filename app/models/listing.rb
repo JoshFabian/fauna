@@ -51,7 +51,7 @@ class Listing < ActiveRecord::Base
   end
 
   def as_indexed_json(options={})
-    as_json(methods: [:category_ids, :category_names, :user_handle], except: [:created_at, :data])
+    as_json(methods: [:category_ids, :category_names, :user_handle], except: [:data])
   end
 
   def as_json(options={})

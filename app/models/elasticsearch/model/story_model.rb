@@ -3,7 +3,6 @@ module Elasticsearch
 
     class StoryModel < Array
       def initialize(models=[])
-        models = models.empty? ? [Category, Listing] : models
         super(models)
       end
 

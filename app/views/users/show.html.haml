@@ -22,8 +22,8 @@
         .edit-show
           = f.text_field :handle, value: @user.handle, placeholder: "Profile name"
       .profile-follow
-        %div{class: @edit ? ['edit-hide'] : ['follow']}
-          - if @edit
+        %div{class: @me ? ['edit-hide'] : ['follow']}
+          - if @me
             = link_to 'Edit', '#', class: ['button', 'edit-button'], :'data-user-id' => @user.id
           - else
             = link_to 'Follow', '#', class: ['button', 'follow-button', 'track-user-profile-view'], :'data-follow-id' => @user.id

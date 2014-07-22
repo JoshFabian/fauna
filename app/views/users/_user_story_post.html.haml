@@ -1,0 +1,47 @@
+- user = current_user
+
+.update-panel.rounded-panel
+  .small-12.columns
+    .user-image
+      = link_to user_path(user) do
+        = image_tag user_avatar_image_thumbnail(user.avatar_image, 200)
+    .user-info
+      %h4.story-title
+        = link_to user.handle, user_path(user)
+      %p.secondary
+        %span#ember928.ember-view 2 days ago
+
+  .comment-content.small-12.columns.clearfix
+    %p.comment-text
+      Just started incubating another clutch of eggs, it's going to be a great year!
+  .panel-footer.small-12.columns
+    .footer-button
+      %a{:href => "#"}
+        %i.icon.ion-heart
+        09
+    .footer-button
+      %a{:href => "#"}
+        %i.icon.ion-reply
+        reply
+    %ul.who-liked
+      %li.liked
+        %a{:href=>"#"}
+          %img.tip-top{"data-tooltip" => "", :title => "JoshFabian", :src => "http://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_200/v1405184238/avatar_default.jpg"}
+      %li.liked
+        %a{:href=>"#"}
+          %img.tip-top{"data-tooltip" => "", :title => "JoshFabian", :src => "http://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_200/v1405184238/avatar_default.jpg"}
+      %li.more-liked
+        %span +10 more
+  .comment-section.small-12.columns
+    .panel-input
+      %input.status-form{:placeholder => "Write something...", :rows => "1"}
+    .comment.clearfix
+      .user-image
+        %a{:href => "#"}
+          %img{:src => "http://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_200/v1405184238/avatar_default.jpg"}
+      .user-info
+        %h6.story-title
+          = link_to user.handle, user_path(user)
+        %span.time-stamp 15 minutes ago
+        %p.secondary
+          This is a comment!
