@@ -17,8 +17,7 @@ module Endpoints
         end
 
         def comment_params
-          ActionController::Parameters.new(params).required(:comment).permit(:body, :commentable_id,
-            :commentable_type, :commentable, :user_id, :user)
+          ActionController::Parameters.new(params).required(:comment).permit(:body)
         end
       end
 
@@ -35,6 +34,7 @@ module Endpoints
       post ':id/comments' do
         authenticate!
         comment = current_user.comments.create(comment_params.merge(commentable: @post))
+        logger.post("tegu.api", log_data.merge({event: 'post.comment.create', post_id: @post.id}))
         {post: @post.as_json().merge(comment: comment)}
       end
     end # posts

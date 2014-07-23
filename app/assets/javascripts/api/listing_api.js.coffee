@@ -25,6 +25,15 @@ class Tegu.ListingApi
       success: (data) ->
         callback(null, data) if callback
 
+  @create_comment: (listing_id, params, token, callback = null) ->
+    api = "/api/v1/listings/#{listing_id}/comments?token=#{token}"
+    $.ajax api,
+      type: 'POST'
+      dataType: 'json'
+      data: params,
+      success: (data) ->
+        callback(null, data) if callback
+
   @create_review: (listing_id, params, token, callback = null) ->
     api = "/api/v1/listings/#{listing_id}/reviews?token=#{token}"
     $.ajax api,

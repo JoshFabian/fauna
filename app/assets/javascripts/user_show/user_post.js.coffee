@@ -28,7 +28,10 @@ $(document).ready ->
       console.log "user:#{current_user} #{object_type} comment ..."
       async.waterfall [
         (callback) ->
-          if object_type == 'post'
+          if object_type == 'listing'
+            # create listing comment
+            Tegu.ListingApi.create_comment(object_id, {comment: {body: body}}, auth_token, callback)
+          else if object_type == 'post'
             # create post comment
             Tegu.PostApi.create_comment(object_id, {comment: {body: body}}, auth_token, callback)
         (data, callback) ->

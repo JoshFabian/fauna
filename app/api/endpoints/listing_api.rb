@@ -8,6 +8,10 @@ module Endpoints
 
     resource :listings do
       helpers do
+        def comment_params
+          ActionController::Parameters.new(params).required(:comment).permit(:body)
+        end
+
         def listing_params
           ActionController::Parameters.new(params).require(:listing).permit(:description, :local_pickup,
             :price, :shipping_from, :shipping_time, :title).tap do |whitelisted|
@@ -163,6 +167,15 @@ module Endpoints
         logger.post("tegu.api", log_data.merge({event: 'listing.image.delete', listing_id: @listing.id,
           image_id: @image.id}))
         {listing: @listing, event: 'delete'}
+      end
+
+      desc "Create listing comment"
+      post ':id/comments' do
+        authenticate!
+        @listing = Listing.find(params.id)
+        comment = current_user.comments.create(comment_params.merge(commentable: @listing))
+        logger.post("tegu.api", log_data.merge({event: 'listing.comment.create', listing_id: @listing.id}))
+        {listing: @listing.as_json().merge(comment: comment)}
       end
 
       desc "Create listing review"
