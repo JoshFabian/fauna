@@ -1,10 +1,9 @@
 class ElasticIndex
 
   def self.create_all
-    # klasses.each do |klass|
-    #   # klass.create_elasticsearch_index rescue nil
-    #   klass.__elasticsearch__.create_index! rescue nil
-    # end
+    klasses.each do |klass|
+      klass.__elasticsearch__.create_index!(force: true) rescue nil
+    end
   end
 
   def self.delete_all
