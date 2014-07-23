@@ -17,6 +17,12 @@ class ListingApiSpec < ActionDispatch::IntegrationTest
       @lizards.reload
       @lizards.listings_count.must_equal 1
     end
+
+    it "should not create listing" do
+      data = {listing: {title: "Listing"}}
+      post "/api/v1/listings?token=#{@user.auth_token}", data
+      response.status.must_equal 400
+    end
   end
 
   describe "listing event" do
