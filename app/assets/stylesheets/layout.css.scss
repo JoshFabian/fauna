@@ -507,7 +507,7 @@
     display: inline-block;
     float: left;
     img {    
-      width: 50px;
+      width: 40px;
       border-radius: 3px;
     }
   }
@@ -518,6 +518,7 @@
       color: #999999;
       font-weight: 300;
       margin: 0;
+      font-size: 16px;
       a {
         color: #333;
         font-weight: 700;
@@ -529,7 +530,7 @@
     .secondary {
       color: #999;
       font-size: 14px;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
   }
   .panel-footer {

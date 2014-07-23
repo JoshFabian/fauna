@@ -4,7 +4,6 @@
   %meta{property: "og:title", content: @listing.title}
   %meta{property: "og:site_name", content: "Fauna"}
   %meta{property: "og:url", content: url_for(only_path: false)}
-  %meta{property: "og:description", content: @listing.description}
   %meta{property: "og:image", content: cloudinary_url(@main_image.try(:full_public_id))}
   %meta{property: "fb:app_id", content: Settings[Rails.env][:fb_app_id]}
 
@@ -35,45 +34,7 @@
         - @all_images.each do |image|
           %a.rsImg.bugaga{"data-rsBigImg" => "#{listing_image_show_big(image)}", :href => "#{listing_image_show_big(image)}"}
             = image_tag listing_image_show_big(image), :class => "rsTmb"
-        / %a.rsImg{"data-rsBigImg" => "../img/paintings/2.jpg", "data-rsh" => "500", "data-rsw" => "632", :href => "../img/paintings/700x500/2.jpg"}
-        /   Vincent van Gogh - The Starry Night
-        /   %img.rsTmb{:height => "72", :src => "../img/paintings/t/2.jpg", :width => "96"}/
-        / %a.rsImg{"data-rsBigImg" => "../img/paintings/3.jpg", "data-rsh" => "500", "data-rsw" => "336", :href => "../img/paintings/700x500/3.jpg"}
-        /   Leonardo da Vinci - Mona Lisa
-        /   %img.rsTmb{:height => "72", :src => "../img/paintings/t/3.jpg", :width => "96"}/
-        / %a.rsImg{"data-rsBigImg" => "../img/paintings/4.jpg", "data-rsh" => "500", "data-rsw" => "417", :href => "../img/paintings/700x500/4.jpg"}
-        /   Grant DeVolson Wood - American Gothic
-        /   %img.rsTmb{:height => "72", :src => "../img/paintings/t/4.jpg", :width => "96"}/
-        / %a.rsImg{"data-rsBigImg" => "../img/paintings/5.jpg", "data-rsh" => "500", "data-rsw" => "601", :href => "../img/paintings/700x500/5.jpg"}
-        /   Rembrandt - The Night Watch
-        /   %img.rsTmb{:height => "72", :src => "../img/paintings/t/5.jpg", :width => "96"}/
-        / %a.rsImg{"data-rsBigImg" => "../img/paintings/6.jpg", "data-rsh" => "500", "data-rsw" => "350", :href => "../img/paintings/700x500/6.jpg"}
-        /   Johannes Vermeer - Girl with a Pearl Earring
-        /   %img.rsTmb{:height => "72", :src => "../img/paintings/t/6.jpg", :width => "96"}/
-        / %a.rsImg{"data-rsBigImg" => "../img/paintings/7.jpg", "data-rsh" => "500", "data-rsw" => "596", :href => "../img/paintings/700x500/7.jpg"}
-        /   Paul Cezanne - Card Players
-        /   %img.rsTmb{:height => "72", :src => "../img/paintings/t/7.jpg", :width => "96"}/
-        / %a.rsImg{"data-rsBigImg" => "../img/paintings/8.jpg", "data-rsh" => "414", "data-rsw" => "700", :href => "../img/paintings/700x500/8.jpg"}
-        /   Ilya Repin - Reply of the Zaporozhian Cossacks
-        /   %img.rsTmb{:height => "72", :src => "../img/paintings/t/8.jpg", :width => "96"}/
-        / %a.rsImg{"data-rsBigImg" => "../img/paintings/9.jpg", "data-rsh" => "500", "data-rsw" => "470", :href => "../img/paintings/700x500/9.jpg"}
-        /   Ivan Aivazovsky - Chesmabattle
-        /   %img.rsTmb{:height => "72", :src => "../img/paintings/t/9.jpg", :width => "96"}/
-        / %a.rsImg{"data-rsBigImg" => "../img/paintings/10.jpg", "data-rsh" => "500", "data-rsw" => "500", :href => "../img/paintings/700x500/10.jpg"}
-        /   Gustav Klimt - The Kiss
-        /   %img.rsTmb{:height => "72", :src => "../img/paintings/t/10.jpg", :width => "96"}/
-        / %a.rsImg{"data-rsBigImg" => "../img/paintings/11.jpg", "data-rsh" => "475", "data-rsw" => "700", :href => "../img/paintings/700x500/11.jpg"}
-        /   Ivan Shishkin - Morning in a Pine Forest
-        /   %img.rsTmb{:height => "72", :src => "../img/paintings/t/11.jpg", :width => "96"}/
-      / .main-image
-      /   -# image is filled via js
-      /   = image_tag nil, itemprop: "image"
-
-      / .more-images
-      /   %ul.image-grid.small-block-grid-5
-      /     - @all_images.each do |image|
-      /       %li{:'data-image-url' => listing_image_show_big(image)}
-      /         = image_tag listing_image_show_thumb(image)
+        
       .small-12.columns
         %ul.pills{:'data-tab' => ""}
           %li.tab-title.active{:'data-pill' => 'description'}
