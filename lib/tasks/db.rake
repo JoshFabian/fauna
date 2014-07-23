@@ -1,12 +1,14 @@
 namespace :db do
 
-  desc "Re-index search indices"
-  task :index_all => :environment do
-    puts "#{Time.now}: index_all starting"
-    ElasticIndex.delete_all
-    ElasticIndex.create_all
-    ElasticIndex.index_all
-    puts "#{Time.now}: index_all completed"
+  namespace :search do
+    desc "Re-index search indices"
+    task :index_all => :environment do
+      puts "#{Time.now}: index_all starting"
+      ElasticIndex.delete_all
+      ElasticIndex.create_all
+      ElasticIndex.index_all
+      puts "#{Time.now}: index_all completed"
+    end
   end
 
   namespace :data do
