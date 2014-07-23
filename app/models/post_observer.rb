@@ -3,6 +3,9 @@ class PostObserver < ActiveRecord::Observer
 
   def after_create(post)
     # puts "post:#{post.id} created"
+    # track post
+    SegmentPost.track_post_create(post)
+  rescue Exception => e
   end
 
   def after_save(post)
