@@ -1,10 +1,10 @@
 class WaitlistMailer < ActionMailer::Base
   default from: "Fauna Support <support@fauna.net>"
 
-  def first_email(user, options={})
-    @user = user
-    @subject = options[:subject] || "Test Subject"
-    mail(to: @user.email, subject: @subject)
+  def first_email(email, options={})
+    @email = email
+    @subject = options[:subject] || "Fauna early access"
+    mail(to: @email, subject: @subject)
   end
 
 end
