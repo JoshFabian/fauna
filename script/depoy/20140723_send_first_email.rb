@@ -7,7 +7,7 @@ count = 0
 
 Waitlist.where(role: 'both').each do |waitlist|
   begin
-    WaitlistMailer.first_email(email: waitlist.email).deliver
+    WaitlistMailer.first_email(waitlist.email).deliver
     count += 1
   rescue Exception => e
     
