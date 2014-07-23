@@ -27,7 +27,7 @@ class UsersController < ApplicationController
       @cover_images.select{ |o| o.position == i }.first or i
     end
 
-    @stories = Story.by_user(@user).results rescue []
+    @stories = Story.by_wall(@user).results rescue []
 
     @total_listings = @user.listings.active.count
     @recent_listings = @user.listings.active.order("id desc").limit(3)

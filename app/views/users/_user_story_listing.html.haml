@@ -1,6 +1,7 @@
 - listing = Listing.find(story.id)
 - image = listing.primary_image
 - user = listing.user
+- comments = listing.comments
 
 .update-panel.rounded-panel
   .small-12.columns
@@ -20,8 +21,6 @@
         .listing-images.small-6.columns
           .main-image
             = image_tag cloudinary_url(image.full_public_id, transformation: [{width: 300, crop: 'fit'}]), itemprop: "image"
-            -# %img{:itemprop => "image", :src => "https://res.cloudinary.com/tegu/image/upload/c_fit,w_600/v1405981757/kd6mxcqwyik0osh49pjj.jpg"}
-            
         .listing-aside.small-6.columns
           -# .category-breadcrumbs
             -# %span
@@ -31,12 +30,12 @@
           %h5{:itemprop => "alternateName"}= listing.title
           %h2= number_to_currency(listing.price.to_f/100.0, precision: 2)
           = link_to "View Listing", user_listing_path(user, listing), :class => "view-embedded-listing"
-          
+
   .panel-footer.small-12.columns
     .footer-button
       %a{:href => "#"}
         %i.icon.ion-heart
-        09
+        0
     .footer-button
       %a{:href => "#"}
         %i.icon.ion-reply

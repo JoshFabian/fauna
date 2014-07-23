@@ -5,19 +5,35 @@ class StoryTest < ActiveSupport::TestCase
     @user = Fabricate(:user, listing_credits: 3)
   end
 
-  describe "search by user" do
-    it "should find no stories" do
-      @stories = Story.by_user(@user)
-      @stories.size.must_equal 0
+  describe "search by wall" do
+    before do
+      [Listing, Post].each do |klass|
+        klass.delete_all
+        klass.__elasticsearch__.create_index! force: true
+      end
     end
 
-    it "should find 1 story" do
+    # it "should find no stories" do
+    #   @stories = Story.by_wall(@user)
+    #   @stories.size.must_equal 0
+    # end
+
+    it "should find 1 listing story" do
       @listing = Fabricate(:listing, user: @user)
       Listing.import
       Listing.__elasticsearch__.refresh_index!
-      @stories = Story.by_user(@user)
+      @stories = Story.by_wall(@user, models: [Listing])
       @stories.size.must_equal 1
       @stories.results.collect{ |o| [o.type, o.id.to_i] }.must_equal [['listing', @listing.id]]
+    end
+
+    it "should find 1 post story" do
+      @post = Fabricate(:post, user: @user)
+      Post.import
+      Post.__elasticsearch__.refresh_index!
+      @stories = Story.by_wall(@user, models: [Post])
+      @stories.size.must_equal 1
+      @stories.results.collect{ |o| [o.type, o.id.to_i] }.must_equal [['post', @post.id]]
     end
   end
 

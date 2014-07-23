@@ -10,6 +10,8 @@ class Listing < ActiveRecord::Base
   validates :title, presence: true, uniqueness: {scope: :user}
   validates :user, presence: true
 
+  belongs_to :user
+
   has_many :images, class_name: "ListingImage", dependent: :destroy
   has_many :payments, dependent: :destroy
   has_many :reports, class_name: "ListingReport", dependent: :destroy
@@ -18,7 +20,7 @@ class Listing < ActiveRecord::Base
   has_many :listing_categories, dependent: :destroy
   has_many :categories, through: :listing_categories
 
-  belongs_to :user
+  has_many :comments, as: :commentable
 
   serialize :shipping_prices, Hash
 
@@ -51,7 +53,7 @@ class Listing < ActiveRecord::Base
   end
 
   def as_indexed_json(options={})
-    as_json(methods: [:category_ids, :category_names, :user_handle], except: [:data])
+    as_json(methods: [:category_ids, :category_names, :user_handle, :wall_id], except: [:data])
   end
 
   def as_json(options={})
@@ -120,5 +122,9 @@ class Listing < ActiveRecord::Base
 
   def user_handle
     user.try(:handle)
+  end
+
+  def wall_id
+    self.user_id
   end
 end

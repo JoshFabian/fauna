@@ -1,4 +1,6 @@
-- user = current_user
+- post = Post.find(story.id)
+- user = post.user
+- comments = post.comments.order('id desc')
 
 .update-panel.rounded-panel
   .small-12.columns
@@ -9,16 +11,17 @@
       %h4.story-title
         = link_to user.handle, user_path(user)
       %p.secondary
-        %span#ember928.ember-view 2 days ago
+        %span#ember928.ember-view #{time_ago_in_words(post.created_at)} ago
 
   .comment-content.small-12.columns.clearfix
     %p.comment-text
-      Just started incubating another clutch of eggs, it's going to be a great year!
+      = post.body
+
   .panel-footer.small-12.columns
     .footer-button
       %a{:href => "#"}
         %i.icon.ion-heart
-        09
+        = post.comments_count
     .footer-button
       %a{:href => "#"}
         %i.icon.ion-reply
@@ -32,16 +35,11 @@
           %img.tip-top{"data-tooltip" => "", :title => "JoshFabian", :src => "http://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_200/v1405184238/avatar_default.jpg"}
       %li.more-liked
         %span +10 more
+
+  -# comments
   .comment-section.small-12.columns
     .panel-input
-      %input.status-form{:placeholder => "Write something...", :rows => "1"}
-    .comment.clearfix
-      .user-image
-        %a{:href => "#"}
-          %img{:src => "http://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_200/v1405184238/avatar_default.jpg"}
-      .user-info
-        %h6.story-title
-          = link_to user.handle, user_path(user)
-        %span.time-stamp 15 minutes ago
-        %p.secondary
-          This is a comment!
+      %input.status-form{placeholder: "Write something...", rows: "1", :'data-object-id' => post.id, :'data-object-type' => 'post'}
+    - comments.each do |comment|
+      = render(partial: "users/user_story_comment", locals: {comment: comment})
+      
