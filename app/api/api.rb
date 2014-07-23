@@ -39,6 +39,7 @@ class Api < Grape::API
   mount Endpoints::PaypalApi
   mount Endpoints::PingApi
   mount Endpoints::PlanApi
+  mount Endpoints::PostApi
   mount Endpoints::ReportApi
   mount Endpoints::SmsApi
   mount Endpoints::StripeApi

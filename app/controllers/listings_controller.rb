@@ -13,7 +13,7 @@ class ListingsController < ApplicationController
     @title = "Manage Listings | Admin"
 
     respond_to do |format|
-      format.html
+      format.html { render(layout: !request.xhr?) }
     end
   end
 

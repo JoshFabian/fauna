@@ -39,6 +39,10 @@ class User < ActiveRecord::Base
   has_many :user_followers, class_name: "UserFollow", foreign_key: 'following_id', dependent: :destroy
   has_many :followers, through: :user_followers, source: :user
 
+  # posts, comments
+  has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
+
   friendly_id :slug
 
   bitmask :roles, :as => [:admin, :basic, :buyer, :seller]

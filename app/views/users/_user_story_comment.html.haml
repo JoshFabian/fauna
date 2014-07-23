@@ -1,0 +1,13 @@
+- user = comment.user
+
+.comment.clearfix
+  .user-image
+    = link_to user_path(user) do
+      = image_tag user_avatar_image_thumbnail(user.avatar_image, 200)
+  .user-info
+    %h6.story-title
+      = link_to user.handle, user_path(user)
+    %span.time-stamp #{time_ago_in_words(comment.created_at)} ago
+    %p.secondary
+      = comment.body
+

@@ -1,5 +1,5 @@
 .row
-  -if @edit and !@user.profile_complete?
+  -if @me and !@user.profile_complete?
     .small-12.columns.no-padding
       %p.welcome-message
         %strong Welcome to Fauna!
@@ -11,12 +11,16 @@
       - if @total_listings > 0
         = render(partial: "users/user_recent_listings")
 
-    .feedback
-      - if @recent_reviews.present?
-        = render(partial: "reviews/review_widget", locals: {reviews: @recent_reviews})
-      - else
-        -# Empty state
-        = render(partial: "reviews/review_empty")
+    - if feature(:user_feed)
+      .user-feed
+        = render(partial: "users/user_stories")
+    - else
+      .feedback
+        - if @recent_reviews.present?
+          = render(partial: "reviews/review_widget", locals: {reviews: @recent_reviews})
+        - else
+          -# Empty state
+          = render(partial: "reviews/review_empty")
 
   .profile-sidebar.small-4.columns
     .rounded-panel

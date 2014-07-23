@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140721213815) do
+ActiveRecord::Schema.define(version: 20140723012022) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -46,6 +46,19 @@ ActiveRecord::Schema.define(version: 20140721213815) do
   add_index "categories", ["name"], name: "index_categories_on_name"
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id"
   add_index "categories", ["position"], name: "index_categories_on_position"
+
+  create_table "comments", force: true do |t|
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.integer  "user_id"
+    t.string   "body"
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type"
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
   create_table "conversations", force: true do |t|
     t.string   "subject",    default: ""
@@ -135,8 +148,10 @@ ActiveRecord::Schema.define(version: 20140721213815) do
     t.text     "data"
     t.datetime "sold_at"
     t.integer  "views_count",                 default: 0
+    t.integer  "comments_count",              default: 0
   end
 
+  add_index "listings", ["comments_count"], name: "index_listings_on_comments_count"
   add_index "listings", ["created_at"], name: "index_listings_on_created_at"
   add_index "listings", ["images_count"], name: "index_listings_on_images_count"
   add_index "listings", ["price"], name: "index_listings_on_price"
@@ -280,6 +295,21 @@ ActiveRecord::Schema.define(version: 20140721213815) do
   add_index "plans", ["subscription"], name: "index_plans_on_subscription"
   add_index "plans", ["subscriptions_count"], name: "index_plans_on_subscriptions_count"
   add_index "plans", ["trial_period_days"], name: "index_plans_on_trial_period_days"
+
+  create_table "posts", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "wall_id"
+    t.integer  "comments_count", default: 0
+    t.text     "body"
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "posts", ["comments_count"], name: "index_posts_on_comments_count"
+  add_index "posts", ["created_at"], name: "index_posts_on_created_at"
+  add_index "posts", ["user_id"], name: "index_posts_on_user_id"
+  add_index "posts", ["wall_id"], name: "index_posts_on_wall_id"
 
   create_table "receipts", force: true do |t|
     t.integer  "receiver_id"
@@ -430,6 +460,7 @@ ActiveRecord::Schema.define(version: 20140721213815) do
     t.string   "slug",                    limit: 100
     t.integer  "followers_count",                                               default: 0
     t.integer  "views_count",                                                   default: 0
+    t.integer  "posts_count",                                                   default: 0
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true
@@ -445,6 +476,7 @@ ActiveRecord::Schema.define(version: 20140721213815) do
   add_index "users", ["paypal_email"], name: "index_users_on_paypal_email"
   add_index "users", ["pending_listing_reviews"], name: "index_users_on_pending_listing_reviews"
   add_index "users", ["postal_code"], name: "index_users_on_postal_code"
+  add_index "users", ["posts_count"], name: "index_users_on_posts_count"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   add_index "users", ["roles"], name: "index_users_on_roles"
   add_index "users", ["slug"], name: "index_users_on_slug"

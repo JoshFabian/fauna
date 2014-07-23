@@ -1,0 +1,48 @@
+- if @me
+  -# post something
+  .panel-body.status-panel.rounded-panel
+    %textarea.status-form{placeholder: "Write something...", rows: "1"}
+    .panel-footer.clearfix
+      %button.btn.status-button Post
+
+- @stories.each do |story|
+  - begin
+    - if story.type == 'listing'
+      = render(partial: "users/user_story_listing", locals: {story: story})
+    - elsif story.type == 'post'
+      = render(partial: "users/user_story_post", locals: {story: story})
+  - rescue Exception => e
+
+    // Don't show this section if no users have liked story
+    / %ul.who-liked
+    /   %li.liked
+    /     %a{:href=>"#"}
+    /       %img.tip-top{"data-tooltip" => "", :title => "JoshFabian", :src => "http://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_200/v1405184238/avatar_default.jpg"}
+    /   %li.liked
+    /     %a{:href=>"#"}
+    /       %img.tip-top{"data-tooltip" => "", :title => "JoshFabian", :src => "http://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_200/v1405184238/avatar_default.jpg"}
+    /   %li.more-liked
+    /     %span +10 more
+
+  -# hide by default if no comments
+  .comment-section.small-12.columns.hide
+    .panel-input
+      %input.status-form{:placeholder => "Write something...", :rows => "1"}
+    .comment.clearfix
+      .user-image
+        %a{:href => "#"}
+          %img{:src => "http://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_200/v1405184238/avatar_default.jpg"}
+      .user-info
+        %h6.story-title
+          %a{:href => "#"}
+            Josh
+        %span.time-stamp 15 minutes ago
+        %p.secondary
+          This is a comment!
+
+/ .feedback
+/   - if @recent_reviews.present?
+/     = render(partial: "reviews/review_widget", locals: {reviews: @recent_reviews})
+/   - else
+/     -# Empty state
+/     = render(partial: "reviews/review_empty")

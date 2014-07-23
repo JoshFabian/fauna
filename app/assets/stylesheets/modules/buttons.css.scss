@@ -163,3 +163,13 @@ input.button {
   width: 300px;
   margin-bottom: 10px;
 }
+
+.view-embedded-listing {
+  border-radius: 3px;
+  border: 1px solid #DDDDDD;
+  padding: 10px 45px;
+  color: #848484;
+  &:hover {
+    color: $orange;
+  }
+}

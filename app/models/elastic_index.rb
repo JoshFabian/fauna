@@ -28,6 +28,6 @@ class ElasticIndex
   protected
 
   def self.klasses
-    [Category, Listing]
+    [Category, Listing, Post]
   end
 end

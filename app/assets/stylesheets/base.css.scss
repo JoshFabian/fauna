@@ -5,9 +5,17 @@ body {
   min-width: 1075px;
 }
 
+a {
+  transition: .2s ease-in;
+}
+
 textarea {
   height: 100px;
   box-shadow: none;
+  border-radius: 3px;
+}
+
+.tooltip {
   border-radius: 3px;
 }
 
