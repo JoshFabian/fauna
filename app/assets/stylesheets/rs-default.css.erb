@@ -66,7 +66,7 @@
 
 	position: absolute;	
 	cursor: pointer;	
-	background: url('rs-default.png');
+	background: url(<%= asset_path 'rs-default.png' %>);
 
 	background-color: #000;
 	background-color: rgba(0,0,0,0.75);
@@ -230,7 +230,7 @@
 	margin-left: -8px;
 	position: absolute;	
 	cursor: pointer;	
-	background: url('rs-default.png');
+	background: url(<%= asset_path 'rs-default.png' %>);
 }
 
 .rsDefault.rsWithThumbsHor .rsThumbsArrowLeft .rsThumbsArrowIcn { background-position: -128px -32px; }
@@ -339,7 +339,7 @@
 	width: 32px;
 	height: 32px;
 
-	background: url('rs-default.png') 0 0;
+	background: url(<%= asset_path 'rs-default.png' %>) 0 0;
 	background-color: #000;
 	background-color: rgba(0,0,0,0.75);
 	*background-color: #000;
@@ -382,7 +382,7 @@
 	-moz-transition: .3s;
 	transition: .3s;
 
-	background:url(rs-default.png) no-repeat 0 -32px;
+	background: url(<%= asset_path 'rs-default.png' %>) no-repeat 0 -32px;
 	background-color: #000;
 	background-color: rgba(0,0,0,0.75);
 	*background-color: #000;
@@ -416,7 +416,7 @@
 	margin: 6px;
 	width: 32px;
 	height: 32px;
-	background: url('rs-default.png') -64px 0;
+	background: url(<%= asset_path 'rs-default.png' %>) -64px 0;
 	background-color: #000;
 	background-color: rgba(0,0,0,0.75);
 	*background-color: #000;
