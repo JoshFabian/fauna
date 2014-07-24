@@ -8,28 +8,64 @@ class TrackObjectTest < ActiveSupport::TestCase
   end
 
   describe "listings" do
-    it "should increment listing view count using listing id" do
-      @listing.views_count.must_equal 0
-      TrackObject.listing_view!(@listing.id, by: @user).must_equal 1
-      @listing.reload
-      @listing.views_count.must_equal 1
+    describe "by user" do
+      it "should increment listing view count using listing id" do
+        @listing.views_count.must_equal 0
+        TrackObject.listing_view!(@listing.id, by: @user).must_equal 1
+        @listing.reload
+        @listing.views_count.must_equal 1
+      end
+
+      it "should increment listing view count using listing object" do
+        @listing.views_count.must_equal 0
+        TrackObject.listing_view!(@listing, by: @user).must_equal 1
+        @listing.reload
+        @listing.views_count.must_equal 1
+        TrackObject.listing_working_set(by: @user).must_equal [@listing.id]
+      end
+
+      it "should not increment listing view count twice within x minutes" do
+        TrackObject.listing_view!(@listing, by: @user).must_equal 1
+        @listing.reload
+        @listing.views_count.must_equal 1
+        TrackObject.listing_view!(@listing, by: @user).must_equal 0
+        @listing.reload
+        @listing.views_count.must_equal 1
+      end
     end
 
-    it "should increment listing view count using listing object" do
-      @listing.views_count.must_equal 0
-      TrackObject.listing_view!(@listing, by: @user).must_equal 1
-      @listing.reload
-      @listing.views_count.must_equal 1
-      TrackObject.listing_working_set(by: @user).must_equal [@listing.id]
-    end
+    describe "by guest" do
+      before do
+        @session1 = "session1"
+        @session2 = "session2"
+      end
 
-    it "should not increment listing view count twice within x minutes" do
-      TrackObject.listing_view!(@listing, by: @user).must_equal 1
-      @listing.reload
-      @listing.views_count.must_equal 1
-      TrackObject.listing_view!(@listing, by: @user).must_equal 0
-      @listing.reload
-      @listing.views_count.must_equal 1
+      it "should increment listing view count" do
+        @listing.views_count.must_equal 0
+        TrackObject.listing_view!(@listing.id, by: @session1).must_equal 1
+        @listing.reload
+        @listing.views_count.must_equal 1
+      end
+
+      it "should increment listing view count by different sessions" do
+        @listing.views_count.must_equal 0
+        TrackObject.listing_view!(@listing.id, by: @session1).must_equal 1
+        @listing.reload
+        @listing.views_count.must_equal 1
+        TrackObject.listing_view!(@listing.id, by: @session2).must_equal 1
+        @listing.reload
+        @listing.views_count.must_equal 2
+      end
+
+      it "should not increment listing view count by same session twice within x minutes" do
+        @listing.views_count.must_equal 0
+        TrackObject.listing_view!(@listing.id, by: @session1).must_equal 1
+        @listing.reload
+        @listing.views_count.must_equal 1
+        TrackObject.listing_view!(@listing, by: @session1).must_equal 0
+        @listing.reload
+        @listing.views_count.must_equal 1
+      end
     end
   end
 
