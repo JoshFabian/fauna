@@ -949,8 +949,33 @@ body.editing {
   margin-top: 50px;
   .rounded-panel {
     padding-bottom: 20px;
+    .account-form {
+      margin-top: 20px;
+      label {
+        line-height: 40px;
+        font-weight: bold;
+        text-align: right;
+      }
+      .inline-link {
+        line-height: 39px;
+      }
+      .password-block {
+        label {
+          text-align: left;
+          font-weight: normal;
+        }
+      }
+    }
+    .divider {
+      margin-bottom: 15px;
+    }
+    .settings-footer {
+      text-align: center;
+      margin-top: 30px;
+    }
   }
 }
+
 .policy-text {
   margin-top: 30px;
   color: #848484;

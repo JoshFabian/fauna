@@ -1,0 +1,68 @@
+.row
+	.account-page.small-8.small-centered.columns
+		.rounded-panel
+			.account-avatar
+				= image_tag user_avatar_image_thumbnail(current_user.avatar_image, 120)
+			.account-header
+				%h3 Account Settings
+			.small-10.small-centered.columns
+				.account-form
+					.small-12.columns
+						.small-4.columns
+							%label Email Address
+						.small-8.columns
+							%input#user_email{:name => "user[email]", :placeholder => "email", :remote => "/users/validate_email", :required => "required", :type => "email", :value => "contact@joshfabian.com"}
+
+					.small-12.columns
+						.small-4.columns
+							%label Account Name
+						.small-8.columns
+							%input#user_email{:name => "user[email]", :placeholder => "what should people call you?", :remote => "/users/validate_email", :required => "required", :type => "email", :value => "JoshFabian"}
+
+					.small-12.columns
+						.small-4.columns
+							%label Password
+						.small-8.columns
+							%a.inline-link{:href=>"#"} Change Password
+							.password-block.hide
+								%label Current Password
+								%input#user_email{:placeholder => "current password", :type => "password", :value => ""}
+
+								%label New Password
+								%input#user_email{:name => "user[email]", :placeholder => "new password", :type => "password", :value => ""}
+
+					.small-12.columns
+						.small-4.columns
+							%label Paypal
+						.small-8.columns
+							%a.inline-link{:href=>"#"} Update Paypal Account
+
+					.small-12.columns
+						.small-4.columns
+							%label Phone Number
+						.small-8.columns
+							%a.inline-link{:href=>"#"} Update Phone Number
+					.small-12.columns.divider
+						%hr
+					.small-12.columns.divider
+						.small-4.columns
+							%label Facebook
+						.small-8.columns
+							%a.facebook-settings{:href=>"#"}
+								Connect to Facebook
+							%input#facebook{:type => "checkbox"}
+								%label{:for => "facebook"} Share new listings to Facebook
+
+					.small-12.columns
+						.small-4.columns
+							%label Twitter
+						.small-8.columns
+							%a.twitter-settings{:href=>"#"}
+								Connect to Twitter
+							%input#twitter{:type => "checkbox"}
+								%label{:for => "twitter"} Share new listings to Twitter
+
+					.small-12.columns
+						%hr
+					.small-12.columns.settings-footer
+						%a.button.orange-button{:href => "#"} Update Account Settings
