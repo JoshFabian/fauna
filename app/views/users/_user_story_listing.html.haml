@@ -33,10 +33,17 @@
 
   .panel-footer.small-12.columns
     .footer-button
-      %a{:href => "#"}
+      = link_to '#', class: 'object-like' do
         %i.icon.ion-heart
         0
     .footer-button
-      %a{:href => "#"}
+      = link_to '#', class: 'object-comment' do
         %i.icon.ion-reply
         reply
+
+  -# comments
+  .comment-section.small-12.columns{class: [comments.any? ? '' : 'hide']}
+    .panel-input
+      %input.status-form{placeholder: "Write something...", rows: "1", :'data-object-id' => listing.id, :'data-object-type' => 'listing'}
+    - comments.each do |comment|
+      = render(partial: "users/user_story_comment", locals: {comment: comment})
