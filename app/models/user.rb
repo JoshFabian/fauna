@@ -171,6 +171,12 @@ class User < ActiveRecord::Base
     user
   end
 
+  def self.by_slug!(s, options={})
+    user = by_slug(s, options)
+    raise ::ActiveRecord::RecordNotFound if user.blank?
+    user
+  end
+
   protected
 
   def generate_authentication_token

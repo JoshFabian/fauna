@@ -47,7 +47,7 @@ class UsersController < ApplicationController
 
   # GET /:slug/listings
   def listings
-    @user = User.by_slug(params[:slug])
+    @user = User.by_slug!(params[:slug])
     @edit = @user.id == current_user.id
     @cover_images = @user.cover_images.order("position asc").first(3)
     @cover_set = 1.upto(3).map do |i|
@@ -71,14 +71,12 @@ class UsersController < ApplicationController
   # GET /:slug/listings/manage
   # GET /:slug/listings/manage?category_id=1&state=active
   def manage_listings
-    @user = User.by_slug(params[:slug])
+    @user = User.by_slug!(params[:slug])
     acl_manage!(on: @user)
     @state = params[:state].present? ? params[:state] : 'active'
     @category_id = params[:category_id]
     terms = [ListingFilter.user(@user.id), ListingFilter.state(@state)]
-    if @category_id.present?
-      terms.push({term: {category_ids: @category_id}})
-    end
+    terms.push(ListingFilter.category(@category_id)) if @category_id.present?
     query = {filter: {bool: {must: terms}}}
     @listings = Listing.search(query).page(page).per(per).records
 
@@ -87,7 +85,7 @@ class UsersController < ApplicationController
 
   # GET /:slug/messages
   def messages
-    @user = User.by_slug(params[:slug])
+    @user = User.by_slug!(params[:slug])
     @edit = @user.id == current_user.id
     @cover_images = @user.cover_images.order("position asc").first(3)
     @cover_set = 1.upto(3).map do |i|
@@ -110,7 +108,7 @@ class UsersController < ApplicationController
 
   # GET /:slug/purchases
   def purchases
-    @user = User.by_slug(params[:slug])
+    @user = User.by_slug!(params[:slug])
 
     @user_purchases = @user.purchases
     @user_reviews = @user.authored_reviews
@@ -124,7 +122,7 @@ class UsersController < ApplicationController
 
   # GET /:slug/reviews
   def reviews
-    @user = User.by_slug(params[:slug])
+    @user = User.by_slug!(params[:slug])
     @edit = @user.id == current_user.id
     @cover_images = @user.cover_images.order("position asc").first(3)
     @cover_set = 1.upto(3).map do |i|
