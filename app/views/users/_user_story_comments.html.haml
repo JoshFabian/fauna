@@ -1,0 +1,6 @@
+-# comments
+.comment-section.small-12.columns{class: [comments.any? ? '' : 'hide']}
+  .panel-input
+    %input.status-form{placeholder: "Write something...", rows: "1", :'data-object-id' => object.id, :'data-object-klass' => object.class.to_s.downcase}
+  - comments.each do |comment|
+    = render(partial: "users/user_story_comment", locals: {comment: comment})

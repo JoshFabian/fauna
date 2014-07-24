@@ -81,6 +81,43 @@ class ListingTest < ActiveSupport::TestCase
     end
   end
 
+  describe "likes" do
+    before do
+      @listing = Fabricate(:listing, user: @user)
+    end
+
+    it "should create like and increment likes_count" do
+      @listing.likes_count.must_equal 0
+      ListingLike.like!(@listing, @user).must_equal true
+      @listing.reload
+      @listing.likes_count.must_equal 1
+    end
+
+    it "should remove like and decrement likes_count" do
+      ListingLike.like!(@listing, @user).must_equal true
+      ListingLike.unlike!(@listing, @user).must_equal true
+      @listing.reload
+      @listing.likes_count.must_equal 0
+    end
+
+    it "should toggle like and adjust likes_count" do
+      @listing.likes_count.must_equal 0
+      ListingLike.toggle_like!(@listing, @user).must_equal true
+      @listing.reload
+      @listing.likes_count.must_equal 1
+      ListingLike.toggle_like!(@listing, @user).must_equal true
+      @listing.reload
+      @listing.likes_count.must_equal 0
+    end
+
+    it "should not allow duplicate like by user" do
+      ListingLike.like!(@listing, @user).must_equal true
+      ListingLike.like!(@listing, @user).must_equal false
+      @listing.reload
+      @listing.likes_count.must_equal 1
+    end
+  end
+
   describe "search" do
     describe "by category name" do
       before do

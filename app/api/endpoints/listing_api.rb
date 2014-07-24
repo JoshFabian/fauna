@@ -172,10 +172,19 @@ module Endpoints
       desc "Create listing comment"
       post ':id/comments' do
         authenticate!
-        @listing = Listing.find(params.id)
-        comment = current_user.comments.create(comment_params.merge(commentable: @listing))
-        logger.post("tegu.api", log_data.merge({event: 'listing.comment.create', listing_id: @listing.id}))
-        {listing: @listing.as_json().merge(comment: comment)}
+        listing = Listing.find(params.id)
+        comment = current_user.comments.create(comment_params.merge(commentable: listing))
+        logger.post("tegu.api", log_data.merge({event: 'listing.comment.create', listing_id: listing.id}))
+        {listing: listing.as_json().merge(comment: comment)}
+      end
+
+      desc "Toggle listing like"
+      put ':id/toggle_like' do
+        authenticate!
+        listing = Listing.find(params.id)
+        ListingLike.toggle_like!(listing, current_user)
+        logger.post("tegu.api", log_data.merge({event: 'listing.toggle_like', listing_id: listing.id}))
+        {listing: listing.as_json()}
       end
 
       desc "Create listing review"

@@ -16,13 +16,12 @@
         = render(partial: "users/user_stories")
         = render(partial: "users/user_story_follow")
     - else
-    
-    .feedback
-      - if @recent_reviews.present?
-        = render(partial: "reviews/review_widget", locals: {reviews: @recent_reviews})
-      - else
-        -# Empty state
-        = render(partial: "reviews/review_empty")
+      .feedback
+        - if @recent_reviews.present?
+          = render(partial: "reviews/review_widget", locals: {reviews: @recent_reviews})
+        - else
+          -# Empty state
+          = render(partial: "reviews/review_empty")
 
   .profile-sidebar.small-4.columns
     .rounded-panel

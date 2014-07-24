@@ -9,6 +9,7 @@ class Post < ActiveRecord::Base
   belongs_to :user, counter_cache: :posts_count
 
   has_many :comments, as: :commentable
+  has_many :likes, class_name: "PostLike", dependent: :destroy
 
   store :data
 

@@ -16,3 +16,11 @@ class Tegu.PostApi
       data: params,
       success: (data) ->
         callback(null, data) if callback
+
+  @toggle_like: (post_id, token, callback = null) ->
+    api = "/api/v1/posts/#{post_id}/toggle_like?token=#{token}"
+    $.ajax api,
+      type: 'PUT'
+      dataType: 'json'
+      success: (data) ->
+        callback(null, data) if callback

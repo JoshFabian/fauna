@@ -21,6 +21,7 @@ class Listing < ActiveRecord::Base
   has_many :categories, through: :listing_categories
 
   has_many :comments, as: :commentable
+  has_many :likes, class_name: "ListingLike", dependent: :destroy
 
   serialize :shipping_prices, Hash
 

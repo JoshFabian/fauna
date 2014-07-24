@@ -1,8 +1,7 @@
-- post = Post.find(story.id)
 - user = post.user
 - comments = post.comments.order('id desc')
 
-.update-panel.rounded-panel
+.update-panel.rounded-panel{:'data-story-id' => story.id, :'data-story-klass' => story.type, id: "#{story.type}_#{story.id}"}
   .small-12.columns
     .user-image
       = link_to user_path(user) do
@@ -19,9 +18,9 @@
 
   .panel-footer.small-12.columns
     .footer-button
-      = link_to '#', class: 'object-like' do
-        %i.icon.ion-heart
-        = post.comments_count
+      = link_to '#', class: 'object-like', :'data-object-id' => post.id, :'data-object-klass' => 'post' do
+        %i.icon.ion-heart.active
+        = post.likes_count
     .footer-button
       = link_to '#', class: 'object-comment' do
         %i.icon.ion-reply
@@ -37,9 +36,5 @@
         %span +10 more
 
   -# comments
-  .comment-section.small-12.columns{class: [comments.any? ? '' : 'hide']}
-    .panel-input
-      %input.status-form{placeholder: "Write something...", rows: "1", :'data-object-id' => post.id, :'data-object-type' => 'post'}
-    - comments.each do |comment|
-      = render(partial: "users/user_story_comment", locals: {comment: comment})
+  = render(partial: "users/user_story_comments", locals: {object: post, comments: comments})
       

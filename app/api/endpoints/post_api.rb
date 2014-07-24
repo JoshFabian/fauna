@@ -37,6 +37,14 @@ module Endpoints
         logger.post("tegu.api", log_data.merge({event: 'post.comment.create', post_id: @post.id}))
         {post: @post.as_json().merge(comment: comment)}
       end
+
+      desc "Create post like"
+      put ':id/toggle_like' do
+        authenticate!
+        PostLike.toggle_like!(@post, current_user)
+        logger.post("tegu.api", log_data.merge({event: 'post.toggle_like', post_id: @post.id}))
+        {post: @post.as_json()}
+      end
     end # posts
   end
 end

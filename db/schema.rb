@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140723012022) do
+ActiveRecord::Schema.define(version: 20140724200337) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -122,6 +122,17 @@ ActiveRecord::Schema.define(version: 20140723012022) do
   add_index "listing_images", ["listing_id"], name: "index_listing_images_on_listing_id"
   add_index "listing_images", ["position"], name: "index_listing_images_on_position"
 
+  create_table "listing_likes", force: true do |t|
+    t.integer  "listing_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "listing_likes", ["created_at"], name: "index_listing_likes_on_created_at"
+  add_index "listing_likes", ["listing_id"], name: "index_listing_likes_on_listing_id"
+  add_index "listing_likes", ["user_id"], name: "index_listing_likes_on_user_id"
+
   create_table "listing_reports", force: true do |t|
     t.integer  "listing_id"
     t.integer  "user_id"
@@ -149,11 +160,13 @@ ActiveRecord::Schema.define(version: 20140723012022) do
     t.datetime "sold_at"
     t.integer  "views_count",                 default: 0
     t.integer  "comments_count",              default: 0
+    t.integer  "likes_count",                 default: 0
   end
 
   add_index "listings", ["comments_count"], name: "index_listings_on_comments_count"
   add_index "listings", ["created_at"], name: "index_listings_on_created_at"
   add_index "listings", ["images_count"], name: "index_listings_on_images_count"
+  add_index "listings", ["likes_count"], name: "index_listings_on_likes_count"
   add_index "listings", ["price"], name: "index_listings_on_price"
   add_index "listings", ["slug"], name: "index_listings_on_slug"
   add_index "listings", ["sold_at"], name: "index_listings_on_sold_at"
@@ -296,6 +309,17 @@ ActiveRecord::Schema.define(version: 20140723012022) do
   add_index "plans", ["subscriptions_count"], name: "index_plans_on_subscriptions_count"
   add_index "plans", ["trial_period_days"], name: "index_plans_on_trial_period_days"
 
+  create_table "post_likes", force: true do |t|
+    t.integer  "post_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "post_likes", ["created_at"], name: "index_post_likes_on_created_at"
+  add_index "post_likes", ["post_id"], name: "index_post_likes_on_post_id"
+  add_index "post_likes", ["user_id"], name: "index_post_likes_on_user_id"
+
   create_table "posts", force: true do |t|
     t.integer  "user_id"
     t.integer  "wall_id"
@@ -304,10 +328,12 @@ ActiveRecord::Schema.define(version: 20140723012022) do
     t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "likes_count",    default: 0
   end
 
   add_index "posts", ["comments_count"], name: "index_posts_on_comments_count"
   add_index "posts", ["created_at"], name: "index_posts_on_created_at"
+  add_index "posts", ["likes_count"], name: "index_posts_on_likes_count"
   add_index "posts", ["user_id"], name: "index_posts_on_user_id"
   add_index "posts", ["wall_id"], name: "index_posts_on_wall_id"
 
