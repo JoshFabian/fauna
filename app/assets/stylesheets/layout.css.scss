@@ -245,6 +245,67 @@
   }
 }
 
+.list-panel {
+  @extend .rounded-panel;
+  padding: 0;
+  padding-bottom: 5px;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+  transition: .1s ease-in;
+  .listing-info {
+    .title {
+      color: #333;
+      font-size: 14px;
+    }
+    .breeder {
+      float: left;
+      font-size: 14px;
+      color: #a2a3a3;
+    }
+    .price {
+      float: right;
+      color: #1abc9c;
+      font-weight: 500;
+      font-size: 14px;
+    }
+  }
+  .grid-thumb {
+    width: 100%;
+    height: 200px;
+  }
+  .listing-info {
+    padding: 10px;
+  }
+  .listing-aside {
+    padding: 15px;
+  }
+  .listing-images {
+    padding: 0;
+    .main-image {
+      margin-bottom: 10px;
+      img {
+        width: 100%;
+      }
+    }
+    .image-grid {
+      padding-right: 5px;
+      padding-left: 15px;
+    }
+    .more-images {
+      li {
+        padding-right: 5px;
+        padding-left: 5px;
+        padding-bottom: 0;
+        img {
+          width: 100%;
+          height: 80px;
+        }
+      }
+    }
+  }
+}
+
 .edit-timer {
   margin-bottom: 15px;
   background: #eee;
@@ -604,7 +665,7 @@
       position: relative;
       .time-stamp {
         position: absolute;
-        top: 12px;
+        top: 19px;
         right: 10px;
         font-size: 13px;
         color: #999;
@@ -612,11 +673,18 @@
       .user-info {
         margin-left: 15px;
         .story-title {
-          margin-bottom: 5px;
+          display: inline-block;
+          float: left;
+          line-height: 29px;
+          margin-bottom: 0;
         }
         .secondary {
           font-size: 16px;
           margin-bottom: 0;
+          display: inline-block;
+          float: left;
+          margin-left: 10px;
+          line-height: 29px;
         }
       }
     }
@@ -629,12 +697,34 @@
     padding-bottom: 0;
     border: 1px solid #F0F0F0;
     box-shadow: none;
-    height: 200px;
+    height: 180px;
     .main-image {
       margin-bottom: 0;
     }
     h2 {
       margin-bottom: 30px;
+    }
+  }
+  .small-block-grid-2 {
+    margin-bottom: -15px;
+  }
+  .follow-panel {
+    @extend .clearfix;
+    padding-bottom: 0;
+    border: 1px solid #F0F0F0;
+    box-shadow: none;
+    .listing-aside {
+      padding: 10px;
+    }
+    img {
+      width: 50px;
+      border-radius: 3px;
+      float: left;
+    }
+    h5 {
+      line-height: 40px;
+      margin-left: 15px;
+      display: inline-block;
     }
   }
 }
@@ -859,8 +949,33 @@ body.editing {
   margin-top: 50px;
   .rounded-panel {
     padding-bottom: 20px;
+    .account-form {
+      margin-top: 20px;
+      label {
+        line-height: 40px;
+        font-weight: bold;
+        text-align: right;
+      }
+      .inline-link {
+        line-height: 39px;
+      }
+      .password-block {
+        label {
+          text-align: left;
+          font-weight: normal;
+        }
+      }
+    }
+    .divider {
+      margin-bottom: 15px;
+    }
+    .settings-footer {
+      text-align: center;
+      margin-top: 30px;
+    }
   }
 }
+
 .policy-text {
   margin-top: 30px;
   color: #848484;

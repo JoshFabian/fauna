@@ -121,6 +121,40 @@
   }
 }
 
+.facebook-settings {
+  background: #5975b1;
+  color: #fff;
+  padding: 15px 30px;
+  border-radius: 3px;
+  display: block;
+  text-align: center;
+  &:hover {
+    background: darken(#5975b1, 10);
+    color: #fff;
+  }
+}
+
+.twitter-settings {
+  background: #55acee;
+  color: #fff;
+  padding: 15px 30px;
+  border-radius: 3px;
+  display: block;
+  text-align: center;
+  &:hover {
+    background: darken(#55acee, 10);
+    color: #fff;
+  }
+  &.active {
+    background: #ddd;
+    color: #444;
+    &:hover {
+      background: darken(#ddd, 10);
+      color: #444;
+    }
+  }
+}
+
 input.button {
   padding: 10px 50px;
   background: #1abc9c;
