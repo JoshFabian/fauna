@@ -35,6 +35,8 @@ class SegmentListing
     result = Analytics.track(hash)
     logger.post("tegu.app", log_data.merge(hash))
     result
+  rescue Exception => e
+    false
   end
 
   def self.track_listing_view(listing, options={})
@@ -47,6 +49,8 @@ class SegmentListing
     result = Analytics.track(hash)
     logger.post("tegu.app", log_data.merge(hash))
     result
+  rescue Exception => e
+    false
   end
 
   def self.track_listing_cart_add(listing, options={})
@@ -59,6 +63,8 @@ class SegmentListing
     result = Analytics.track(hash)
     logger.post("tegu.app", log_data.merge(hash))
     result
+  rescue Exception => e
+    false
   end
 
   def self.track_listing_cart_remove(listing, options={})
@@ -71,6 +77,8 @@ class SegmentListing
     result = Analytics.track(hash)
     logger.post("tegu.app", log_data.merge(hash))
     result
+  rescue Exception => e
+    false
   end
 
   def self.track_listing_purchase(payment)

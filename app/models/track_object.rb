@@ -2,7 +2,7 @@ class TrackObject
 
   def self.listing_view!(listing, options={})
     id = listing.is_a?(Listing) ? listing.id : listing
-    by_id = options[:by].id rescue 0
+    by_id = by(options)
     i = add("user:#{by_id}:listings:view", id)
     if i == 1
       listing = listing.is_a?(Listing) ? listing : Listing.find_by_id(listing)
@@ -12,16 +12,16 @@ class TrackObject
   end
 
   def self.listing_working_set(options={})
-    by_id = options[:by].id rescue 0
+    by_id = by(options)
     key = "user:#{by_id}:listings:view"
     redis.smembers(key).map(&:to_i) rescue []
   end
 
   def self.profile_view!(user, options={})
     id = user.is_a?(User) ? user.id : user
-    by_id = options[:by].id rescue 0
+    by_id = by(options)
     return 0 if options[:by].blank? or id == by_id
-    i = add("user:#{options[:by]}:profiles:view", id)
+    i = add("user:#{by_id}:profiles:view", id)
     if i == 1
       user = user.is_a?(User) ? user : User.find_by_id(user)
       user.increment!(:views_count)
@@ -30,9 +30,15 @@ class TrackObject
   end
 
   def self.profile_working_set(options={})
-    by_id = options[:by].id rescue 0
-    key = "user:#{by_id}:profiles:view"
+    by_id = by(options)
+    key = "user:#{by_id}:profiles:view" 
     redis.smembers(key).map(&:to_i) rescue []
+  end
+
+  def self.by(options={})
+    options[:by].respond_to?(:id) ? options[:by].id : options[:by]
+  rescue Exception => e
+    0
   end
 
   def self.flush

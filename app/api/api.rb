@@ -1,4 +1,8 @@
 module AuthHelper
+  def current_session
+    @current_session ||= Hashie::Mash.new(id: params.session_token)
+  end
+
   def current_user
     @current_user ||= User.find_by_authentication_token(params[:token])
   end

@@ -14,13 +14,15 @@ class StoryTest < ActiveSupport::TestCase
     end
 
     # it "should find no stories" do
+    #   Listing.import(force: true)
+    #   Post.import(force: true)
     #   @stories = Story.by_wall(@user)
     #   @stories.size.must_equal 0
     # end
 
     it "should find 1 listing story" do
       @listing = Fabricate(:listing, user: @user)
-      Listing.import
+      Listing.import(force: true)
       Listing.__elasticsearch__.refresh_index!
       @stories = Story.by_wall(@user, models: [Listing])
       @stories.size.must_equal 1
@@ -29,7 +31,7 @@ class StoryTest < ActiveSupport::TestCase
 
     it "should find 1 post story" do
       @post = Fabricate(:post, user: @user)
-      Post.import
+      Post.import(force: true)
       Post.__elasticsearch__.refresh_index!
       @stories = Story.by_wall(@user, models: [Post])
       @stories.size.must_equal 1

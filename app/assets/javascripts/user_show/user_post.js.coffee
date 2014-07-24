@@ -17,7 +17,13 @@ $(document).ready ->
         window.location.reload(true)
     ]
 
-  # create commente
+  # show comment
+  $(".object-comment").on 'click', (e) ->
+    e.preventDefault()
+    # show related comment section
+    $(this).closest(".panel-footer").siblings(".comment-section").removeClass('hide')
+
+  # create comment
   $(".comment-section .status-form").keypress (e) ->
     if (e.which == 13)
       body = $(this).val()

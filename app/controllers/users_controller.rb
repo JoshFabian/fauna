@@ -28,7 +28,7 @@ class UsersController < ApplicationController
     end
 
     if feature(:user_feed)
-      @stories = Story.by_wall(@user).results rescue []
+      @stories = Story.by_wall(@user).page(page).per(per) rescue []
     end
 
     @total_listings = @user.listings.active.count
