@@ -57,7 +57,7 @@ Tegu::Application.routes.draw do
     as: :listing_category
   get 'listings/:id' => "listings#show", constraints: {id: /[0-9]+/}
 
-  resources :stories, only: [:show]
+  resources :stories, only: [:index, :show]
 
   # oauth
   get 'auth/:provider/callback', to: 'oauths#callback'
