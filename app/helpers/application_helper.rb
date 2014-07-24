@@ -76,7 +76,7 @@ module ApplicationHelper
     "http://res.cloudinary.com/tegu/image/upload/c_fill,h_#{size},w_#{size}/v1405184238/avatar_default.jpg"
   end
 
-  def user_cover_image_profile(position, image, width=350, height=300)
+  def user_cover_image_profile(position, image, width=480, height=300)
     cloudinary_url(image.full_public_id, transformation: [{width: width, height: height, crop: 'fill'}])
   rescue Exception => e
     # use default cover images
