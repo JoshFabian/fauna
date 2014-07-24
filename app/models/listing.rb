@@ -127,4 +127,5 @@ class Listing < ActiveRecord::Base
   def wall_id
     self.user_id
   end
+
 end

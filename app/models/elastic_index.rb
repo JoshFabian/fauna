@@ -12,9 +12,10 @@ class ElasticIndex
     end
   end
 
-  def self.index_all
+  # import all classes; use force: true to delete index first
+  def self.import_all(options={})
     klasses.each do |klass|
-      klass.import
+      klass.import(options)
     end
   end
 

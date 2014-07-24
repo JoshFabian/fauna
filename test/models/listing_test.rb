@@ -90,7 +90,7 @@ class ListingTest < ActiveSupport::TestCase
         @listing1 = @user.listings.create!(title: "Lizard", price: 100)
         @listing1.categories.push(@lizards)
         @listing1.categories.push(@geckos)
-        Listing.import
+        Listing.import(force: true)
         Listing.__elasticsearch__.refresh_index!
       end
 
@@ -127,7 +127,7 @@ class ListingTest < ActiveSupport::TestCase
         @lizards = Category.create!(name: 'Lizards')
         @listing1 = @user.listings.create!(title: "Lizard", price: 100)
         @listing1.categories.push(@lizards)
-        Listing.import
+        Listing.import(force: true)
         Listing.__elasticsearch__.refresh_index!
       end
 
@@ -151,10 +151,9 @@ class ListingTest < ActiveSupport::TestCase
 
       it "should not find on multiple term filter match" do
         @dummy = Fabricate(:user, listing_credits: 3)
-        @listing2 = @dummy.listings.create!(title: "Dummy Listing", price: 100)
-        results = Listing.search(filter: {bool: {must: [{term: {category_ids: @lizards.id}},
-          {term: {user_id: @dummy.id}}]}})
-        results.size.must_equal 0
+        listing2 = @dummy.listings.create!(title: "Dummy Listing", price: 100)
+        Listing.search(filter: {bool: {must: [{term: {category_ids: @lizards.id}},
+          {term: {user_id: @dummy.id}}]}}).results.size.must_equal 0
       end
 
       it "should find when listing category is changed" do
@@ -172,21 +171,28 @@ class ListingTest < ActiveSupport::TestCase
 
     describe "by state" do
       before do
+        Listing.delete_all
         @listing1 = @user.listings.create!(title: "Lizard", price: 100)
-        Listing.import
+        Listing.import(force: true)
+        Listing.__elasticsearch__.refresh_index!
       end
 
-      it "should find active listings" do
+      it "should find listings in active state" do
         @listing1.state.must_equal 'active'
-        Listing.search('lizard').results.size.must_equal 1
+        Listing.search(filter: {term: {state: 'active'}}).results.size.must_equal 1
+        Listing.search(filter: {term: {state: 'sold'}}).results.size.must_equal 0
       end
 
-      it "should not find sold listings" do
+      it "should find listings matching state and title" do
+        Listing.search({query: {match: {title: 'lizard'}}, filter: {term: {state: 'active'}}}).results.size.must_equal 1
+      end
+
+      it "should find listings in sold state" do
         @listing1.sold!
         @listing1.reload
         @listing1.state.must_equal 'sold'
         Listing.__elasticsearch__.refresh_index!
-        Listing.search('lizard').results.size.must_equal 0
+        Listing.search(filter: {term: {state: 'sold'}}).results.size.must_equal 1
       end
     end
 
@@ -195,27 +201,22 @@ class ListingTest < ActiveSupport::TestCase
         Listing.destroy_all
         @listing1 = @user.listings.create!(title: "Lizard", price: 100)
         @listing2 = @user.listings.create!(title: "Tegu", price: 100)
-        Listing.import
+        Listing.import(force: true)
         Listing.__elasticsearch__.refresh_index!
       end
 
-      it "should find on exact title match" do
-        results = Listing.search 'lizard'
-        results.size.must_equal 1
-        results = Listing.search 'tegu'
-        results.size.must_equal 1
+      it "should find with exact title match" do
+        Listing.search('lizard').results.size.must_equal 1
+        Listing.search('tegu').results.size.must_equal 1
       end
 
-      it "should find on substring title match" do
-        results = Listing.search 'liz*'
-        results.size.must_equal 1
-        results = Listing.search 'tegu*'
-        results.size.must_equal 1
+      it "should find with substring title match" do
+        Listing.search('liz*').results.size.must_equal 1
+        Listing.search('tegu*').results.size.must_equal 1
       end
 
       it "should not find when title doesn't match" do
-        results = Listing.search 'reptile'
-        results.size.must_equal 0
+        Listing.search('reptile').results.size.must_equal 0
       end
     end
 
@@ -223,7 +224,7 @@ class ListingTest < ActiveSupport::TestCase
       before do
         @listing1 = @user.listings.create!(title: "1", price: 100)
         @listing2 = @user.listings.create!(title: "2", price: 100)
-        Listing.import
+        Listing.import(force: true)
         Listing.__elasticsearch__.refresh_index!
       end
 
@@ -236,8 +237,7 @@ class ListingTest < ActiveSupport::TestCase
       end
 
       it "should not find when invalid handle" do
-        results = Listing.search(filter: {term: {user_handle: "bogus"}})
-        results.size.must_equal 0
+        Listing.search(filter: {term: {user_handle: "bogus"}}).results.size.must_equal 0
       end
     end
 
@@ -245,18 +245,16 @@ class ListingTest < ActiveSupport::TestCase
       before do
         @listing1 = @user.listings.create!(title: "1", price: 100)
         @listing2 = @user.listings.create!(title: "2", price: 100)
-        Listing.import
+        Listing.import(force: true)
         Listing.__elasticsearch__.refresh_index!
       end
 
-      it "should find on id match" do
-        @results = Listing.search(filter: {term: {user_id: @user.id}})
-        @results.size.must_equal 2
+      it "should find with id match" do
+        Listing.search(filter: {term: {user_id: @user.id}}).results.size.must_equal 2
       end
 
-      it "should not find when invalid id" do
-        @results = Listing.search(filter: {term: {user_id: 0}})
-        @results.size.must_equal 0
+      it "should not find with invalid id" do
+        Listing.search(filter: {term: {user_id: 0}}).results.size.must_equal 0
       end
     end
   end

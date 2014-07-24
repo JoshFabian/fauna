@@ -20,11 +20,14 @@ class Post < ActiveRecord::Base
   end
 
   def as_indexed_json(options={})
-    as_json(methods: [], except: [:data])
+    as_json(methods: [:state], except: [:data])
   end
 
   def should_update_index!
     self.__elasticsearch__.index_document rescue nil
   end
-  
+
+  def state
+    'active'
+  end
 end

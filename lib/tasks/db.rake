@@ -1,13 +1,12 @@
 namespace :db do
 
   namespace :search do
-    desc "Re-index search indices"
-    task :index_all => :environment do
-      puts "#{Time.now}: index_all starting"
-      ElasticIndex.delete_all
-      ElasticIndex.create_all
-      ElasticIndex.index_all
-      puts "#{Time.now}: index_all completed"
+    desc "Re-import search indices"
+    task :import_all => :environment do
+      puts "#{Time.now}: import_all starting"
+      # delete indices, create, and import
+      ElasticIndex.import_all(force: true)
+      puts "#{Time.now}: import_all completed"
     end
   end
 

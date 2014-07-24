@@ -16,11 +16,7 @@ class ListingObserver < ActiveRecord::Observer
   end
 
   def after_save(listing)
-    if listing.sold?
-      listing.__elasticsearch__.delete_document
-    else
-      listing.__elasticsearch__.update_document
-    end
+    listing.__elasticsearch__.update_document
   rescue Exception => e
   end
 

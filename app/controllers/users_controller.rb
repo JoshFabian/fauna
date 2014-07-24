@@ -54,8 +54,10 @@ class UsersController < ApplicationController
       @cover_images.select{ |o| o.position == i }.first or i
     end
 
-    @listings = @user.listings.active.order("id desc").limit(50)
-    # @listings = Listing.search(filter: {term: {user_id: @user.id}}).records
+    terms = [ListingFilter.user(@user.id), ListingFilter.state('active')]
+    query = {filter: {bool: {must: terms}}}
+    @listings = Listing.search(query).page(page).per(per).records
+    # @listings = @user.listings.active.order("id desc").limit(50)
 
     @tab = 'listings'
 
@@ -73,18 +75,12 @@ class UsersController < ApplicationController
     acl_manage!(on: @user)
     @state = params[:state].present? ? params[:state] : 'active'
     @category_id = params[:category_id]
-    @terms = [{term: {user_id: @user.id}}]
+    terms = [ListingFilter.user(@user.id), ListingFilter.state(@state)]
     if @category_id.present?
-      @terms.push({term: {category_ids: @category_id}})
+      terms.push({term: {category_ids: @category_id}})
     end
-    @filter = {filter: {bool: {must: @terms}}}
-    @listings = Listing.search(@filter).records.where(state: @state)
-
-    if @state == 'sold'
-      # special case
-      @listings = Listing.where(state: @state, user_id: @user.id)
-      @listings = @listings.select{ |o| o.categories.collect(&:id).include?(@category_id.to_i) } if @category_id.present?
-    end
+    query = {filter: {bool: {must: terms}}}
+    @listings = Listing.search(query).page(page).per(per).records
 
     @title = "#{@user.handle} | Manage Listings"
   end
@@ -208,4 +204,13 @@ class UsersController < ApplicationController
     redirect_to(root_path) and return
   end
 
+  protected
+
+  def page
+    params[:page]
+  end
+
+  def per
+    20
+  end
 end

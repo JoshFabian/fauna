@@ -34,12 +34,13 @@ class ListingsController < ApplicationController
   # GET /listings/:category
   # GET /listings/:category/:subcategory
   def by_category
-    @token = params[:category].titleize.split.first
-    @subtoken = params[:subcategory].to_s.titleize.split.first
-    @category = Category.roots.find_by_match(@token)
-    @subcategory = @category.children.find_by_match(@subtoken) if @subtoken.present?
-    @term = {term: {category_ids: @subcategory.present? ? @subcategory.id : @category.id}}
-    @listings = Listing.search(filter: @term).records.active
+    token = params[:category].titleize.split.first
+    subtoken = params[:subcategory].to_s.titleize.split.first
+    @category = Category.roots.find_by_match(token)
+    @subcategory = @category.children.find_by_match(subtoken) if subtoken.present?
+    terms = [ListingFilter.category(@subcategory.present? ? @subcategory.id : @category.id), ListingFilter.state('active')]
+    query = {filter: {bool: {must: terms}}}
+    @listings = Listing.search(query).page(page).per(per).records
 
     @subcategories = @category.children.with_listings
 
@@ -54,7 +55,7 @@ class ListingsController < ApplicationController
   def by_search
     begin
       @query = params[:query].to_s
-      @listings = Listing.search(@query).records.active
+      @listings = Listing.search(@query).page(page).per(per).records.active
     rescue Exception => e
       @listings = []
     end
@@ -69,8 +70,9 @@ class ListingsController < ApplicationController
   # GET /:slug/listings
   def by_user
     @user = User.by_slug(params[:slug])
-    @term = {term: {user_id: @user.id}}
-    @listings = Listing.search(filter: @term).records.active
+    terms = [ListingFilter.user(@user.id), ListingFilter.state('active')]
+    query = {filter: {bool: {must: terms}}}
+    @listings = Listing.search(query).page(page).per(per).records
 
     @title = "Listings by #{@user.handle}"
 
@@ -141,4 +143,13 @@ class ListingsController < ApplicationController
     end
   end
 
+  protected
+
+  def page
+    params[:page]
+  end
+
+  def per
+    20
+  end
 end

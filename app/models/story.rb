@@ -3,7 +3,8 @@ class Story
 
   def self.by_wall(user, options={})
     user_id = user.respond_to?(:id) ? user.id : user
-    query = {filter: {term: {wall_id: user_id}}, sort: {created_at: "desc"}}
+    terms = [filter_wall(user_id), filter_active]
+    query = {filter: {bool: {must: terms}}, sort: {created_at: "desc"}}
     search(query, options[:models])
   end
 
@@ -13,6 +14,14 @@ class Story
     models = ::Elasticsearch::Model::StoryModel.new(models)
     search = ::Elasticsearch::Model::Searching::SearchRequest.new(models, query_or_payload, options)
     ::Elasticsearch::Model::Response::Response.new(models, search)
+  end
+
+  def self.filter_active
+    ListingFilter.state('active')
+  end
+
+  def self.filter_wall(user_id)
+    {term: {wall_id: user_id}}
   end
 
   protected
