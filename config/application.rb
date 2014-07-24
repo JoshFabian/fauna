@@ -28,7 +28,7 @@ module Tegu
     # config.i18n.default_locale = :de
     config.i18n.enforce_available_locales = true
 
-    config.active_record.observers = [:comment_observer, :conversation_observer, :listing_observer,
+    config.active_record.observers = [:comment_observer, :conversation_observer, :like_observer, :listing_observer,
       :plan_charge_observer, :plan_subscription_observer, :post_observer, :review_observer, :user_observer,
       :waitlist_observer]
 
