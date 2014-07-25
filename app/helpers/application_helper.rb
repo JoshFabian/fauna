@@ -32,6 +32,12 @@ module ApplicationHelper
     cloudinary_url(image.full_public_id, transformation: transformation)
   end
 
+  def listing_image_story(image)
+    cloudinary_url(image.full_public_id, transformation: [{width: 300, crop: 'fit'}])
+  rescue Exception => e
+    "http://www.placehold.it/300x200/fff&text=Image"
+  end
+
   def listing_image_tile(image)
     cloudinary_url(image.full_public_id, transformation: [{width: 235, height: 200, crop: 'fill'}])
   rescue Exception => e

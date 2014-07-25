@@ -19,7 +19,7 @@
       .list-panel
         .listing-images.small-6.columns
           .main-image
-            = image_tag cloudinary_url(image.full_public_id, transformation: [{width: 300, crop: 'fit'}]), itemprop: "image"
+            = image_tag listing_image_story(image), itemprop: "image"
         .listing-aside.small-6.columns
           -# .category-breadcrumbs
             -# %span

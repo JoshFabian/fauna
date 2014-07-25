@@ -7,4 +7,3 @@
       - post = Post.find(story.id)
       = render(partial: "users/user_story_post", locals: {story: story, post: post})
   - rescue Exception => e
-    = raise e
