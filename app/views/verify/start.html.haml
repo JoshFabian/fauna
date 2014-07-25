@@ -14,7 +14,7 @@
           - if current_user.phone_verified?
             %a.button.green-button.secondary.disabled{href: "#"} Phone Verified
           - else
-            %a.button.green-button{:href => sms_path} Verify Phone Number
+            %a.button.green-button{:href => user_verify_phone_path} Verify Phone Number
       %hr
       .account-tagline
         %h5 Paypal Verification (required)

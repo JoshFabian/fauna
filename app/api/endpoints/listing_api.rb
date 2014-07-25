@@ -145,28 +145,31 @@ module Endpoints
 
       desc "Change listing state"
       put ':id/event/:event' do
-        @listing = current_user.listings.find(params[:id])
+        listing = Listing.find(params.id)
+        acl_manage!(on: listing)
+        acl_admin! if params.event.match(/flag/)
         begin
-          @listing.send("#{params.event}")
-          @listing.save
-          if params.event.match(/sold/)
-            SegmentListing.track_listing_remove(@listing)
+          listing.send("#{params.event}")
+          listing.save
+          if params.event.match(/remove/)
+            SegmentListing.track_listing_remove(listing)
           end
         rescue Exception => e
         end
-        logger.post("tegu.api", log_data.merge({event: 'listing.event', listing_id: @listing.id,
+        logger.post("tegu.api", log_data.merge({event: 'listing.event', listing_id: listing.id,
           event: params.event}))
-        {listing: @listing}
+        {listing: listing}
       end
 
       desc "Delete listing image"
       delete ':listing_id/images/:id' do
-        @listing = current_user.listings.find(params.listing_id)
-        @image = @listing.images.find(params.id)
-        @listing.images.destroy(@image)
-        logger.post("tegu.api", log_data.merge({event: 'listing.image.delete', listing_id: @listing.id,
-          image_id: @image.id}))
-        {listing: @listing, event: 'delete'}
+        listing = Listings.find(params.listing_id)
+        acl_manage!(on: listing)
+        image = listing.images.find(params.id)
+        listing.images.destroy(image)
+        logger.post("tegu.api", log_data.merge({event: 'listing.image.delete', listing_id: listing.id,
+          image_id: image.id}))
+        {listing: listing, event: 'delete'}
       end
 
       desc "Create listing comment"

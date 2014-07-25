@@ -31,7 +31,7 @@ class ListingApiSpec < ActionDispatch::IntegrationTest
       @listing = @user.listings.create!(title: "Title", price: 100)
     end
 
-    it "should mark listing as sold" do
+    it "should allow owner to mark listing as sold" do
       @listing.state.must_equal 'active'
       put "/api/v1/listings/#{@listing.id}/event/sold?token=#{@user.auth_token}"
       response.success?.must_equal true
@@ -40,6 +40,23 @@ class ListingApiSpec < ActionDispatch::IntegrationTest
       @listing.reload
       @listing.state.must_equal 'sold'
       @listing.sold_at.present?.must_equal true
+    end
+
+    it "should not allow owner to mark listing as flagged" do
+      @listing.state.must_equal 'active'
+      put "/api/v1/listings/#{@listing.id}/event/flag?token=#{@user.auth_token}"
+      response.status.must_equal 401
+    end
+
+    it "should allow admin to mark listing as flagged" do
+      @admin = Fabricate(:user, listing_credits: 3)
+      @admin.roles << :admin
+      @admin.save
+      @listing.state.must_equal 'active'
+      put "/api/v1/listings/#{@listing.id}/event/flag?token=#{@admin.auth_token}"
+      response.status.must_equal 200
+      body = JSON.parse(response.body)
+      body['listing'].must_include({'id' => @listing.id, 'state' => 'flagged'})
     end
   end
 

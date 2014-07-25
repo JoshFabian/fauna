@@ -2,7 +2,6 @@
 .error-state.hide Please select a shipping option.
 = link_to 'Checkout with Paypal', '#', class: 'button buy-button checkout secondary disabled track-listing-view', :'data-listing-id' => @listing.id
 .small-12.columns.no-padding
-	= link_to 'Ask a question', '#', class: 'button ask-question', :'data-reveal-id' => 'listing-message-modal'
-	= link_to 'Report Listing', '#', class: 'remove-link', :'data-reveal-id' => 'listing-report-modal'
-	- if current_user.roles?(:admin)
-		= link_to 'Flag', '#', class: 'remove-link', :'data-reveal-id' => 'listing-report-modal'
+= link_to 'Ask a question', '#', class: 'button ask-question', :'data-reveal-id' => 'listing-message-modal'
+= link_to 'Report Listing', '#', class: 'remove-link', :'data-reveal-id' => 'listing-report-modal'
+= link_to 'Flag', '#', class: 'remove-link mark-flag admin hide', :'data-listing-id' => @listing.id

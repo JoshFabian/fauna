@@ -14,6 +14,32 @@ module AuthHelper
   def authenticate!
     error!('401 Unauthorized', 401) unless current_user.present?
   end
+
+  def acl_admin?(options={})
+    current_user.roles?(:admin) ? true : false
+  rescue Exception => e
+    false
+  end
+
+  def acl_admin!(options={})
+    error! 'Unauthorized', 401 if !acl_admin?(options)
+  end
+
+  def acl_manage?(options={})
+    return true if acl_admin?(options)
+    return false if options[:on].blank?
+    if options[:on].is_a?(Listing)
+      return true if options[:on].user_id == current_user_id
+    end
+    false
+  rescue Exception => e
+    false
+  end
+
+  def acl_manage!(options={})
+    error! 'Unauthorized', 401 if !acl_manage?(options)
+  end
+
 end
 
 module LoggerHelper

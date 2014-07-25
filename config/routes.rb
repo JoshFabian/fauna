@@ -86,7 +86,7 @@ Tegu::Application.routes.draw do
   resources :payments, only: [:index]
 
   # twilio sms
-  get '/sms' => redirect("/sms/send")
+  get '/sms' => redirect("/sms/send"), as: :user_verify_phone
   match 'sms/reply' => "twilio#sms_reply", as: :twilio_sms_reply, via: [:get, :post]
   match 'sms/send'=> "twilio#sms_send", as: :twilio_sms_send, via: [:get, :post]
   match 'sms/verify_phone'=> "twilio#sms_verify_phone", as: :twilio_sms_verify_phone, via: [:get]
