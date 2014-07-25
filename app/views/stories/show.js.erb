@@ -1,5 +1,5 @@
 <% if @story.type == 'listing' %>
-  <%= render(partial: "users/user_story_listing", locals: {story: @story, listing: @object}) %>
+  <%= render(partial: "stories/story_listing", locals: {story: @story, listing: @object}) %>
 <% elsif @story.type == 'post' %>
-  <%= render(partial: "users/user_story_post", locals: {story: @story, post: @object}) %>
+  <%= render(partial: "stories/story_post", locals: {story: @story, post: @object}) %>
 <% end %>

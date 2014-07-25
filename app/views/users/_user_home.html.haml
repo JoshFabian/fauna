@@ -13,8 +13,7 @@
 
     - if feature(:user_feed)
       .user-feed
-        = render(partial: "users/user_story_post_status")
-        = render(partial: "users/user_stories")
+        = render(partial: "stories/story_post_status")
     - else
       .feedback
         - if @recent_reviews.present?

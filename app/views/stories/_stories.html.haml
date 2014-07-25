@@ -2,11 +2,11 @@
   - begin
     - if story.type == 'listing'
       - listing = Listing.find(story.id)
-      = render(partial: "users/user_story_listing", locals: {story: story, listing: listing})
+      = render(partial: "stories/story_listing", locals: {story: story, listing: listing})
     - elsif story.type == 'post'
       - post = Post.find(story.id)
-      = render(partial: "users/user_story_post", locals: {story: story, post: post})
+      = render(partial: "stories/story_post", locals: {story: story, post: post})
     - elsif story.type == 'user_follow'
       - user_follow = UserFollow.find(story.id)
-      = render(partial: "users/user_story_follow", locals: {story: story, user_follow: user_follow})
+      = render(partial: "stories/story_follow", locals: {story: story, user_follow: user_follow})
   - rescue Exception => e
