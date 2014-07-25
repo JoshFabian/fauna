@@ -1,5 +1,16 @@
 class TrackObject
 
+  def self.listing_peek!(listing, options={})
+    id = listing.is_a?(Listing) ? listing.id : listing
+    by_id = by(options)
+    i = add("user:#{by_id}:listings:peek", id)
+    if i == 1
+      listing = listing.is_a?(Listing) ? listing : Listing.find_by_id(listing)
+      listing.increment!(:peeks_count)
+    end
+    i
+  end
+
   def self.listing_view!(listing, options={})
     id = listing.is_a?(Listing) ? listing.id : listing
     by_id = by(options)

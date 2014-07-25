@@ -39,6 +39,20 @@ class SegmentListing
     false
   end
 
+  # def self.track_listing_peek(listing, options={})
+  #   raise Exception, "test environment" if Rails.env.test?
+  #   category = listing.categories.roots.first
+  #   properties = {id: listing.id, sku: listing.id, name: listing.title, price: listing.price/100.0,
+  #     category: 'Listing', label: category.try(:name)}
+  #   user_id = options[:by].present? ? options[:by].id : 0
+  #   hash = {user_id: user_id, event: 'Listing Peek', properties: properties}
+  #   result = Analytics.track(hash)
+  #   logger.post("tegu.app", log_data.merge(hash))
+  #   result
+  # rescue Exception => e
+  #   false
+  # end
+
   def self.track_listing_view(listing, options={})
     raise Exception, "test environment" if Rails.env.test?
     category = listing.categories.roots.first

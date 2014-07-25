@@ -7,7 +7,18 @@ class TrackObjectTest < ActiveSupport::TestCase
     @listing = Fabricate(:listing, user: @user)
   end
 
-  describe "listings" do
+  describe "listing peeks" do
+    describe "by user" do
+      it "should increment listing peek count using listing id" do
+        @listing.peeks_count.must_equal 0
+        TrackObject.listing_peek!(@listing.id, by: @user).must_equal 1
+        @listing.reload
+        @listing.peeks_count.must_equal 1
+      end
+    end
+  end
+
+  describe "listing views" do
     describe "by user" do
       it "should increment listing view count using listing id" do
         @listing.views_count.must_equal 0
@@ -69,7 +80,7 @@ class TrackObjectTest < ActiveSupport::TestCase
     end
   end
 
-  describe "users" do
+  describe "user profile view" do
     it "should increment profile view count by another user" do
       @viewer = Fabricate(:user)
       @user.views_count.must_equal 0

@@ -7,6 +7,14 @@ class Tegu.TrackingApi
       success: (data) ->
         callback(null, data) if callback
 
+  @track_listing_peek: (listing_id, session_token, token, callback = null) ->
+    api = "/api/v1/track/listings/#{listing_id}/peek?session_token=#{session_token}&token=#{token}"
+    $.ajax api,
+      type: 'PUT'
+      dataType: 'json'
+      success: (data) ->
+        callback(null, data) if callback
+
   @track_listing_view: (listing_id, session_token, token, callback = null) ->
     api = "/api/v1/track/listings/#{listing_id}/view?session_token=#{session_token}&token=#{token}"
     $.ajax api,
