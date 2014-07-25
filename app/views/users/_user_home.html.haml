@@ -13,11 +13,7 @@
 
     - if feature(:user_feed)
       .user-feed
-        - if @me
-          = render(partial: "users/user_story_post_status")
-        - else
-          -# empty status panel
-          .panel-body.status-panel.rounded-panel{:'data-user-id' => @user.id, style: 'display:none;'}
+        = render(partial: "users/user_story_post_status")
         = render(partial: "users/user_stories")
     - else
       .feedback
