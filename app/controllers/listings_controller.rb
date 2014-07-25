@@ -108,6 +108,10 @@ class ListingsController < ApplicationController
     @other_listings = Listing.active.limit(4) if @other_listings.blank?
 
     @title = "#{@listing.title} | Listing"
+
+    respond_to do |format|
+      format.html
+    end
   end
 
   # GET /listings/new

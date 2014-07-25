@@ -38,7 +38,7 @@ class SignupController < ApplicationController
   # POST /signup/new/facebook
   def create_facebook
     # create user
-    @user = User.create(user_params)
+    @user = User.create!(user_params)
     begin
       # build oauth and save
       @oauth = Oauth.from_omniauth(session["omniauth.auth"].merge(user_id: @user.id))
@@ -52,17 +52,21 @@ class SignupController < ApplicationController
     # sign user in
     sign_in(:user, @user)
     respond_with @user, location: after_sign_in_path_for(@user)
+  rescue Exception => e
+    redirect_to login_path and return
   end
 
   # POST /signup/new/password
   def create_password
     # create user
-    @user = User.create(user_params)
+    @user = User.create!(user_params)
     # track invite
     # current_invite.signup!(@user) if current_invite
     # sign user in
     sign_in(:user, @user)
     respond_with @user, location: after_sign_in_path_for(@user)
+  rescue Exception => e
+    redirect_to login_path and return
   end
 
   protected
