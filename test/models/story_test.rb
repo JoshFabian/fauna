@@ -20,6 +20,18 @@ class StoryTest < ActiveSupport::TestCase
     #   @stories.size.must_equal 0
     # end
 
+    it "should find 1 follow story for the follower" do
+      UserFollow.delete_all
+      @follower = Fabricate(:user)
+      UserFollow.follow!(@follower, @user).must_equal true
+      UserFollow.import(force: true)
+      UserFollow.__elasticsearch__.refresh_index!
+      @stories = Story.by_wall(@follower, models: [UserFollow])
+      @stories.size.must_equal 1
+      @user_follow = UserFollow.first
+      @stories.results.collect{ |o| [o.type, o.id.to_i] }.must_equal [['user_follow', @user_follow.id]]
+    end
+
     it "should find 1 listing story" do
       @listing = Fabricate(:listing, user: @user)
       Listing.import(force: true)

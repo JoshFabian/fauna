@@ -27,6 +27,6 @@ class Story
   protected
 
   def self.default_models
-    [Listing, Post]
+    [Listing, Post, UserFollow]
   end
 end

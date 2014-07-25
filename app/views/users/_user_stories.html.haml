@@ -6,4 +6,7 @@
     - elsif story.type == 'post'
       - post = Post.find(story.id)
       = render(partial: "users/user_story_post", locals: {story: story, post: post})
+    - elsif story.type == 'user_follow'
+      - user_follow = UserFollow.find(story.id)
+      = render(partial: "users/user_story_follow", locals: {story: story, user_follow: user_follow})
   - rescue Exception => e

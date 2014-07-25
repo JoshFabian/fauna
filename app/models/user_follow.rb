@@ -1,4 +1,8 @@
 class UserFollow < ActiveRecord::Base
+  include Loggy
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
   belongs_to :user, touch: true # user is the follower
   belongs_to :following, touch: true, class_name: "User", counter_cache: :followers_count
 
@@ -6,6 +10,25 @@ class UserFollow < ActiveRecord::Base
   validates :following_id, presence: true, uniqueness: {scope: :user_id}
 
   scope :following, -> { where("following_at IS NOT ?", nil) }
+
+  # set search index name
+  index_name "user_follows.#{Rails.env}"
+
+  def as_indexed_json(options={})
+    as_json(methods: [:state, :wall_id], except: [])
+  end
+
+  def should_update_index!
+    self.__elasticsearch__.index_document rescue nil
+  end
+
+  def state
+    'active'
+  end
+
+  def wall_id
+    self.user_id
+  end
 
   def self.follow!(user, follow)
     o = user.user_follows.find_or_create_by(following_id: follow.respond_to?(:id) ? follow.id : follow)

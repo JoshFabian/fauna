@@ -1,33 +1,34 @@
-// User Comment
+- follower = user_follow.user
+- following = user_follow.following
+
 .update-panel.rounded-panel
   .small-12.columns
     .user-image
-      %a{:href => "/joshfabian"}
-        %img{:alt => "Erwgafk32jurq5wvgmiz", :src => "https://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_200/v1406127507/erwgafk32jurq5wvgmiz.jpg"}
+      = link_to image_tag(user_avatar_image_thumbnail(follower.avatar_image, 80)), user_path(follower)
     .user-info
       %h4.story-title
-        %a{:href => "/joshfabian"} JoshFabian
-        %span 
-          Followed 2 new users
+        = link_to follower.handle, user_path(follower)
+        %span
+          Followed a new user
       %p.secondary
-        %span#ember928.ember-view 1 day ago
+        %span.ember-view #{time_ago_in_words(user_follow.created_at)} ago
   .comment-content.small-12.columns.clearfix
     .listing-embed
       %ul.small-block-grid-2
-        - 2.times do
+        - [following].each do
           %li
-            %a{:href=>"#"}
+            = link_to user_path(following) do
               .follow-panel
                 .listing-aside.small-12.columns
-                  %img{:alt => "Erwgafk32jurq5wvgmiz", :src => "https://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_200/v1406127507/erwgafk32jurq5wvgmiz.jpg"}
-                  %h5{:itemprop => "alternateName"} Test
+                  = image_tag(user_avatar_image_thumbnail(following.avatar_image, 100))
+                  %h5{:itemprop => following.handle}= following.handle
 
   .panel-footer.small-12.columns
-    .footer-button
-      %a{:href => "#"}
-        %i.icon.ion-heart
-        0
-    .footer-button
-      %a{:href => "#"}
-        %i.icon.ion-reply
-        reply
+    -# .footer-button
+    -#   %a{:href => "#"}
+    -#     %i.icon.ion-heart
+    -#     0
+    -# .footer-button
+    -#   %a{:href => "#"}
+    -#     %i.icon.ion-reply
+    -#     reply
