@@ -48,7 +48,7 @@ module Endpoints
       put 'users/:ids/profile/view' do
         ids = params.ids.split(',')
         ids.each do |id|
-          user = User.find(params.id)
+          user = User.find(id)
           TrackObject.profile_view!(user, by: current_object)
           SegmentUser.track_profile_view(user, by: current_object)
         end
