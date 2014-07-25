@@ -1,0 +1,39 @@
+/ :css
+/   .global-head {
+/     display: none;
+/   }
+/   .global-subhead {
+/     display: none;
+/   }
+/ .landing-page
+/   .scrolling-background-container
+/     .scrolling-bg.animate-background
+/   .row
+/     = form_for(@user, as: :user, url: @url, html: {class: "form-validation user-edit", :'data-user-id' => @user.id.to_i}) do |f|
+/       .email-block.small-6.small-centered.columns
+/         = image_tag "landing-logo.jpg", :class => "landing-logo"
+/         %h3 Forgot Password?
+/         .register-form.small-8.columns.small-centered
+/           = f.email_field :email, autofocus: false, required: true, class: "", placeholder: 'email', remote: "/users/validate_email"
+/         = f.submit 'Continue', class: 'button'
+
+:css
+  .global-head {
+    display: none;
+  }
+  .global-subhead {
+    display: none;
+  }
+.landing-page
+  .scrolling-background-container
+    .scrolling-bg.animate-background
+  .row
+    = form_for(@user, as: :user, url: @url, html: {class: "form-validation user-edit", :'data-user-id' => @user.id.to_i}) do |f|
+      .email-block.small-6.small-centered.columns
+        = image_tag "landing-logo.jpg", :class => "landing-logo"
+        %h3 Reset Password
+        .register-form.small-8.columns.small-centered
+          = f.email_field :email, required: true, class: "", placeholder: 'New Password'
+          = f.email_field :email, required: true, class: "", placeholder: 'Confirm Password'
+
+        = f.submit 'Continue', class: 'button'
