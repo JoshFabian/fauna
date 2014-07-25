@@ -11,7 +11,7 @@ class OauthsController < ApplicationController
       if user_signed_in?
         logger.post("tegu.app", log_data.merge({event: 'facebook.connect'}))
         # user connected their facebook account
-        redirect_to(user_verify_path(current_user))
+        redirect_to(user_settings_path(current_user))
       else
         logger.post("tegu.app", log_data.merge({event: 'facebook.login'}))
         # user exists, sign them in

@@ -1,2 +1,2 @@
 = link_to 'Edit Listing', user_edit_listing_path(@owner, @listing.id), class: ['button', 'edit-listing']
-= link_to 'Mark as Sold', user_edit_listing_path(@owner, @listing.id), class: 'button edit-listing remove-button', :'data-listing-id' => @listing.id
+= link_to 'Mark as Sold', user_edit_listing_path(@owner, @listing.id), class: 'button edit-listing remove-button mark-sold', :'data-listing-id' => @listing.id

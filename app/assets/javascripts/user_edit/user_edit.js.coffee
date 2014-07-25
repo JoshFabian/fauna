@@ -6,7 +6,8 @@ $(document).ready ->
     e.preventDefault()
     $("body").toggleClass('editing')
     button_name = $(this).text()
-    if button_name.match(/save/i)
+    # console.log "button name: #{button_name}"
+    if button_name.match(/save|update/i)
       # trigger form submit
       $("form.user-edit").submit()
 
@@ -29,7 +30,7 @@ $(document).ready ->
         form.submit()
       else
         # update user
-        console.log("user:#{user_id} ... saving")
+        console.log("user:#{user_id} update ...")
         async.waterfall [
           (callback) ->
             # update user

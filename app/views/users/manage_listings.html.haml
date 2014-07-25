@@ -7,6 +7,8 @@
     %ul.pills{:'data-tab' => ""}
       %li.tab-title{class: [@state == 'active' ? 'active' : nil]}
         %a{href: url_for(state: 'active')} Active Listings
+      %li.tab-title{class: [@state == 'removed' ? 'active' : nil]}
+        %a{href: url_for(state: 'removed')} Removed Listings
       %li.tab-title{class: [@state == 'sold' ? 'active' : nil]}
         %a{href: url_for(state: 'sold')} Sold Listings
     -# .listing-search
@@ -59,12 +61,11 @@
                     %td= number_to_currency(listing.price/100.0)
                     %td= listing.created_at.to_s(:date_dow_ddmmyyyy)
                     %td= listing.sold_at.to_s(:date_dow_ddmmyyyy) rescue 'n/a'
-                    %td.text-right
+                    %td
                       %small{style: 'font-size: 0.85em;'}
                         - if listing.active?
                           = link_to 'Edit Listing', edit_listing_path(listing.id)
+                          = link_to 'Remove Listing', '#', class: 'mark-remove', :'data-listing-id' => listing.id
                           = link_to 'Mark as Sold', '#', class: 'mark-sold', :'data-listing-id' => listing.id
-
-        #sold-listings.content
 
     

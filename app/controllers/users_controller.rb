@@ -140,6 +140,18 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /:slug/settings
+  def settings
+    @user = User.by_slug(params[:slug]) || User.find(params[:id])
+    # @url = user_path(@user)
+
+    @title = "My Settings"
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
   # GET /users/1/edit
   # GET /:slug/edit
   def edit
