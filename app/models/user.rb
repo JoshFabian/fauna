@@ -160,8 +160,8 @@ class User < ActiveRecord::Base
   # build user object from omniauth auth hash
   def self.from_omniauth(auth)
     User.new do |user|
-      user.email = auth.info.email
-      user.handle = auth.info.nickname || auth.info.name
+      user.email = auth.info.email rescue ''
+      user.handle = (auth.info.nickname || auth.info.name) rescue ''
     end
   end
 
