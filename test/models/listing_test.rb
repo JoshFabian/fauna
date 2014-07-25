@@ -39,14 +39,28 @@ class ListingTest < ActiveSupport::TestCase
     end
   end
 
+  describe "state machine" do
+    before do
+      @listing = Fabricate(:listing, user: @user)
+    end
+
+    it "should set flagged_at on flag event" do
+      @listing.state.must_equal 'active'
+      @listing.flag!
+      @listing.reload
+      @listing.state.must_equal 'flagged'
+      @listing.flagged_at.present?.must_equal true
+    end
+  end
+
   describe "slug" do
     it "should auto create slug from title" do
-      @listing = @user.listings.create!(title: "Listing 1", price: 100)
+      @listing = Fabricate(:listing, user: @user, title: "Listing 1")
       @listing.slug.must_equal 'listing-1'
     end
 
     it "should change slug when title is changed" do
-      @listing = @user.listings.create!(title: "Listing 1", price: 100)
+      @listing = Fabricate(:listing, user: @user, title: "Listing 1")
       @listing.update_attributes(title: "Tegu Lizard")
       @listing.reload
       @listing.slug.must_equal "tegu-lizard"

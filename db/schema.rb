@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140725013347) do
+ActiveRecord::Schema.define(version: 20140725192519) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -162,14 +162,18 @@ ActiveRecord::Schema.define(version: 20140725013347) do
     t.integer  "comments_count",              default: 0
     t.integer  "likes_count",                 default: 0
     t.integer  "peeks_count",                 default: 0
+    t.datetime "flagged_at"
+    t.datetime "removed_at"
   end
 
   add_index "listings", ["comments_count"], name: "index_listings_on_comments_count"
   add_index "listings", ["created_at"], name: "index_listings_on_created_at"
+  add_index "listings", ["flagged_at"], name: "index_listings_on_flagged_at"
   add_index "listings", ["images_count"], name: "index_listings_on_images_count"
   add_index "listings", ["likes_count"], name: "index_listings_on_likes_count"
   add_index "listings", ["peeks_count"], name: "index_listings_on_peeks_count"
   add_index "listings", ["price"], name: "index_listings_on_price"
+  add_index "listings", ["removed_at"], name: "index_listings_on_removed_at"
   add_index "listings", ["slug"], name: "index_listings_on_slug"
   add_index "listings", ["sold_at"], name: "index_listings_on_sold_at"
   add_index "listings", ["state"], name: "index_listings_on_state"
