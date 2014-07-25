@@ -1,31 +1,32 @@
-:css
-  .global-head {
-    display: none;
-  }
-  .global-subhead {
-    display: none;
-  }
-.landing-page
-  .scrolling-background-container
-    .scrolling-bg.animate-background
-  .row
-    = form_for(@user, as: :user, url: @url, html: {class: "form-validation user-edit", :'data-user-id' => @user.id.to_i}) do |f|
-      .email-block.small-6.small-centered.columns
-        = image_tag "landing-logo.jpg", :class => "landing-logo"
-        %h3 Create an account 
-        .register-form.small-8.columns.small-centered
-          = f.email_field :email, autofocus: false, required: true, class: "", placeholder: 'email', remote: "/users/validate_email"
-          .small-6.columns{:style => "padding-left: 0; padding-right: 5px;"}
-            = f.text_field :first_name, autofocus: false, required: true, class: "", placeholder: 'first name'
-          .small-6.columns{:style => "padding-left: 5px; padding-right: 0;"}
-            = f.text_field :last_name, autofocus: false, required: true, class: "", placeholder: 'last name'
-          = f.text_field :handle, autofocus: false, required: true, class: "", placeholder: 'username', remote: "/users/validate_handle"
-          = f.password_field :password, required: @user.new_record?, class: "", placeholder: 'password', :id => "signup_password"
-        = check_box_tag 'tos', 'yes', false, class: 'required'
-        %label{for: ""}
-          I agree to the
-          = link_to "terms and conditions", about_terms_path, target: '_blank'
-          and
-          = link_to "privacy policy", about_privacy_path, target: '_blank'
-        = f.submit 'Continue', class: 'button'
+/ :css
+/   .global-head {
+/     display: none;
+/   }
+/   .global-subhead {
+/     display: none;
+/   }
+/ .landing-page
+/   .scrolling-background-container
+/     .scrolling-bg.animate-background
+/   .row
+/     = form_for(@user, as: :user, url: @url, html: {class: "form-validation user-edit", :'data-user-id' => @user.id.to_i}) do |f|
+/       .email-block.small-6.small-centered.columns
+/         = image_tag "landing-logo.jpg", :class => "landing-logo"
+/         %h3 Create an account 
+/         .register-form.small-8.columns.small-centered
+/           = f.email_field :email, autofocus: false, required: true, class: "", placeholder: 'email', remote: "/users/validate_email"
+/           .small-6.columns{:style => "padding-left: 0; padding-right: 5px;"}
+/             = f.text_field :first_name, autofocus: false, required: true, class: "", placeholder: 'first name'
+/           .small-6.columns{:style => "padding-left: 5px; padding-right: 0;"}
+/             = f.text_field :last_name, autofocus: false, required: true, class: "", placeholder: 'last name'
+/           = f.text_field :handle, autofocus: false, required: true, class: "", placeholder: 'username', remote: "/users/validate_handle"
+/           = f.password_field :password, required: @user.new_record?, class: "", placeholder: 'password', :id => "signup_password"
+/         = check_box_tag 'tos', 'yes', false, class: 'required'
+/         %label{for: ""}
+/           I agree to the
+/           = link_to "terms and conditions", about_terms_path, target: '_blank'
+/           and
+/           = link_to "privacy policy", about_privacy_path, target: '_blank'
+/         = f.submit 'Continue', class: 'button'
+
 
