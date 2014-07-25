@@ -33,7 +33,17 @@ class Listing < ActiveRecord::Base
 
   aasm column: 'state' do
     state :active, initial: true
+    state :flagged, enter: :event_state_flagged
+    state :removed, enter: :event_state_removed
     state :sold, enter: :event_state_sold
+
+    event :flag do
+      transitions to: :flagged, :from => [:active, :flagged]
+    end
+
+    event :report do
+      transitions to: :reported, :from => [:active, :reported]
+    end
 
     event :sold do
       transitions to: :sold, :from => [:active, :sold]
@@ -77,8 +87,19 @@ class Listing < ActiveRecord::Base
     active? and (self.created_at.blank? or self.created_at > 3.days.ago)
   end
 
+  def event_state_flagged
+    self.flagged_at = Time.zone.now
+  rescue Exception => e
+  end
+
+  def event_state_removed
+    self.removed_at = Time.zone.now
+  rescue Exception => e
+  end
+
   def event_state_sold
     self.sold_at = Time.zone.now
+  rescue Exception => e
   end
 
   def price=(s)

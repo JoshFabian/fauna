@@ -9,6 +9,7 @@ class PhoneToken < ActiveRecord::Base
 
   aasm column: 'state' do
     state :created, initial: true
+    state :reset, enter: :event_state_reset
     state :sent, enter: :event_state_sent
     state :verified, enter: :event_state_verified
 
@@ -19,18 +20,29 @@ class PhoneToken < ActiveRecord::Base
     event :verify do
       transitions to: :verified, :from => [:sent, :created, :verified]
     end
+
+    event :reset do
+      transitions to: :reset, :from => [:sent, :created, :verified]
+    end
   end
 
   before_validation(on: :create) do
     self.code ||= generate_token(prefix: self.prefix)
   end
 
+  def event_state_reset
+    self.reset_at = Time.zone.now
+  rescue Exception => e
+  end
+
   def event_state_sent
     self.sent_at = Time.zone.now
+  rescue Exception => e
   end
 
   def event_state_verified
     self.verified_at = Time.zone.now
+  rescue Exception => e
   end
 
   def send_token(options={})
