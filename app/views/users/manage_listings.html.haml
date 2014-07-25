@@ -49,6 +49,7 @@
                   %th Name
                   %th Price
                   %th List Date
+                  %th Removed Date
                   %th Sold Date
                   %th
                 - @listings.each do |listing|
@@ -60,6 +61,7 @@
                       = link_to listing.title, user_listing_path(@user, listing)
                     %td= number_to_currency(listing.price/100.0)
                     %td= listing.created_at.to_s(:date_dow_ddmmyyyy)
+                    %td= listing.removed_at.to_s(:date_dow_ddmmyyyy) rescue 'n/a'
                     %td= listing.sold_at.to_s(:date_dow_ddmmyyyy) rescue 'n/a'
                     %td
                       %small{style: 'font-size: 0.85em;'}
