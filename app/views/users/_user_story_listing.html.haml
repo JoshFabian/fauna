@@ -1,6 +1,9 @@
 - image = listing.primary_image
 - user = listing.user
 - comments = listing.comments
+- like = ListingLike.like?(listing, current_user)
+- more_likes = ListingLike.likes(listing).order("id desc").limit(2)
+- plus_likes = listing.likes_count - 2
 
 .update-panel.rounded-panel{:'data-story-id' => story.id, :'data-story-klass' => story.type, id: "#{story.type}_#{story.id}"}
   .small-12.columns
@@ -32,13 +35,22 @@
 
   .panel-footer.small-12.columns
     .footer-button
-      = link_to '#', class: 'object-like', :'data-object-id' => listing.id, :'data-object-klass' => 'listing' do
+      = link_to '#', class: ['object-like', like ? 'active' : nil], :'data-object-id' => listing.id, :'data-object-klass' => 'listing' do
         %i.icon.ion-heart
         = listing.likes_count
     .footer-button
-      = link_to '#', class: 'object-comment' do
+      = link_to '#', class: ['object-comment'] do
         %i.icon.ion-reply
         reply
+    %ul.who-liked
+      - more_likes.each do |like|
+        - user = like.user
+        %li.liked
+          = link_to user_path(user) do
+            = image_tag user_avatar_image_thumbnail(user.avatar_image, 50), title: user.handle, class: 'tip-top', :'data-tooltip' => ''
+      - if plus_likes > 0
+        %li.more-liked
+          %span +#{plus_likes} more
 
   -# comments
   = render(partial: "users/user_story_comments", locals: {object: listing, comments: comments})

@@ -7,6 +7,12 @@ class PostLike < ActiveRecord::Base
   belongs_to :post, counter_cache: :likes_count
   belongs_to :user
 
+  def self.like?(post, user)
+    post.likes.where(user_id: user.respond_to?(:id) ? user.id : user).exists?
+  rescue Exception => e
+    false
+  end
+
   def self.like!(post, user)
     post.likes.create!(user: user)
     true
@@ -22,7 +28,7 @@ class PostLike < ActiveRecord::Base
   end
 
   def self.toggle_like!(post, user)
-    if post.likes.where(user_id: user.respond_to?(:id) ? user.id : user).exists?
+    if like?(post, user)
       unlike!(post, user)
     else
       like!(post, user)
@@ -30,5 +36,9 @@ class PostLike < ActiveRecord::Base
     true
   rescue Exception => e
     false
+  end
+
+  def self.likes(post)
+    self.where(post_id: post.respond_to?(:id) ? post.id : post)
   end
 end

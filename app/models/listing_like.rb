@@ -7,6 +7,12 @@ class ListingLike < ActiveRecord::Base
   belongs_to :listing, counter_cache: :likes_count
   belongs_to :user
 
+  def self.like?(listing, user)
+    listing.likes.where(user_id: user.respond_to?(:id) ? user.id : user).exists?
+  rescue Exception => e
+    false
+  end
+
   def self.like!(listing, user)
     listing.likes.create!(user: user)
     true
@@ -22,7 +28,7 @@ class ListingLike < ActiveRecord::Base
   end
 
   def self.toggle_like!(listing, user)
-    if listing.likes.where(user_id: user.respond_to?(:id) ? user.id : user).exists?
+    if like?(listing, user)
       unlike!(listing, user)
     else
       like!(listing, user)
@@ -32,4 +38,7 @@ class ListingLike < ActiveRecord::Base
     false
   end
 
+  def self.likes(listing)
+    self.where(listing_id: listing.respond_to?(:id) ? listing.id : listing)
+  end
 end
