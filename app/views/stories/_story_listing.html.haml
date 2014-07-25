@@ -22,7 +22,8 @@
       .list-panel
         .listing-images.small-6.columns
           .main-image
-            = image_tag listing_image_story(image), itemprop: "image"
+            = link_to user_listing_path(user, listing) do
+              = image_tag listing_image_story(image), itemprop: "image"
         .listing-aside.small-6.columns
           -# .category-breadcrumbs
             -# %span
