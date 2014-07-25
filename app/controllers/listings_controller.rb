@@ -47,7 +47,7 @@ class ListingsController < ApplicationController
     @title = [@category.name, @subcategory.try(:name)].compact.join(" : ") + " | Category"
 
     respond_to do |format|
-      format.html { render(action: :index) }
+      format.html { render(action: :index, layout: !request.xhr?) }
     end
   end
 
@@ -55,7 +55,7 @@ class ListingsController < ApplicationController
   def by_search
     begin
       @query = params[:query].to_s
-      @listings = Listing.search(@query).page(page).per(per).records.active
+      @listings = Listing.search(@query).page(page).per(per).records
     rescue Exception => e
       @listings = []
     end
@@ -63,7 +63,7 @@ class ListingsController < ApplicationController
     @title = "#{@query} | Search"
 
     respond_to do |format|
-      format.html { render(action: :index) }
+      format.html { render(action: :index, layout: !request.xhr?) }
     end
   end
 
@@ -77,7 +77,7 @@ class ListingsController < ApplicationController
     @title = "Listings by #{@user.handle}"
 
     respond_to do |format|
-      format.html { render(action: :index) }
+      format.html { render(action: :index, layout: !request.xhr?) }
     end
   end
 
