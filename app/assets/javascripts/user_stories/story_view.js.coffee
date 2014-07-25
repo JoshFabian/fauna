@@ -16,7 +16,7 @@ class Tegu.StoryView
         callback(null, data) if callback
 
   @replace_story: (story_klass, story_id, data) ->
-    $(".update-panel##{story_klass}_#{story_id}").replaceWith(data)
+    $(".update-panel#story_#{story_klass}_#{story_id}").replaceWith(data)
 
   @prepend_stories: (data) ->
     $(".user-feed .status-panel").after(data)

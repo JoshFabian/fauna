@@ -4,7 +4,7 @@
 - more_likes = PostLike.likes(post).order("id desc").limit(2)
 - plus_likes = post.likes_count - 2
 
-.update-panel.rounded-panel{:'data-story-id' => story.id, :'data-story-klass' => story.type, id: "#{story.type}_#{story.id}"}
+.update-panel.rounded-panel{:'data-story-id' => story.id, :'data-story-klass' => story.type, id: "story_#{story.type}_#{story.id}"}
   .small-12.columns
     .user-image
       = link_to user_path(user) do
