@@ -2,11 +2,11 @@ class TwilioController < ApplicationController
 
   skip_before_filter :verify_authenticity_token
 
-  before_filter :authenticate_user!, only: [:sms_list, :sms_test, :sms_send]
-  before_filter :admin_role_required!, only: [:sms_list]
+  before_filter :authenticate_user!, only: [:manage_sms, :sms_test, :sms_send]
+  before_filter :admin_role_required!, only: [:sms_manage]
 
-  # GET /sms/list
-  def sms_list
+  # GET /sms/manage
+  def sms_manage
     @tokens = PhoneToken.order("id desc")
   end
 
@@ -20,8 +20,13 @@ class TwilioController < ApplicationController
   def sms_send
   end
 
-  # GET /sms/verify_phone
-  def sms_verify_phone
+  # GET /sms/code
+  def sms_code
+  end
+
+  # GET /sms/complete
+  def sms_complete
+    redirect_to(session[:verify_phone_return_to])
   end
 
 end

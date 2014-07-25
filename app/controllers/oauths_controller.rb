@@ -9,9 +9,13 @@ class OauthsController < ApplicationController
     logger.post("tegu.app", log_data.merge({event: 'facebook.oauth', oauth: @oauth}))
     if @oauth.persisted?
       if user_signed_in?
-        logger.post("tegu.app", log_data.merge({event: 'facebook.connect'}))
-        # user connected their facebook account
-        redirect_to(user_settings_path(current_user))
+        if @oauth.user_id != current_user.id
+          logger.post("tegu.app", log_data.merge({event: 'facebook.error', message: "user #{@oauth.user_id} already connected"}))
+        else
+          # user connected their facebook account
+          logger.post("tegu.app", log_data.merge({event: 'facebook.connect'}))
+        end
+        redirect_to(session[:oauth_return_to]) and return
       else
         logger.post("tegu.app", log_data.merge({event: 'facebook.login'}))
         # user exists, sign them in

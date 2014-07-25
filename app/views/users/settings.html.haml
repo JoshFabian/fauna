@@ -1,68 +1,74 @@
 .row
-	.account-page.small-8.small-centered.columns
-		.rounded-panel
-			.account-avatar
-				= image_tag user_avatar_image_thumbnail(current_user.avatar_image, 120)
-			.account-header
-				%h3 Account Settings
-			.small-10.small-centered.columns
-				.account-form
-					.small-12.columns
-						.small-4.columns
-							%label Email Address
-						.small-8.columns
-							%input#user_email{:name => "user[email]", :placeholder => "email", :remote => "/users/validate_email", :required => "required", :type => "email", :value => "contact@joshfabian.com"}
+  .account-page.small-8.small-centered.columns
+    .rounded-panel
+      .account-avatar
+        = image_tag user_avatar_image_thumbnail(current_user.avatar_image, 120)
+      .account-header
+        %h3 Account Settings
+      = form_for(@user, as: :user, html: {class: "form-validation user-edit", :'data-user-id' => @user.id.to_i}) do |f|
+        .small-10.small-centered.columns
+          .account-form
+            .small-12.columns
+              .small-4.columns
+                %label Email Address
+              .small-8.columns
+                = f.email_field :email, autofocus: false, required: true, class: "", placeholder: 'email', remote: "/users/validate_email"
 
-					.small-12.columns
-						.small-4.columns
-							%label Account Name
-						.small-8.columns
-							%input#user_email{:name => "user[email]", :placeholder => "what should people call you?", :remote => "/users/validate_email", :required => "required", :type => "email", :value => "JoshFabian"}
+            .small-12.columns
+              .small-4.columns
+                %label Account Name
+              .small-8.columns
+                = f.text_field :handle, autofocus: false, required: true, class: "", placeholder: 'username', remote: "/users/validate_handle"
 
-					.small-12.columns
-						.small-4.columns
-							%label Password
-						.small-8.columns
-							%a.inline-link{:href=>"#"} Change Password
-							.password-block.hide
-								%label Current Password
-								%input#user_email{:placeholder => "current password", :type => "password", :value => ""}
+            .small-12.columns
+              .small-4.columns
+                %label Password
+              .small-8.columns
+                %a.inline-link{:href=>"#"} Change Password
+                .password-block.hide
+                  %label Current Password
+                  %input{:placeholder => "current password", :type => "password", :value => ""}
+                  %label New Password
+                  = f.password_field :password, required: @user.new_record?, class: "", placeholder: 'password', :id => "signup_password"
+                  = f.password_field :password_confirmation, required: @user.new_record?, class: "", placeholder: 'password', :id => "signup_password"
 
-								%label New Password
-								%input#user_email{:name => "user[email]", :placeholder => "new password", :type => "password", :value => ""}
+            .small-12.columns
+              .small-4.columns
+                %label Paypal
+              .small-8.columns
+                = link_to 'Update Paypal Account', user_verify_paypal_path(@user), class: 'inline-link user-reset-paypal-email'
 
-					.small-12.columns
-						.small-4.columns
-							%label Paypal
-						.small-8.columns
-							%a.inline-link{:href=>"#"} Update Paypal Account
+            .small-12.columns
+              .small-4.columns
+                %label Phone Number
+              .small-8.columns
+                = link_to 'Update Phone Number', user_verify_phone_path, class: 'inline-link user-reset-phone-number'
 
-					.small-12.columns
-						.small-4.columns
-							%label Phone Number
-						.small-8.columns
-							%a.inline-link{:href=>"#"} Update Phone Number
-					.small-12.columns.divider
-						%hr
-					.small-12.columns.divider
-						.small-4.columns
-							%label Facebook
-						.small-8.columns
-							%a.facebook-settings{:href=>"#"}
-								Connect to Facebook
-							%input#facebook{:type => "checkbox"}
-								%label{:for => "facebook"} Share new listings to Facebook
+            .small-12.columns.divider
+              %hr
 
-					.small-12.columns
-						.small-4.columns
-							%label Twitter
-						.small-8.columns
-							%a.twitter-settings{:href=>"#"}
-								Connect to Twitter
-							%input#twitter{:type => "checkbox"}
-								%label{:for => "twitter"} Share new listings to Twitter
+            .small-12.columns.divider
+              .small-4.columns
+                %label Facebook
+              .small-8.columns
+                - if @user.facebook_verified?
+                  %input#facebook{:type => "checkbox"}
+                    %label{:for => "facebook"} Share new listings to Facebook
+                - else
+                  = link_to 'Connect to Facebook', user_omniauth_authorize_path(:facebook), class: 'facebook-settings'
 
-					.small-12.columns
-						%hr
-					.small-12.columns.settings-footer
-						%a.button.orange-button{:href => "#"} Update Account Settings
+            - if false # need to add twitter oauth settings
+              .small-12.columns
+                .small-4.columns
+                  %label Twitter
+                .small-8.columns
+                  - if @user.twitter_verified?
+                    %input#twitter{:type => "checkbox"}
+                      %label{:for => "twitter"} Share new listings to Twitter
+                  - else
+                    = link_to 'Connect to Twitter', user_omniauth_authorize_path(:twitter), class: 'twitter-settings'
+
+            .small-12.columns
+              %hr
+            .small-12.columns.settings-footer
+              %a.button.orange-button.edit-link{:href => "#"} Update Account Settings

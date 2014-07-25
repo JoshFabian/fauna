@@ -12,7 +12,7 @@ $(document).ready ->
           Tegu.SmsApi.send_token(user_to, auth_token, callback)
         (data, callback) ->
           if data.event == 'sent'
-            window.location.href = "/sms/verify_phone"
+            window.location.href = Tegu.UserRoute.user_slug_route(current_user_slug, 'verify/sms/code')
           # else
           #   console.log "sms error: #{JSON.stringify data}"
       ],
@@ -31,7 +31,7 @@ $(document).ready ->
           Tegu.SmsApi.verify_token(sms_code, auth_token, callback)
         (data, callback) ->
           if data.event == 'verified'
-            window.location.href = Tegu.UserRoute.user_slug_route(current_user_slug, 'verify')
+            window.location.href = Tegu.UserRoute.user_slug_route(current_user_slug, 'verify/sms/complete')
       ],
       # optional callback
       (err, results) ->

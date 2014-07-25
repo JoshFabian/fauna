@@ -23,17 +23,16 @@
           - if current_user.paypal_verified?
             %a.button.green-button.secondary.disabled{href: "#"} Paypal Verified
           - else
-            = link_to 'Verify Paypal', user_verify_email_path(@user), class: 'button green-button'
-            -# %a.button.green-button{href: paypal_verify_email_path} Verify Paypal
+            = link_to 'Verify Paypal', user_verify_paypal_path(@user), class: 'button green-button'
       %hr
       %h5 Connect to Facebook (optional)
       %p Connect your account to Facebook. This helps as it helps build confidence in users that your identity is known.
       %p We recommend that you also allow us to display a link on your user profile. This allows other users to see that you have nothing to hide.
       .small-12.columns.no-padding
         - if current_user.facebook_verified?
-          %a.button.orange-button.secondary.disabled{href: "#"} Facebook Connected
+          = link_to 'Facebook Connected', '#', class: 'button orange-button secondary disabled'
         - else
-          %a.button.orange-button{href: user_omniauth_authorize_path(:facebook)} Connect to Facebook
+          = link_to 'Connect to Facebook', user_omniauth_authorize_path(:facebook), class: 'button orange-button'
       %hr
       %a.button.green-button.right.user-verify-continue{href: new_listing_path} Continue
 

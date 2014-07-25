@@ -8,7 +8,7 @@ class Tegu.UserVerifyEmail
 $(document).ready ->
 
   # verify email form
-  $("form.user-verify-email").validate
+  $("form.user-verify-paypal").validate
     onsubmit: true,
     submitHandler: (form) ->
       email = $(form).find("input.email").val()
@@ -24,7 +24,7 @@ $(document).ready ->
           console.log data
           if data.event == 'verified'
             # redirect
-            window.location.href = Tegu.UserRoute.user_slug_route(current_user_slug, 'verify')
+            window.location.href = Tegu.UserRoute.user_slug_route(current_user_slug, 'verify/paypal/complete')
           else
             # show error state
             Tegu.UserVerifyEmail.show_error_state()

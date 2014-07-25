@@ -26,8 +26,11 @@ Tegu::Application.routes.draw do
   get ':slug/settings' => "users#settings", as: :user_settings
   get ':slug/reviews' => "users#reviews", as: :user_reviews
   get ':slug/verify' => "verify#start", as: :user_verify
-  get ':slug/verify/email', to: "verify#email", as: :user_verify_email # paypal verify email
-  # messages
+  get ':slug/verify/paypal', to: "verify#paypal", as: :user_verify_paypal # paypal verify email
+  get ':slug/verify/paypal/complete', to: "verify#paypal_complete", as: :user_verify_paypal_complete
+  get ':slug/verify/sms/send', to: "twilio#sms_send", as: :user_verify_phone, via: [:get, :post]
+  get ':slug/verify/sms/code'=> "twilio#sms_code", via: [:get]
+  get ':slug/verify/sms/complete'=> "twilio#sms_complete", via: [:get]
   get ':slug/messages/:id' => "messages#show", constraints: {id: /[0-9]+/}
   get ':slug/messages/:label' => "messages#index", constraints: {label: /[a-z]+/}
 
@@ -86,11 +89,11 @@ Tegu::Application.routes.draw do
   resources :payments, only: [:index]
 
   # twilio sms
-  get '/sms' => redirect("/sms/send"), as: :user_verify_phone
   match 'sms/reply' => "twilio#sms_reply", as: :twilio_sms_reply, via: [:get, :post]
-  match 'sms/send'=> "twilio#sms_send", as: :twilio_sms_send, via: [:get, :post]
-  match 'sms/verify_phone'=> "twilio#sms_verify_phone", as: :twilio_sms_verify_phone, via: [:get]
-  match 'sms/list'=> "twilio#sms_list", as: :twilio_sms_list, via: [:get]
+  match 'sms/manage'=> "twilio#sms_manage", as: :twilio_sms_list, via: [:get]
+  # get '/sms' => redirect("/sms/send"), as: :user_verify_phone_start
+  # match 'sms/send'=> "twilio#sms_send", as: :twilio_sms_send, via: [:get, :post]
+  # match 'sms/verify_phone'=> "twilio#sms_verify_phone", as: :twilio_sms_verify_phone, via: [:get]
 
   # plans
   resources :plans, only: [:index, :show] do

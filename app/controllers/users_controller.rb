@@ -145,6 +145,11 @@ class UsersController < ApplicationController
     @user = User.by_slug(params[:slug]) || User.find(params[:id])
     # @url = user_path(@user)
 
+    # set return_to paths
+    session[:connect_oauth_return_to] = request.path
+    session[:verify_paypal_return_to] = request.path
+    session[:verify_phone_return_to] = request.path
+
     @title = "My Settings"
 
     respond_to do |format|

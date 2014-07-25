@@ -5,12 +5,22 @@ class VerifyController < ApplicationController
 
   # :slug/verify
   def start
-    @user = User.by_slug(params[:slug])
+    @user = User.by_slug!(params[:slug])
+
+    # set return_to paths
+    session[:connect_oauth_return_to] = request.path
+    session[:verify_paypal_return_to] = request.path
+    session[:verify_phone_return_to] = request.path
   end
 
-  # :slug/verify/email
-  def email
-    @user = User.by_slug(params[:slug])
+  # :slug/verify/paypal
+  def paypal
+    @user = User.by_slug!(params[:slug])
+  end
+
+  # :slug/verify/paypal/complete
+  def paypal_complete
+    redirect_to(session[:verify_paypal_return_to])
   end
 
 end
