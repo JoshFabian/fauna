@@ -9,5 +9,8 @@
       = link_to user.handle, user_path(user)
     %span.time-stamp #{time_ago_in_words(comment.created_at)} ago
     %p.secondary
-      = comment.body
+      - begin
+        = auto_link(comment.body, html: {target: '_blank'})
+      - rescue Exception => e
+        = comment.body
 

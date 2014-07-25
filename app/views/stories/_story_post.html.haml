@@ -17,7 +17,10 @@
 
   .comment-content.small-12.columns.clearfix
     %p.comment-text
-      = post.body
+      - begin
+        = auto_link(post.body, html: {target: '_blank'})
+      - rescue Exception => e
+        = post.body
 
   .panel-footer.small-12.columns
     .footer-button
