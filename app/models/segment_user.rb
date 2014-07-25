@@ -45,6 +45,17 @@ class SegmentUser
     false
   end
 
+  def self.track_follow(user_follow, options={})
+    raise Exception, "test environment" if Rails.env.test?
+    user_id = user_follow.user_id
+    hash = {user_id: user_id, event: 'User Follow', properties: {category: 'User', label: user_follow.following.handle}}
+    result = track(hash)
+    logger.post("tegu.app", log_data.merge(hash))
+    result
+  rescue Exception => e
+    false
+  end
+
   protected
 
   def self.track(hash)
