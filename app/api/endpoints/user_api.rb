@@ -127,6 +127,24 @@ module Endpoints
         {user: user.as_json(only: [:id, :listing_credits])}
       end
 
+      # user settings
+
+      desc "Reset user paypal email verification"
+      put ':id/paypal_email/reset' do
+        authenticate!
+        @user.update_attributes(paypal_email: nil)
+        logger.post("tegu.api", log_data.merge({event: 'user.reset_paypal_email', user_id: @user.id}))
+        {user: @user.as_json(only: [:id, :paypal_email]), event: 'reset_paypal_email'}
+      end
+
+      desc "Reset user phone number verification"
+      put ':id/phone_number/reset' do
+        authenticate!
+        @user.phone_tokens.verified.each { |o| o.reset! }
+        logger.post("tegu.api", log_data.merge({event: 'user.reset_phone_number', user_id: @user.id}))
+        {user: @user.as_json(only: [:id]), event: 'reset_phone_number'}
+      end
+
       # user follow
 
       desc "Get users following list"

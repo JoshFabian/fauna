@@ -56,6 +56,32 @@ class UserApiSpec < ActionDispatch::IntegrationTest
     end
   end
 
+  describe "user settings" do
+    before do
+      @user = Fabricate(:user)
+    end
+
+    it "should reset user paypal email" do
+      @user.update_attributes(paypal_email: "user@paypal.com")
+      put "/api/v1/users/#{@user.id}/paypal_email/reset?token=#{@user.auth_token}"
+      response.success?.must_equal true
+      body = JSON.parse(response.body)
+      body.must_include({'user' => {'id' => @user.id, 'paypal_email' => nil}, 'event' => 'reset_paypal_email'})
+    end
+
+    it "should reset user phone number" do
+      @user.phone_tokens.create(state: 'verified')
+      @user.reload
+      @user.phone_verified?.must_equal true
+      put "/api/v1/users/#{@user.id}/phone_number/reset?token=#{@user.auth_token}"
+      response.success?.must_equal true
+      body = JSON.parse(response.body)
+      body.must_include({'user' => {'id' => @user.id}, 'event' => 'reset_phone_number'})
+      @user.reload
+      @user.phone_verified?.must_equal false
+    end
+  end
+
   describe "user verified" do
     before do
       @user = Fabricate(:user)
