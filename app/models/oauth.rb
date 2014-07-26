@@ -10,7 +10,7 @@ class Oauth < ActiveRecord::Base
       oauth.provider = auth.provider
       oauth.uid = auth.uid
       oauth.oauth_token = auth.credentials.token
-      oauth.oauth_expires_at = Time.at(auth.credentials.expires_at)
+      oauth.oauth_expires_at = Time.at(auth.credentials.expires_at) rescue nil
     end
   end
 

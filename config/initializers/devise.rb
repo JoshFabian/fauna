@@ -247,6 +247,7 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
   config.omniauth :facebook, Settings[Rails.env][:fb_app_id], Settings[Rails.env][:fb_secret],
     :scope => 'email,publish_actions'
+  config.omniauth :twitter, Settings[Rails.env][:twitter_api_key], Settings[Rails.env][:twitter_api_secret]
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

@@ -4,6 +4,7 @@ Settings.read("#{Rails.root}/config/pp.yml")
 Settings.read("#{Rails.root}/config/segmentio.yml")
 Settings.read("#{Rails.root}/config/stripe.yml")
 Settings.read("#{Rails.root}/config/twilio.yml")
+Settings.read("#{Rails.root}/config/twitter.yml")
 
 Settings.use :config_block
 Settings.finally do |c|

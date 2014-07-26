@@ -60,14 +60,15 @@
                 - else
                   = link_to 'Connect to Facebook', user_omniauth_authorize_path(:facebook), class: 'facebook-settings'
 
-            - if false # need to add twitter oauth settings
+            - if true # need to add twitter oauth settings
               .small-12.columns
                 .small-4.columns
                   %label Twitter
                 .small-8.columns
                   - if @user.twitter_verified?
-                    %input#twitter{:type => "checkbox"}
-                      %label{:for => "twitter"} Share new listings to Twitter
+                    -# %input#twitter{:type => "checkbox"}
+                    -#   %label{:for => "twitter"} Share new listings to Twitter
+                    = link_to 'Twitter Connected', '#', class: 'button orange-button secondary disabled'
                   - else
                     = link_to 'Connect to Twitter', user_omniauth_authorize_path(:twitter), class: 'twitter-settings'
 

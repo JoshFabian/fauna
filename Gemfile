@@ -75,6 +75,7 @@ gem 'logstash-event'
 gem 'mailboxer'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'omniauth-twitter'
 gem 'open4' # required by rubber
 gem 'paddock'
 gem 'paypal-sdk-adaptivepayments'

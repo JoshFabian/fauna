@@ -1,0 +1,12 @@
+development:
+  twitter_api_key: 0Ap9udysdGBe1bYTSWvLFL7oe
+  twitter_api_secret: UREbBVTTVZFxBJgTW54gKe76ku0oaMsUD2Ttq7wbhsZyUyWYbT
+test:
+  twitter_api_key: 0Ap9udysdGBe1bYTSWvLFL7oe
+  twitter_api_secret: UREbBVTTVZFxBJgTW54gKe76ku0oaMsUD2Ttq7wbhsZyUyWYbT
+staging:
+  twitter_api_key: XyX3OSNwtzijE2QleL8uAM8EP
+  twitter_api_secret: 6Ifg1Fevg4uyzklGBMViOBnT3IqDn5o9BR1cauvre3CcxoXNOr
+production:
+  twitter_api_key: XyX3OSNwtzijE2QleL8uAM8EP
+  twitter_api_secret: 6Ifg1Fevg4uyzklGBMViOBnT3IqDn5o9BR1cauvre3CcxoXNOr
