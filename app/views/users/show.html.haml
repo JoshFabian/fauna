@@ -28,8 +28,7 @@
           - else
             = link_to 'Follow', '#', class: ['button', 'follow-button', 'track-user-profile-view'], :'data-follow-id' => @user.id
           = link_to "Message", '#', class: ['button', 'message-button', 'active'], :'data-user-id' => @user.id
-          - if current_user.roles?(:admin)
-            = link_to "Become", '#', class: ['button', 'message-button', 'active'], :'data-user-id' => @user.id
+          = link_to "Become", become_user_path(@user.id), class: ['button', 'active', 'admin', 'hide'], :'data-user-id' => @user.id
           = render(partial: 'users/user_message_modal')
         .edit-show
           = link_to 'Cancel', '#', class: 'button active'
