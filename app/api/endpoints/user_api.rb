@@ -25,8 +25,8 @@ module Endpoints
         end
 
         def user_params
-          permit_params = [:about, :city, :state_code, :email, :first_name, :handle, :last_name, :password,
-            :password_confirmation, :phone, :website, :welcome_message]
+          permit_params = [:about, :city, :state_code, :email, :first_name, :handle, :last_name,
+            :password, :password_confirmation, :phone, :website, :welcome_message]
           ActionController::Parameters.new(params).required(:user).permit(permit_params)
         end
       end
@@ -68,7 +68,7 @@ module Endpoints
           params.user.delete(:password)
           params.user.delete(:password_confirmation)
         end
-        @user.update_attributes(user_params)
+        @user.update(user_params)
         if params.avatar_image_params.present?
           # puts "*** adding avatar image:#{params.avatar_image_params}"
           begin

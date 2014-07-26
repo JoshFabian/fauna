@@ -24,25 +24,27 @@
               .small-4.columns
                 %label Password
               .small-8.columns
-                %a.inline-link{:href=>"#"} Change Password
+                = link_to 'Change Password', '#', class: 'inline-link user-change-password'
                 .password-block.hide
                   %label Current Password
-                  %input{:placeholder => "current password", :type => "password", :value => ""}
+                  = f.password_field :current_password, autofocus: false, required: true, class: "", placeholder: 'current password'
                   %label New Password
-                  = f.password_field :password, required: @user.new_record?, class: "", placeholder: 'password', :id => "signup_password"
-                  = f.password_field :password_confirmation, required: @user.new_record?, class: "", placeholder: 'password', :id => "signup_password"
+                  = f.password_field :password, required: true, class: "", placeholder: 'password', id: "new_password"
+                  = f.password_field :password_confirmation, required: true, class: "", placeholder: 'password confirmation', id: 'new_password_confirmation', equalTo: "#new_password"
 
             .small-12.columns
               .small-4.columns
                 %label Paypal
               .small-8.columns
-                = link_to 'Update Paypal Account', user_verify_paypal_path(@user), class: 'inline-link user-reset-paypal-email'
+                - text = @user.paypal_verified? ? "Update Paypal Account" : "Verify Paypal Account"
+                = link_to text, user_verify_paypal_path(@user), class: 'inline-link user-reset-paypal-email'
 
             .small-12.columns
               .small-4.columns
                 %label Phone Number
               .small-8.columns
-                = link_to 'Update Phone Number', user_verify_phone_path, class: 'inline-link user-reset-phone-number'
+                - text = @user.paypal_verified? ? "Update Phone Number" : "Verify Phone Number"
+                = link_to text, user_verify_phone_path, class: 'inline-link user-reset-phone-number'
 
             .small-12.columns.divider
               %hr
@@ -52,8 +54,9 @@
                 %label Facebook
               .small-8.columns
                 - if @user.facebook_verified?
-                  %input#facebook{:type => "checkbox"}
-                    %label{:for => "facebook"} Share new listings to Facebook
+                  -# %input#facebook{:type => "checkbox"}
+                    -# %label{:for => "facebook"} Share new listings to Facebook
+                  = link_to 'Facebook Connected', '#', class: 'button orange-button secondary disabled'
                 - else
                   = link_to 'Connect to Facebook', user_omniauth_authorize_path(:facebook), class: 'facebook-settings'
 

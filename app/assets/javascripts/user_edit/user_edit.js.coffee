@@ -2,6 +2,10 @@ $(document).ready ->
 
   Tegu.cover_image_deletes = []
 
+  $(".user-change-password").on 'click', (e) ->
+    e.preventDefault()
+    $(".password-block").toggleClass('hide')
+
   $(".edit-hide .edit-button, .edit-show .button, .edit-link").on 'click', (e) ->
     e.preventDefault()
     $("body").toggleClass('editing')
@@ -37,12 +41,13 @@ $(document).ready ->
             Tegu.UserApi.update(user_id, form_data, auth_token, callback)
           (data, callback) ->
             console.log data
+            console.log("user:#{user_id} sort cover images ...")
             # sort cover images
             Tegu.UserApi.sort_cover_images(user_id, {cover_images: cover_images}, auth_token, callback)
           (data, callback) ->
             console.log data
             # reload user settings page
-            window.location.href = Tegu.UserRoute.user_slug_route(data.user.handle, 'settings')
+            window.location.href = Tegu.UserRoute.user_slug_route(data.user.handle, '')
         ],
         # optional callback
         (err, results) ->

@@ -24,4 +24,4 @@ class Tegu.UserRoute
     ]
 
   @user_slug_route: (slug, s) ->
-    "/#{slug}/#{s}"
+    if s then "/#{slug}/#{s}" else "/#{slug}"

@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
 
   has_many :oauths, dependent: :destroy
   has_many :facebook_oauths, -> { where(provider: 'facebook') }, :class_name => 'Oauth'
+  has_many :twitter_oauths, -> { where(provider: 'twitter') }, :class_name => 'Oauth'
 
   has_many :listings, dependent: :destroy
   has_many :payments, class_name: 'Payment', foreign_key: 'buyer_id', dependent: :destroy
@@ -144,6 +145,10 @@ class User < ActiveRecord::Base
 
   def trial?
     self.trial_ends_at.present? and self.trial_ends_at > Time.zone.now
+  end
+
+  def twitter_verified?
+    twitter_oauths.count > 0
   end
 
   # update inbox unread count
