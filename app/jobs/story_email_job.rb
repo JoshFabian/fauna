@@ -7,7 +7,7 @@ class StoryEmailJob
 
   def self.perform(mash)
     if mash.type == 'comment'
-      comment = Comment.find_by_id(mash.id)
+      comment = Comment.find_by_id(mash.id.to_i)
       return 0 if comment.blank? or comment.email_sent?
       if comment.commentable.is_a?(Post)
         # send post comment email
@@ -24,6 +24,7 @@ class StoryEmailJob
       raise Exception, "invalid type"
     end
   rescue Exception => e
+    logger.post("tegu.job", log_data.merge({event: 'story_email', error: e.message}))
     0
   end
 

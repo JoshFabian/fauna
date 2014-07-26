@@ -7,7 +7,7 @@ class UserEmailJob
 
   def self.perform(mash)
     if mash.type == 'user_follow'
-      user_follow = UserFollow.find_by_id(mash.id)
+      user_follow = UserFollow.find_by_id(mash.id.to_i)
       return 0 if user_follow.blank?
       # send email
       UserMailer.user_follow_email(user_follow).deliver
@@ -16,6 +16,7 @@ class UserEmailJob
       return 1
     end
   rescue Exception => e
+    logger.post("tegu.job", log_data.merge({event: 'user_email', error: e.message}))
     0
   end
 
