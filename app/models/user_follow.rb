@@ -24,6 +24,11 @@ class UserFollow < ActiveRecord::Base
     self.email_sent.to_i == 1
   end
 
+  # returns true if someone should be notified when this object is created
+  def notify?
+    true
+  end
+
   def should_update_index!
     self.__elasticsearch__.index_document rescue nil
   end
