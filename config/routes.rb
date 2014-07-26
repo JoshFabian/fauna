@@ -12,6 +12,9 @@ Tegu::Application.routes.draw do
   root to: "home#index"
   get '/' => redirect("/listings/recent")
 
+  # password edit route (conflicts with user/edit)
+  get 'users/password/edit' => "passwords#edit"
+
   # vanity user scopes
   get ':slug' => "users#show", as: :user, constraints: HandleRoute.new
   get ':slug/edit' => "users#edit", as: :user_edit

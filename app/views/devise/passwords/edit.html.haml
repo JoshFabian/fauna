@@ -5,15 +5,17 @@
   .global-subhead {
     display: none;
   }
+
 .landing-page
   .scrolling-background-container
     .scrolling-bg.animate-background
   .row
-    = form_for(@user, as: :user, url: @url, html: {class: "form-validation user-edit", :'data-user-id' => @user.id.to_i}) do |f|
+    = form_for(@user, html: {class: "form-validation user-reset-password"}) do |f|
+      = f.hidden_field :reset_password_token
       .email-block.small-6.small-centered.columns
         = image_tag "landing-logo.jpg", :class => "landing-logo"
-        %h3 Forgot Password?
+        %h3 Reset Password
         .register-form.small-8.columns.small-centered
-          = f.email_field :email, autofocus: false, required: true, class: "", placeholder: 'email'
+          = f.password_field :password, required: true, class: "", placeholder: 'New Password'
+          = f.password_field :password_confirmation, required: true, class: "", placeholder: 'Confirm Password', equalTo: "#user_password"
         = f.submit 'Continue', class: 'button'
-

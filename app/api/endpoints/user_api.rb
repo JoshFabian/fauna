@@ -26,7 +26,7 @@ module Endpoints
 
         def user_params
           permit_params = [:about, :city, :state_code, :email, :first_name, :handle, :last_name,
-            :password, :password_confirmation, :phone, :website, :welcome_message]
+            :password, :password_confirmation, :reset_password_token, :phone, :website, :welcome_message]
           ActionController::Parameters.new(params).required(:user).permit(permit_params)
         end
       end
@@ -56,6 +56,13 @@ module Endpoints
           verified = user.send("#{params.name}_verified?")
         end
         {user: {id: user.id, verified: verified}}
+      end
+
+      desc "Reset user password with password reset token"
+      put 'reset_password' do
+        user = User.reset_password_by_token(user_params)
+        logger.post("tegu.api", log_data.merge({event: 'user.reset_password'}))
+        {user: user}
       end
 
       desc "Update user"
