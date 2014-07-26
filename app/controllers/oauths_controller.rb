@@ -13,7 +13,7 @@ class OauthsController < ApplicationController
       # verify oauth user vs current user
       if @oauth.user_id != current_user.id
         logger.post("tegu.app", log_data.merge({event: "#{@provider}.error",
-          message: "user:#{@oauth.user_id}, provider:#{@provider} already connected"}))
+          message: "user:#{@oauth.user_id}:provider:#{@provider} already connected"}))
       else
         # user re-connected their account
         logger.post("tegu.app", log_data.merge({event: "#{@provider}.reconnect"}))
@@ -29,8 +29,10 @@ class OauthsController < ApplicationController
     elsif !@oauth.persisted? and user_signed_in?
       # user connected their account
       logger.post("tegu.app", log_data.merge({event: "#{@provider}.connect"}))
+      current_user.oauths.create(@oauth.attributes)
       redirect_to(session[:connect_oauth_return_to]) and return
     elsif !@oauth.persisted? and !user_signed_in?
+      logger.post("tegu.app", log_data.merge({event: "#{@provider}.signup"}))
       # facebook oauth signup as login credentials
       redirect_to(new_facebook_signup_path) and return
     end

@@ -58,7 +58,7 @@ module Endpoints
         {user: {id: user.id, verified: verified}}
       end
 
-      desc "Send password reset to email"
+      desc "Send password reset email"
       put 'send_reset_password' do
         user = User.find_by_email(params.email)
         user.send_reset_password_instructions if user
