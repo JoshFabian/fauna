@@ -9,9 +9,9 @@ class Comment < ActiveRecord::Base
   belongs_to :commentable, polymorphic: true, counter_cache: :comments_count
   belongs_to :user
 
-  store :data
+  store :data, accessors: [:email_sent]
 
   def email_sent?
-    false
+    self.email_sent.to_i == 1
   end
 end
