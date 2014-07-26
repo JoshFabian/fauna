@@ -1,9 +1,8 @@
 class TestMailer < ActionMailer::Base
   default from: "test@fauna.net"
 
-  def test_email(user, options={})
-    @user = user
+  def test_email(email, options={})
     @subject = options[:subject] || "Test Subject"
-    mail(to: @user.email, subject: @subject)
+    mail(to: email, subject: @subject)
   end
 end
