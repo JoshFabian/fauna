@@ -16,15 +16,18 @@ class TwilioController < ApplicationController
     logger.post("tegu.app", log_data.merge({event: 'twilio.sms.reply', from: params[:From], body: params[:Body]}))
   end
 
-  # GET /sms/send
+  # step 1
+  # GET /:slug/verify/sms/send
   def sms_send
   end
 
-  # GET /sms/code
+  # step 2
+  # GET /:slug/verify/sms/code
   def sms_code
   end
 
-  # GET /sms/complete
+  # step 3
+  # GET /:slug/verify/sms/complete
   def sms_complete
     redirect_to(session[:verify_phone_return_to])
   end
