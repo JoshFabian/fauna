@@ -39,6 +39,14 @@ class Tegu.UserApi
       success: (data) ->
         callback(null, data) if callback
 
+  @send_reset_password: (email, token, callback=null) ->
+    api = "/api/v1/users/send_reset_password?email=#{email}&token=#{token}"
+    $.ajax api,
+      type: 'PUT'
+      dataType: 'json'
+      success: (data) ->
+        callback(null, data) if callback
+
   @reset_password: (params, token, callback=null) ->
     api = "/api/v1/users/reset_password?token=#{token}"
     $.ajax api,

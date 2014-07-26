@@ -58,11 +58,19 @@ module Endpoints
         {user: {id: user.id, verified: verified}}
       end
 
-      desc "Reset user password with password reset token"
+      desc "Send password reset to email"
+      put 'send_reset_password' do
+        user = User.find_by_email(params.email)
+        user.send_reset_password_instructions if user
+        logger.post("tegu.api", log_data.merge({event: 'user.send_reset_password'}))
+        {user: user.as_json(only: [:id])}
+      end
+
+      desc "Reset password with password reset token"
       put 'reset_password' do
         user = User.reset_password_by_token(user_params)
         logger.post("tegu.api", log_data.merge({event: 'user.reset_password'}))
-        {user: user}
+        {user: user.as_json(only: [:id])}
       end
 
       desc "Update user"

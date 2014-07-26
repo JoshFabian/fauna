@@ -9,7 +9,7 @@
   .scrolling-background-container
     .scrolling-bg.animate-background
   .row
-    = form_for(@user, as: :user, url: @url, html: {class: "form-validation user-edit", :'data-user-id' => @user.id.to_i}) do |f|
+    = form_for(@user, as: :user, url: @url, html: {class: "form-validation user-send-reset-password", :'data-user-id' => @user.id.to_i}) do |f|
       .email-block.small-6.small-centered.columns
         = image_tag "landing-logo.jpg", :class => "landing-logo"
         %h3 Forgot Password?
