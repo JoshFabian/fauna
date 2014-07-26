@@ -91,9 +91,6 @@ Tegu::Application.routes.draw do
   # twilio sms
   match 'sms/reply' => "twilio#sms_reply", as: :twilio_sms_reply, via: [:get, :post]
   match 'sms/manage'=> "twilio#sms_manage", as: :twilio_sms_list, via: [:get]
-  # get '/sms' => redirect("/sms/send"), as: :user_verify_phone_start
-  # match 'sms/send'=> "twilio#sms_send", as: :twilio_sms_send, via: [:get, :post]
-  # match 'sms/verify_phone'=> "twilio#sms_verify_phone", as: :twilio_sms_verify_phone, via: [:get]
 
   # plans
   resources :plans, only: [:index, :show] do
