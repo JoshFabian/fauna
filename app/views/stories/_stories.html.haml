@@ -10,3 +10,6 @@
       - user_follow = UserFollow.find(story.id)
       = render(partial: "stories/story_follow", locals: {story: story, user_follow: user_follow})
   - rescue Exception => e
+
+- if page.to_i <= 1
+  = paginate @stories

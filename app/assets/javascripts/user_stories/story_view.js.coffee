@@ -7,6 +7,9 @@ class Tegu.StoryView
       success: (data) ->
         callback(null, data) if callback
 
+  @init_stories: (data) ->
+    $(".user-feed .status-panel").after(data)
+
   @get_story: (story_id, story_klass, token, callback = null) ->
     api = "/stories/#{story_id}?klass=#{story_klass}&token=#{token}"
     $.ajax api,
@@ -17,9 +20,6 @@ class Tegu.StoryView
 
   @replace_story: (story_klass, story_id, data) ->
     $(".update-panel#story_#{story_klass}_#{story_id}").replaceWith(data)
-
-  @prepend_stories: (data) ->
-    $(".user-feed .status-panel").after(data)
 
   @prepend_story: (data) ->
     $(".user-feed .status-panel").after(data)

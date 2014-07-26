@@ -10,6 +10,7 @@ $(document).ready ->
           Tegu.StoryView.get_stories(user_id, auth_token, callback)
         (data, callback) ->
           # console.log data
-          Tegu.StoryView.prepend_stories(data)
+          Tegu.StoryView.init_stories(data)
+          Tegu.StoryScroll.init()
       ]
   catch e

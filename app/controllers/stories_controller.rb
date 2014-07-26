@@ -1,9 +1,11 @@
 class StoriesController < ApplicationController
 
-  # GET /stories?id=1
+  helper_method :page
+
+  # GET /stories?id=1&page=1
   def index
     @user = User.find(params[:id])
-    @stories = Story.by_wall(@user).page(page).per(per) rescue []
+    @stories = Story.by_wall(@user).page(page).per(per)
 
     respond_to do |format|
       format.js
@@ -28,7 +30,7 @@ class StoriesController < ApplicationController
   end
 
   def per
-    20
+    10
   end
 
 end

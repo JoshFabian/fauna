@@ -1,7 +1,7 @@
 - follower = user_follow.user
 - following = user_follow.following
 
-.update-panel.rounded-panel
+.update-panel.rounded-panel{:'data-story-id' => story.id, :'data-story-klass' => story.type, id: "story_#{story.type}_#{story.id}"}
   .small-12.columns
     .user-image
       = link_to image_tag(user_avatar_image_thumbnail(follower.avatar_image, 80)), user_path(follower)
