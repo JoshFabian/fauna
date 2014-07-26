@@ -11,4 +11,7 @@ class Comment < ActiveRecord::Base
 
   store :data
 
+  def email_sent?
+    false
+  end
 end

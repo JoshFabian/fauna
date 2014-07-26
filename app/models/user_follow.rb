@@ -18,6 +18,10 @@ class UserFollow < ActiveRecord::Base
     as_json(methods: [:state, :wall_id], except: [])
   end
 
+  def email_sent?
+    false
+  end
+
   def should_update_index!
     self.__elasticsearch__.index_document rescue nil
   end
