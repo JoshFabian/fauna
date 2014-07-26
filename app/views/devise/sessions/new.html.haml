@@ -22,6 +22,9 @@
           = link_to "Login", '#', class: 'user-password-login-show'
           %span or 
           = link_to "Register with Email", new_password_signup_path
+        .login-text
+          %span{style: 'font-size: 0.8em;'}= link_to "Forgot my password", new_user_password_path
+
         = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "form-validation user-password-login hide"}) do |f|
           = f.email_field :email, :autofocus => true, :required => true, :class => "", :placeholder => 'email'
           = f.password_field :password, :required => true, :class => "", :placeholder => 'password'
