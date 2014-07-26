@@ -5,9 +5,9 @@ class StoryEmailJob
   queue_priority 1000 # most urgent priority is 0
   queue_respond_timeout 100 # number of seconds before job times out
 
-  def self.perform(mash)
-    if mash.type == 'comment'
-      comment = Comment.find_by_id(mash.id.to_i)
+  def self.perform(hash)
+    if hash['type'] == 'comment'
+      comment = Comment.find_by_id(hash['id'].to_i)
       return 0 if comment.blank? or comment.email_sent?
       if comment.commentable.is_a?(Post)
         # send post comment email

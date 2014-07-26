@@ -5,9 +5,9 @@ class UserEmailJob
   queue_priority 1000 # most urgent priority is 0
   queue_respond_timeout 100 # number of seconds before job times out
 
-  def self.perform(mash)
-    if mash.type == 'user_follow'
-      user_follow = UserFollow.find_by_id(mash.id.to_i)
+  def self.perform(hash)
+    if hash['type'] == 'user_follow'
+      user_follow = UserFollow.find_by_id(hash['id'].to_i)
       return 0 if user_follow.blank?
       # send email
       UserMailer.user_follow_email(user_follow).deliver

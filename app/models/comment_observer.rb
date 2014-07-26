@@ -2,9 +2,9 @@ class CommentObserver < ActiveRecord::Observer
   include Loggy
 
   def after_create(comment)
-    if comment.notify? and !comment.email_sent?
+    if comment.notify? and !comment.email_sent? and feature(:backburner_emails)
       # queue email
-      Backburner::Worker.enqueue(StoryEmailJob, Hashie::Mash.new(type: 'comment', id: comment.id), delay: 1.minute)
+      Backburner::Worker.enqueue(StoryEmailJob, [{type: 'comment', id: comment.id}], delay: 1.minute)
     end
     # track comment
     SegmentComment.track_comment_create(comment)
