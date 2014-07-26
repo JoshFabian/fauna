@@ -6,7 +6,7 @@ class UserFollowObserver < ActiveRecord::Observer
       # send user follow email
       UserMailer.user_follow_email(user_follow).deliver
     end
-    # segment io events
+    # track segment io events
     SegmentUser.track_follow(user_follow)
   rescue Exception => e
   end

@@ -11,7 +11,7 @@ class UserFollow < ActiveRecord::Base
 
   scope :following, -> { where("following_at IS NOT ?", nil) }
 
-  # store :data, accessors: [:email_sent]
+  store :data, accessors: [:email_sent]
 
   # set search index name
   index_name "user_follows.#{Rails.env}"
@@ -21,7 +21,7 @@ class UserFollow < ActiveRecord::Base
   end
 
   def email_sent?
-    false
+    self.email_sent.to_i == 1
   end
 
   def should_update_index!

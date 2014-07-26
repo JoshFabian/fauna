@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140725192519) do
+ActiveRecord::Schema.define(version: 20140726160928) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -440,6 +440,7 @@ ActiveRecord::Schema.define(version: 20140725192519) do
     t.datetime "following_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "data"
   end
 
   add_index "user_follows", ["created_at"], name: "index_user_follows_on_created_at"
