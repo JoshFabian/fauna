@@ -41,8 +41,8 @@ $(document).ready ->
             Tegu.UserApi.sort_cover_images(user_id, {cover_images: cover_images}, auth_token, callback)
           (data, callback) ->
             console.log data
-            # reload page
-            window.location.reload(true)
+            # reload user settings page
+            window.location.href = Tegu.UserRoute.user_slug_route(data.user.handle, 'settings')
         ],
         # optional callback
         (err, results) ->

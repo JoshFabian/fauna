@@ -103,7 +103,6 @@ module Endpoints
       desc "Update cover image positions"
       put ':id/cover_images/sort' do
         authenticate!
-        @user = User.find(params.id)
         if params.cover_images.present?
           params.cover_images.each do |object|
             begin
@@ -116,15 +115,14 @@ module Endpoints
         end
         @images = @user.cover_images
         logger.post("tegu.api", log_data.merge({event: 'user.cover_images.update', user_id: @user.id}))
-        {user: {id: @user.id, cover_images: @images.as_json(only: [:id, :position])}}
+        {user: @user.as_json().merge(cover_images: @images.as_json(only: [:id, :position]))}
       end
 
       desc "Add user listing credits"
       put ':id/credits/add/:number' do
         authenticate!
-        user = User.find(params.id)
-        user.increment!(:listing_credits, 1)
-        {user: user.as_json(only: [:id, :listing_credits])}
+        @user.increment!(:listing_credits, 1)
+        {user: @user.as_json(only: [:id, :listing_credits])}
       end
 
       # user settings
