@@ -1,5 +1,6 @@
 .modal-header
-  %h3 Adjust Image Size
+  %h3 Adjust Image?
+  = link_to 'Skip', '#', class: 'image-crop-close button orange-button active close-reveal-modal'
   = link_to 'Crop Image', '#', class: 'image-crop-save button orange-button', :'data-image-id' => @image_id
 
 - begin

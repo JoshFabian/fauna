@@ -62,6 +62,15 @@
     right: 0;
     padding: 6px 20px;
   }
+  &.image-crop-close {
+    position: absolute;
+    top: 0;
+    right: 140px;
+    color: #fff;
+    padding: 9px 20px;
+    font-size: 1rem;
+    background: #7f8c8d;
+  }
 }
 
 .green-button {
