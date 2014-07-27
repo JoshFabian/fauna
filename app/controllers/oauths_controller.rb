@@ -18,7 +18,7 @@ class OauthsController < ApplicationController
         # user re-connected their account
         logger.post("tegu.app", log_data.merge({event: "#{@provider}.reconnect"}))
       end
-      redirect_to(session[:oauth_return_to]) and return
+      redirect_to(session[:connect_oauth_return_to]) and return
     elsif @oauth.persisted? and !user_signed_in?
       # facebook oauth login
       logger.post("tegu.app", log_data.merge({event: "#{@provider}.login"}))
