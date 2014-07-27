@@ -56,12 +56,15 @@ class ListingsController < ApplicationController
   def by_search
     begin
       @query = params[:query].to_s
+      raise ListingException, "missing search query"
       @listings = Listing.search(@query).page(page).per(per).records
     rescue Exception => e
       @listings = []
     end
 
     @title = "#{@query} | Search"
+
+    @empty_text = "No Search Results" if @listings.blank?
 
     respond_to do |format|
       format.html { render(action: :index, layout: !request.xhr?) }
