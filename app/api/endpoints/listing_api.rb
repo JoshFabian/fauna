@@ -154,6 +154,7 @@ module Endpoints
           if params.event.match(/remove/)
             SegmentListing.track_listing_remove(listing)
           end
+          listing.should_update_index!
         rescue Exception => e
         end
         logger.post("tegu.api", log_data.merge({event: 'listing.event', listing_id: listing.id,

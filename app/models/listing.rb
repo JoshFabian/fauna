@@ -41,6 +41,10 @@ class Listing < ActiveRecord::Base
       transitions to: :flagged, :from => [:active, :flagged]
     end
 
+    event :remove do
+      transitions to: :removed, :from => [:active, :removed]
+    end
+
     event :report do
       transitions to: :reported, :from => [:active, :reported]
     end
