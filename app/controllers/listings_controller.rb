@@ -8,7 +8,9 @@ class ListingsController < ApplicationController
 
   # GET /listings/manage
   def manage
-    @listings = Listing.order('id desc').page(page).per(per)
+    @listings = Listing.order('id desc')
+    @listings = Listing.where(state: params[:state]) if params[:state].present?
+    @listings = @listings.page(page).per(per)
 
     @title = "Manage Listings | Admin"
 
