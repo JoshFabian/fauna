@@ -1,3 +1,5 @@
+class ListingException < StandardError; end
+
 class Listing < ActiveRecord::Base
   include AASM
   include Currency

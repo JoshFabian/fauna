@@ -10,3 +10,9 @@ $(document).ready ->
       finishedMsg: "<span style='font-size: 0.7em;'>no more listings<span>"
     }
     debug: false
+    , (new_elements) ->
+      try
+        listing_ids = ($(element).data('listing-id') for element in new_elements)
+        console.log "track listing peek: #{listing_ids.join(',')}"
+        Tegu.ListingTrack.track_listing_peeks(listing_ids)
+      catch e

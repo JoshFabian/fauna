@@ -37,6 +37,7 @@ class ListingsController < ApplicationController
     token = params[:category].titleize.split.first
     subtoken = params[:subcategory].to_s.titleize.split.first
     @category = Category.roots.find_by_match(token)
+    raise ListingException, "missing category" if @category.blank?
     @subcategory = @category.children.find_by_match(subtoken) if subtoken.present?
     terms = [ListingFilter.category(@subcategory.present? ? @subcategory.id : @category.id), ListingFilter.state('active')]
     query = {filter: {bool: {must: terms}}, sort: {id: "desc"}}

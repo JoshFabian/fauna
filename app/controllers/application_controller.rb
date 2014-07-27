@@ -6,15 +6,19 @@ class ApplicationController < ActionController::Base
   include Loggy
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_url, :alert => exception.message
+    redirect_to root_url, alert: exception.message
   end
 
   rescue_from ActiveRecord::RecordNotFound do |exception|
-    redirect_to root_url, :alert => exception.message
+    redirect_to root_url, alert: exception.message
   end
 
   rescue_from ActionController::UnknownFormat do |exception|
-    redirect_to root_url, :alert => exception.message
+    redirect_to root_url, alert: exception.message
+  end
+
+  rescue_from ListingException do |exception|
+    redirect_to root_url, alert: exception.message
   end
 
   def after_sign_in_path_for(user)
