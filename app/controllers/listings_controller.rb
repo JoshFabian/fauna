@@ -98,6 +98,11 @@ class ListingsController < ApplicationController
       @listing = Listing.friendly.find(params[:id])
     end
 
+    if @listing.flagged? and !acl_manage?(on: @listing)
+      logger.post("tegu.app", log_data.merge({event: "listing.flagged.exception", listing_id: @listing.id}))
+      raise ListingException, "listing is flagged"
+    end
+
     @message = params[:message]
 
     @owner = @listing.user
