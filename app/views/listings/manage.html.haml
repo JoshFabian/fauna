@@ -15,19 +15,19 @@
       %th Handle
       %th Title
       %th State
-      %th Views
       %th Peeks
+      %th Views
       %th Created
 
     - @listings.each do |listing|
       - user = listing.user
       %tr.listing
-        %td= listing.id
-        %td{style: 'width: 170px !important;'}= link_to user.handle, user_path(user)
-        %td.name-cell= link_to listing.title.truncate(50), user_listing_path(user, listing)
-        %td= listing.state
-        %td= listing.views_count
-        %td= listing.peeks_count
+        %td.data-cell= listing.id
+        %td.name-cell= link_to user.handle.truncate(30), user_path(user)
+        %td.title-cell= link_to listing.title.truncate(50), user_listing_path(user, listing)
+        %td.data-cell= listing.state
+        %td.data-cell= listing.peeks_count
+        %td.data-cell= listing.views_count
         %td.date-cell #{time_ago_in_words(listing.created_at)} ago
 
   = paginate @listings

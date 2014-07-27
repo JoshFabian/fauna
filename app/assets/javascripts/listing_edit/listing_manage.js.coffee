@@ -48,7 +48,7 @@ $(document).ready ->
     itemSelector: "#listings_manage tr.listing" # selector for all items you'll retrieve
     loading: {
       img: 'data:image/gif;base64,R0lGODlhAQABAHAAACH5BAUAAAAALAAAAAABAAEAAAICRAEAOw=='
-      msgText: "<span style='font-size: 0.7em;'>loading more ...<span>"
-      finishedMsg: "<span style='font-size: 0.7em;'>no more listings<span>"
+      msgText: "<div style='display: none; visibility: hidden;'>loading more ...</div>"
+      finishedMsg: "<div style='font-size: 0.7em;'>no more<div>"
     }
     debug: false

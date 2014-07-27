@@ -57,7 +57,7 @@
                   %tr
                     %td.thumb-cell
                       = image_tag listing_image_thumbnail(image, 40)
-                    %td.name-cell.small-text
+                    %td.title-cell.small-text
                       = link_to listing.title.truncate(30), user_listing_path(@user, listing)
                     %td= number_to_currency(listing.price/100.0)
                     %td.date-cell.small-text
