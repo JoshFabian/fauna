@@ -7,6 +7,10 @@ module Endpoints
     end
 
     resource :listings do
+      before do
+        @listing = Listing.find(params[:id]) if params[:id].present?
+      end
+
       helpers do
         def comment_params
           ActionController::Parameters.new(params).required(:comment).permit(:body)
@@ -31,9 +35,8 @@ module Endpoints
 
       desc "Get listing"
       get ':id' do
-        listing = Listing.find(params[:id])
-        logger.post("tegu.api", log_data.merge({event: 'listing.get', listing_id: listing.id}))
-        {listing: listing}
+        logger.post("tegu.api", log_data.merge({event: 'listing.get', listing_id: @listing.id}))
+        {listing: @listing}
       end
 
       desc "Create listing"
@@ -70,7 +73,7 @@ module Endpoints
 
       desc "Update listing"
       put ':id' do
-        @listing = current_user.listings.find(params.id)
+        acl_manage!(on: @listing)
         # update listing
         @listing.update(listing_params)
         # check listing categories
@@ -105,7 +108,7 @@ module Endpoints
 
       desc "Create listing images"
       post ':id/images' do
-        @listing = current_user.listings.find(params.id)
+        acl_manage!(on: @listing)
         if params.image_params.present?
           params.image_params.each_pair do |id, hash|
             begin
@@ -124,7 +127,7 @@ module Endpoints
 
       desc "Update listing images"
       put ':id/images' do
-        @listing = current_user.listings.find(params.id)
+        acl_manage!(on: @listing)
         if params.images.present?
             params.images.each_pair do |id, hash|
               begin
@@ -145,56 +148,51 @@ module Endpoints
 
       desc "Change listing state"
       put ':id/event/:event' do
-        listing = Listing.find(params.id)
-        acl_manage!(on: listing)
+        acl_manage!(on: @listing)
         acl_admin! if params.event.match(/flag/)
         begin
-          listing.send("#{params.event}")
-          listing.save
+          @listing.send("#{params.event}")
+          @listing.save
           if params.event.match(/remove/)
-            SegmentListing.track_listing_remove(listing)
+            SegmentListing.track_listing_remove(@listing)
           end
-          listing.should_update_index!
+          @listing.should_update_index!
         rescue Exception => e
         end
-        logger.post("tegu.api", log_data.merge({event: 'listing.event', listing_id: listing.id,
+        logger.post("tegu.api", log_data.merge({event: 'listing.event', listing_id: @listing.id,
           event: params.event}))
-        {listing: listing}
+        {listing: @listing}
       end
 
       desc "Delete listing image"
-      delete ':listing_id/images/:id' do
-        listing = Listings.find(params.listing_id)
-        acl_manage!(on: listing)
-        image = listing.images.find(params.id)
-        listing.images.destroy(image)
-        logger.post("tegu.api", log_data.merge({event: 'listing.image.delete', listing_id: listing.id,
+      delete ':id/images/:image_id' do
+        acl_manage!(on: @listing)
+        image = @listing.images.find(params.image_id)
+        @listing.images.destroy(image)
+        logger.post("tegu.api", log_data.merge({event: 'listing.image.delete', listing_id: @listing.id,
           image_id: image.id}))
-        {listing: listing, event: 'delete'}
+        {listing: @listing, event: 'delete'}
       end
 
       desc "Create listing comment"
       post ':id/comments' do
         authenticate!
-        listing = Listing.find(params.id)
-        comment = current_user.comments.create(comment_params.merge(commentable: listing))
-        logger.post("tegu.api", log_data.merge({event: 'listing.comment.create', listing_id: listing.id}))
-        {listing: listing.as_json().merge(comment: comment)}
+        comment = current_user.comments.create(comment_params.merge(commentable: @listing))
+        logger.post("tegu.api", log_data.merge({event: 'listing.comment.create', listing_id: @listing.id}))
+        {listing: @listing.as_json().merge(comment: comment)}
       end
 
       desc "Toggle listing like"
       put ':id/toggle_like' do
         authenticate!
-        listing = Listing.find(params.id)
-        ListingLike.toggle_like!(listing, current_user)
-        logger.post("tegu.api", log_data.merge({event: 'listing.toggle_like', listing_id: listing.id}))
-        {listing: listing.as_json()}
+        ListingLike.toggle_like!(@listing, current_user)
+        logger.post("tegu.api", log_data.merge({event: 'listing.toggle_like', listing_id: @listing.id}))
+        {listing: @listing.as_json()}
       end
 
       desc "Create listing review"
       post ':id/reviews' do
         authenticate!
-        @listing = Listing.find(params.id)
         @review = @listing.reviews.create(review_params.merge(user: current_user))
         error!('401 Unauthorized', 401) if !@review.persisted?
         if params.ratings and params.ratings.is_a?(Hash)
@@ -209,7 +207,6 @@ module Endpoints
       desc "Get listing shipping price"
       get ':id/shipping/to/:country_code' do
         begin
-          @listing = Listing.find(params.id)
           @shipping_price = @listing.shipping_price(to: params.country_code)
           @total_price = @listing.price + @shipping_price
           @shipping_price_string = ActionController::Base.helpers.number_to_currency(@shipping_price/100.0)
