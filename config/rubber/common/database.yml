@@ -8,4 +8,4 @@
   encoding: utf8
   database: /mnt/tegu-<%=Rubber.env%>/shared/db/tegu.<%=Rubber.env%>.sqlite3
   pool: 5
-  timeout: 1000
+  timeout: 5000
