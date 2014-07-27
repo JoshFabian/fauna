@@ -6,5 +6,6 @@
       Nobody is selling #{@category.try(:name)} here yet!
 
   %p
-    Be the first to sell them on Fauna.
+    - if @category.present?
+      Be the first to sell them on Fauna.
     = link_to "Create a Listing", new_listing_path

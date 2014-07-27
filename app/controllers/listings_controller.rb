@@ -64,7 +64,7 @@ class ListingsController < ApplicationController
 
     @title = "#{@query} | Search"
 
-    @empty_text = "No Search Results" if @listings.blank?
+    @empty_text = "We couldn't find any listings matching that search term" if @listings.blank?
 
     respond_to do |format|
       format.html { render(action: :index, layout: !request.xhr?) }
