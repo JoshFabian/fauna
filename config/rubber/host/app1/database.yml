@@ -12,3 +12,4 @@
   encoding: utf8
   database: /mnt/tegu-production/shared/db/tegu.production.sqlite3
   pool: 5
+  timeout: 5000
