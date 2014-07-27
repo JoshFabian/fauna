@@ -157,4 +157,20 @@ class ListingApiSpec < ActionDispatch::IntegrationTest
       @geckos.listings_count.must_equal 1
     end
   end
+
+  describe "listing image delete" do
+    before do
+      @user = Fabricate(:user, listing_credits: 3)
+      @listing = @user.listings.create!(title: "Title", price: 10000)
+      @image = @listing.images.create!
+    end
+
+    it "should delete image" do
+      delete "/api/v1/listings/#{@listing.id}/images/#{@image.id}?token=#{@user.auth_token}"
+      response.success?.must_equal true
+      body = JSON.parse(response.body)
+      body['listing'].must_include('id' => @listing.id)
+      body['event'].must_equal 'delete'
+    end
+  end
 end
