@@ -1,10 +1,10 @@
 class ListingsController < ApplicationController
 
   before_filter :authenticate_user!, only: [:new]
+  before_filter :admin_role_required!, only: [:manage]
   before_filter :seller_verify!, only: [:new]
   before_filter :seller_paid!, only: [:new]
   before_filter :store_location!
-  before_filter :admin_role_required!, only: [:manage]
 
   # GET /listings/manage
   def manage
@@ -56,7 +56,7 @@ class ListingsController < ApplicationController
   def by_search
     begin
       @query = params[:query].to_s
-      raise ListingException, "missing search query"
+      raise ListingException, "missing search query" if @query.blank?
       @listings = Listing.search(@query).page(page).per(per).records
     rescue Exception => e
       @listings = []
