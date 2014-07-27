@@ -41,21 +41,20 @@ module Endpoints
       desc "Get user"
       get ':id' do
         authenticate!
-        user = User.find(params.id)
         logger.post("tegu.api", log_data.merge({event: 'user.get'}))
-        {user: user}
+        {user: @user}
       end
 
       desc "Get user verified status"
       get ':id/verified(/:name)' do
         authenticate!
-        user = User.find(params.id)
         if params.name.blank?
-          verified = user.verified?
+          verified = @user.verified?
         else
-          verified = user.send("#{params.name}_verified?")
+          verified = @user.send("#{params.name}_verified?")
         end
-        {user: {id: user.id, verified: verified}}
+        logger.post("tegu.api", log_data.merge({event: 'user.verified'}))
+        {user: {id: @user.id, verified: verified}}
       end
 
       desc "Send password reset email"
@@ -76,8 +75,6 @@ module Endpoints
       desc "Update user"
       put ':id' do
         authenticate!
-        # puts "[params]:#{params}"
-        @user = User.find(params.id)
         error! '', 401 if @user != current_user
         if params.user.password.blank? and params.user.password_confirmation.blank?
           params.user.delete(:password)

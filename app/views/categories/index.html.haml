@@ -14,7 +14,11 @@
     - @categories.each do |category|
       %tr
         %td= category.id
-        %td= category.name
+        %td
+          - if category.level == 1
+            = link_to category.name, listing_category_path(category.name.parameterize)
+          - else
+            = category.name
         %td= category.level
         %td= category.children_count
         %td= category.listings_count
