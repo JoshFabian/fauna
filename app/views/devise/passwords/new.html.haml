@@ -16,4 +16,6 @@
         .register-form.small-8.columns.small-centered
           = f.email_field :email, autofocus: false, required: true, class: "", placeholder: 'email'
         = f.submit 'Continue', class: 'button'
+        .small-10.columns.small-centered{style: 'padding-bottom: 20px;'}
+          %div.alert-box.hide{:'data-alert' => '', style: 'line-height: 1.5em;'}
 

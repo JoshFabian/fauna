@@ -5,17 +5,20 @@ $(document).ready ->
     onsubmit: true,
     submitHandler: (form) ->
       email = $(form).find("input#user_email").val()
-      console.log "send reset password: #{email} ..."
+      console.log "send reset password ..."
       async.waterfall [
         (callback) ->
           # reset password
           Tegu.UserApi.send_reset_password(email, auth_token, callback)
         (data, callback) ->
-          console.log data
-          if data.user.id > 0
-            console.log "ok"
-          else
+          # console.log data
+          try
+            if data.user.id > 0
+              console.log "password reset ok"
+              $(".alert-box").addClass('success').removeClass('hide warning').text("You should get an email with instructions in a few minutes")
+          catch e
             console.log "password reset error"
+            $(".alert-box").addClass('warning').removeClass('hide success').text("Whoops, are you sure that's your email")
       ]
 
   # user reset password form
