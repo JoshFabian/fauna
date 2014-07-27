@@ -1,6 +1,6 @@
-- image = listing.primary_image
 - user = listing.user
-- comments = listing.comments
+- comments = listing.comments.order('id desc')
+- image = listing.primary_image
 - like = ListingLike.like?(listing, current_user)
 - more_likes = ListingLike.likes(listing).order("id desc").limit(2)
 - plus_likes = listing.likes_count - 2
