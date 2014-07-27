@@ -100,36 +100,3 @@
       js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
-
-  :javascript
-    jQuery(document).ready(function($) {
-      $('#listing-slider').royalSlider({
-        fullscreen: {
-          enabled: true,
-          nativeFS: true
-        },
-        controlNavigation: 'thumbnails',
-        autoScaleSlider: true, 
-        autoScaleSliderWidth: 970,     
-        autoScaleSliderHeight: 860,
-        loop: false,
-        imageScaleMode: 'fit-if-smaller',
-        navigateByClick: true,
-        numImagesToPreload:2,
-        arrowsNav:true,
-        arrowsNavAutoHide: true,
-        arrowsNavHideOnTouch: true,
-        keyboardNavEnabled: true,
-        fadeinLoadedSlide: true,
-        globalCaption: false,
-        globalCaptionInside: false,
-        thumbs: {
-          appendSpan: true,
-          firstMargin: true,
-          autoCenter: false,
-          spacing: 5,
-          paddingTop: 5,
-          paddingBottom: 5,
-        }
-      });
-    });
