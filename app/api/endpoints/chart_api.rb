@@ -11,7 +11,7 @@ module Endpoints
       desc "Listing category data"
       get 'listings/categories' do
         data = Category.roots.pluck(:name, :listings_count)
-        logger.post("tegu.api", log_data.merge({event: 'charts.listings.categories', data: data}))
+        logger.post("tegu.api", log_data.merge({event: 'charts.listings.categories'}))
         data
       end
 
@@ -23,7 +23,7 @@ module Endpoints
           hash[tuple[0]] += 1
           hash
         end
-        logger.post("tegu.api", log_data.merge({event: 'charts.listings.created', data: data}))
+        logger.post("tegu.api", log_data.merge({event: 'charts.listings.created'}))
         data
       end
 
@@ -35,7 +35,7 @@ module Endpoints
           hash[tuple[0]] += 1
           hash
         end
-        logger.post("tegu.api", log_data.merge({event: 'charts.users.signups', data: data}))
+        logger.post("tegu.api", log_data.merge({event: 'charts.users.signups'}))
         data
       end
 
