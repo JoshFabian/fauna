@@ -8,27 +8,34 @@ module Endpoints
 
     resource :charts do
 
+      desc "Listing category data"
+      get 'listings/categories' do
+        data = Category.roots.pluck(:name, :listings_count)
+        logger.post("tegu.api", log_data.merge({event: 'charts.listings.categories', data: data}))
+        data
+      end
+
       desc "Listing created data"
-      get 'listing_creates' do
+      get 'listings/created' do
         data = Listing.pluck(:created_at).group_by{ |datetime| datetime.to_s(:date_yyyymmdd) }
         data = data.inject({}) do |hash, tuple|
           hash[tuple[0]] = 0 if hash[tuple[0]].blank?
           hash[tuple[0]] += 1
           hash
         end
-        logger.post("tegu.api", log_data.merge({event: 'charts.listing_creates', data: data}))
+        logger.post("tegu.api", log_data.merge({event: 'charts.listings.created', data: data}))
         data
       end
 
       desc "User signup data"
-      get 'user_signups' do
+      get 'users/signups' do
         data = User.pluck(:created_at).group_by{ |datetime| datetime.to_s(:date_yyyymmdd) }
         data = data.inject({}) do |hash, tuple|
           hash[tuple[0]] = 0 if hash[tuple[0]].blank?
           hash[tuple[0]] += 1
           hash
         end
-        logger.post("tegu.api", log_data.merge({event: 'charts.user_signups', data: data}))
+        logger.post("tegu.api", log_data.merge({event: 'charts.users.signups', data: data}))
         data
       end
 

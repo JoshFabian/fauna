@@ -1,0 +1,11 @@
+- content_for :javascript_pre do
+  = javascript_include_tag "//www.google.com/jsapi"
+
+.row
+  .text-center
+    %h5 Listing Categories
+
+  #listings-categories{style: "height: 300px;"}
+
+:javascript
+  new Chartkick.PieChart("listings-categories", "/api/v1/charts/listings/categories")

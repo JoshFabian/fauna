@@ -23,7 +23,7 @@
 
   -# turn turbolinks off
   = stylesheet_link_tag "application", media: "all"
-  = yield :javascript_before
+  = yield :javascript_pre
   = javascript_include_tag "application"
   = javascript_include_tag "vendor/modernizr"
   = cloudinary_js_config
