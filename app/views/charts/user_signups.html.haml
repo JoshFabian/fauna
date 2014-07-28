@@ -1,0 +1,11 @@
+- content_for :javascript_before do
+  = javascript_include_tag "//www.google.com/jsapi"
+
+.row
+  .text-center
+    %h5 User Signups
+
+  #user-signups{style: "height: 300px;"}
+
+:javascript
+  new Chartkick.ColumnChart("user-signups", "/api/v1/charts/user_signups")

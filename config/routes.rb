@@ -106,6 +106,12 @@ Tegu::Application.routes.draw do
   # categories
   resources :categories, only: [:index]
 
+  # charts
+  resources :charts, only: [] do
+    get :listing_creates, on: :collection
+    get :user_signups, on: :collection
+  end
+
   get 'about/contact' => "about#contact", as: :about_contact
   get 'about/privacy' => "about#privacy", as: :about_privacy
   get 'about/terms' => "about#terms", as: :about_terms
