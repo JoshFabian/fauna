@@ -19,8 +19,8 @@
       %th Verified
       %th Listings
       %th Sold
+      %th Wall
       %th Trial
-      %th Plans
       %th Credits
       %th Signup
       %th Actions
@@ -38,8 +38,8 @@
         %td.data-cell= user.verified? ? 'yes' : 'no'
         %td.data-cell= user.listings.active.count
         %td.data-cell= user.listings.sold.count
+        %td.data-cell= user.wall_comments_count + user.wall_likes_count
         %td.data-cell= user.trial? ? 'yes' : 'no'
-        %td.data-cell= user.subscriptions.collect{|o| o.plan.try(:name)}.join(', ') rescue ''
         %td
           = user.listing_credits
           %span.right= link_to '+1', '#', class: 'listing-credits-add', :'data-user-id' => user.id
