@@ -25,7 +25,7 @@ class Listing < ActiveRecord::Base
 
   serialize :shipping_prices, Hash
 
-  store :data, accessors: [:shipping_from, :shipping_time]
+  store :data, accessors: [:flagged_reason, :shipping_from, :shipping_time]
 
   attr_accessor :shipping_to
 
@@ -104,6 +104,11 @@ class Listing < ActiveRecord::Base
   def event_state_sold
     self.sold_at = Time.zone.now
   rescue Exception => e
+  end
+
+  def flag_with_reason!(options={})
+    self.flagged_reason = options[:reason]
+    self.flag!
   end
 
   def price=(s)

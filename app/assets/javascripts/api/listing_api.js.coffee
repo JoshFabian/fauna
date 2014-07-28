@@ -59,6 +59,15 @@ class Tegu.ListingApi
       success: (data) ->
         callback(null, data) if callback
 
+  @flag: (listing_id, params, token, callback = null) ->
+    api = "/api/v1/listings/#{listing_id}/flag?token=#{token}"
+    $.ajax api,
+      type: 'PUT'
+      dataType: 'json'
+      data: params
+      success: (data) ->
+        callback(null, data) if callback
+
   @put_event: (listing_id, event, token, callback = null) ->
     api = "/api/v1/listings/#{listing_id}/event/#{event}?token=#{token}"
     $.ajax api,

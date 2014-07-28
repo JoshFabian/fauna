@@ -44,12 +44,13 @@ class ListingTest < ActiveSupport::TestCase
       @listing = Fabricate(:listing, user: @user)
     end
 
-    it "should set flagged_at on flag event" do
+    it "should set flagged reason and timestamp on flag event" do
       @listing.state.must_equal 'active'
-      @listing.flag!
+      @listing.flag_with_reason!(reason: "just cause")
       @listing.reload
       @listing.state.must_equal 'flagged'
       @listing.flagged_at.present?.must_equal true
+      @listing.flagged_reason.must_equal 'just cause'
     end
   end
 

@@ -146,6 +146,13 @@ module Endpoints
         {listing: @listing}
       end
 
+      desc "Flag listing"
+      put ':id/flag' do
+        acl_admin!
+        @listing.flag_with_reason!(reason: params.reason)
+        {listing: @listing.as_json(methods: [:flagged_reason])}
+      end
+
       desc "Change listing state"
       put ':id/event/:event' do
         acl_manage!(on: @listing)
