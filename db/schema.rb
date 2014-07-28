@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140726160928) do
+ActiveRecord::Schema.define(version: 20140728003416) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -494,6 +494,8 @@ ActiveRecord::Schema.define(version: 20140726160928) do
     t.integer  "followers_count",                                               default: 0
     t.integer  "views_count",                                                   default: 0
     t.integer  "posts_count",                                                   default: 0
+    t.integer  "wall_comments_count",                                           default: 0
+    t.integer  "wall_likes_count",                                              default: 0
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true
@@ -517,6 +519,8 @@ ActiveRecord::Schema.define(version: 20140726160928) do
   add_index "users", ["subscriptions_count"], name: "index_users_on_subscriptions_count"
   add_index "users", ["trial_ends_at"], name: "index_users_on_trial_ends_at"
   add_index "users", ["views_count"], name: "index_users_on_views_count"
+  add_index "users", ["wall_comments_count"], name: "index_users_on_wall_comments_count"
+  add_index "users", ["wall_likes_count"], name: "index_users_on_wall_likes_count"
 
   create_table "waitlists", force: true do |t|
     t.string   "email",        limit: 50
