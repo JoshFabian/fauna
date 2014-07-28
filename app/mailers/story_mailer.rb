@@ -6,7 +6,7 @@ class StoryMailer < ActionMailer::Base
     @listing = comment.commentable
     @owner = @listing.user
     @commenter = comment.user
-    @subject = options[:subject] || "Fauna comment"
+    @subject = options[:subject] || "New Fauna comment on your listing '#{@listing.title.truncate(10)}'"
     mail(to: @owner.email, subject: @subject)
   end
 
@@ -15,7 +15,7 @@ class StoryMailer < ActionMailer::Base
     @post = comment.commentable
     @owner = @post.user
     @commenter = comment.user
-    @subject = options[:subject] || "Fauna comment"
+    @subject = options[:subject] || "New Fauna comment on your post"
     mail(to: @owner.email, subject: @subject)
   end
 
