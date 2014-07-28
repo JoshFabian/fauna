@@ -6,9 +6,7 @@ class TestEmailJob
   queue_respond_timeout 100 # number of seconds before job times out
 
   def self.perform(hash)
-    email = hash['email']
-    subject = hash['subject']
-    TestMailer.email(email, subject: subject).deliver
+    TestMailer.test_email(hash['email'], subject: hash['subject']).deliver
     1
   rescue Exception => e
     0
