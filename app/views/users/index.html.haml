@@ -15,10 +15,10 @@
       %th Handle:Email
       %th Facebook
       %th Roles
-      %th Followers
       %th Verified
       %th Listings
       %th Sold
+      %th Followers
       %th Wall
       %th Trial
       %th Credits
@@ -34,10 +34,10 @@
           = user.email
         %td.data-cell= user.oauths.present? ? "yes" : "no"
         %td.data-cell= user.roles.map{ |s| s.to_s[0] }.join(',')
-        %td.data-cell= user.followers_count
         %td.data-cell= user.verified? ? 'yes' : 'no'
         %td.data-cell= user.listings.active.count
         %td.data-cell= user.listings.sold.count
+        %td.data-cell= user.followers_count
         %td.data-cell= user.wall_comments_count + user.wall_likes_count
         %td.data-cell= user.trial? ? 'yes' : 'no'
         %td
