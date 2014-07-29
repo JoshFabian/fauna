@@ -1,5 +1,6 @@
 - user = post.user
 - comments = post.comments.order('id desc')
+- me = post.user_id == current_user.try(:id)
 - like = PostLike.like?(post, current_user)
 - more_likes = PostLike.likes(post).order("id desc").limit(2)
 - plus_likes = post.likes_count - 2
@@ -31,6 +32,15 @@
       = link_to '#', class: ['object-comment'] do
         %i.icon.ion-reply
         reply
+    - if me and feature(:story_facebook_share)
+      .footer-button
+        = link_to '#', class: ['object-facebook-share'], :'data-object-id' => post.id, :'data-object-klass' => 'post' do
+          %i.icon.ion-social-facebook
+          share
+      - if me and post.facebook_shared?
+        .footer-button
+          = link_to 'javascript:void(0)', class: [] do
+            shared
     %ul.who-liked
       - more_likes.each do |like|
         - user = like.user

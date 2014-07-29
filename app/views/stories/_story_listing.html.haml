@@ -1,5 +1,6 @@
 - user = listing.user
 - comments = listing.comments.order('id desc')
+- me = listing.user_id == current_user.try(:id)
 - image = listing.primary_image
 - like = ListingLike.like?(listing, current_user)
 - more_likes = ListingLike.likes(listing).order("id desc").limit(2)
@@ -43,12 +44,12 @@
       = link_to '#', class: ['object-comment'] do
         %i.icon.ion-reply
         reply
-    - if feature(:story_facebook_share)
+    - if me and feature(:story_facebook_share)
       .footer-button
         = link_to '#', class: ['object-facebook-share'], :'data-object-id' => listing.id, :'data-object-klass' => 'listing' do
           %i.icon.ion-social-facebook
           share
-      - if listing.facebook_shared?
+      - if me and listing.facebook_shared?
         .footer-button
           = link_to 'javascript:void(0)', class: [] do
             shared
