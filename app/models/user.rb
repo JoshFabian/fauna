@@ -135,6 +135,10 @@ class User < ActiveRecord::Base
     paypal_email.present?
   end
 
+  def phone_number
+    phone_tokens.verified.last.try(:to)
+  end
+
   def phone_verified?
     phone_tokens.verified.count > 0
   end
