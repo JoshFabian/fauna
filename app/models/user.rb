@@ -79,6 +79,12 @@ class User < ActiveRecord::Base
     facebook_oauths.last
   end
 
+  def facebook_publish_permission?
+    facebook_oauth.facebook_publish_permission?
+  rescue Exception => e
+    false
+  end
+
   def facebook_verified?
     facebook_oauths.count > 0
   end

@@ -46,9 +46,9 @@
         reply
     - if me and feature(:story_facebook_share)
       .footer-button
-        = link_to '#', class: ['object-facebook-share'], :'data-object-id' => listing.id, :'data-object-klass' => 'listing' do
+        = link_to '#', class: ['object-facebook-share', user.facebook_publish_permission? ? '' : 'disabled'], :'data-object-id' => listing.id, :'data-object-klass' => 'listing' do
           %i.icon.ion-social-facebook
-          share
+          = user.facebook_publish_permission? ? 'share' : 'disabled'
       - if me and listing.facebook_shared?
         .footer-button
           = link_to 'javascript:void(0)', class: [] do

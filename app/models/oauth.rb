@@ -16,4 +16,15 @@ class Oauth < ActiveRecord::Base
     o
   end
 
+  def facebook_publish_permission?
+    raise Exception, "not facebook" if self.provider != 'facebook'
+    graph = Koala::Facebook::API.new(self.oauth_token)
+    objects = graph.get_connections('me', 'permissions').select do |hash|
+      hash['permission'] == 'publish_actions' and hash['status'] == 'granted'
+    end
+    objects.any?
+  rescue Exception => e
+    false
+  end
+
 end

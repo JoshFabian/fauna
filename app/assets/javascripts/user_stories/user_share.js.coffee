@@ -3,6 +3,7 @@ $(document).ready ->
   # toggle like
   $(document).on 'click', ".object-facebook-share", (e) ->
     e.preventDefault()
+    return if $(this).hasClass('disabled')
     object_id = $(this).data('object-id')
     object_klass = $(this).data('object-klass')
     console.log "#{object_klass}:#{object_id} share ..."
