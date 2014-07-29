@@ -16,11 +16,17 @@ class ListingObserver < ActiveRecord::Observer
   end
 
   def after_save(listing)
+    # update search index
     listing.__elasticsearch__.update_document
+    if listing.state_changed? and listing.flagged?
+      # queue email
+      Backburner::Worker.enqueue(ListingFlaggedEmailJob, [{id: listing.id}], delay: 1.minute)
+    end
   rescue Exception => e
   end
 
   def after_destroy(listing)
+    # update search index
     listing.__elasticsearch__.delete_document
   rescue Exception => e
   end
