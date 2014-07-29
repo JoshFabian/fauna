@@ -15,5 +15,9 @@ $(document).ready ->
           # toggle post like
           Tegu.PostApi.share_facebook(object_id, auth_token, callback)
       (data, callback) ->
-        console.log data
+        try
+          console.log data
+          if data.event == 'share'
+            console.log "shared"
+        catch e
     ]

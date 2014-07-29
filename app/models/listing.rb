@@ -106,6 +106,10 @@ class Listing < ActiveRecord::Base
   rescue Exception => e
   end
 
+  def facebook_shared?
+    self.facebook_share_id.present?
+  end
+
   def flag_with_reason!(options={})
     self.flagged_reason = options[:reason]
     self.flag!

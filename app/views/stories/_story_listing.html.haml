@@ -48,6 +48,10 @@
         = link_to '#', class: ['object-facebook-share'], :'data-object-id' => listing.id, :'data-object-klass' => 'listing' do
           %i.icon.ion-social-facebook
           share
+      - if listing.facebook_shared?
+        .footer-button
+          = link_to 'javascript:void(0)', class: [] do
+            shared
     %ul.who-liked
       - more_likes.each do |like|
         - user = like.user
