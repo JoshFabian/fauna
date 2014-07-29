@@ -225,6 +225,23 @@ module Endpoints
         {listing: {id: @listing.id, price: @listing.price, shipping_price: @shipping_price, total_price: @total_price,
           shipping_price_string: @shipping_price_string, total_price_string: @total_price_string}}
       end
+
+      desc "Share listing on facebook"
+      put ':id/share/facebook' do
+        acl_manage!(on: @listing)
+        begin
+          graph = Koala::Facebook::API.new(current_user.facebook_oauth.oauth_token)
+          message = params.message || @listing.title
+          link = "http://www.fauna.net/#{@listing.user.handle}/listings/#{@listing.slug}"
+          result = graph.put_connections('me', 'feed', message: message, link: link)
+          @listing.update(facebook_share_id: result['id'])
+          logger.post("tegu.api", log_data.merge({event: 'listing.share.facebook', listing_id: @listing.id,
+            result: result}))
+        rescue Exception => e
+          error!("Share exception: #{e.message}", 401)
+        end
+        {listing: @listing.as_json(methods: [:facebook_share_id])}
+      end
     end
   end
 end

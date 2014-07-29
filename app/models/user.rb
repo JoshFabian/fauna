@@ -75,6 +75,10 @@ class User < ActiveRecord::Base
     [city_state, postal_code].join(' ')
   end
 
+  def facebook_oauth
+    facebook_oauths.last
+  end
+
   def facebook_verified?
     facebook_oauths.count > 0
   end
