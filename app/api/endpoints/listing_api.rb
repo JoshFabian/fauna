@@ -232,15 +232,16 @@ module Endpoints
         begin
           graph = Koala::Facebook::API.new(current_user.facebook_oauth.oauth_token)
           message = params.message || @listing.title
-          link = "http://www.fauna.net/#{@listing.user.handle}/listings/#{@listing.slug}"
+          link = "#{Settings[Rails.env][:api_host]}/#{@listing.user.handle}/listings/#{@listing.slug}"
           result = graph.put_connections('me', 'feed', message: message, link: link)
+          event = 'share'
           @listing.update(facebook_share_id: result['id'])
           logger.post("tegu.api", log_data.merge({event: 'listing.share.facebook', listing_id: @listing.id,
             result: result}))
         rescue Exception => e
           error!("Share exception: #{e.message}", 401)
         end
-        {listing: @listing.as_json(methods: [:facebook_share_id])}
+        {listing: @listing.as_json(methods: [:facebook_share_id]), event: event}
       end
     end
   end
