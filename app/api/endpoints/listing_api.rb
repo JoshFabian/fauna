@@ -239,6 +239,8 @@ module Endpoints
           logger.post("tegu.api", log_data.merge({event: 'listing.share.facebook', listing_id: @listing.id,
             result: result}))
         rescue Exception => e
+          logger.post("tegu.api", log_data.merge({event: 'listing.share.facebook.exception', listing_id: @listing.id,
+            message: e.message}))
           error!("Share exception: #{e.message}", 401)
         end
         {listing: @listing.as_json(methods: [:facebook_share_id]), event: event}
