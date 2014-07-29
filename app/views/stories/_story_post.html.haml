@@ -13,7 +13,7 @@
       %h4.story-title
         = link_to user.handle, user_path(user)
       %p.secondary
-        %span#ember928.ember-view #{time_ago_in_words(post.created_at)} ago
+        %span #{time_ago_in_words(post.created_at)} ago
 
   .comment-content.small-12.columns.clearfix
     %p.comment-text

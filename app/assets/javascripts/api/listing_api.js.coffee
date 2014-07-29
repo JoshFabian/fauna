@@ -101,4 +101,11 @@ class Tegu.ListingApi
       dataType: 'json'
       success: (data) ->
         callback(null, data) if callback
-    
+
+  @share_facebook: (listing_id, token, callback = null) ->
+    api = "/api/v1/listings/#{listing_id}/share/facebook?token=#{token}"
+    $.ajax api,
+      type: 'PUT'
+      dataType: 'json'
+      success: (data) ->
+        callback(null, data) if callback
