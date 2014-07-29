@@ -19,13 +19,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /:slug
   def show
-    @user = User.by_slug(params[:slug]) || User.find_by_id(params[:id])
-    raise ActiveRecord::RecordNotFound if @user.blank?
-    @edit = @me = @user.id == current_user.try(:id)
-    @cover_images = @user.cover_images.order("position asc").first(3)
-    @cover_set = 1.upto(3).map do |i|
-      @cover_images.select{ |o| o.position == i }.first or i
-    end
+    @user, @me, @cover_images, @cover_set, @image = user_show_init
 
     if feature(:user_feed)
       @stories = []
@@ -47,17 +41,11 @@ class UsersController < ApplicationController
 
   # GET /:slug/listings
   def listings
-    @user = User.by_slug!(params[:slug])
-    @edit = @user.id == current_user.id
-    @cover_images = @user.cover_images.order("position asc").first(3)
-    @cover_set = 1.upto(3).map do |i|
-      @cover_images.select{ |o| o.position == i }.first or i
-    end
+    @user, @me, @cover_images, @cover_set, @image = user_show_init
 
     terms = [ListingFilter.user(@user.id), ListingFilter.state('active')]
     query = {filter: {bool: {must: terms}}}
     @listings = Listing.search(query).page(page).per(per).records
-    # @listings = @user.listings.active.order("id desc").limit(50)
 
     @tab = 'listings'
 
@@ -85,12 +73,7 @@ class UsersController < ApplicationController
 
   # GET /:slug/messages
   def messages
-    @user = User.by_slug!(params[:slug])
-    @edit = @user.id == current_user.id
-    @cover_images = @user.cover_images.order("position asc").first(3)
-    @cover_set = 1.upto(3).map do |i|
-      @cover_images.select{ |o| o.position == i }.first or i
-    end
+    @user, @me, @cover_images, @cover_set, @image = user_show_init
 
     # optional mailbox label
     @label = params[:label] || 'inbox'
@@ -108,7 +91,8 @@ class UsersController < ApplicationController
 
   # GET /:slug/purchases
   def purchases
-    @user = User.by_slug!(params[:slug])
+    @user, @me, @cover_images, @cover_set, @image = user_show_init
+    # @user = User.by_slug!(params[:slug])
 
     @user_purchases = @user.purchases
     @user_reviews = @user.authored_reviews
@@ -122,12 +106,7 @@ class UsersController < ApplicationController
 
   # GET /:slug/reviews
   def reviews
-    @user = User.by_slug!(params[:slug])
-    @edit = @user.id == current_user.id
-    @cover_images = @user.cover_images.order("position asc").first(3)
-    @cover_set = 1.upto(3).map do |i|
-      @cover_images.select{ |o| o.position == i }.first or i
-    end
+    @user, @me, @cover_images, @cover_set, @image = user_show_init
 
     @reviews = @user.listing_reviews
 
@@ -220,6 +199,19 @@ class UsersController < ApplicationController
   end
 
   protected
+
+  # shared helper method
+  def user_show_init
+    user = User.by_slug(params[:slug]) || User.find_by_id(params[:id])
+    raise ActiveRecord::RecordNotFound if user.blank?
+    me = user.id == current_user.try(:id)
+    cover_images = user.cover_images.order("position asc").first(3)
+    cover_set = 1.upto(3).map do |i|
+      cover_images.select{ |o| o.position == i }.first or i
+    end
+    image = cover_images.first
+    [user, me, cover_images, cover_set, image]
+  end
 
   def page
     params[:page]

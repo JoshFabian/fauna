@@ -1,5 +1,12 @@
 - content_for :title, @title
 
+- content_for :facebook_meta_tags do
+  %meta{property: "og:title", content: @title}
+  %meta{property: "og:site_name", content: "Fauna"}
+  %meta{property: "og:url", content: url_for(only_path: false)}
+  %meta{property: "og:image", content: cloudinary_url(@image.try(:full_public_id))}
+  %meta{property: "fb:app_id", content: Settings[Rails.env][:fb_app_id]}
+
 :css
   .global-subhead {
     border-bottom: none;
