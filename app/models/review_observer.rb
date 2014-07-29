@@ -12,8 +12,10 @@ class ReviewObserver < ActiveRecord::Observer
       if payment.present?
         payment.update(reviewed: true)
       end
-      # enqeue review job
-      Backburner::Worker.enqueue(ReviewJob, [{}])
+      if feature(:backburner_emails)
+        # enqeue review job
+        Backburner::Worker.enqueue(ReviewJob, [{}])
+      end
     end
   rescue Exception => e
   end
@@ -22,8 +24,10 @@ class ReviewObserver < ActiveRecord::Observer
     if object.is_a?(ReviewRating)
       update_review_rating(object.review)
     elsif object.is_a?(Review)
-      # enqeue review job
-      Backburner::Worker.enqueue(ReviewJob, [{}])
+      if feature(:backburner_emails)
+        # enqeue review job
+        Backburner::Worker.enqueue(ReviewJob, [{}])
+      end
     end
   rescue Exception => e
   end

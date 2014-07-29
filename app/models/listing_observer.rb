@@ -18,7 +18,7 @@ class ListingObserver < ActiveRecord::Observer
   def after_save(listing)
     # update search index
     listing.__elasticsearch__.update_document
-    if listing.state_changed? and listing.flagged?
+    if listing.state_changed? and listing.flagged? and feature(:backburner_emails)
       # queue email
       Backburner::Worker.enqueue(ListingFlaggedEmailJob, [{id: listing.id}], delay: 1.minute)
     end
