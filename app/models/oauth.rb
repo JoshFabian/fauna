@@ -27,4 +27,13 @@ class Oauth < ActiveRecord::Base
     false
   end
 
+  def revoke_facebook_publish_permission!
+    raise Exception, "not facebook" if self.provider != 'facebook'
+    graph = Koala::Facebook::API.new(self.oauth_token)
+    # returns true or exception
+    graph.delete_connections('me', 'permissions/publish_actions')
+  rescue Exception => e
+    false
+  end
+
 end
