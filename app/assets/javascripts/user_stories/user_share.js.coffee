@@ -10,10 +10,10 @@ $(document).ready ->
     async.waterfall [
       (callback) ->
         if object_klass == 'listing'
-          # toggle listing like
+          # share listing
           Tegu.ListingApi.share_facebook(object_id, auth_token, callback)
         else if object_klass == 'post'
-          # toggle post like
+          # share post
           Tegu.PostApi.share_facebook(object_id, auth_token, callback)
       (data, callback) ->
         try

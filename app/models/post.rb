@@ -11,7 +11,7 @@ class Post < ActiveRecord::Base
   has_many :comments, as: :commentable
   has_many :likes, class_name: "PostLike", dependent: :destroy
 
-  store :data, accessors: [:facebook_share_id]
+  store :data, accessors: [:facebook_share, :facebook_share_id]
 
   # set search index name
   index_name "posts.#{Rails.env}"
@@ -21,7 +21,11 @@ class Post < ActiveRecord::Base
   end
 
   def as_indexed_json(options={})
-    as_json(methods: [:state], except: [:data])
+    as_json(methods: [:facebook_share, :facebook_share_id, :state], except: [:data])
+  end
+
+  def facebook_share
+    self.data[:facebook_share].to_i
   end
 
   def facebook_shared?

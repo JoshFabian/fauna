@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
 
   bitmask :roles, :as => [:admin, :basic, :buyer, :seller]
 
-  store :data, accessors: [:welcome_message]
+  store :data, accessors: [:facebook_share_listing, :facebook_share_post, :welcome_message]
 
   # private messaging
   acts_as_messageable

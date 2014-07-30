@@ -5,10 +5,14 @@ class ListingObserver < ActiveRecord::Observer
     user = listing.user
     # update user listing credits
     user.decrement!(:listing_credits, 1) if user.listing_credits > 0
-    if !user.roles?(:seller)
-      # add user seller role
-      user.roles << :seller
-      user.save
+    # update user facebook_share_listing state
+    user.facebook_share_listing = listing.facebook_share
+    # add user seller role if missing
+    user.roles << :seller if !user.roles?(:seller)
+    user.save
+    if listing.facebook_share == 1 and feature(:backburner)
+      # queue share
+      Backburner::Worker.enqueue(FacebookShareJob, [{id: listing.id, klass: 'listing'}])
     end
     # track listing
     SegmentListing.track_listing_create(listing)

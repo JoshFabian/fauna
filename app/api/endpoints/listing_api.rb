@@ -230,20 +230,15 @@ module Endpoints
       put ':id/share/facebook' do
         acl_manage!(on: @listing)
         begin
-          graph = Koala::Facebook::API.new(current_user.facebook_oauth.oauth_token)
-          message = params.message || @listing.title
-          link = "#{Settings[Rails.env][:api_host]}/#{@listing.user.handle}/listings/#{@listing.slug}"
-          result = graph.put_connections('me', 'feed', message: message, link: link)
-          event = 'share'
-          @listing.update(facebook_share_id: result['id'])
-          logger.post("tegu.api", log_data.merge({event: 'listing.share.facebook', listing_id: @listing.id,
-            result: result}))
+          ListingShare.facebook_share!(@listing)
+          event = 'facebook_share'
+          logger.post("tegu.api", log_data.merge({event: 'listing.share.facebook', listing_id: @listing.id}))
         rescue Exception => e
           logger.post("tegu.api", log_data.merge({event: 'listing.share.facebook.exception', listing_id: @listing.id,
             message: e.message}))
           error!("Share exception: #{e.message}", 401)
         end
-        {listing: @listing.as_json(methods: [:facebook_share_id]), event: event}
+        {listing: @listing, event: event}
       end
     end
   end

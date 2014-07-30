@@ -3,6 +3,10 @@ class PostObserver < ActiveRecord::Observer
 
   def after_create(post)
     # puts "post:#{post.id} created"
+    if post.facebook_share == 1 and feature(:backburner)
+      # queue share
+      Backburner::Worker.enqueue(FacebookShareJob, [{id: post.id, klass: 'post'}])
+    end
     # track post
     SegmentPost.track_post_create(post)
   rescue Exception => e

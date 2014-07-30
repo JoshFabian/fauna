@@ -29,9 +29,20 @@ class SegmentListing
 
   def self.track_category_view(category, options={})
     raise Exception, "test environment" if Rails.env.test?
-    properties = {id: category.id, category: 'Listing', label: category.try(:name)}
     user_id = options[:by].present? ? options[:by].id : 0
-    hash = {user_id: user_id, event: 'Viewed Category', properties: properties}
+    hash = {user_id: user_id, event: 'Viewed Category', properties: {id: category.id, category: 'Listing',
+      label: category.try(:name)}}
+    result = Analytics.track(hash)
+    logger.post("tegu.app", log_data.merge(hash))
+    result
+  rescue Exception => e
+    false
+  end
+
+  def self.track_listing_share(listing)
+    raise Exception, "test environment" if Rails.env.test?
+    hash = {user_id: listing.user_id, event: 'Listing Shared', properties: {category: 'Story',
+      label: 'Facebook'}}
     result = Analytics.track(hash)
     logger.post("tegu.app", log_data.merge(hash))
     result
