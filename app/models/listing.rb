@@ -74,8 +74,12 @@ class Listing < ActiveRecord::Base
 
   def as_json(options={})
     options ||= {}
-    if options[:methods].blank?
-      options[:methods] = [:category_ids]
+    options[:methods] ||= []
+    [:category_ids, :facebook_share].each do |sym|
+      options[:methods].push(sym) if !options[:methods].include?(sym)
+    end
+    if options[:except].blank?
+      options[:except] = [:data]
     end
     super(options)
   end
