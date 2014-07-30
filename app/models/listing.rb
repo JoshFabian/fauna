@@ -25,7 +25,7 @@ class Listing < ActiveRecord::Base
 
   serialize :shipping_prices, Hash
 
-  store :data, accessors: [:shipping_from, :shipping_time]
+  store :data, accessors: [:facebook_share, :facebook_share_id, :flagged_reason, :shipping_from, :shipping_time]
 
   attr_accessor :shipping_to
 
@@ -68,7 +68,8 @@ class Listing < ActiveRecord::Base
   end
 
   def as_indexed_json(options={})
-    as_json(methods: [:category_ids, :category_names, :user_handle, :wall_id], except: [:data])
+    as_json(methods: [:category_ids, :category_names, :facebook_share, :facebook_share_id, :user_handle, :wall_id],
+      except: [:data])
   end
 
   def as_json(options={})
@@ -104,6 +105,19 @@ class Listing < ActiveRecord::Base
   def event_state_sold
     self.sold_at = Time.zone.now
   rescue Exception => e
+  end
+
+  def facebook_share
+    self.data[:facebook_share].to_i
+  end
+
+  def facebook_shared?
+    self.facebook_share_id.present?
+  end
+
+  def flag_with_reason!(options={})
+    self.flagged_reason = options[:reason]
+    self.flag!
   end
 
   def price=(s)

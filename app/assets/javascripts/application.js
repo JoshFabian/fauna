@@ -23,6 +23,7 @@
 //= require numeral
 //= require redactor
 //= require underscore.string.min
+//= require chartkick
 //= require_tree .
 
 $(document).ready(function() {

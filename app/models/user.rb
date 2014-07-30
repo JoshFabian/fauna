@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
 
   bitmask :roles, :as => [:admin, :basic, :buyer, :seller]
 
-  store :data, accessors: [:welcome_message]
+  store :data, accessors: [:facebook_share_listing, :facebook_share_post, :welcome_message]
 
   # private messaging
   acts_as_messageable
@@ -73,6 +73,16 @@ class User < ActiveRecord::Base
 
   def city_state_zip
     [city_state, postal_code].join(' ')
+  end
+
+  def facebook_oauth
+    facebook_oauths.last
+  end
+
+  def facebook_share_permission?
+    facebook_oauth.facebook_share_permission?
+  rescue Exception => e
+    false
   end
 
   def facebook_verified?
@@ -129,6 +139,10 @@ class User < ActiveRecord::Base
 
   def paypal_verified?
     paypal_email.present?
+  end
+
+  def phone_number
+    phone_tokens.verified.last.try(:to)
   end
 
   def phone_verified?

@@ -1,0 +1,10 @@
+Hey #{@owner.handle},
+%br
+%br
+Just wanted to let you know that your listing #{link_to(@listing.title, user_listing_path(@owner, @listing))} has been flagged:
+%br
+%br
+#{@listing.flagged_reason}
+%br
+%br
+The Fauna Team

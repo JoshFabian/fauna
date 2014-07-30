@@ -20,6 +20,7 @@
   }
 
 .row
+  -# listing messages
   - if @message.present?
     - if @message == 'canceled'
       %div.alert-box.alert{:'data-alert' => ''}
@@ -27,6 +28,11 @@
     - elsif @message.match(/purchase|sold/)
       %div.alert-box.success{:'data-alert' => ''}
         Your payment is complete
+  
+  -# listing flagged
+  - if @listing.flagged?
+    %div.alert-box.alert{:'data-alert' => ''}
+      This listing has been flagged: #{@listing.flagged_reason}
 
   .list-panel
     .listing-images.small-7.columns
@@ -90,6 +96,7 @@
 
   = render(partial: 'listings/listing_message_modal')
   = render(partial: 'listings/listing_report_modal')
+  = render(partial: 'listings/listing_flag_modal')
 
   #fb-root
   :javascript

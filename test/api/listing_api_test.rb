@@ -48,15 +48,16 @@ class ListingApiSpec < ActionDispatch::IntegrationTest
       response.status.must_equal 401
     end
 
-    it "should allow admin to mark listing as flagged" do
+    it "should allow admin to mark listing as flagged with a reason" do
       @admin = Fabricate(:user, listing_credits: 3)
       @admin.roles << :admin
       @admin.save
+      data = {reason: "just cause"}
       @listing.state.must_equal 'active'
-      put "/api/v1/listings/#{@listing.id}/event/flag?token=#{@admin.auth_token}"
+      put "/api/v1/listings/#{@listing.id}/flag?token=#{@admin.auth_token}", data
       response.status.must_equal 200
       body = JSON.parse(response.body)
-      body['listing'].must_include({'id' => @listing.id, 'state' => 'flagged'})
+      body['listing'].must_include({'id' => @listing.id, 'state' => 'flagged', 'flagged_reason' => 'just cause'})
     end
   end
 

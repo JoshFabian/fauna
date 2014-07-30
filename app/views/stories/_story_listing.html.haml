@@ -1,5 +1,6 @@
 - user = listing.user
 - comments = listing.comments.order('id desc')
+- me = listing.user_id == current_user.try(:id)
 - image = listing.primary_image
 - like = ListingLike.like?(listing, current_user)
 - more_likes = ListingLike.likes(listing).order("id desc").limit(2)
@@ -15,7 +16,7 @@
         = link_to user.handle, user_path(user)
         %span created a new listing
       %p.secondary
-        %span#ember928.ember-view #{time_ago_in_words(listing.created_at)} ago
+        %span #{time_ago_in_words(listing.created_at)} ago
 
   .comment-content.small-12.columns.clearfix
     .listing-embed
@@ -43,6 +44,15 @@
       = link_to '#', class: ['object-comment'] do
         %i.icon.ion-reply
         reply
+    - if me and feature(:story_facebook_share)
+      .footer-button
+        = link_to '#', class: ['object-facebook-share', ListingShare.facebook_shareable?(listing) ? 'facebook-share-permission' : 'facebook-basic-permission'], :'data-object-id' => listing.id, :'data-object-klass' => 'listing' do
+          %i.icon.ion-social-facebook
+          share
+    - if me and ListingShare.facebook_shared?(listing)
+      .footer-button
+        = link_to 'javascript:void(0)', class: [] do
+          shared
     %ul.who-liked
       - more_likes.each do |like|
         - user = like.user

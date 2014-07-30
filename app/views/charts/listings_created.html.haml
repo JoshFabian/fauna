@@ -1,0 +1,11 @@
+- content_for :javascript_pre do
+  = javascript_include_tag "//www.google.com/jsapi"
+
+.row
+  .text-center
+    %h5 Listing Creates
+
+  #listings-created{style: "height: 300px;"}
+
+:javascript
+  new Chartkick.ColumnChart("listings-created", "/api/v1/charts/listings/created")

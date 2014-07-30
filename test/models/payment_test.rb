@@ -60,10 +60,10 @@ class PaymentTest < ActiveSupport::TestCase
     end
 
     it "should allow buyer to review after 24 hours" do
-      @payment.update_attributes!(completed_at: 23.hours.ago)
+      @payment.update!(completed_at: 23.hours.ago)
       @listing.review_allowed?(@buyer).must_equal false
       @listing.review_allowed?(@seller).must_equal false
-      @payment.update_attributes!(completed_at: 25.hours.ago)
+      @payment.update!(completed_at: 25.hours.ago)
       @listing.review_allowed?(@buyer).must_equal true
       @listing.review_allowed?(@seller).must_equal false
     end
@@ -85,25 +85,27 @@ class PaymentTest < ActiveSupport::TestCase
     end
 
     it "should set buyer pending_listing_reviews when purchase has not been reviewed after 5 days" do
-      @payment.update_attributes!(completed_at: 4.days.ago)
-      ReviewJob.perform({})
+      @payment.update!(completed_at: 4.days.ago)
+      ReviewJob.perform({'payment_id' => @payment.id})
       @buyer.reload
       @buyer.pending_listing_reviews.must_equal 0
-      @payment.update_attributes!(completed_at: 6.days.ago)
-      ReviewJob.perform({})
+      @payment.update!(completed_at: 6.days.ago)
+      ReviewJob.perform({'payment_id' => @payment.id})
       @buyer.reload
       @buyer.pending_listing_reviews.must_equal 1
-      ReviewJob.perform({})
+      ReviewJob.perform({'payment_id' => @payment.id})
       @buyer.reload
       @buyer.pending_listing_reviews.must_equal 1
     end
 
     it "should reset buyer pending_listing_reviews after purchase is reviewed" do
-      @payment.update_attributes!(completed_at: 6.days.ago)
-      @buyer.update_attributes(pending_listing_reviews: 1)
+      @payment.update!(completed_at: 6.days.ago)
+      @buyer.update(pending_listing_reviews: 1)
       @buyer.pending_listing_reviews.must_equal 1
       @review = @listing.reviews.create!(user: @buyer, body: "body")
+      # todo: fix this
       ReviewJob.perform({})
+      # ReviewJob.perform({'payment_id' => @payment.id})
       @buyer.reload
       @buyer.pending_listing_reviews.must_equal 0
     end

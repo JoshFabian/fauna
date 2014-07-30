@@ -36,14 +36,22 @@
               .small-4.columns
                 %label Paypal
               .small-8.columns
-                - text = @user.paypal_verified? ? "Update Paypal Account" : "Verify Paypal Account"
+                - if @user.paypal_verified?
+                  = @user.paypal_email
+                  - text = "Update"
+                - else
+                  - text = "Verify Paypal Account"
                 = link_to text, user_verify_paypal_path(@user), class: 'inline-link user-reset-paypal-email'
 
             .small-12.columns
               .small-4.columns
                 %label Phone Number
               .small-8.columns
-                - text = @user.paypal_verified? ? "Update Phone Number" : "Verify Phone Number"
+                - if @user.phone_verified?
+                  = @user.phone_number
+                  - text = "Update"
+                - else
+                  - text = "Verify Phone Number"
                 = link_to text, user_verify_phone_path, class: 'inline-link user-reset-phone-number'
 
             .small-12.columns.divider

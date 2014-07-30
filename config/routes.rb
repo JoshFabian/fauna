@@ -15,6 +15,14 @@ Tegu::Application.routes.draw do
   # password edit route (conflicts with user/edit)
   get 'users/password/edit' => "passwords#edit"
 
+  # charts
+  scope '/charts' do
+    get '', to: "charts#index"
+    get '/listings/categories', to: "charts#listings_categories"
+    get '/listings/created', to: "charts#listings_created"
+    get '/users/signups', to: "charts#users_signups"
+  end
+
   # vanity user scopes
   get ':slug' => "users#show", as: :user, constraints: HandleRoute.new
   get ':slug/edit' => "users#edit", as: :user_edit
@@ -87,6 +95,10 @@ Tegu::Application.routes.draw do
   get 'signup/new/password', to: "signup#new_password", as: :new_password_signup
   post 'signup/create/facebook', to: "signup#create_facebook", as: :create_facebook_signup
   post 'signup/create/password', to: "signup#create_password", as: :create_password_signup
+
+  # facebook share
+  get 'facebook/share/:klass/:id/auth', to: "facebook_share#auth", as: :facebook_share_auth
+  get 'facebook/share/:klass/:id/share', to: "facebook_share#share", as: :facebook_share
 
   # payments
   resources :payments, only: [:index]

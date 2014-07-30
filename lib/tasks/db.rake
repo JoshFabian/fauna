@@ -27,7 +27,7 @@ namespace :db do
       data_file = Dir["#{Rails.root}/db/data*"].sort.last
       puts "#{Time.now}: loading file: #{data_file}"
       SerializationHelper::Base.new(helper).load(data_file)
-      Rake::Task['db:index_all'].invoke
+      Rake::Task['db:search:import_all'].invoke
       puts "#{Time.now}: completed"
     end
 

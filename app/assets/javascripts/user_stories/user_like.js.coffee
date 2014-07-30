@@ -4,7 +4,6 @@ $(document).ready ->
   $(document).on 'click', ".object-like", (e) ->
     e.preventDefault()
     object_id = $(this).data('object-id')
-    object_id = $(this).data('object-id')
     object_klass = $(this).data('object-klass')
     console.log "#{object_klass}:#{object_id} like ..."
     async.waterfall [

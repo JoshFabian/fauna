@@ -146,6 +146,13 @@ module Endpoints
         {listing: @listing}
       end
 
+      desc "Flag listing"
+      put ':id/flag' do
+        acl_admin!
+        @listing.flag_with_reason!(reason: params.reason)
+        {listing: @listing.as_json(methods: [:flagged_reason])}
+      end
+
       desc "Change listing state"
       put ':id/event/:event' do
         acl_manage!(on: @listing)
@@ -217,6 +224,22 @@ module Endpoints
         logger.post("tegu.api", log_data.merge({event: 'listing.shipping_price', listing_id: @listing.id}))
         {listing: {id: @listing.id, price: @listing.price, shipping_price: @shipping_price, total_price: @total_price,
           shipping_price_string: @shipping_price_string, total_price_string: @total_price_string}}
+      end
+
+      desc "Share listing on facebook"
+      put ':id/share/facebook' do
+        acl_manage!(on: @listing)
+        begin
+          raise Exception, "listing already facebook shared" if @listing.facebook_shared?
+          ListingShare.facebook_share!(@listing)
+          event = 'facebook_share'
+          logger.post("tegu.api", log_data.merge({event: 'listing.share.facebook', listing_id: @listing.id}))
+        rescue Exception => e
+          logger.post("tegu.api", log_data.merge({event: 'listing.share.facebook.exception', listing_id: @listing.id,
+            message: e.message}))
+          error!("Share exception: #{e.message}", 401)
+        end
+        {listing: @listing, event: event}
       end
     end
   end

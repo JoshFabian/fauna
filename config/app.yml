@@ -1,6 +1,9 @@
 development:
+  api_host: http://tegu.lvh.me:7777
   api_root: http://tegu.lvh.me:7777/api/v1
 staging:
+  api_host: http://staging.fauna.net
   api_root: http://staging.fauna.net/api/v1
 production:
+  api_host: http://www.fauna.net
   api_root: http://www.fauna.net/api/v1

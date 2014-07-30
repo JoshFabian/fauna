@@ -10,25 +10,14 @@ class ListingTest < ActiveSupport::TestCase
       @listing = @user.listings.create!(title: "Title 1", price: 100)
     end
 
+    it "should default facebook_share to 0" do
+      @listing = @user.listings.new
+      @listing.facebook_share.must_equal 0
+    end
+
     it "should start in active state" do
       @listing = @user.listings.create!(title: "Title 2", price: 100)
       @listing.state.must_equal 'active'
-    end
-
-    it "should decrement user listing_credits when credits gt 0" do
-      @user.listing_credits.must_equal 3
-      @listing = @user.listings.create!(title: "Title 2", price: 100)
-      @user.reload
-      @user.listing_credits.must_equal 2
-    end
-
-    it "should not decrement user listing_credits when credits lte 0" do
-      @user.update_attributes(listing_credits: 0)
-      @user.reload
-      @user.listing_credits.must_equal 0
-      @listing = @user.listings.create!(title: "Title 2", price: 100)
-      @user.reload
-      @user.listing_credits.must_equal 0
     end
 
     it "should add user seller role" do
@@ -37,6 +26,34 @@ class ListingTest < ActiveSupport::TestCase
       @user.reload
       @user.roles?(:seller).must_equal true
     end
+
+    describe "listing credits" do
+      it "should decrement user listing_credits when credits gt 0" do
+        @user.listing_credits.must_equal 3
+        @listing = @user.listings.create!(title: "Title 2", price: 100)
+        @user.reload
+        @user.listing_credits.must_equal 2
+      end
+
+      it "should not decrement user listing_credits when credits lte 0" do
+        @user.update_attributes(listing_credits: 0)
+        @user.reload
+        @user.listing_credits.must_equal 0
+        @listing = @user.listings.create!(title: "Title 2", price: 100)
+        @user.reload
+        @user.listing_credits.must_equal 0
+      end
+    end
+
+    describe "facebook share" do
+      it "should set user.facebook_share_listing when listing.facebook_share is set" do
+        @user.facebook_share_listing.to_i.must_equal 0
+        @listing = @user.listings.create!(title: "Title 2", price: 100, facebook_share: 1)
+        @listing.facebook_share.to_i.must_equal 1
+        @user.reload
+        @user.facebook_share_listing.to_i.must_equal 1
+      end
+    end
   end
 
   describe "state machine" do
@@ -44,12 +61,13 @@ class ListingTest < ActiveSupport::TestCase
       @listing = Fabricate(:listing, user: @user)
     end
 
-    it "should set flagged_at on flag event" do
+    it "should set flagged reason and timestamp on flag event" do
       @listing.state.must_equal 'active'
-      @listing.flag!
+      @listing.flag_with_reason!(reason: "just cause")
       @listing.reload
       @listing.state.must_equal 'flagged'
       @listing.flagged_at.present?.must_equal true
+      @listing.flagged_reason.must_equal 'just cause'
     end
   end
 

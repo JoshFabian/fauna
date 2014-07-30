@@ -45,6 +45,22 @@ module Endpoints
         logger.post("tegu.api", log_data.merge({event: 'post.toggle_like', post_id: @post.id}))
         {post: @post.as_json()}
       end
+
+      desc "Share post on facebook"
+      put ':id/share/facebook' do
+        acl_manage!(on: @post)
+        begin
+          raise Exception, "post already facebook shared" if @post.facebook_shared?
+          PostShare.facebook_share!(@post)
+          event = 'facebook_share'
+          logger.post("tegu.api", log_data.merge({event: 'post.share.facebook', post_id: @post.id}))
+        rescue Exception => e
+          logger.post("tegu.api", log_data.merge({event: 'post.share.facebook.exception', post_id: @post.id,
+            message: e.message}))
+          error!("Share exception: #{e.message}", 401)
+        end
+        {post: @post, event: event}
+      end
     end # posts
   end
 end

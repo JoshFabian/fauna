@@ -26,13 +26,14 @@
       %th Actions
 
     - @users.each do |user|
+      - facebook_oauth = user.facebook_oauth
       %tr.user
         %td= user.id
         %td.name-cell
           = link_to user.handle, user_path(user)
           %br
           = user.email
-        %td.data-cell= user.oauths.present? ? "yes" : "no"
+        %td.data-cell= facebook_oauth.present? ? (facebook_oauth.facebook_share_permission? ? 'share' : 'basic') : "no"
         %td.data-cell= user.roles.map{ |s| s.to_s[0] }.join(',')
         %td.data-cell= user.verified? ? 'yes' : 'no'
         %td.data-cell= user.listings.active.count

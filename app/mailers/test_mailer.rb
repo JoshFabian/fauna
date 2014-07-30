@@ -5,4 +5,5 @@ class TestMailer < ActionMailer::Base
     @subject = options[:subject] || "Test Subject"
     mail(to: email, subject: @subject)
   end
+
 end
