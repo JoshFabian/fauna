@@ -12,7 +12,7 @@
         %li The price paid to you via Paypal will be the sum of your price and the shipping option the buyer selects, you keep 100% of the money, we DO NOT take a cut.
         %li Do not put any contact information or links in your listing, shoppers can checkout directly via your Paypal and reach you via private message.
 
-    = form_for(@listing, as: :listing, html: {class: "form-validation listing-edit", :'data-user-id' => current_user.id.to_i, :'data-listing-id' => @listing.id.to_i}) do |f|
+    = form_for(@listing, as: :listing, html: {class: ["form-validation", "listing-edit"], :'data-user-id' => current_user.id.to_i, :'data-listing-id' => @listing.id.to_i, :'data-facebook-permission' => current_user.facebook_share_permission? ? 'facebook-share-permission' : 'facebook-basic-permission'}) do |f|
       .rounded-panel
         .listing-field
           %label What is it?
@@ -48,9 +48,10 @@
         .listing-field
           = render(partial: "listings/edit_shipping")
 
-        .social-share
-          = f.check_box :facebook_share, checked: current_user.facebook_share_listing.to_i == 1
-          %label{for: "listing_facebook_share"} Share this listing on Facebook
+        - if feature(:story_facebook_share)
+          .social-share
+            = f.check_box :facebook_share, checked: current_user.facebook_share_listing.to_i == 1
+            %label{for: "listing_facebook_share"} Share this listing on Facebook
 
         .div.edit-timer
           You have 3 days to edit your listing after it's published.  After this time it is locked.
