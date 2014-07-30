@@ -12,7 +12,7 @@ class ListingObserver < ActiveRecord::Observer
     user.save
     if listing.facebook_share == 1 and feature(:backburner)
       # queue share
-      Backburner::Worker.enqueue(FacebookShareJob, [{id: listing.id, klass: 'listing'}])
+      Backburner::Worker.enqueue(FacebookShareJob, [{id: listing.id, klass: 'listing'}], delay: 30.seconds)
     end
     # track listing
     SegmentListing.track_listing_create(listing)
