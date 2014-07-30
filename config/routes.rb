@@ -96,6 +96,10 @@ Tegu::Application.routes.draw do
   post 'signup/create/facebook', to: "signup#create_facebook", as: :create_facebook_signup
   post 'signup/create/password', to: "signup#create_password", as: :create_password_signup
 
+  # facebook share
+  get 'facebook/share/:klass/:id/auth', to: "facebook_share#auth", as: :facebook_share_auth
+  get 'facebook/share/:klass/:id/share', to: "facebook_share#share", as: :facebook_share
+
   # payments
   resources :payments, only: [:index]
 
