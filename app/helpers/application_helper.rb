@@ -76,7 +76,7 @@ module ApplicationHelper
     ''
   end
 
-  def user_avatar_image_thumbnail(image, size=120)
+  def user_avatar_image_thumbnail(image, size=240)
     cloudinary_url(image.full_public_id, transformation: [{width: size, height: size, crop: 'fill'}])
   rescue Exception => e
     "http://res.cloudinary.com/tegu/image/upload/c_fill,h_#{size},w_#{size}/v1405184238/avatar_default.jpg"

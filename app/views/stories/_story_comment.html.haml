@@ -1,16 +1,16 @@
 - user = comment.user
 
 .comment.clearfix
-  .user-image
+  .user-image.small-1.columns.no-padding
     = link_to user_path(user) do
       = image_tag user_avatar_image_thumbnail(user.avatar_image, 200)
-  .user-info
-    %h6.story-title
-      = link_to user.handle, user_path(user)
-    %span.time-stamp #{time_ago_in_words(comment.created_at)} ago
+  .user-info.small-11.columns.no-padding
     %p.secondary
+      %span.story-title
+        = link_to user.handle, user_path(user)
       - begin
         = auto_link(comment.body, html: {target: '_blank'})
       - rescue Exception => e
         = comment.body
+      %span.time-stamp #{time_ago_in_words(comment.created_at)} ago
 

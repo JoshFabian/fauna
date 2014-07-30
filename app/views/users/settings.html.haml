@@ -54,8 +54,8 @@
                 %label Facebook
               .small-8.columns
                 - if @user.facebook_verified?
-                  -# %input#facebook{:type => "checkbox"}
-                    -# %label{:for => "facebook"} Share new listings to Facebook
+                  / %input#facebook{:type => "checkbox"}
+                  /   %label{:for => "facebook"} Share new listings to Facebook
                   = link_to 'Facebook Connected', '#', class: 'button orange-button secondary disabled'
                 - else
                   = link_to 'Connect to Facebook', user_omniauth_authorize_path(:facebook), class: 'facebook-settings'

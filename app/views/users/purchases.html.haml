@@ -2,7 +2,7 @@
 
 .row
   %h5 My Purchases
-  %ul.small-block-grid-4
+  %ul.list-grid.small-block-grid-4
     - @user_purchases.each do |purchase|
       - listing = purchase.listing
       - review = @user_reviews.select{ |o| o.listing_id == listing.id }.first

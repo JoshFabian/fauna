@@ -10,7 +10,7 @@
         - if @subcategory.present?
           %i.icon.ion-ios7-arrow-forward
           = @subcategory.name
-    %ul.small-block-grid-4#listings
+    %ul.list-grid.small-block-grid-4#listings
       - @listings.each do |listing|
         = render(partial: "listings/listing_tile", locals: {listing: listing, user: listing.user})
 

@@ -69,15 +69,22 @@
   padding: 15px;
   margin-top: 20px;
   .author-image {
-    padding: 0;
+    padding-left: 0;
     img {
       border-radius: 3px;
     }
   }
   .author-name {
-    padding-right: 0;
+    padding: 0;
     h5 {
       margin: 0;
+    }
+    .orange-button {
+      padding: 5px 30px;
+      margin-top: 10px;
+      &.active {
+        background: #7f8c8d;
+      }
     }
   }
   .author-bio {
@@ -125,6 +132,9 @@
   &:hover {
     top: -2px;
   }
+  img {
+    width: 100%;
+  }
   .listing-info {
     .title {
       color: #333;
@@ -146,6 +156,15 @@
       color: #1abc9c;
       font-weight: 500;
       font-size: 14px;
+      @media (max-width: 768px) {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: rgba(0,0,0,.5);
+        padding: 5px 15px;
+        color: #fff;
+        border-bottom-left-radius: 3px;
+      }
     }
   }
   .grid-thumb {
@@ -244,7 +263,17 @@
     }
   }
 }
-
+.list-grid {
+  @media (max-width: 600px) {
+    > li:nth-of-type(2n+1) {
+      clear: both;
+    }
+    > li {
+      width: 50%;
+      list-style: none;
+    }
+  }
+}
 .list-panel {
   @extend .rounded-panel;
   padding: 0;
@@ -592,6 +621,7 @@
       color: #999;
       font-size: 14px;
       margin-bottom: 10px;
+      margin-left: 0;
     }
   }
   .panel-footer {
@@ -664,27 +694,31 @@
       padding: 10px;
       position: relative;
       .time-stamp {
-        position: absolute;
-        top: 19px;
-        right: 10px;
+        display: block;
         font-size: 13px;
         color: #999;
+        position: relative;
+        top: -5px;
+        margin-bottom: -10px;
       }
       .user-info {
-        margin-left: 15px;
+        margin-left: 0;
         .story-title {
+          margin-right: 10px;
           display: inline-block;
           float: left;
           line-height: 29px;
           margin-bottom: 0;
         }
         .secondary {
+          color: #535353;
           font-size: 16px;
+          margin-top: -7px;
           margin-bottom: 0;
           display: inline-block;
           float: left;
-          margin-left: 10px;
-          line-height: 29px;
+          margin-left: 0px;
+          line-height: 30px;
         }
       }
     }
@@ -703,6 +737,11 @@
     }
     h2 {
       margin-bottom: 30px;
+    }
+    h5 {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
   }
   .small-block-grid-2 {

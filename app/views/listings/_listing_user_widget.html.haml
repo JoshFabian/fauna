@@ -1,9 +1,10 @@
 .user-widget
-  .author-image.small-2.columns
+  .author-image.small-3.columns
     = image_tag user_avatar_image_thumbnail(@owner.avatar_image)
-  .author-name.small-10.columns
+  .author-name.small-9.columns
     %h5= link_to @owner.handle, user_path(@owner)
-    %p= @owner.city_state
+    / %p= @owner.city_state
+    = link_to 'Follow', '#', class: ['button', 'follow-button', 'orange-button', 'track-user-profile-view'], :'data-follow-id' => @owner.id
   .author-bio.small-12.columns
     %p= @owner.about
 
