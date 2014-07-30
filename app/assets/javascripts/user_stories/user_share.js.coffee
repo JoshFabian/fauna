@@ -1,13 +1,14 @@
 $(document).ready ->
 
-  # toggle like
+  # share object
   $(document).on 'click', ".object-facebook-share", (e) ->
     e.preventDefault()
-    if $(this).hasClass('no-permissions')
-      window.location.href = "/auth/facebook"
-      return
-    object_id = $(this).data('object-id')
     object_klass = $(this).data('object-klass')
+    object_id = $(this).data('object-id')
+    if $(this).hasClass('facebook-basic-permission')
+      console.log "#{object_klass}:#{object_id} share auth ..."
+      window.location.href = Tegu.FacebookShareRoute.auth_route(object_klass, object_id)
+      return
     console.log "#{object_klass}:#{object_id} share ..."
     async.waterfall [
       (callback) ->

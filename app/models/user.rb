@@ -79,8 +79,8 @@ class User < ActiveRecord::Base
     facebook_oauths.last
   end
 
-  def facebook_publish_permission?
-    facebook_oauth.facebook_publish_permission?
+  def facebook_share_permission?
+    facebook_oauth.facebook_share_permission?
   rescue Exception => e
     false
   end

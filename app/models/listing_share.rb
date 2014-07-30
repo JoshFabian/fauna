@@ -4,7 +4,7 @@ class ListingShare
   # returns true if the listing can be shared by the specified user
   def self.facebook_shareable?(listing, options={})
     user = options[:by] || listing.user
-    user.facebook_publish_permission?
+    user.facebook_share_permission?
   end
 
   # returns true if the listing has been shared by the owner

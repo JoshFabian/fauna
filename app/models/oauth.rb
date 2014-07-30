@@ -3,6 +3,22 @@ class Oauth < ActiveRecord::Base
 
   validates :user, :presence => true, :uniqueness => {:scope => :provider}
 
+  def facebook?
+    self.provider == 'facebook'
+  end
+
+  def revoke_facebook_share_permission!
+    raise Exception, "not facebook" if self.provider != 'facebook'
+    graph = Koala::Facebook::API.new(self.oauth_token)
+    # returns true or exception
+    result = graph.delete_connections('me', 'permissions/publish_actions')
+    # update share flag
+    self.update(facebook_share_permission: 0)
+    result
+  rescue Exception => e
+    false
+  end
+
   # create oauth object from omniauth auth hash
   def self.from_omniauth(auth)
     o = where(auth.slice(:provider, :uid)).first_or_initialize.tap do |oauth|
@@ -14,26 +30,6 @@ class Oauth < ActiveRecord::Base
     end
     o.save
     o
-  end
-
-  def facebook_publish_permission?
-    raise Exception, "not facebook" if self.provider != 'facebook'
-    graph = Koala::Facebook::API.new(self.oauth_token)
-    objects = graph.get_connections('me', 'permissions').select do |hash|
-      hash['permission'] == 'publish_actions' and hash['status'] == 'granted'
-    end
-    objects.any?
-  rescue Exception => e
-    false
-  end
-
-  def revoke_facebook_publish_permission!
-    raise Exception, "not facebook" if self.provider != 'facebook'
-    graph = Koala::Facebook::API.new(self.oauth_token)
-    # returns true or exception
-    graph.delete_connections('me', 'permissions/publish_actions')
-  rescue Exception => e
-    false
   end
 
 end

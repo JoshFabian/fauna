@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140728003416) do
+ActiveRecord::Schema.define(version: 20140730120729) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -203,13 +203,15 @@ ActiveRecord::Schema.define(version: 20140728003416) do
 
   create_table "oauths", force: true do |t|
     t.integer  "user_id"
-    t.string   "provider",         limit: 20
-    t.string   "uid",              limit: 50
+    t.string   "provider",                  limit: 20
+    t.string   "uid",                       limit: 50
     t.string   "oauth_token"
     t.datetime "oauth_expires_at"
     t.text     "data"
+    t.boolean  "facebook_share_permission",            default: false
   end
 
+  add_index "oauths", ["facebook_share_permission"], name: "index_oauths_on_facebook_share_permission"
   add_index "oauths", ["provider"], name: "index_oauths_on_provider"
   add_index "oauths", ["uid"], name: "index_oauths_on_uid"
   add_index "oauths", ["user_id"], name: "index_oauths_on_user_id"

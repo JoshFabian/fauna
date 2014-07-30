@@ -4,7 +4,7 @@ class PostShare
   # returns true if the post can be shared by the specified user
   def self.facebook_shareable?(post, options={})
     user = options[:by] || post.user
-    user.facebook_publish_permission?
+    user.facebook_share_permission?
   end
 
   # returns true if the post has been shared by the owner
