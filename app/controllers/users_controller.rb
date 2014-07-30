@@ -34,6 +34,9 @@ class UsersController < ApplicationController
 
     @title = "#{@user.handle} | Profile"
 
+    # set return_to paths
+    session[:connect_oauth_return_to] = request.path
+
     respond_to do |format|
       format.html
     end
