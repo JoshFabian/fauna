@@ -34,7 +34,7 @@
         reply
     - if me and feature(:story_facebook_share)
       .footer-button
-        = link_to '#', class: ['object-facebook-share', PostShare.facebook_shareable?(post) ? 'facebook-share-permission' : 'facebook-basic-permission'], :'data-object-id' => post.id, :'data-object-klass' => 'post' do
+        = link_to '#', class: ['object-facebook-share'], :'data-object-id' => post.id, :'data-object-klass' => 'post', :'data-facebook-permission' => PostShare.facebook_shareable?(post) ? 'facebook-share-permission' : 'facebook-basic-permission' do
           %i.icon.ion-social-facebook
           share
     - if me and post.facebook_shared?
