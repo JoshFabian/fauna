@@ -8,12 +8,12 @@ class FacebookShareJob
   def self.perform(hash)
     if hash['klass'] == 'listing'
       listing = Listing.find(hash['id'])
-      raise Exception, "listing already shared on facebook" if listing.facebook_shared?
+      raise Exception, "listing already facebook shared" if listing.facebook_shared?
       ListingShare.facebook_share!(listing)
       logger.post("tegu.job", log_data.merge({event: 'facebook_share', listing_id: listing.id}))
     elsif hash['klass'] == 'post'
       post = Post.find(hash['id'])
-      raise Exception, "post already shared on facebook" if post.facebook_shared?
+      raise Exception, "post already facebook shared" if post.facebook_shared?
       PostShare.facebook_share!(post)
       logger.post("tegu.job", log_data.merge({event: 'facebook_share', post_id: post.id}))
     end

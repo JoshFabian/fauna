@@ -230,6 +230,7 @@ module Endpoints
       put ':id/share/facebook' do
         acl_manage!(on: @listing)
         begin
+          raise Exception, "listing already facebook shared" if @listing.facebook_shared?
           ListingShare.facebook_share!(@listing)
           event = 'facebook_share'
           logger.post("tegu.api", log_data.merge({event: 'listing.share.facebook', listing_id: @listing.id}))

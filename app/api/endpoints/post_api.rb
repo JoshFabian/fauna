@@ -50,6 +50,7 @@ module Endpoints
       put ':id/share/facebook' do
         acl_manage!(on: @post)
         begin
+          raise Exception, "post already facebook shared" if @post.facebook_shared?
           PostShare.facebook_share!(@post)
           event = 'facebook_share'
           logger.post("tegu.api", log_data.merge({event: 'post.share.facebook', post_id: @post.id}))

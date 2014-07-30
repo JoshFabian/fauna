@@ -5,6 +5,8 @@ class PostShare
   def self.facebook_shareable?(post, options={})
     user = options[:by] || post.user
     user.facebook_share_permission?
+  rescue Exception => e
+    false
   end
 
   # returns true if the post has been shared by the owner
@@ -20,6 +22,8 @@ class PostShare
     link = options[:link] || "#{Settings[Rails.env][:api_host]}/#{user.handle}"
     result = graph.put_connections('me', 'feed', message: message, link: link)
     post.update(facebook_share_id: result['id'])
+    # track event
+    SegmentPost.track_post_share(post)
     true
   # rescue => e
     # if e.is_a?(Koala::Facebook::ClientError) and e.fb_error_type == "OAuthException"
