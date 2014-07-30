@@ -5,8 +5,8 @@ $(document).ready ->
     e.preventDefault()
     object_klass = $(this).data('object-klass')
     object_id = $(this).data('object-id')
-    facebook_share_permission = $(this).data('facebook-share-permission')
-    if facebook_share_permission == 'facebook-basic-permission'
+    facebook_permission = $(this).data('facebook-permission')
+    if facebook_permission == 'basic'
       console.log "#{object_klass}:#{object_id} share auth ..."
       window.location.href = Tegu.FacebookShareRoute.auth_route(object_klass, object_id)
       return

@@ -46,7 +46,7 @@
         reply
     - if me and feature(:story_facebook_share)
       .footer-button
-        = link_to '#', class: ['object-facebook-share'], :'data-object-id' => listing.id, :'data-object-klass' => 'listing', :'data-facebook-permission' => ListingShare.facebook_shareable?(listing) ? 'facebook-share-permission' : 'facebook-basic-permission' do
+        = link_to '#', class: ['object-facebook-share'], :'data-object-id' => listing.id, :'data-object-klass' => 'listing', :'data-facebook-permission' => ListingShare.facebook_shareable?(listing) ? 'share' : 'basic' do
           %i.icon.ion-social-facebook
           share
     - if me and ListingShare.facebook_shared?(listing)
