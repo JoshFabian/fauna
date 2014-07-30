@@ -1,7 +1,8 @@
 class Oauth < ActiveRecord::Base
   belongs_to :user
 
-  validates :user, :presence => true, :uniqueness => {:scope => :provider}
+  validates :uid, presence: true
+  validates :user, presence: true, uniqueness: {scope: :provider}
 
   def facebook?
     self.provider == 'facebook'
@@ -28,7 +29,8 @@ class Oauth < ActiveRecord::Base
       oauth.oauth_token = auth.credentials.token
       oauth.oauth_expires_at = Time.at(auth.credentials.expires_at) rescue nil
     end
-    o.save
+    # save oauth if oauth has been persisted
+    o.save if o.persisted?
     o
   end
 
