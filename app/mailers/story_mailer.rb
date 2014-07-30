@@ -1,5 +1,5 @@
 class StoryMailer < ActionMailer::Base
-  default from: "Fauna Notifications <support@fauna.net>"
+  default from: lambda { |s|  StoryMailer.default_from }
 
   def user_listing_comment_email(comment, options={})
     @comment = comment
@@ -17,6 +17,16 @@ class StoryMailer < ActionMailer::Base
     @commenter = comment.user
     @subject = options[:subject] || "New Fauna comment on your post"
     mail(to: @owner.email, subject: @subject)
+  end
+
+  protected
+
+  def self.default_from
+    if Rails.env.production?
+      "Fauna Notifications <support@fauna.net>"
+    else
+      "Fauna Notifications #{Rails.env.titleize} <support@fauna.net>"
+    end
   end
 
 end
