@@ -42,6 +42,11 @@ $(document).ready ->
         window.location.reload(true)
     ]
 
+  $('a.listing-delete').bind 'ajax:success', (evt, data, status, xhr) ->
+    console.log "listing deleted"
+    # reload page
+    window.location.reload(true)
+
   $("#listings_manage").infinitescroll
     navSelector: "nav.pagination" # selector for the paged navigation (it will be hidden)
     nextSelector: "nav.pagination a[rel=next]" # selector for the NEXT link (to page 2)

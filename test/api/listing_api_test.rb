@@ -25,6 +25,23 @@ class ListingApiSpec < ActionDispatch::IntegrationTest
     end
   end
 
+  describe "listing delete" do
+    before do
+      @user = Fabricate(:user, listing_credits: 3)
+      @user.roles << :admin; @user.save
+      @listing = @user.listings.create!(title: "Title", price: 100)
+    end
+
+    it "should delete listing" do
+      delete "/api/v1/listings/#{@listing.id}?token=#{@user.auth_token}"
+      response.success?.must_equal true
+      body = JSON.parse(response.body)
+      body['listing'].must_include('id' => @listing.id)
+      body['event'].must_equal 'delete'
+      Listing.find_by_id(@listing.id).must_equal nil
+    end
+  end
+
   describe "listing event" do
     before do
       @user = Fabricate(:user, listing_credits: 3)

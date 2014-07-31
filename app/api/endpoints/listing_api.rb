@@ -171,6 +171,14 @@ module Endpoints
         {listing: @listing}
       end
 
+      desc "Delete listing"
+      delete ':id' do
+        acl_admin!(on: @listing)
+        @listing.destroy
+        logger.post("tegu.api", log_data.merge({event: 'listing.delete', listing_id: @listing.id}))
+        {listing: @listing, event: 'delete'}
+      end
+
       desc "Delete listing image"
       delete ':id/images/:image_id' do
         acl_manage!(on: @listing)

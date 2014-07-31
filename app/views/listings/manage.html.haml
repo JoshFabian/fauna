@@ -19,6 +19,7 @@
       %th Peeks
       %th Views
       %th Created
+      %th Actions
 
     - @listings.each do |listing|
       - user = listing.user
@@ -31,5 +32,7 @@
         %td.data-cell= listing.peeks_count
         %td.data-cell= listing.views_count
         %td.date-cell #{time_ago_in_words(listing.created_at)} ago
+        %td.data-cell
+          = link_to 'delete', "/api/v1/listings/#{listing.id}?token=#{current_user.auth_token}", class: 'listing-delete', data:{confirm: 'Are you sure', remote: true, method: :delete}
 
   = paginate @listings
