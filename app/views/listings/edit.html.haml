@@ -12,18 +12,18 @@
         %li The price paid to you via Paypal will be the sum of your price and the shipping option the buyer selects, you keep 100% of the money, we DO NOT take a cut.
         %li Do not put any contact information or links in your listing, shoppers can checkout directly via your Paypal and reach you via private message.
 
-    = form_for(@listing, as: :listing, html: {class: ["form-validation", "listing-edit"], :'data-user-id' => current_user.id.to_i, :'data-listing-id' => @listing.id.to_i, :'data-facebook-permission' => current_user.facebook_share_permission? ? 'share' : 'basic'}) do |f|
+    = form_for(@listing, as: :listing, html: {class: ["form-validation", "listing-edit", @listing.new_record? ? 'draft' : @listing.state], :'data-user-id' => current_user.id.to_i, :'data-listing-id' => @listing.id.to_i, :'data-facebook-permission' => current_user.facebook_share_permission? ? 'share' : 'basic'}) do |f|
       .rounded-panel
         .listing-field
           %label What is it?
-          .small-12.columns.no-padding{class: "category-wrapper", :'data-category-level' => 1, :'data-category-name' => @category.try(:name)}
+          .small-12.columns.no-padding{class: ["category-wrapper", @listing.new_record? ? 'draft step1' : @listing.state], :'data-category-level' => 1, :'data-category-name' => @category.try(:name)}
             = render(partial: "listings/edit_categories", locals: {categories: @root1_categories, selected: @category, prompt: "Reptile Categories", level: 1})
-          .small-12.columns.no-padding{class: "category-wrapper", :'data-category-level' => 2, :'data-category-name' => @subcategory.try(:name)}
+          .small-12.columns.no-padding{class: ["category-wrapper"], :'data-category-level' => 2, :'data-category-name' => @subcategory.try(:name)}
             = render(partial: "listings/edit_categories", locals: {categories: @root2_categories, selected: @subcategory, prompt: "Reptile Sub-Category", level: 2})
         %hr
         .listing-field
           %label Title
-          = f.text_field :title, autofocus: false, required: true, class: nil, placeholder: "Try to describe your reptile the way a buyer would.", disabled: !@listing.editable?
+          = f.text_field :title, autofocus: false, required: true, class: [@listing.new_record? ? 'draft step1' : @listing.state], placeholder: "Try to describe your reptile the way a buyer would.", disabled: !@listing.editable?
         %hr
         .listing-field
           %label Photos
@@ -37,12 +37,12 @@
         %hr
         .listing-field
           %label Description
-          = f.text_area :description, autofocus: false, required: true, class: nil, disabled: !@listing.editable?, placeholder: "Try to answer the questions buyers will have. Tell the reptile's story and explain why it's special."
+          = f.text_area :description, autofocus: false, required: true, class: [@listing.new_record? ? 'draft step2' : @listing.state], disabled: !@listing.editable?, placeholder: "Try to answer the questions buyers will have. Tell the reptile's story and explain why it's special."
         %hr 
         .listing-field
           %label Price
           .small-3.columns{:style => "padding: 0;"}
-            = f.text_field :price, autofocus: false, required: true, class: "numeral price", disabled: !@listing.editable?, placeholder: "$0.00", :'data-number' => @listing.price
+            = f.text_field :price, autofocus: false, required: true, class: ['numeral', 'any-price', @listing.new_record? ? 'draft step1' : @listing.state], disabled: !@listing.editable?, placeholder: "$0.00", :'data-number' => @listing.price.to_i
 
         %hr 
         .listing-field

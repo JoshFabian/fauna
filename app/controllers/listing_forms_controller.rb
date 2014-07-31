@@ -26,6 +26,7 @@ class ListingFormsController < ApplicationController
       @listing = Listing.find(params[:id])
       @shipping_prices = @listing.shipping_prices
     rescue Exception => e
+      @listing = Listing.new
       @shipping_prices = {}
     end
 

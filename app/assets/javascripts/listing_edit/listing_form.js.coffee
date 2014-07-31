@@ -1,11 +1,25 @@
 class Tegu.ListingForm
-  new_images = []
+  listing_id = 0
+
+  @set_listing_id: (id) ->
+    listing_id = id
+
+  @get_listing_id: () ->
+    listing_id
+
+  @change_draft_state: (listing_id) ->
+    $("form.listing-edit").removeClass('draft').data('listing-id', listing_id)
+    $("form.listing-edit").validate().settings.ignore = ":hidden"
+    history.pushState({}, '', "/#{current_user_slug}/listings/#{listing_id}/edit")
 
   @disable_form: () ->
     $("form.listing-edit input[type='submit']").addClass('disabled').attr('disabled', true).val("Saving ...")
 
   @enable_form: (s = "Saved") ->
     $("form.listing-edit input[type='submit']").removeClass('disabled').attr('disabled', false).val(s)
+
+  @submit_form: () ->
+    $("form.listing-edit").submit()
 
   @format_currency: () ->
     $("input.numeral").map ->
@@ -63,8 +77,8 @@ class Tegu.ListingForm
   @replace_images: (data) ->
     $(".image-grid").html(data)
 
-  @show_no_images_error_message: () ->
+  @show_images_error_message: () ->
     $(".no-images").show()
 
-  @hide_no_images_error_message: () ->
+  @hide_images_error_message: () ->
     $(".no-images").hide()
