@@ -1,5 +1,5 @@
-class CustomMessageMailer < ActionMailer::Base
-  default from: lambda { |s|  CustomMessageMailer.default_from }
+class FaunaMessageMailer < ActionMailer::Base
+  default from: lambda { |s|  FaunaMessageMailer.default_from }
 
   add_template_helper(ApplicationHelper)
 
@@ -8,16 +8,17 @@ class CustomMessageMailer < ActionMailer::Base
   # when indicating a reply to an already created conversation.
   def send_email(message, receiver)
     if message.conversation.messages.size > 1
-      reply_message_email(message,receiver)
+      reply_message_email(message, receiver)
     else
-      new_message_email(message,receiver)
+      new_message_email(message, receiver)
     end
   end
 
-  include ActionView::Helpers::SanitizeHelper
+  # include ActionView::Helpers::SanitizeHelper
 
   # Sends an email for indicating a new message for the receiver
   def new_message_email(message, receiver)
+    debugger # xxx
     @message = message
     @sender = @message.sender
     @receiver = receiver

@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: lambda { |s|  StoryMailer.default_from }
+  default from: lambda { |s|  UserMailer.default_from }
 
   add_template_helper(ApplicationHelper)
 
