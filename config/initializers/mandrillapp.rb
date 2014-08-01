@@ -21,4 +21,6 @@ if host.present?
       domain: 'fauna.net'
     }
   end
+
+  Rails.application.routes.default_url_options[:host] = host
 end

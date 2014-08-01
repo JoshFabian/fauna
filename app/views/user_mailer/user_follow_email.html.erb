@@ -204,7 +204,7 @@
                                 <tbody>
                                   <tr>
                                     <td align="center" style="border-collapse:collapse">
-                                      <a rel="contact" title="Ariel Dorol" style="color:#4083a9;font-family:'Helvetica Neue',Helvetica,Arial;font-weight:bold;text-decoration:none"><img height="80" src=<%= user_avatar_image_thumbnail(@user.avatar_image, 80) %> width="80" style="border-radius:50%;border:0;display:inline;min-height:auto;line-height:100%;outline:none;text-decoration:none;width:80px"></a>
+                                      <a rel="contact" title="<%= @user.handle %>" href="<%= user_url(@user) %>" style="color:#4083a9;font-family:'Helvetica Neue',Helvetica,Arial;font-weight:bold;text-decoration:none"><img height="80" src=<%= user_avatar_image_thumbnail(@user.avatar_image, 80) %> width="80" style="border-radius:50%;border:0;display:inline;min-height:auto;line-height:100%;outline:none;text-decoration:none;width:80px"></a>
                                     </td>
                                   </tr>
                                   <tr>
