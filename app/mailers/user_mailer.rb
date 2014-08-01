@@ -1,11 +1,13 @@
 class UserMailer < ActionMailer::Base
   default from: lambda { |s|  StoryMailer.default_from }
 
+  add_template_helper(ApplicationHelper)
+
   def user_follow_email(user_follow, options={})
     @user = user_follow.user
     @following = user_follow.following
     @email = @following.email
-    @subject = options[:subject] || "Fauna user follow"
+    @subject = options[:subject] || "[Fauna] #{@user.handle} is now following you"
     mail(to: @email, subject: @subject)
   end
 
