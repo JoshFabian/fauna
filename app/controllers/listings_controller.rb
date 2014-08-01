@@ -141,7 +141,7 @@ class ListingsController < ApplicationController
     end
   end
 
-  # GET /listings/1/edit
+  # GET /:handle/listings/1/edit
   def edit
     @listing = current_user.listings.friendly.find(params[:id])
     acl_manage!(on: @listing)

@@ -10,10 +10,6 @@ class ListingObserver < ActiveRecord::Observer
     # add user seller role if missing
     user.roles << :seller if !user.roles?(:seller)
     user.save
-    if listing.facebook_share == 1 and feature(:backburner)
-      # queue share
-      Backburner::Worker.enqueue(FacebookShareJob, [{id: listing.id, klass: 'listing'}], delay: 30.seconds)
-    end
     # track listing
     SegmentListing.track_listing_create(listing)
   rescue Exception => e
@@ -22,8 +18,12 @@ class ListingObserver < ActiveRecord::Observer
   def after_save(listing)
     # update search index
     listing.__elasticsearch__.update_document
+    if listing.state_changed? and listing.active? and listing.facebook_share == 1 and feature(:backburner)
+      # listing is active and facebook share is on
+      Backburner::Worker.enqueue(FacebookShareJob, [{id: listing.id, klass: 'listing'}], delay: 30.seconds)
+    end
     if listing.state_changed? and listing.flagged? and feature(:backburner_emails)
-      # queue email
+      # listing was flagged, queue email
       Backburner::Worker.enqueue(ListingFlaggedEmailJob, [{id: listing.id}], delay: 1.minute)
     end
   rescue Exception => e

@@ -7,10 +7,13 @@ class Tegu.ListingForm
   @get_listing_id: () ->
     listing_id
 
-  @change_draft_state: (listing_id) ->
-    $("form.listing-edit").removeClass('draft').data('listing-id', listing_id)
+  @change_new_state: (listing_id) ->
+    $("form.listing-edit").removeClass('new').data('listing-id', listing_id)
     $("form.listing-edit").validate().settings.ignore = ":hidden"
     history.pushState({}, '', "/#{current_user_slug}/listings/#{listing_id}/edit")
+
+  @change_price_constraint: () ->
+    $("form.listing-edit #listing_price").removeClass('any-price').addClass('price')
 
   @disable_form: () ->
     $("form.listing-edit input[type='submit']").addClass('disabled').attr('disabled', true).val("Saving ...")

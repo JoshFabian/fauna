@@ -33,7 +33,7 @@ class StoryTest < ActiveSupport::TestCase
     end
 
     it "should find 1 listing story" do
-      @listing = Fabricate(:listing, user: @user)
+      @listing = Fabricate(:listing, user: @user, state: 'active')
       Listing.import(force: true)
       Listing.__elasticsearch__.refresh_index!
       @stories = Story.by_wall(@user, models: [Listing])
