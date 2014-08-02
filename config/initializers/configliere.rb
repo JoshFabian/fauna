@@ -1,4 +1,5 @@
 Settings.read("#{Rails.root}/config/app.yml")
+Settings.read("#{Rails.root}/config/email.yml")
 Settings.read("#{Rails.root}/config/facebook.yml")
 Settings.read("#{Rails.root}/config/pp.yml")
 Settings.read("#{Rails.root}/config/segmentio.yml")

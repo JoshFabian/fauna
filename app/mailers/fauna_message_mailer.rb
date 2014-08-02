@@ -18,7 +18,6 @@ class FaunaMessageMailer < ActionMailer::Base
 
   # Sends an email for indicating a new message for the receiver
   def new_message_email(message, receiver)
-    debugger # xxx
     @message = message
     @sender = @message.sender
     @receiver = receiver
