@@ -1,10 +1,10 @@
 class ListingMailer < ActionMailer::Base
-  default from: lambda { |s|  StoryMailer.default_from }
+  default from: lambda { |s|  ListingMailer.default_from }
 
   def listing_flagged_email(listing, options={})
     @listing = listing
     @owner = @listing.user
-    @subject = options[:subject] || "Your listing has been flagged"
+    @subject = options[:subject] || "[Fauna] Your listing has been flagged"
     mail(to: @owner.email, subject: @subject)
   end
 

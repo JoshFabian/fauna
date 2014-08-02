@@ -16,16 +16,16 @@ class ListingObserver < ActiveRecord::Observer
   end
 
   def after_save(listing)
-    # update search index
-    listing.__elasticsearch__.update_document
-    if listing.state_changed? and listing.active? and listing.facebook_share == 1 and feature(:backburner)
-      # listing is active and facebook share is on
+    if listing.state_changed? and ListingShare.facebook_share_approved?(listing) and feature(:backburner)
+      # listing is active and facebook share has been approved
       Backburner::Worker.enqueue(FacebookShareJob, [{id: listing.id, klass: 'listing'}], delay: 30.seconds)
     end
     if listing.state_changed? and listing.flagged? and feature(:backburner_emails)
-      # listing was flagged, queue email
+      # listing was flagged; queue email
       Backburner::Worker.enqueue(ListingFlaggedEmailJob, [{id: listing.id}], delay: 1.minute)
     end
+    # update search index
+    listing.__elasticsearch__.update_document
   rescue Exception => e
   end
 
