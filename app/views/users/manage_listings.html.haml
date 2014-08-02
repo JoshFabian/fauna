@@ -77,7 +77,7 @@
                       - elsif listing.active?
                         = link_to 'Mark as Sold', '#', class: 'mark-sold', :'data-listing-id' => listing.id
                     %td.small-text
-                      - if listing.draft? or listing.active?
+                      - if listing.editable?
                         = link_to 'Edit Listing', edit_listing_path(listing.id)
 
     

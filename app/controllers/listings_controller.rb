@@ -1,6 +1,6 @@
 class ListingsController < ApplicationController
 
-  before_filter :authenticate_user!, only: [:new]
+  before_filter :authenticate_user!, only: [:check_share, :edit, :manage, :new]
   before_filter :admin_role_required!, only: [:manage]
   before_filter :seller_verify!, only: [:new]
   before_filter :seller_paid!, only: [:new]
