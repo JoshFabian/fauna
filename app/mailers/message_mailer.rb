@@ -1,5 +1,5 @@
-class FaunaMessageMailer < ActionMailer::Base
-  default from: lambda { |s|  FaunaMessageMailer.default_from }
+class MessageMailer < ActionMailer::Base
+  default from: lambda { |s|  MessageMailer.default_from }
 
   add_template_helper(ApplicationHelper)
 
