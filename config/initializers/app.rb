@@ -16,4 +16,20 @@ Settings.finally do |c|
   rescue Exception => e
   end
 end
-Settings.resolve! 
+Settings.resolve!
+
+Tegu::Application.configure do
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = { host: Settings[Rails.env][:email_host] }
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.mandrillapp.com',
+    port: 587,
+    domain: 'fauna.net',
+    user_name: Settings[Rails.env][:mandrillapp_username],
+    password: Settings[Rails.env][:mandrillapp_password],
+    enable_starttls_auto: false,
+    openssl_verify_mode: "none"
+    # authentication: :login,
+  }
+end
