@@ -1,7 +1,7 @@
 development:
   email_host: tegu.lvh.me:777
 test:
-  email_host:
+  email_host: tegu.lvh.me:777
 staging:
   email_host: staging.fauna.net
 production:
