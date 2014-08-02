@@ -8,7 +8,7 @@ $(document).ready ->
     facebook_permission = $(this).data('facebook-permission')
     if facebook_permission == 'basic'
       console.log "#{object_klass}:#{object_id} share auth ..."
-      window.location.href = Tegu.FacebookShareRoute.auth_route(object_klass, object_id)
+      window.location.href = Tegu.FacebookShareRoute.auth_route(object_klass, object_id, 'story')
       return
     console.log "#{object_klass}:#{object_id} share ..."
     async.waterfall [

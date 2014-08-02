@@ -47,7 +47,7 @@ $(document).ready ->
             else
               callback(null, data)
           (data, callback) ->
-            Tegu.ListingRoute.show_route(current_user_slug, listing_id, auth_token, callback)
+            Tegu.ListingRoute.check_share_route(current_user_slug, listing_id, auth_token, callback)
           (url, callback) ->
             Tegu.ListingForm.enable_form()
             window.location.href = url

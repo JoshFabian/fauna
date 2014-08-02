@@ -48,7 +48,7 @@
         .listing-field
           = render(partial: "listings/edit_shipping")
 
-        - if feature(:story_facebook_share)
+        - if (@listing.new_record? or @listing.draft?) and feature(:story_facebook_share)
           .social-share
             = f.check_box :facebook_share, checked: false
             -# = f.check_box :facebook_share, checked: current_user.facebook_share_listing.to_i == 1

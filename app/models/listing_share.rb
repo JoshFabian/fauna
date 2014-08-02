@@ -1,7 +1,12 @@
 class ListingShare
   include Loggy
 
-  # returns true if the listing can be shared by the specified user
+  # returns true if the listing should be shared but requires permissions from the specified user
+  def self.facebook_share_permissions_required?(listing, options={})
+    !facebook_shared?(listing) and listing.facebook_share == 1 and listing.active? and !facebook_shareable?(listing)
+  end
+
+  # returns true if the listing can be shared by the specified user based on permissions
   def self.facebook_shareable?(listing, options={})
     user = options[:by] || listing.user
     user.facebook_share_permission?

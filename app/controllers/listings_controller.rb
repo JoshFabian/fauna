@@ -158,6 +158,18 @@ class ListingsController < ApplicationController
     end
   end
 
+  # GET /:handle/listings/1/check-share
+  def check_share
+    @listing = current_user.listings.friendly.find(params[:id])
+    acl_manage!(on: @listing)
+    if ListingShare.facebook_share_permissions_required?(@listing) and feature(:story_facebook_share)
+      goto = facebook_share_auth_path('listing', @listing.id, 'listing')
+    else
+      goto = user_listing_path(current_user, @listing)
+    end
+    redirect_to goto and return
+  end
+
   protected
 
   def page
