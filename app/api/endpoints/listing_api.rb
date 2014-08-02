@@ -150,6 +150,7 @@ module Endpoints
       put ':id/flag' do
         acl_admin!
         @listing.flag_with_reason!(reason: params.reason)
+        @listing.should_update_index!
         {listing: @listing.as_json(methods: [:flagged_reason])}
       end
 
