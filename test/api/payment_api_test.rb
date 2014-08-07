@@ -3,8 +3,8 @@ require 'test_helper'
 class PaymentApiSpec < ActionDispatch::IntegrationTest
   before do
     @user = Fabricate(:user, listing_credits: 3)
-    @listing = @user.listings.create!(title: "Title", price: 100, shipping_prices: {'US' => '50',
-      'everywhere' => '100'})
+    @listing = @user.listings.create!(title: "Title", price: 100, state: 'active',
+      shipping_prices: {'US' => '50', 'everywhere' => '100'})
   end
 
   describe "payment create" do

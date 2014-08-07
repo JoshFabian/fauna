@@ -45,11 +45,11 @@ class ListingApiSpec < ActionDispatch::IntegrationTest
   describe "listing event" do
     before do
       @user = Fabricate(:user, listing_credits: 3)
-      @listing = @user.listings.create!(title: "Title", price: 100)
+      @listing = @user.listings.create!(title: "Title", price: 100, state: 'active')
+      @listing.state.must_equal 'active'
     end
 
     it "should allow owner to mark listing as sold" do
-      @listing.state.must_equal 'active'
       put "/api/v1/listings/#{@listing.id}/event/sold?token=#{@user.auth_token}"
       response.success?.must_equal true
       body = JSON.parse(response.body)
@@ -59,8 +59,7 @@ class ListingApiSpec < ActionDispatch::IntegrationTest
       @listing.sold_at.present?.must_equal true
     end
 
-    it "should not allow owner to mark listing as flagged" do
-      @listing.state.must_equal 'active'
+    it "should not allow regular user to mark listing as flagged" do
       put "/api/v1/listings/#{@listing.id}/event/flag?token=#{@user.auth_token}"
       response.status.must_equal 401
     end

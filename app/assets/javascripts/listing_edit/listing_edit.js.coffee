@@ -9,7 +9,7 @@ $(document).ready ->
   # listing edit form
   $("form.listing-edit").validate
     onsubmit: true,
-    ignore: ".draft.step2"
+    ignore: ".new.step2"
     submitHandler: (form) ->
       Tegu.ListingForm.disable_form()
       listing_id = Tegu.ListingForm.get_listing_id()
@@ -25,7 +25,8 @@ $(document).ready ->
             # set listing id
             Tegu.ListingForm.set_listing_id(data.listing.id)
             # update form
-            Tegu.ListingForm.change_draft_state(data.listing.id)
+            Tegu.ListingForm.change_new_state(data.listing.id)
+            Tegu.ListingForm.change_price_constraint()
             # enable form
             Tegu.ListingForm.enable_form('Create Listing')
         ]
@@ -40,22 +41,26 @@ $(document).ready ->
             Tegu.ListingApi.update_images(listing_id, {images: Tegu.ListingImage.cropped_images()}, auth_token, callback)
           (data, callback) ->
             # console.log data
-            Tegu.ListingRoute.show_route(current_user_slug, listing_id, auth_token, callback)
+            if data.listing.state == 'draft'
+              console.log "listing:#{listing_id} is a draft ..."
+              Tegu.ListingApi.put_event(listing_id, 'approve', auth_token, callback)
+            else
+              callback(null, data)
+          (data, callback) ->
+            Tegu.ListingRoute.check_share_route(current_user_slug, listing_id, auth_token, callback)
           (url, callback) ->
             Tegu.ListingForm.enable_form()
             window.location.href = url
         ]
 
-
-  # in draft state, try to save listing when category and title are set
-  $(document).on 'blur', "form.listing-edit.draft .draft.step1", (e) ->
+  # in new state, try to save listing when category and title are set
+  $(document).on 'blur', "form.listing-edit.new .new.step1", (e) ->
     listing_id = Tegu.ListingForm.get_listing_id()
-    # $("#save_draft").trigger 'click'
     listing_form = $(this).closest('form')
-    console.log "listing:#{listing_id} draft check ..."
+    console.log "listing:#{listing_id} new check ..."
     # validate form to show validate errors
     if $(listing_form).valid()
-      console.log "listing:#{listing_id} draft save ..."
+      console.log "listing:#{listing_id} new save ..."
       # turn off handlers
       $(this).off('blur')
       $(this).off('change')
@@ -63,13 +68,13 @@ $(document).ready ->
       Tegu.ListingForm.disable_form()
       Tegu.ListingForm.submit_form()
 
-  $(document).on 'click', "form.listing-edit input.hidden[type='submit']", (e) ->
+  $(document).on 'click', "form.listing-edit input[type='submit']", (e) ->
     listing_form = $(this).closest('form')
-    # skip drafts
-    return if $(listing_form).hasClass('draft')
+    # skip new objects
+    return if $(listing_form).hasClass('new')
     listing_id = Tegu.ListingForm.get_listing_id()
     image_count = $(listing_form).find(".image-grid li:not(.empty) img").length
-    console.log "listing:#{listing_id} images:#{image_count} ..."
+    console.log "listing:#{listing_id} image count:#{image_count} ..."
     if image_count == 0
       e.preventDefault()
       # validate form to show validate errors

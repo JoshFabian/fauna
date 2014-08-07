@@ -15,9 +15,9 @@ class ListingTest < ActiveSupport::TestCase
       @listing.facebook_share.must_equal 0
     end
 
-    it "should start in active state" do
+    it "should start in draft state" do
       @listing = @user.listings.create!(title: "Title 2", price: 100)
-      @listing.state.must_equal 'active'
+      @listing.state.must_equal 'draft'
     end
 
     it "should add user seller role" do
@@ -58,7 +58,7 @@ class ListingTest < ActiveSupport::TestCase
 
   describe "state machine" do
     before do
-      @listing = Fabricate(:listing, user: @user)
+      @listing = Fabricate(:listing, user: @user, state: 'active')
     end
 
     it "should set flagged reason and timestamp on flag event" do
@@ -85,12 +85,36 @@ class ListingTest < ActiveSupport::TestCase
     end
   end
 
+  describe "draft complete" do
+    before do
+      @listing = Fabricate(:listing, user: @user)
+    end
+
+    it "should return false when no images" do
+      @listing.may_approve?.must_equal false
+      @listing.draft_complete?.must_equal false
+    end
+
+    it "should return true with price, 1 image, 1 shipping from" do
+      @listing.images.create!
+      @listing.update(price: 100)
+      @listing.may_approve?.must_equal true
+      @listing.draft_complete?.must_equal true
+    end
+  end
+
   describe "editable" do
     before do
       @listing = Fabricate(:listing, user: @user)
     end
 
-    it "should be editable for 3 days after approval" do
+    it "should be editable in draft state" do
+      @listing.state.must_equal 'draft'
+      @listing.editable?.must_equal true
+    end
+
+    it "should be editable in active state for 3 days after approval" do
+      @listing.update(state: 'active')
       @listing.update_attributes(created_at: 71.hours.ago)
       @listing.editable?.must_equal true
       @listing.update_attributes(created_at: 73.hours.ago)
@@ -160,10 +184,11 @@ class ListingTest < ActiveSupport::TestCase
   describe "search" do
     describe "by category name" do
       before do
+        Listing.delete_all
         Category.delete_all
         @lizards = Category.create!(name: 'Lizards')
         @geckos = Category.create!(name: 'Geckos')
-        @listing1 = @user.listings.create!(title: "Lizard", price: 100)
+        @listing1 = @user.listings.create!(title: "Lizard", price: 100, state: 'active')
         @listing1.categories.push(@lizards)
         @listing1.categories.push(@geckos)
         Listing.import(force: true)
@@ -248,25 +273,35 @@ class ListingTest < ActiveSupport::TestCase
     describe "by state" do
       before do
         Listing.delete_all
-        @listing1 = @user.listings.create!(title: "Lizard", price: 100)
+        @listing = @user.listings.create!(title: "Lizard", price: 100)
         Listing.import(force: true)
         Listing.__elasticsearch__.refresh_index!
       end
 
-      it "should find listings in active state" do
-        @listing1.state.must_equal 'active'
-        Listing.search(filter: {term: {state: 'active'}}).results.size.must_equal 1
-        Listing.search(filter: {term: {state: 'sold'}}).results.size.must_equal 0
+      it "should find listings in draft state" do
+        @listing.state.must_equal 'draft'
+        Listing.search(filter: {term: {state: 'draft'}}).results.size.must_equal 1
+        Listing.search(filter: {term: {state: 'active'}}).results.size.must_equal 0
       end
 
-      it "should find listings matching state and title" do
-        Listing.search({query: {match: {title: 'lizard'}}, filter: {term: {state: 'active'}}}).results.size.must_equal 1
+      it "should find listings in active state" do
+        @listing = flexmock(@listing, :draft_complete? => true)
+        @listing.approve!
+        @listing.state.must_equal 'active'
+        Listing.__elasticsearch__.refresh_index!
+        Listing.search(filter: {term: {state: 'active'}}).results.size.must_equal 1
+        Listing.search(filter: {term: {state: 'draft'}}).results.size.must_equal 0
+      end
+
+      it "should find listings matching draft state and title" do
+        Listing.search({query: {match: {title: 'lizard'}}, filter: {term: {state: 'draft'}}}).results.size.must_equal 1
       end
 
       it "should find listings in sold state" do
-        @listing1.sold!
-        @listing1.reload
-        @listing1.state.must_equal 'sold'
+        @listing = flexmock(@listing, :draft_complete? => true)
+        @listing.approve!
+        @listing.sold!
+        @listing.state.must_equal 'sold'
         Listing.__elasticsearch__.refresh_index!
         Listing.search(filter: {term: {state: 'sold'}}).results.size.must_equal 1
       end

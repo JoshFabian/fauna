@@ -32,25 +32,30 @@ class Listing < ActiveRecord::Base
   friendly_id :title, use: :scoped, scope: :user
 
   aasm column: 'state' do
-    state :active, initial: true
+    state :draft, initial: true
+    state :active
     state :flagged, enter: :event_state_flagged
     state :removed, enter: :event_state_removed
     state :sold, enter: :event_state_sold
 
+    event :approve do
+      transitions to: :active, from: [:active, :draft], guard: :draft_complete?
+    end
+
     event :flag do
-      transitions to: :flagged, :from => [:active, :flagged]
+      transitions to: :flagged, from: [:active, :flagged]
     end
 
     event :remove do
-      transitions to: :removed, :from => [:active, :removed]
+      transitions to: :removed, from: [:active, :removed]
     end
 
     event :report do
-      transitions to: :reported, :from => [:active, :reported]
+      transitions to: :reported, from: [:active, :reported]
     end
 
     event :sold do
-      transitions to: :sold, :from => [:active, :sold]
+      transitions to: :sold, from: [:active, :sold]
     end
   end
 
@@ -92,8 +97,15 @@ class Listing < ActiveRecord::Base
     categories.collect{ |o| o.name.downcase }
   end
 
+  def draft_complete?
+    return false if !draft?
+    persisted? and price > 0 and images.count > 0
+  rescue Exception => e
+    false
+  end
+
   def editable?
-    active? and (self.created_at.blank? or self.created_at > 3.days.ago)
+    draft? or (active? and (self.created_at.blank? or self.created_at > 3.days.ago))
   end
 
   def event_state_flagged

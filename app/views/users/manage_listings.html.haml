@@ -7,6 +7,8 @@
     %ul.pills{:'data-tab' => ""}
       %li.tab-title{class: [@state == 'active' ? 'active' : nil]}
         %a{href: url_for(state: 'active')} Active Listings
+      %li.tab-title{class: [@state == 'draft' ? 'active' : nil]}
+        %a{href: url_for(state: 'draft')} Draft Listings
       %li.tab-title{class: [@state == 'removed' ? 'active' : nil]}
         %a{href: url_for(state: 'removed')} Removed Listings
       %li.tab-title{class: [@state == 'sold' ? 'active' : nil]}
@@ -48,6 +50,7 @@
                   %th
                   %th Name
                   %th Price
+                  %th Shared
                   %th List Date
                   %th Removed Date
                   %th Sold Date
@@ -60,6 +63,7 @@
                     %td.title-cell.small-text
                       = link_to listing.title.truncate(30), user_listing_path(@user, listing)
                     %td= number_to_currency(listing.price/100.0)
+                    %td= listing.facebook_shared? ? 'yes' : 'no'
                     %td.date-cell.small-text
                       = listing.created_at.to_s(:date_dow_ddmmyyyy)
                     %td.date-cell.small-text
@@ -73,7 +77,7 @@
                       - elsif listing.active?
                         = link_to 'Mark as Sold', '#', class: 'mark-sold', :'data-listing-id' => listing.id
                     %td.small-text
-                      - if listing.active?
+                      - if listing.editable?
                         = link_to 'Edit Listing', edit_listing_path(listing.id)
 
     

@@ -30,6 +30,7 @@ Tegu::Application.routes.draw do
   get ':slug/listings/manage' => "users#manage_listings", as: :user_manage_listings
   get ':slug/listings/:id/reviews/new' => "reviews#new", as: :new_listing_review
   get ':slug/listings/:id/edit' => "listings#edit", as: :user_edit_listing
+  get ':slug/listings/:id/check-share' => "listings#check_share", as: :user_check_share_listing
   get ':slug/listings/:id' => "listings#show", as: :user_listing
   get ':slug/listings' => "users#listings", as: :user_listings
   get ':slug/messages' => "users#messages", as: :user_messages
@@ -97,8 +98,8 @@ Tegu::Application.routes.draw do
   post 'signup/create/password', to: "signup#create_password", as: :create_password_signup
 
   # facebook share
-  get 'facebook/share/:klass/:id/auth', to: "facebook_share#auth", as: :facebook_share_auth
-  get 'facebook/share/:klass/:id/share', to: "facebook_share#share", as: :facebook_share
+  get 'facebook/share/:klass/:id/auth(/from/:page)', to: "facebook_share#auth", as: :facebook_share_auth
+  get 'facebook/share/:klass/:id/share(/from/:page)', to: "facebook_share#share", as: :facebook_share
 
   # payments
   resources :payments, only: [:index]

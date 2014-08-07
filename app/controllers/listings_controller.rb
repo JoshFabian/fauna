@@ -1,6 +1,6 @@
 class ListingsController < ApplicationController
 
-  before_filter :authenticate_user!, only: [:new]
+  before_filter :authenticate_user!, only: [:check_share, :edit, :manage, :new]
   before_filter :admin_role_required!, only: [:manage]
   before_filter :seller_verify!, only: [:new]
   before_filter :seller_paid!, only: [:new]
@@ -141,7 +141,7 @@ class ListingsController < ApplicationController
     end
   end
 
-  # GET /listings/1/edit
+  # GET /:handle/listings/1/edit
   def edit
     @listing = current_user.listings.friendly.find(params[:id])
     acl_manage!(on: @listing)
@@ -156,6 +156,18 @@ class ListingsController < ApplicationController
     respond_to do |format|
       format.html
     end
+  end
+
+  # GET /:handle/listings/1/check-share
+  def check_share
+    @listing = current_user.listings.friendly.find(params[:id])
+    acl_manage!(on: @listing)
+    if ListingShare.facebook_share_permissions_required?(@listing) and feature(:story_facebook_share)
+      goto = facebook_share_auth_path('listing', @listing.id, 'listing')
+    else
+      goto = user_listing_path(current_user, @listing)
+    end
+    redirect_to goto and return
   end
 
   protected
