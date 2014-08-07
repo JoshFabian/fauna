@@ -39,7 +39,7 @@ class Listing < ActiveRecord::Base
     state :sold, enter: :event_state_sold
 
     event :approve do
-      transitions to: :active, from: [:active, :draft], guard: :draft_complete?
+      transitions to: :active, from: [:active, :draft, :flagged], guard: :draft_complete?
     end
 
     event :flag do

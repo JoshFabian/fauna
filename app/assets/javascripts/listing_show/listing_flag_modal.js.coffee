@@ -4,7 +4,7 @@ class Tegu.ListingFlagModal
 
 $(document).ready ->
 
-  $("#listing-flag-modal a.button").on 'click', (e) ->
+  $(document).on 'click', "#listing-flag-modal a.button", (e) ->
     e.preventDefault()
     modal = $(this).closest('.reveal-modal')
     listing_id = $(modal).data('listing-id')

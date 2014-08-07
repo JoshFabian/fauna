@@ -4,7 +4,7 @@ class Tegu.ListingReportModal
 
 $(document).ready ->
 
-  $("#listing-report-modal a.button").on 'click', (e) ->
+  $(document).on 'click', "#listing-report-modal a.button", (e) ->
     e.preventDefault()
     modal = $(this).closest('.reveal-modal')
     listing_id = $(modal).data('listing-id')

@@ -121,7 +121,7 @@ class ListingsController < ApplicationController
     @title = "#{@listing.title} | Listing"
 
     respond_to do |format|
-      format.html
+      format.html { render(layout: !request.xhr?) }
     end
   end
 
