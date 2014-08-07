@@ -13,15 +13,18 @@
     name: nginx
     options: {}
   - !ruby/object:Rubber::Configuration::RoleItem
-    name: elasticsearch
-    options: {}
-  - !ruby/object:Rubber::Configuration::RoleItem
-    name: collectd
+    name: sqlite
     options: {}
   - !ruby/object:Rubber::Configuration::RoleItem
     name: db
     options:
       primary: true
+  - !ruby/object:Rubber::Configuration::RoleItem
+    name: elasticsearch
+    options: {}
+  - !ruby/object:Rubber::Configuration::RoleItem
+    name: collectd
+    options: {}
   - !ruby/object:Rubber::Configuration::RoleItem
     name: monit
     options: {}
@@ -31,16 +34,16 @@
   - !ruby/object:Rubber::Configuration::RoleItem
     name: redis_master
     options: {}
-  instance_id: i-d9a402f5
+  instance_id: i-5eff9b75
   image_type: m3.medium
   image_id: ami-4a0df923
   security_groups:
   - default
-  external_host: ec2-54-210-235-218.compute-1.amazonaws.com
-  external_ip: 54.210.235.218
-  internal_host: ip-172-31-47-89.ec2.internal
-  internal_ip: 172.31.47.89
-  zone: us-east-1b
+  external_host: ec2-54-84-183-54.compute-1.amazonaws.com
+  external_ip: 54.84.183.54
+  internal_host: ip-172-31-27-195.ec2.internal
+  internal_ip: 172.31.27.195
+  zone: us-east-1c
   provider: aws
   platform: linux
   root_device_type: ebs
