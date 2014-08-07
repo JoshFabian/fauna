@@ -58,7 +58,7 @@ $(document).ready ->
         console.log "listing:#{listing_id} init image slider ..."
         Tegu.ListingImageSlider.init()
         console.log "listing:#{listing_id} slider open ..."
-        Tegu.ListingSlider.open("/#{user_handle}/listings/#{listing_slug}")
+        Tegu.ListingSlider.open(Tegu.ListingRoute.show_route(user_handle, listing_slug))
     ]
 
   $(document).on 'click', '#closeButton a', (e) ->
