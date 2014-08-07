@@ -1,7 +1,7 @@
 - image = listing.primary_image
 - review = local_assigns.fetch :review, :na
 
-%li.listing.track-listing-peek{:'data-listing-id' => listing.id, :'data-user-id' => listing.user_id}
+%li.listing.track-listing-peek{:'data-listing-id' => listing.id, :'data-listing-slug' => listing.slug, :'data-user-id' => listing.user_id}
   = link_to user_listing_path(user, listing) do
     .listing-panel
       - if review == :completed
