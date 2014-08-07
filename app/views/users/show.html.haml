@@ -44,13 +44,19 @@
   .sub-user-bar
     .row
       %ul.inline-list
-        %li= link_to "Home", user_path(@user), class: [@tab == 'home' ? 'active' : nil]
-        %li= link_to "Listings", user_listings_path(@user), class: [@tab == 'listings' ? 'active' : nil]
+        %li= link_to "Activity", user_path(@user), class: [@tab == 'home' ? 'active' : nil]
+        %li= link_to "Store", user_listings_path(@user), class: [@tab == 'listings' ? 'active' : nil]
         %li= link_to "Reviews", user_reviews_path(@user), class: [@tab == 'reviews' ? 'active' : nil]
         %li.edit.owner.hide{:'data-user-id' => @user.id}= link_to "Messages", user_messages_path(@user), class: [@tab == 'messages' ? 'active' : nil]
         - if false
           %li= link_to "Followers", "#"
           %li= link_to "Following", "#"
+    -# categories
+    %header.global-subhead
+      .row
+        %ul.inline-list
+          - Category.roots.order("position asc").each do |category|
+            %li= link_to category.name, listing_category_path(category.name.parameterize)
 
   - if @tab == 'home'
     = render(partial: "users/user_home", locals: {f: f})
