@@ -1,6 +1,7 @@
 class Tegu.ListingReportModal
-  @open: (listing_id) ->
+  @open: (listing_id, listing_title) ->
     $('#listing-report-modal').find("#listing_id").val(listing_id)
+    $('#listing-report-modal').find(".highlight").text(listing_title)
     $('#listing-report-modal').find("textarea").val("")
     $('#listing-report-modal').foundation('reveal', 'open')
 
@@ -12,8 +13,9 @@ $(document).ready ->
   $(document).on 'click', '.listing-report-modal-open', (e) ->
     e.preventDefault()
     listing_id = $(this).data('listing-id')
+    listing_title = $(this).data('listing-title')
     console.log "listing:#{listing_id} report modal open ..."
-    Tegu.ListingReportModal.open(listing_id)
+    Tegu.ListingReportModal.open(listing_id, listing_title)
 
   $(document).on 'click', "#listing-report-modal a.button", (e) ->
     e.preventDefault()
