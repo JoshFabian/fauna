@@ -3,14 +3,14 @@
 .row
   .new-listing.small-8.columns.small-centered
     %h3.text-center= @title
-    .listing-welcome
-      %h4.text-center Guidelines
-      %p Please follow our marketplace guidelines to help maintain an exceptional experience for both buyers and sellers.
-      %ul
-        %li Each listing should represent a single product just like it would on eBay or Amazon.
-        %li Every listing is linked directly to your Paypal account allowing shoppers to pay you directly with a click.
-        %li The price paid to you via Paypal will be the sum of your price and the shipping option the buyer selects, you keep 100% of the money, we DO NOT take a cut.
-        %li Do not put any contact information or links in your listing, shoppers can checkout directly via your Paypal and reach you via private message.
+    / .listing-welcome
+    /   %h4.text-center Guidelines
+    /   %p Please follow our marketplace guidelines to help maintain an exceptional experience for both buyers and sellers.
+    /   %ul
+    /     %li Each listing should represent a single product just like it would on eBay or Amazon.
+    /     %li Every listing is linked directly to your Paypal account allowing shoppers to pay you directly with a click.
+    /     %li The price paid to you via Paypal will be the sum of your price and the shipping option the buyer selects, you keep 100% of the money, we DO NOT take a cut.
+    /     %li Do not put any contact information or links in your listing, shoppers can checkout directly via your Paypal and reach you via private message.
 
     = form_for(@listing, as: :listing, html: {class: ["form-validation", "listing-edit", @listing.new_record? ? 'new' : @listing.state], :'data-user-id' => current_user.id.to_i, :'data-listing-id' => @listing.id.to_i, :'data-facebook-permission' => current_user.facebook_share_permission? ? 'share' : 'basic'}) do |f|
       .rounded-panel
@@ -43,10 +43,23 @@
           %label Price
           .small-3.columns{:style => "padding: 0;"}
             = f.text_field :price, autofocus: false, required: true, class: ['numeral', @listing.new_record? ? 'any-price' : 'price', @listing.new_record? ? 'new step1' : @listing.state], disabled: !@listing.editable?, placeholder: "$0.00", :'data-number' => @listing.price.to_i, title: "Price is required"
-
-        %hr 
+      .rounded-panel{:style=>"margin-top: 10px;"}
         .listing-field
-          = render(partial: "listings/edit_shipping")
+          %h5 Where will you be selling?
+          %p 
+            Fauna allows users to pay for your listings via paypal directly through our site for a more seamless shopping experience. 
+            %strong We do not take a commission or charge for this feature.
+          .large-12.columns.no-padding
+            .input-option
+              %input#paypal{:name => "checkout-option", :type => "radio", :value => "paypal"}
+                %label{:for => "paypal"} I'll be selling through Paypal
+            .input-option
+              %input#mysite{:name => "checkout-option", :type => "radio", :value => "mysite"}
+                %label{:for => "mysite"} I'll be selling through my own site
+
+          -# Show partial based on selection above       
+          / = render(partial: "listings/edit_checkout_url")
+          / = render(partial: "listings/edit_shipping")
 
         - if (@listing.new_record? or @listing.draft?) and feature(:story_facebook_share)
           .social-share
