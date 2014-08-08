@@ -17,8 +17,8 @@ module Endpoints
         end
 
         def listing_params
-          ActionController::Parameters.new(params).require(:listing).permit(:description, :facebook_share,
-            :price, :shipping_from, :shipping_time, :title).tap do |whitelisted|
+          ActionController::Parameters.new(params).require(:listing).permit(:checkout_option, :checkout_website,
+            :description, :facebook_share, :price, :shipping_from, :shipping_time, :title).tap do |whitelisted|
               whitelisted[:shipping_prices] = params[:listing][:shipping_prices]
           end
         end

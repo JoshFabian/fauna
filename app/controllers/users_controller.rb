@@ -64,7 +64,7 @@ class UsersController < ApplicationController
     @category_id = params[:category_id]
     terms = [ListingFilter.user(@user.id), ListingFilter.state(@state)]
     terms.push(ListingFilter.category(@category_id)) if @category_id.present?
-    query = {filter: {bool: {must: terms}}}
+    query = {filter: {bool: {must: terms}}, sort: {id: "desc"}}
     @listings = Listing.search(query).page(page).per(per).records
 
     @title = "#{@user.handle} | Manage Listings"

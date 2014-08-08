@@ -1,4 +1,5 @@
-.listing-field
-  %label Direct URL to buy this listing:
-  .small-8.columns{:style => "padding: 0;"}
-    %input{"data-number" => "0", :name => "listing[price]", :placeholder => "Enter page address related to this listing on your website", :required => "required", :title => "Website url is required", :type => "text"}
+.small-12.columns.no-padding.checkout-option-website.hide
+  .listing-field
+    %label Direct URL to buy this listing:
+    .small-8.columns{:style => "padding: 0;"}
+      = text_field_tag 'listing[checkout_website]', @listing.checkout_website, placeholder: "Enter page address related to this listing on your website", title: "Website url is required", class: ['checkout-option-website-required',  'url']

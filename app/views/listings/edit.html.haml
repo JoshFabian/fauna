@@ -50,16 +50,19 @@
             Fauna allows users to pay for your listings via paypal directly through our site for a more seamless shopping experience. 
             %strong We do not take a commission or charge for this feature.
           .large-12.columns.no-padding
-            .input-option
-              %input#paypal{:name => "checkout-option", :type => "radio", :value => "paypal"}
-                %label{:for => "paypal"} I'll be selling through Paypal
-            .input-option
-              %input#mysite{:name => "checkout-option", :type => "radio", :value => "mysite"}
-                %label{:for => "mysite"} I'll be selling through my own site
+            .input-option.checkout-option
+              = radio_button("checkout", "option", 'paypal', class: ['required', @listing.new_record? ? 'new step2' : @listing.state], name: 'listing[checkout_option]', checked: @listing.checkout_option == 'paypal', title: "Checkout option is required")
+              %label{for: "checkout_option_paypal"} I'll be selling through Paypal
+            .input-option.checkout-option
+              = radio_button("checkout", "option", 'website', class: ['required', @listing.new_record? ? 'new step2' : @listing.state], name: 'listing[checkout_option]', checked: @listing.checkout_option == 'website', title: "Checkout option is required")
+              %label{for: "checkout_option_website"} I'll be selling through my own site
 
-          -# Show partial based on selection above       
-          / = render(partial: "listings/edit_checkout_url")
-          / = render(partial: "listings/edit_shipping")
+          -# error message for checkout option
+          %label.error{for: 'listing[checkout_option]', style: 'display: none;'}
+
+          -# show/hide partial based on checkout option selection
+          = render(partial: "listings/edit_checkout_url")
+          = render(partial: "listings/edit_shipping")
 
         - if (@listing.new_record? or @listing.draft?) and feature(:story_facebook_share)
           .social-share

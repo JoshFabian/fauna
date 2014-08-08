@@ -1,16 +1,16 @@
--# Show if buying with paypal
-
-= select_tag "listing[shipping_to]", options_for_select(listing_shipping_prices_options(@listing)), class: 'shipping-selector shipping-dropdown', prompt: "Select Shipping", :'data-listing-id' => @listing.id
-.error-state.hide Please select a shipping option.
-= link_to 'Checkout with Paypal', '#', class: 'button buy-button checkout secondary disabled track-listing-view', :'data-listing-id' => @listing.id
-
--# Show if buying on seller website
-/ = link_to 'http://www.google.com', class: 'button buy-button button-link track-listing-view', :target => "_blank" do
-/ 	Visit seller website
-/ 	%i.ion-share
+-# switch based on listing checkout option
+- if @listing.checkout_option == 'paypal'
+  = select_tag "listing[shipping_to]", options_for_select(listing_shipping_prices_options(@listing)), class: 'shipping-selector shipping-dropdown', prompt: "Select Shipping", :'data-listing-id' => @listing.id
+  .error-state.hide Please select a shipping option.
+  = link_to 'Checkout with Paypal', '#', class: 'button buy-button checkout secondary disabled track-listing-view', :'data-listing-id' => @listing.id
+- elsif @listing.checkout_option == 'website'
+  = link_to @listing.checkout_website, class: 'button buy-button button-link track-listing-view', :target => "_blank" do
+    Visit seller website
+    %i.ion-share
 
 .small-12.columns.no-padding
+
 = link_to 'Ask a question', '#', class: 'button ask-question listing-message-modal-open', :'data-listing-id' => @listing.id, :'data-listing-title' => @listing.title, :'data-user-id' => @listing.user_id
 = link_to 'Report Listing', '#', class: 'remove-link listing-report-modal-open', :'data-listing-id' => @listing.id, :'data-listing-title' => @listing.title
 - if !@listing.flagged?
-	= link_to 'Flag', '#', class: 'remove-link admin hide listing-flag-modal-open', :'data-listing-id' => @listing.id, :'data-listing-title' => @listing.title
+  = link_to 'Flag', '#', class: 'remove-link admin hide listing-flag-modal-open', :'data-listing-id' => @listing.id, :'data-listing-title' => @listing.title

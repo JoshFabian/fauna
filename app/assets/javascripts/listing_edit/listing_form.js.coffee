@@ -24,13 +24,13 @@ class Tegu.ListingForm
   @submit_form: () ->
     $("form.listing-edit").submit()
 
-  @format_currency: () ->
-    $("input.numeral").map ->
-      try
-        number = $(this).data('number')
-        number = numeral(number/100).format('$0,0.00')
-        $(this).val(number)
-      catch
+  @init: () ->
+    @init_currency()
+    @init_checkout_option()
+    @init_shipping_table()
+
+  @init_checkout_option: () ->
+    $(".checkout-option:first").trigger 'click'
 
   @init_cloudinary: () ->
     for li in $(".image-grid li")
@@ -40,6 +40,29 @@ class Tegu.ListingForm
   @init_currency: () ->
     if $("input.numeral").length > 0
       Tegu.ListingForm.format_currency()
+
+  @init_shipping_table: () ->
+    $("select#listing_shipping_from").trigger('change')
+
+  @format_currency: () ->
+    $("input.numeral").map ->
+      try
+        number = $(this).data('number')
+        number = numeral(number/100).format('$0,0.00')
+        $(this).val(number)
+      catch
+
+  @show_checkout_paypal: () ->
+    $(".checkout-option-paypal-required").addClass('required')
+    $(".checkout-option-website-required").removeClass('required')
+    $(".checkout-option-paypal").show()
+    $(".checkout-option-website").hide()
+
+  @show_checkout_website: () ->
+    $(".checkout-option-website-required").addClass('required')
+    $(".checkout-option-paypal-required").removeClass('required')
+    $(".checkout-option-website").show()
+    $(".checkout-option-paypal").hide()
 
   @get_images: (listing_id, callback=null) ->
     $.ajax "/listing_forms/#{listing_id}/images.js",
