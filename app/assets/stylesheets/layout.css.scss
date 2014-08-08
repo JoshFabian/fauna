@@ -378,6 +378,20 @@
       text-align: center;
     }
   }
+  .input-option {
+    display: inline-block;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+    padding: 0 15px;
+    margin-bottom: 20px;
+    input {
+      margin-bottom: 0;
+    }
+    label {
+      margin: 0;
+      padding: 10px 0px 10px 5px;
+    }
+  }
   #listing_description {
     height: 100px;
     line-height: 20px;
