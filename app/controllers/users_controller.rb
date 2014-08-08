@@ -21,10 +21,6 @@ class UsersController < ApplicationController
   def show
     @user, @me, @cover_images, @cover_set, @image = user_show_init
 
-    if feature(:user_feed)
-      @stories = []
-    end
-
     @total_listings = @user.listings.active.count
     @recent_listings = @user.listings.active.order("id desc").limit(3)
     @recent_reviews = @user.listing_reviews.order("id desc").limit(4)
