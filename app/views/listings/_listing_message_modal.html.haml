@@ -1,9 +1,9 @@
 #listing-message-modal.reveal-modal.small{"data-reveal" => ""}
   = hidden_field_tag :listing_id, 0
   = hidden_field_tag :user_id, 0
-  %h5 
-    Ask a question about 
-    %span.highlight= @listing.title
+  %h5
+    Ask a question about
+    %span.highlight
   %input.rounded-input.message-subject{placeholder: "Message Subject"}
   %textarea.message-body{placeholder: "Message Body"}
   = link_to 'Send Message', '#', class: 'button orange-button right'

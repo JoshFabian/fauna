@@ -2,7 +2,7 @@
 .error-state.hide Please select a shipping option.
 = link_to 'Checkout with Paypal', '#', class: 'button buy-button checkout secondary disabled track-listing-view', :'data-listing-id' => @listing.id
 .small-12.columns.no-padding
-= link_to 'Ask a question', '#', class: 'button ask-question listing-message-modal-open', :'data-listing-id' => @listing.id, :'data-user-id' => @listing.user_id
+= link_to 'Ask a question', '#', class: 'button ask-question listing-message-modal-open', :'data-listing-id' => @listing.id, :'data-listing-title' => @listing.title, :'data-user-id' => @listing.user_id
 = link_to 'Report Listing', '#', class: 'remove-link listing-report-modal-open', :'data-listing-id' => @listing.id
 - if !@listing.flagged?
   = link_to 'Flag', '#', class: 'remove-link admin hide listing-flag-modal-open', :'data-listing-id' => @listing.id
