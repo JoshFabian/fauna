@@ -14,7 +14,8 @@
       .listing-info
         .title
           = listing.title
-          %a.listing-card-open Click me
+          - if feature(:listing_card)
+            %a.listing-card-open Click me
         .breeder
           = user.handle
         .price
