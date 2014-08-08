@@ -2,7 +2,6 @@
 
 body {
   background: #eee !important;
-  min-width: 1075px !important;
   padding-top: 150px !important;
   &.no-scroll {
     overflow: hidden;
@@ -29,6 +28,9 @@ ul {
 
 .body-wrapper {
   min-height: 650px;
+  @media (max-width: 1000px) {
+    padding: 0 10px;
+  }
 }
 
 .floating-table {

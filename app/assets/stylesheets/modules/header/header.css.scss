@@ -156,33 +156,6 @@
         }
       }
     }
-    &:after, &:before {
-      bottom: 10px;
-      left: 35px;
-      border: solid transparent;
-      content: " ";
-      height: 0;
-      width: 0;
-      position: absolute;
-      pointer-events: none;
-      @media (max-width: 430px) {
-        display: none;
-        border: none;
-      }
-    }
-
-    &:after {
-      border-color: rgba(249, 249, 249, 0);
-      border-bottom-color: #f9f9f9;
-      border-width: 9px;
-      margin-left: -9px;
-    }
-    &:before {
-      border-color: rgba(214, 214, 214, 0);
-      border-bottom-color: #d6d6d6;
-      border-width: 10px;
-      margin-left: -10px;
-    }
   }
 }
 
