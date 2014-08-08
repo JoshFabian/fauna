@@ -3,6 +3,10 @@
 body {
   background: #eee !important;
   min-width: 1075px !important;
+  padding-top: 150px !important;
+  &.no-scroll {
+    overflow: hidden;
+  }
 }
 
 a {

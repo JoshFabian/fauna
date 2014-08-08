@@ -2,36 +2,9 @@ $(document).ready ->
 
   # royal slider plugin
 
-  if $('#listing-slider').length > 0
+  if $('.listing-image-slider').length > 0
     console.log "init image slider"
-    $('#listing-slider').royalSlider
-      fullscreen: {
-        enabled: true,
-        nativeFS: true
-      },
-      controlNavigation: 'thumbnails',
-      autoScaleSlider: true, 
-      autoScaleSliderWidth: 970,     
-      autoScaleSliderHeight: 860,
-      loop: false,
-      imageScaleMode: 'fit-if-smaller',
-      navigateByClick: true,
-      numImagesToPreload:2,
-      arrowsNav:true,
-      arrowsNavAutoHide: true,
-      arrowsNavHideOnTouch: true,
-      keyboardNavEnabled: true,
-      fadeinLoadedSlide: true,
-      globalCaption: false,
-      globalCaptionInside: false,
-      thumbs: {
-        appendSpan: true,
-        firstMargin: true,
-        autoCenter: false,
-        spacing: 5,
-        paddingTop: 5,
-        paddingBottom: 5,
-      }
+    Tegu.ListingImageSlider.init()
 
   # image slider
   # deprecated
@@ -53,7 +26,7 @@ $(document).ready ->
 
   # pills
 
-  $(".listing-images .pills .tab-title").on 'click', (e) ->
+  $(document).on 'click', ".listing-images .pills .tab-title",  (e) ->
     e.preventDefault()
     pill = $(this).data('pill')
     console.log "pill:#{pill} click ..."

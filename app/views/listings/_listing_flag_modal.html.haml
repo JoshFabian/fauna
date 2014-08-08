@@ -1,4 +1,5 @@
-#listing-flag-modal.reveal-modal.small{"data-reveal" => "", :'data-listing-id' => @listing.id}
+#listing-flag-modal.reveal-modal.small{"data-reveal" => ""}
+  = hidden_field_tag :listing_id, 0
   %h2 Flag Listing
   %p.lead Why are you flagging this?
   %textarea

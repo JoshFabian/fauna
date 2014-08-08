@@ -6,6 +6,9 @@
   background: #fff;
   padding-top: 15px;
   padding-bottom: 15px;
+  position: fixed;
+  top: 0;
+  z-index: 1;
   .header-logo {
     width: 105px;
   }
@@ -126,6 +129,9 @@
   border-top: 1px solid #d6d6d6;
   position: relative;
   margin-bottom: 30px;
+  position: fixed;
+  top: 66px;
+  z-index: 2;
   @media (max-width: 430px) {
     overflow: scroll;
     .inline-list {

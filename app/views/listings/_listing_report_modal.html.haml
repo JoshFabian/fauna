@@ -1,6 +1,10 @@
-#listing-report-modal.reveal-modal.small{"data-reveal" => "", :'data-listing-id' => @listing.id}
-  %h2 Report Listing
-  %p.lead Why are you reporting this?
+#listing-report-modal.reveal-modal.small{"data-reveal" => ""}
+  = hidden_field_tag :listing_id, 0
+  %h5
+    Report Listing
+    %span.highlight
+  %p.lead
+    Why are you reporting this?
   %textarea
   = link_to 'Report', '#', class: 'button orange-button right'
   %a.close-reveal-modal ×

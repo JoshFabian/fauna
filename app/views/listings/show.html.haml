@@ -1,23 +1,25 @@
-- content_for :title, @title
+- if !request.xhr?
+  - content_for :title, @title
 
-- content_for :facebook_meta_tags do
-  %meta{property: "og:title", content: @listing.title}
-  %meta{property: "og:site_name", content: "Fauna"}
-  %meta{property: "og:url", content: url_for(only_path: false)}
-  %meta{property: "og:image", content: cloudinary_url(@main_image.try(:full_public_id))}
-  %meta{property: "fb:app_id", content: Settings[Rails.env][:fb_app_id]}
+  - content_for :facebook_meta_tags do
+    %meta{property: "og:title", content: @listing.title}
+    %meta{property: "og:site_name", content: "Fauna"}
+    %meta{property: "og:url", content: url_for(only_path: false)}
+    %meta{property: "og:image", content: cloudinary_url(@main_image.try(:full_public_id))}
+    %meta{property: "fb:app_id", content: Settings[Rails.env][:fb_app_id]}
 
-:css
-  #listing-slider {
-    width: 100%;
-    -webkit-user-select: none;
-    -moz-user-select: none;  
-    user-select: none;
-  }
-  .royalSlider img {
-    width: 100%;
-    height: auto;
-  }
+- if !request.xhr?
+  :css
+    .listing-image-slider {
+      width: 100%;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+    .royalSlider img {
+      width: 100%;
+      height: auto;
+    }
 
 .row
   -# listing messages
@@ -36,7 +38,7 @@
 
   .list-panel
     .listing-images.small-7.columns
-      #listing-slider.royalSlider.rsDefault
+      .listing-image-slider.royalSlider.rsDefault
         - @all_images.each do |image|
           %a.rsImg.bugaga{"data-rsBigImg" => "#{listing_image_show_big(image)}", :href => "#{listing_image_show_big(image)}"}
             = image_tag listing_image_show_big(image), :class => "rsTmb"
@@ -88,16 +90,19 @@
 
       = render(partial: "listings/listing_user_widget")
 
-  .more-listings
-    %h5 More Listings
-    %ul.list-grid.small-block-grid-4
-      - @other_listings.each do |listing|
-        = render(partial: "listings/listing_tile", locals: {listing: listing, user: listing.user})
+  - if !request.xhr?
+    .more-listings
+      %h5 More Listings
+      %ul.list-grid.small-block-grid-4
+        - @other_listings.each do |listing|
+          = render(partial: "listings/listing_tile", locals: {listing: listing, user: listing.user})
 
-  = render(partial: 'listings/listing_message_modal')
-  = render(partial: 'listings/listing_report_modal')
-  = render(partial: 'listings/listing_flag_modal')
+  -# moved to footer
+  -# = render(partial: 'listings/listing_message_modal')
+  -# = render(partial: 'listings/listing_report_modal')
+  -# = render(partial: 'listings/listing_flag_modal')
 
+- if !request.xhr?
   #fb-root
   :javascript
     (function(d, s, id) {
