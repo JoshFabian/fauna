@@ -1,6 +1,7 @@
 class Tegu.ListingFlagModal
-  @open: (listing_id) ->
+  @open: (listing_id, listing_title) ->
     $('#listing-flag-modal').find("#listing_id").val(listing_id)
+    $('#listing-flag-modal').find(".highlight").text(listing_title)
     $('#listing-flag-modal').find("textarea").val("")
     $('#listing-flag-modal').foundation('reveal', 'open')
 
@@ -12,8 +13,9 @@ $(document).ready ->
   $(document).on 'click', '.listing-flag-modal-open', (e) ->
     e.preventDefault()
     listing_id = $(this).data('listing-id')
+    listing_title = $(this).data('listing-title')
     console.log "listing:#{listing_id} flag modal open ..."
-    Tegu.ListingFlagModal.open(listing_id)
+    Tegu.ListingFlagModal.open(listing_id, listing_title)
 
   $(document).on 'click', "#listing-flag-modal a.button", (e) ->
     e.preventDefault()

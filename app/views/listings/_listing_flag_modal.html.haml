@@ -1,7 +1,9 @@
 #listing-flag-modal.reveal-modal.small{"data-reveal" => ""}
   = hidden_field_tag :listing_id, 0
-  %h2 Flag Listing
-  %p.lead Why are you flagging this?
+  %h5
+    Flag Listing
+    %span.highlight
+  %p Why are you flagging this?
   %textarea
   = link_to 'Flag', '#', class: 'button orange-button right'
   %a.close-reveal-modal ×
