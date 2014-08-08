@@ -1,4 +1,6 @@
-#listing-message-modal.reveal-modal.small{"data-reveal" => "", :'data-listing-id' => @listing.id, :'data-user-id' => @listing.user_id}
+#listing-message-modal.reveal-modal.small{"data-reveal" => ""}
+  = hidden_field_tag :listing_id, 0
+  = hidden_field_tag :user_id, 0
   %h5 
     Ask a question about 
     %span.highlight= @listing.title

@@ -24,5 +24,8 @@
         %li= link_to "TOS", about_terms_path
         %li= link_to "Privacy", about_privacy_path
 
--# listing card
+-# listing card and modals
 = render(partial: "shared/listing_card")
+= render(partial: 'listings/listing_message_modal')
+= render(partial: 'listings/listing_report_modal')
+= render(partial: 'listings/listing_flag_modal')
