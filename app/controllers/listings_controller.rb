@@ -59,7 +59,10 @@ class ListingsController < ApplicationController
     begin
       @query = params[:query].to_s
       raise ListingException, "missing search query" if @query.blank?
-      @listings = Listing.search(@query).page(page).per(per).records
+      terms = [ListingFilter.state('active')]
+      search = {query: {match: {'_all' => Search.wildcard_query(@query)}}, filter: {bool: {must: terms}},
+        sort: {id: "desc"}}
+      @listings = Listing.search(search).page(page).per(per).records
     rescue Exception => e
       @listings = []
     end
