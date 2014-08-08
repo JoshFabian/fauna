@@ -1,14 +1,16 @@
 .small-12.columns
-  .alert-box.info.radius{"data-alert" => ""}
-    You must have at least 10 listings to unlock additional Stores features!
-    %a.close{:href => "#"} &times;
-%h5{:style => "float: left; position: relative; top: 0px;"} All Listings
-.search{:style => "float: right;margin-bottom: 15px;width: auto;"}
-  %div{:style => "margin:0;padding:0;display:inline"}
-    %input{:name => "utf8", :type => "hidden", :value => "✓"}
-      %input{:name => "authenticity_token", :type => "hidden", :value => "JonHpAebf+Lf1zR+jCwpVt0ZjjfhN3qMsGmDFj0uTdY="}/
-  %input#_query{:name => "query", :placeholder => "Search ...", :type => "text"}
-    %i.icon.ion-ios7-search-strong
+  .row
+    .alert-box.info.radius{"data-alert" => ""}
+      You must have at least 10 listings to unlock additional Stores features!
+      %a.close{:href => "#"} &times;
+.row
+  %h5{:style => "float: left; position: relative; top: 0px;"} All Listings
+  .search{:style => "float: right;margin-bottom: 15px;width: auto;"}
+    %div{:style => "margin:0;padding:0;display:inline"}
+      %input{:name => "utf8", :type => "hidden", :value => "✓"}
+        %input{:name => "authenticity_token", :type => "hidden", :value => "JonHpAebf+Lf1zR+jCwpVt0ZjjfhN3qMsGmDFj0uTdY="}/
+    %input#_query{:name => "query", :placeholder => "Search ...", :type => "text"}
+      %i.icon.ion-ios7-search-strong
 .row
   - if @listings.blank?
     -# Empty State

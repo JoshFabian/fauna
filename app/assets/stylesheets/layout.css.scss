@@ -506,6 +506,13 @@
   background: #fff;
   @extend %shadow;
   margin-bottom: 30px;
+  .global-subhead {
+    ul {
+      &::before, &::after {
+        display: none;
+      }
+    }
+  }
   ul {
     padding-bottom: 0;
     margin-bottom: 0;
