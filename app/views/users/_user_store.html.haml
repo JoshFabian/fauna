@@ -8,12 +8,11 @@
 - if @store
   .row
     %h5{:style => "float: left; position: relative; top: 0px;"}= @subtitle
-    .search{:style => "float: right;margin-bottom: 15px;width: auto;"}
+    -# .search{:style => "float: right;margin-bottom: 15px;width: auto;"}
+    = form_for "", url: user_store_search_path(@user), method: :post, html: {class: "search-form search", style: "float: right;margin-bottom: 15px;width: auto;"} do |f|
       %div{:style => "margin:0;padding:0;display:inline"}
-        %input{:name => "utf8", :type => "hidden", :value => "✓"}
-          %input{:name => "authenticity_token", :type => "hidden", :value => "JonHpAebf+Lf1zR+jCwpVt0ZjjfhN3qMsGmDFj0uTdY="}/
-      %input#_query{:name => "query", :placeholder => "Search ...", :type => "text"}
-        %i.icon.ion-ios7-search-strong
+      = f.text_field 'query', name: 'query', value: @query, placeholder: 'Search ...'
+      %i.icon.ion-ios7-search-strong
 
 .row
   - if @listings.blank?

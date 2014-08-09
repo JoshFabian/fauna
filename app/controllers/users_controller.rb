@@ -143,13 +143,27 @@ class UsersController < ApplicationController
   end
 
   # GET /:slug/store/category/:category
-  def store_by_category
+  # POST /:slug/store/search?query=q
+  def store_by_filter
     @user, @me, @cover_images, @cover_set, @image = user_show_init
 
-    token = params[:category].titleize.split.first
-    @category = Category.roots.find_by_match(token)
-    terms = [ListingFilter.user(@user.id), ListingFilter.state('active'), ListingFilter.category(@category.try(:id))]
-    query = {filter: {bool: {must: terms}}}
+    # build terms
+    terms = [ListingFilter.user(@user.id), ListingFilter.state('active')]
+
+    if params[:category].present?
+      token = params[:category].titleize.split.first
+      @category = Category.roots.find_by_match(token)
+      # add filter category term
+      terms.push(ListingFilter.category(@category.try(:id)))
+      query = {filter: {bool: {must: terms}}, sort: {id: "desc"}}
+    elsif params[:query].present?
+      # add match query
+      @query = params[:query].to_s
+      query = {query: {match: {'_all' => @query}}, filter: {bool: {must: terms}}}
+    end
+
+    # terms = [ListingFilter.user(@user.id), ListingFilter.state('active'), ListingFilter.category(@category.try(:id))]
+    # query = {filter: {bool: {must: terms}}, sort: {id: "desc"}}
     @listings = Listing.search(query).page(page).per(per).records
 
     @store = @user.listings.count >= 10
