@@ -52,13 +52,13 @@
           %li= link_to "Followers", "#"
           %li= link_to "Following", "#"
 
-    - if @tab == 'listings'
-      -# categories
+    - if @store
+      -# store categories
       %header.global-subhead
         .row
           %ul.inline-list
             - Category.roots.order("position asc").each do |category|
-              %li= link_to category.name, listing_category_path(category.name.parameterize)
+              %li= link_to category.name, user_store_category_path(@user, category.name.parameterize), class: [@category.try(:name) == category.name ? 'active' : nil]
 
   - if @tab == 'home'
     = render(partial: "users/user_home", locals: {f: f})

@@ -132,13 +132,32 @@ class UsersController < ApplicationController
     @listings = Listing.search(query).page(page).per(per).records
 
     @store = @user.listings.count >= 10
-
     @tab = 'store'
 
     @title = "#{@user.handle} | Store"
 
     respond_to do |format|
       format.html
+    end
+  end
+
+  # GET /:slug/store/category/:category
+  def store_by_category
+    @user, @me, @cover_images, @cover_set, @image = user_show_init
+
+    token = params[:category].titleize.split.first
+    @category = Category.roots.find_by_match(token)
+    terms = [ListingFilter.user(@user.id), ListingFilter.state('active'), ListingFilter.category(@category.try(:id))]
+    query = {filter: {bool: {must: terms}}}
+    @listings = Listing.search(query).page(page).per(per).records
+
+    @store = @user.listings.count >= 10
+    @tab = 'store'
+
+    @title = "#{@user.handle} | Store"
+
+    respond_to do |format|
+      format.html { render(action: :store) }
     end
   end
 
