@@ -117,6 +117,10 @@ class User < ActiveRecord::Base
     [first_name.first(1), last_name.first(1)].compact.join('') rescue ''
   end
 
+  def listing_category_ids
+    listings.includes(:categories).where("categories.level == 1").references(:categories).pluck("distinct category_id")
+  end
+
   # reviews for user's listing
   def listing_reviews
     Review.where(listing_id: listings.select(:id).collect(&:id))

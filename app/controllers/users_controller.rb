@@ -126,7 +126,7 @@ class UsersController < ApplicationController
     terms = [ListingFilter.user(@user.id), ListingFilter.state('active')]
     query = {filter: {bool: {must: terms}}}
     @listings = Listing.search(query).page(page).per(per).records
-
+    @category_ids = @user.listing_category_ids
     @store = @user.store?
     @tab = 'store'
     @subtitle = "All Listings"
@@ -159,6 +159,7 @@ class UsersController < ApplicationController
     end
 
     @listings = Listing.search(query).page(page).per(per).records
+    @category_ids = @user.listing_category_ids
     @store = @user.store?
     @tab = 'store'
     @subtitle = [@category.present? ? @category.try(:name) : "Search Results"].compact.join(' ')

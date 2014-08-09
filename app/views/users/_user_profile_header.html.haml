@@ -57,7 +57,7 @@
       %header.global-subhead
         .row
           %ul.inline-list
-            - Category.roots.order("position asc").each do |category|
+            - Category.roots.where(id: @category_ids).order("position asc").each do |category|
               %li= link_to category.name, user_store_category_path(@user, category.name.parameterize), class: [@category.try(:name) == category.name ? 'active' : nil]
 
   - if @tab == 'home'
