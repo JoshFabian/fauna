@@ -45,7 +45,7 @@
     .row
       %ul.inline-list
         %li= link_to "Activity", user_path(@user), class: [@tab == 'home' ? 'active' : nil]
-        %li= link_to "Store", user_listings_path(@user), class: [@tab == 'listings' ? 'active' : nil]
+        %li= link_to "Store", user_store_path(@user), class: [@tab == 'store' ? 'active' : nil]
         %li= link_to "Reviews", user_reviews_path(@user), class: [@tab == 'reviews' ? 'active' : nil]
         %li.edit.owner.hide{:'data-user-id' => @user.id}= link_to "Messages", user_messages_path(@user), class: [@tab == 'messages' ? 'active' : nil]
         - if false

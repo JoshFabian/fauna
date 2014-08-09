@@ -43,25 +43,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /:slug/listings
-  def listings
-    @user, @me, @cover_images, @cover_set, @image = user_show_init
-
-    terms = [ListingFilter.user(@user.id), ListingFilter.state('active')]
-    query = {filter: {bool: {must: terms}}}
-    @listings = Listing.search(query).page(page).per(per).records
-
-    @store = @user.listings.count >= 10
-
-    @tab = 'listings'
-
-    @title = "#{@user.handle} | Listings"
-
-    respond_to do |format|
-      format.html
-    end
-  end
-
   # GET /:slug/listings/manage
   # GET /:slug/listings/manage?category_id=1&state=active
   def manage_listings
@@ -136,6 +117,25 @@ class UsersController < ApplicationController
     session[:verify_phone_return_to] = request.path
 
     @title = "My Settings"
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  # GET /:slug/store
+  def store
+    @user, @me, @cover_images, @cover_set, @image = user_show_init
+
+    terms = [ListingFilter.user(@user.id), ListingFilter.state('active')]
+    query = {filter: {bool: {must: terms}}}
+    @listings = Listing.search(query).page(page).per(per).records
+
+    @store = @user.listings.count >= 10
+
+    @tab = 'store'
+
+    @title = "#{@user.handle} | Store"
 
     respond_to do |format|
       format.html
