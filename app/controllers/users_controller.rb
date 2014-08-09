@@ -153,7 +153,7 @@ class UsersController < ApplicationController
     if params[:category].present?
       token = params[:category].titleize.split.first
       @category = Category.roots.find_by_match(token)
-      # add filter category term
+      # add category term
       terms.push(ListingFilter.category(@category.try(:id)))
       query = {filter: {bool: {must: terms}}, sort: {id: "desc"}}
     elsif params[:query].present?
@@ -165,7 +165,7 @@ class UsersController < ApplicationController
     @listings = Listing.search(query).page(page).per(per).records
     @store = @user.store?
     @tab = 'store'
-    @subtitle = [@category.try(:name)].compact.join(' ')
+    @subtitle = [@category.present? ? @category.try(:name) : "Search Results"].compact.join(' ')
 
     @title = "#{@user.handle} | Store"
 
