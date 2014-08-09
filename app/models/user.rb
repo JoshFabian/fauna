@@ -118,7 +118,7 @@ class User < ActiveRecord::Base
   end
 
   def listing_category_ids
-    listings.includes(:categories).where("categories.level == 1").references(:categories).pluck("distinct category_id")
+    listings.includes(:categories).where("categories.level = 1").references(:categories).pluck("distinct category_id")
   end
 
   # reviews for user's listing
