@@ -25,7 +25,8 @@ class Listing < ActiveRecord::Base
 
   serialize :shipping_prices, Hash
 
-  store :data, accessors: [:facebook_share, :facebook_share_id, :flagged_reason, :shipping_from, :shipping_time]
+  store :data, accessors: [:checkout_option, :checkout_website, :facebook_share, :facebook_share_id,
+    :flagged_reason, :shipping_from, :shipping_time]
 
   attr_accessor :shipping_to
 
@@ -39,7 +40,7 @@ class Listing < ActiveRecord::Base
     state :sold, enter: :event_state_sold
 
     event :approve do
-      transitions to: :active, from: [:active, :draft], guard: :draft_complete?
+      transitions to: :active, from: [:active, :draft, :flagged], guard: :draft_complete?
     end
 
     event :flag do

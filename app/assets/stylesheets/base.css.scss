@@ -3,6 +3,10 @@
 body {
   background: #eee !important;
   min-width: 1075px !important;
+  padding-top: 150px !important;
+  &.no-scroll {
+    overflow: hidden;
+  }
 }
 
 a {
@@ -47,7 +51,7 @@ ul {
     width: 200px;
   }
   .title-cell {
-    width: 300px;
+    width: 250px;
   }
   .small-text {
     font-size: 0.8em;

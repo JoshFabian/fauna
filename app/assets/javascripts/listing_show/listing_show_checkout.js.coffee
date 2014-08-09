@@ -42,7 +42,7 @@ $(document).ready ->
   #       $(".checkout-total .price").html(data.listing.total_price_string)
   #   ]
 
-  $("select#listing_shipping_to").on 'change', (e) ->
+  $(document).on 'change', "select#listing_shipping_to", (e) ->
     listing_id = $(this).data('listing-id')
     shipping_to = $(this).find("option:selected").val()
     if !shipping_to
@@ -65,7 +65,7 @@ $(document).ready ->
         # $(".checkout-total .price").html(data.listing.total_price_string)
     ]
 
-  $("a.checkout").on 'click', (e) ->
+  $(document).on 'click', "a.checkout", (e) ->
     e.preventDefault()
     if $(this).hasClass('disabled')
       return Tegu.CheckoutForm.show_shipping_error()

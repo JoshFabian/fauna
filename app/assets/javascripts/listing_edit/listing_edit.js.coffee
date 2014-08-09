@@ -1,11 +1,5 @@
 $(document).ready ->
 
-  try
-    if $("form.listing-edit").length > 0
-      # init listing id
-      Tegu.ListingForm.set_listing_id($("form.listing-edit").data('listing-id'))
-  catch e
-
   # listing edit form
   $("form.listing-edit").validate
     onsubmit: true,
@@ -68,9 +62,18 @@ $(document).ready ->
       Tegu.ListingForm.disable_form()
       Tegu.ListingForm.submit_form()
 
+  $(document).on 'click', '.checkout-option', (e) ->
+    listing_id = Tegu.ListingForm.get_listing_id()
+    checkout_option = $(".checkout-option input:checked").val()
+    console.log "listing:#{listing_id} checkout option #{checkout_option} selected ..."
+    if checkout_option == 'paypal'
+      Tegu.ListingForm.show_checkout_paypal()
+    else if checkout_option == 'website'
+      Tegu.ListingForm.show_checkout_website()
+
   $(document).on 'click', "form.listing-edit input[type='submit']", (e) ->
     listing_form = $(this).closest('form')
-    # skip new objects
+    # skip if its a new listing
     return if $(listing_form).hasClass('new')
     listing_id = Tegu.ListingForm.get_listing_id()
     image_count = $(listing_form).find(".image-grid li:not(.empty) img").length

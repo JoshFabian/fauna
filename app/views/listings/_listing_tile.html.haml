@@ -1,7 +1,7 @@
 - image = listing.primary_image
 - review = local_assigns.fetch :review, :na
 
-%li.listing.track-listing-peek{:'data-listing-id' => listing.id}
+%li.listing.track-listing-peek{:'data-listing-id' => listing.id, :'data-listing-slug' => listing.slug, :'data-user-id' => listing.user_id}
   = link_to user_listing_path(user, listing) do
     .listing-panel
       - if review == :completed
@@ -14,6 +14,8 @@
       .listing-info
         .title
           = listing.title
+          - if feature(:listing_card)
+            %a.listing-card-open.right{style: 'font-size: 0.85em;'} Click me
         .breeder
           = user.handle
         .price

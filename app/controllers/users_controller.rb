@@ -22,10 +22,6 @@ class UsersController < ApplicationController
   def show
     @user, @me, @cover_images, @cover_set, @image = user_profile_init
 
-    if feature(:user_feed)
-      @stories = []
-    end
-
     @total_listings = @user.listings.active.count
     @recent_listings = @user.listings.active.order("id desc").limit(3)
     @recent_reviews = @user.listing_reviews.order("id desc").limit(4)
@@ -52,7 +48,7 @@ class UsersController < ApplicationController
     @category_id = params[:category_id]
     terms = [ListingFilter.user(@user.id), ListingFilter.state(@state)]
     terms.push(ListingFilter.category(@category_id)) if @category_id.present?
-    query = {filter: {bool: {must: terms}}}
+    query = {filter: {bool: {must: terms}}, sort: {id: "desc"}}
     @listings = Listing.search(query).page(page).per(per).records
 
     @title = "#{@user.handle} | Manage Listings"

@@ -1,20 +1,33 @@
 class Tegu.ListingReportModal
+  @open: (listing_id, listing_title) ->
+    $('#listing-report-modal').find("#listing_id").val(listing_id)
+    $('#listing-report-modal').find(".highlight").text(listing_title)
+    $('#listing-report-modal').find("textarea").val("")
+    $('#listing-report-modal').foundation('reveal', 'open')
+
   @close: () ->
     $('#listing-report-modal').foundation('reveal', 'close')
 
 $(document).ready ->
 
-  $("#listing-report-modal a.button").on 'click', (e) ->
+  $(document).on 'click', '.listing-report-modal-open', (e) ->
+    e.preventDefault()
+    listing_id = $(this).data('listing-id')
+    listing_title = $(this).data('listing-title')
+    console.log "listing:#{listing_id} report modal open ..."
+    Tegu.ListingReportModal.open(listing_id, listing_title)
+
+  $(document).on 'click', "#listing-report-modal a.button", (e) ->
     e.preventDefault()
     modal = $(this).closest('.reveal-modal')
-    listing_id = $(modal).data('listing-id')
+    listing_id = $(modal).find("#listing_id").val()
     report_message = $(modal).find("textarea").val()
+    return if !report_message
     console.log "listing:#{listing_id} report ..."
-    data = {report: {message: report_message}}
     async.waterfall [
       (callback) ->
         # create report
-        Tegu.ReportApi.create(listing_id, data, auth_token, callback)
+        Tegu.ReportApi.create(listing_id, {report: {message: report_message}}, auth_token, callback)
       (data, callback) ->
         console.log data
         Tegu.ListingReportModal.close()

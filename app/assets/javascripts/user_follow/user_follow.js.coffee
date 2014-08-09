@@ -28,7 +28,7 @@ class Tegu.UserFollow
 
 $(document).ready ->
 
-  $(".follow-button").on 'click', (event) ->
+  $(document).on 'click', ".follow-button", (event) ->
     event.preventDefault()
     return if current_user == 0
     follow_id = $(this).data('follow-id')

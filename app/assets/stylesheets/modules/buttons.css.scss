@@ -34,6 +34,18 @@
     &.secondary {
       color: #fff;
     }
+    &.button-link {
+      background: #2980b9;
+      .ion-share {
+        margin-left: 10px;
+        font-size: 17px;
+        position: relative;
+        top: 1px;
+      }
+      &:hover {
+        background: darken(#2980b9, 10);
+      }
+    }
     &:hover {
       background-color: darken(#16a085, 10);
     }

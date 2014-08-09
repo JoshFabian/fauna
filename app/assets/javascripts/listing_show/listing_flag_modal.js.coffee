@@ -1,21 +1,33 @@
 class Tegu.ListingFlagModal
+  @open: (listing_id, listing_title) ->
+    $('#listing-flag-modal').find("#listing_id").val(listing_id)
+    $('#listing-flag-modal').find(".highlight").text(listing_title)
+    $('#listing-flag-modal').find("textarea").val("")
+    $('#listing-flag-modal').foundation('reveal', 'open')
+
   @close: () ->
     $('#listing-flag-modal').foundation('reveal', 'close')
 
 $(document).ready ->
 
-  $("#listing-flag-modal a.button").on 'click', (e) ->
+  $(document).on 'click', '.listing-flag-modal-open', (e) ->
+    e.preventDefault()
+    listing_id = $(this).data('listing-id')
+    listing_title = $(this).data('listing-title')
+    console.log "listing:#{listing_id} flag modal open ..."
+    Tegu.ListingFlagModal.open(listing_id, listing_title)
+
+  $(document).on 'click', "#listing-flag-modal a.button", (e) ->
     e.preventDefault()
     modal = $(this).closest('.reveal-modal')
-    listing_id = $(modal).data('listing-id')
+    listing_id = $(modal).find("#listing_id").val()
     flag_reason = $(modal).find("textarea").val()
     return if !flag_reason
     console.log "listing:#{listing_id} flag ..."
-    data = {reason: flag_reason}
     async.waterfall [
       (callback) ->
         # flag listing with reason
-        Tegu.ListingApi.flag(listing_id, data, auth_token, callback)
+        Tegu.ListingApi.flag(listing_id, {reason: flag_reason}, auth_token, callback)
       (data, callback) ->
         console.log data
         # close modal

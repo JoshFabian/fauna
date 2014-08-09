@@ -1,0 +1,32 @@
+.content-slider {
+	background: #fff;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 100%;
+	bottom: 0;
+	z-index: 1;
+	overflow: scroll;
+	padding-top: 40px;
+	-webkit-transform: translateZ(0);
+	transition: top .4s cubic-bezier(0.420, 0.000, 0.580, 1.000);
+	&.active {
+		top: 110px;
+	}
+	.list-panel {
+		box-shadow: none;
+	}
+	.close-button {
+		position: fixed;
+		right: 45px;
+		top: 45px;
+		font-size: 40px;
+		z-index: 1;
+		a {
+			color: #a7a7a7;
+			&:hover {
+				color: #333;
+			}
+		}
+	}
+}
