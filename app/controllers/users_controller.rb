@@ -133,6 +133,7 @@ class UsersController < ApplicationController
 
     @store = @user.listings.count >= 10
     @tab = 'store'
+    @subtitle = "All Listings"
 
     @title = "#{@user.handle} | Store"
 
@@ -153,6 +154,7 @@ class UsersController < ApplicationController
 
     @store = @user.listings.count >= 10
     @tab = 'store'
+    @subtitle = [@category.try(:name)].compact.join(' ')
 
     @title = "#{@user.handle} | Store"
 
