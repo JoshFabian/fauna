@@ -1,0 +1,64 @@
+- content_for :title, @title
+
+- content_for :facebook_meta_tags do
+  %meta{property: "og:title", content: @title}
+  %meta{property: "og:site_name", content: "Fauna"}
+  %meta{property: "og:url", content: url_for(only_path: false)}
+  %meta{property: "og:image", content: cloudinary_url(@image.try(:full_public_id))}
+  %meta{property: "fb:app_id", content: Settings[Rails.env][:fb_app_id]}
+
+:css
+  .global-subhead {
+    border-bottom: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+= form_for(@user, as: :user, html: {class: "form-validation user-edit", :'data-user-id' => @user.id.to_i}) do |f|
+  .cover-photos.small-12.columns
+    = hidden_field "cover_image_deletes", nil, value: nil, name: "cover_image_deletes", id: "cover_image_deletes"
+    - @cover_set.each_with_index do |object, index|
+      = render(partial: "users/user_cover_photo", locals: {f: f, image: object, position: index+1})
+
+  .user-bar.small-12.columns
+    .row
+      = render(partial: "users/user_avatar_photo", locals: {f: f, image: @user.avatar_image})
+      .profile-name
+        .edit-hide
+          %h3= @user.handle
+        .edit-show
+          = f.text_field :handle, value: @user.handle, placeholder: "Profile name"
+      .profile-follow
+        %div{class: @me ? ['edit-hide'] : ['follow']}
+          - if @me
+            = link_to 'Edit', '#', class: ['button', 'edit-button'], :'data-user-id' => @user.id
+          - else
+            = link_to 'Follow', '#', class: ['button', 'follow-button', 'track-user-profile-view'], :'data-follow-id' => @user.id
+          = link_to "Message", '#', class: ['button', 'message-button', 'active'], :'data-user-id' => @user.id
+          = link_to "Become", become_user_path(@user.id), class: ['button', 'active', 'admin', 'hide'], :'data-user-id' => @user.id
+          = render(partial: 'users/user_message_modal')
+        .edit-show
+          = link_to 'Cancel', '#', class: 'button active'
+          = link_to 'Save', '#', class: 'button', :'data-user-id' => @user.id
+
+  .sub-user-bar
+    .row
+      %ul.inline-list
+        %li= link_to "Activity", user_path(@user), class: [@tab == 'home' ? 'active' : nil]
+        %li= link_to "Store", user_listings_path(@user), class: [@tab == 'listings' ? 'active' : nil]
+        %li= link_to "Reviews", user_reviews_path(@user), class: [@tab == 'reviews' ? 'active' : nil]
+        %li.edit.owner.hide{:'data-user-id' => @user.id}= link_to "Messages", user_messages_path(@user), class: [@tab == 'messages' ? 'active' : nil]
+        - if false
+          %li= link_to "Followers", "#"
+          %li= link_to "Following", "#"
+
+    - if @tab == 'listings'
+      -# categories
+      %header.global-subhead
+        .row
+          %ul.inline-list
+            - Category.roots.order("position asc").each do |category|
+              %li= link_to category.name, listing_category_path(category.name.parameterize)
+
+  - if @tab == 'home'
+    = render(partial: "users/user_home", locals: {f: f})

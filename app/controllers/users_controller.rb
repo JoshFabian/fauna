@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   before_filter :manage_role_required!, only: [:messages, :purchases]
   before_filter :user_slug_normalize!, only: [:show]
 
+  # admins only
   # GET /users
   def index
     @users = User.order("id desc").page(params[:page]).per(20)
@@ -50,12 +51,14 @@ class UsersController < ApplicationController
     query = {filter: {bool: {must: terms}}}
     @listings = Listing.search(query).page(page).per(per).records
 
+    @store = @user.listings.count >= 10
+
     @tab = 'listings'
 
     @title = "#{@user.handle} | Listings"
 
     respond_to do |format|
-      format.html { render(action: :show) }
+      format.html
     end
   end
 
@@ -88,7 +91,7 @@ class UsersController < ApplicationController
     @title = "#{@user.handle} | Messages"
 
     respond_to do |format|
-      format.html { render(action: :show) }
+      format.html
     end
   end
 
@@ -118,7 +121,7 @@ class UsersController < ApplicationController
     @title = "#{@user.handle} | Reviews"
 
     respond_to do |format|
-      format.html { render(action: :show) }
+      format.html
     end
   end
 

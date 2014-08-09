@@ -36,6 +36,7 @@ Tegu::Application.routes.draw do
   get ':slug/messages' => "users#messages", as: :user_messages
   get ':slug/purchases' => "users#purchases", as: :user_purchases
   get ':slug/settings' => "users#settings", as: :user_settings
+  get ':slug/store' => "users#store", as: :user_store
   get ':slug/reviews' => "users#reviews", as: :user_reviews
   get ':slug/verify' => "verify#start", as: :user_verify
   get ':slug/verify/paypal', to: "verify#paypal", as: :user_verify_paypal # paypal verify email

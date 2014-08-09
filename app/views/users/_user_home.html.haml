@@ -7,20 +7,8 @@
         = link_to "complete your profile", "#", :class => "edit-link"
 
   .review-column.small-8.columns.no-padding-left
-    .recent-listing
-      - if @total_listings > 0
-        = render(partial: "users/user_recent_listings")
-
-    - if feature(:user_feed)
-      .user-feed
-        = render(partial: "stories/story_post_status")
-    - else
-      .feedback
-        - if @recent_reviews.present?
-          = render(partial: "reviews/review_widget", locals: {reviews: @recent_reviews})
-        - else
-          -# Empty state
-          = render(partial: "reviews/review_empty")
+    .user-feed
+      = render(partial: "stories/story_post_status")
 
   .profile-sidebar.small-4.columns
     .rounded-panel
