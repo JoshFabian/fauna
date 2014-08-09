@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /:slug
   def show
-    @user, @me, @cover_images, @cover_set, @image = user_show_init
+    @user, @me, @cover_images, @cover_set, @image = user_profile_init
 
     if feature(:user_feed)
       @stories = []
@@ -60,7 +60,7 @@ class UsersController < ApplicationController
 
   # GET /:slug/messages
   def messages
-    @user, @me, @cover_images, @cover_set, @image = user_show_init
+    @user, @me, @cover_images, @cover_set, @image = user_profile_init
 
     # optional mailbox label
     @label = params[:label] || 'inbox'
@@ -78,7 +78,7 @@ class UsersController < ApplicationController
 
   # GET /:slug/purchases
   def purchases
-    @user, @me, @cover_images, @cover_set, @image = user_show_init
+    @user, @me, @cover_images, @cover_set, @image = user_profile_init
     # @user = User.by_slug!(params[:slug])
 
     @user_purchases = @user.purchases
@@ -93,7 +93,7 @@ class UsersController < ApplicationController
 
   # GET /:slug/reviews
   def reviews
-    @user, @me, @cover_images, @cover_set, @image = user_show_init
+    @user, @me, @cover_images, @cover_set, @image = user_profile_init
 
     @reviews = @user.listing_reviews
 
@@ -125,13 +125,13 @@ class UsersController < ApplicationController
 
   # GET /:slug/store
   def store
-    @user, @me, @cover_images, @cover_set, @image = user_show_init
+    @user, @me, @cover_images, @cover_set, @image = user_profile_init
 
     terms = [ListingFilter.user(@user.id), ListingFilter.state('active')]
     query = {filter: {bool: {must: terms}}}
     @listings = Listing.search(query).page(page).per(per).records
 
-    @store = @user.listings.count >= 10
+    @store = @user.store?
     @tab = 'store'
     @subtitle = "All Listings"
 
@@ -145,7 +145,7 @@ class UsersController < ApplicationController
   # GET /:slug/store/category/:category
   # POST /:slug/store/search?query=q
   def store_by_filter
-    @user, @me, @cover_images, @cover_set, @image = user_show_init
+    @user, @me, @cover_images, @cover_set, @image = user_profile_init
 
     # build terms
     terms = [ListingFilter.user(@user.id), ListingFilter.state('active')]
@@ -162,11 +162,8 @@ class UsersController < ApplicationController
       query = {query: {match: {'_all' => @query}}, filter: {bool: {must: terms}}}
     end
 
-    # terms = [ListingFilter.user(@user.id), ListingFilter.state('active'), ListingFilter.category(@category.try(:id))]
-    # query = {filter: {bool: {must: terms}}, sort: {id: "desc"}}
     @listings = Listing.search(query).page(page).per(per).records
-
-    @store = @user.listings.count >= 10
+    @store = @user.store?
     @tab = 'store'
     @subtitle = [@category.try(:name)].compact.join(' ')
 
@@ -242,7 +239,7 @@ class UsersController < ApplicationController
   protected
 
   # shared helper method
-  def user_show_init
+  def user_profile_init
     user = User.by_slug(params[:slug]) || User.find_by_id(params[:id])
     raise ActiveRecord::RecordNotFound if user.blank?
     me = user.id == current_user.try(:id)
