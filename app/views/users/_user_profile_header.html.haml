@@ -52,13 +52,13 @@
           %li= link_to "Followers", "#"
           %li= link_to "Following", "#"
 
-    - if @store
-      -# store categories
-      %header.global-subhead
-        .row
-          %ul.inline-list
-            - Category.roots.where(id: @category_ids).order("position asc").each do |category|
-              %li= link_to category.name, user_store_category_path(@user, category.name.parameterize), class: [@category.try(:name) == category.name ? 'active' : nil]
+    -# - if @store
+    -#   -# store categories
+    -#   %header.global-subhead
+    -#     .row
+    -#       %ul.inline-list
+    -#         - Category.roots.where(id: @category_ids).order("position asc").each do |category|
+    -#           %li= link_to category.name, user_store_category_path(@user, category.slug), class: ['user-store-category', @category.try(:name) == category.name ? 'active' : nil], :'data-category-id' => category.id
 
   - if @tab == 'home'
     = render(partial: "users/user_home", locals: {f: f})

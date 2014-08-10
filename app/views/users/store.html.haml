@@ -1,2 +1,3 @@
-= render(partial: "users/user_profile_header")
+- if !request.xhr?
+  = render(partial: "users/user_profile_header")
 = render(partial: "users/user_store")

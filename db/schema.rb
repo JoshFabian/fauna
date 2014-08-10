@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140730120729) do
+ActiveRecord::Schema.define(version: 20140810033627) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20140730120729) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "listings_count",             default: 0
+    t.string   "slug",           limit: 50
   end
 
   add_index "categories", ["children_count"], name: "index_categories_on_children_count"
@@ -46,6 +47,7 @@ ActiveRecord::Schema.define(version: 20140730120729) do
   add_index "categories", ["name"], name: "index_categories_on_name"
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id"
   add_index "categories", ["position"], name: "index_categories_on_position"
+  add_index "categories", ["slug"], name: "index_categories_on_slug"
 
   create_table "comments", force: true do |t|
     t.integer  "commentable_id"

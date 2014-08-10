@@ -6,14 +6,24 @@
         %a.close{:href => "#"} &times;
 
 - if @store
-  .row
+  -# todo: add categories here
+  .row.store-categories
+    -# store categories
+    %header
+      %ul.inline-list
+        - Category.roots.where(id: @category_ids).order("position asc").each do |category|
+          %li= link_to category.name, user_store_category_path(@user, category.slug), class: ['user-store-category', @category.try(:name) == category.name ? 'active' : nil], :'data-category-id' => category.id
+
+- if @store
+  -# store search
+  .row.store-search
     %h5{:style => "float: left; position: relative; top: 0px;"}= @subtitle
-    = form_for "", url: user_store_search_path(@user), method: :post, html: {class: "search", style: "float: right;margin-bottom: 15px;width: auto;"} do |f|
+    = form_for "", url: user_store_search_path(@user), method: :post, html: {class: ["search", "form-validation", "user-store-search"], style: "float: right;margin-bottom: 15px;width: auto;"} do |f|
       %div{:style => "margin:0;padding:0;display:inline"}
       = f.text_field 'query', name: 'query', value: @query, placeholder: 'Search ...'
       %i.icon.ion-ios7-search-strong
 
-.row
+.row.store-listings
   - if @listings.blank?
     -# no listings
     = render(partial: "users/user_listings_empty")

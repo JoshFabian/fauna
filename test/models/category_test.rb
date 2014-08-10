@@ -6,6 +6,13 @@ describe Category do
   end
 
   describe "create" do
+    describe "slug" do
+      it "should create slug" do
+        @category = Category.create!(name: 'Root')
+        @category.slug.must_equal 'root'
+      end
+    end
+
     describe "root nodes" do
       it "should create with level 1" do
         @category = Category.create!(name: 'Root')

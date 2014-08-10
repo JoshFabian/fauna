@@ -134,7 +134,7 @@ class UsersController < ApplicationController
     @title = "#{@user.handle} | Store"
 
     respond_to do |format|
-      format.html
+      format.html { render(layout: !request.xhr?) }
     end
   end
 
@@ -147,8 +147,7 @@ class UsersController < ApplicationController
     terms = [ListingFilter.user(@user.id), ListingFilter.state('active')]
 
     if params[:category].present?
-      token = params[:category].titleize.split.first
-      @category = Category.roots.find_by_match(token)
+      @category = Category.roots.find_by_slug(params[:category])
       # add category term
       terms.push(ListingFilter.category(@category.try(:id)))
       query = {filter: {bool: {must: terms}}, sort: {id: "desc"}}
@@ -167,7 +166,7 @@ class UsersController < ApplicationController
     @title = "#{@user.handle} | Store"
 
     respond_to do |format|
-      format.html { render(action: :store) }
+      format.html { render(action: :store, layout: !request.xhr?) }
     end
   end
 
