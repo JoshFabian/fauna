@@ -24,7 +24,7 @@ Tegu::Application.routes.draw do
   end
 
   # vanity user scopes
-  get ':slug' => "users#show", as: :user, constraints: HandleRoute.new
+  get ':slug' => "users#activity", as: :user, constraints: HandleRoute.new
   get ':slug/edit' => "users#edit", as: :user_edit
   get ':slug/exception' => "home#exception"
   get ':slug/listings/manage' => "users#manage_listings", as: :user_manage_listings

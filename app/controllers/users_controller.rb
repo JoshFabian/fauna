@@ -19,7 +19,7 @@ class UsersController < ApplicationController
 
   # GET /users/1
   # GET /:slug
-  def show
+  def activity
     @user, @me, @cover_images, @cover_set, @image = user_profile_init
 
     @total_listings = @user.listings.active.count
