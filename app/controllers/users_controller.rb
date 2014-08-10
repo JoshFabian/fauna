@@ -154,7 +154,7 @@ class UsersController < ApplicationController
     elsif params[:query].present?
       # add match query
       @query = params[:query].to_s
-      query = {query: {match: {'_all' => @query}}, filter: {bool: {must: terms}}}
+      query = {query: {match: {'_all' => Search.wildcard_query(@query)}}, filter: {bool: {must: terms}}}
     end
 
     @listings = Listing.search(query).page(page).per(per).records
