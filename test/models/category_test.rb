@@ -8,8 +8,8 @@ describe Category do
   describe "create" do
     describe "slug" do
       it "should create slug" do
-        @category = Category.create!(name: 'Root')
-        @category.slug.must_equal 'root'
+        @category = Category.create!(name: 'Ball Pythons')
+        @category.slug.must_equal 'ball-pythons'
       end
     end
 
