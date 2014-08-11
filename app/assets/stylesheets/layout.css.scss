@@ -480,13 +480,35 @@
     img {
       max-width: 100px;
     }
+    @media (max-width: 768px) {
+      bottom: 135px;
+      left: 0;
+      right: 0;
+      background: transparent;
+      border: none;
+      text-align: center;
+      img {
+        border: 3px solid #fff;
+        border-radius: 3px;
+      }
+    }
   }
   .profile-name {
     float: left;
     margin-left: 120px;
+    @media (max-width: 768px) {
+      margin-left: 0;
+      text-align: center;
+      display: block;
+      width: 100%;
+    }
   }
   .profile-follow {
     float: right;
+    @media (max-width: 768px) {
+      width: 100%;
+      text-align: center;
+    }
     .button {
       padding: 5px 40px;
       position: relative;
@@ -522,6 +544,14 @@
         &:hover {
           color: #222;
         }
+      }
+    }
+    @media (max-width: 768px) {
+      text-align: center;
+      li {
+        display: inline-block;
+        float: none;
+        margin-right: 10px;
       }
     }
   }

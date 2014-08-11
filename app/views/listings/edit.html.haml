@@ -1,7 +1,7 @@
 = content_for :title, @title
 
 .row
-  .new-listing.small-8.columns.small-centered
+  .new-listing.small-12.medium-8.columns.medium-centered
     %h3.text-center= @title
     .listing-welcome
       %h4.text-center Guidelines
@@ -30,7 +30,7 @@
           %ul
             %li Use up to 5 different images to better increase the chances of selling.
             %li Recommended image size is 600 (width) x 400 (height).
-          %ul.image-grid.small-block-grid-5
+          %ul.image-grid.small-block-grid-2.medium-block-grid-5
             = render(partial: "listings/edit_images")
           -# custom error message
           %label.error.no-images{style: 'display: none;'} At least one image is required

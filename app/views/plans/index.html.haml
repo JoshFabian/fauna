@@ -8,7 +8,7 @@
 = content_for :title, @title
 
 .row
-  .account-page.small-8.small-centered.columns
+  .account-page.medium-8.medium-centered.columns
     .rounded-panel
       .account-avatar
         = image_tag user_avatar_image_thumbnail(current_user.avatar_image, 120)
@@ -18,7 +18,7 @@
         %h4 Pay as you go or upgrade to Pro.
         %p Take your Fauna experience to the next level. No contracts. Cancel anytime.
       .pricing-blocks
-        .small-6.columns.no-padding-left
+        .medium-6.columns.no-padding-left
           .lined-panel
             %h3 Pay As You Go
             %hr
@@ -36,7 +36,7 @@
                   %i.icon.ion-ios7-locked-outline
                   Buy Credits
 
-        .small-6.columns.no-padding-right
+        .medium-6.columns.no-padding-right
           .lined-panel
             %h3 Pro
             -# = render(partial: 'plans/details', locals: {plan: @subscription_plans.last})

@@ -5,16 +5,7 @@
         %strong Welcome to Fauna!
         You're almost done, just
         = link_to "complete your profile", "#", :class => "edit-link"
-
-  .review-column.small-8.columns.no-padding-left
-    .recent-listing
-      - if @total_listings > 0
-        = render(partial: "users/user_recent_listings")
-
-    .user-feed
-      = render(partial: "stories/story_post_status")
-
-  .profile-sidebar.small-4.columns
+  .profile-sidebar.small-12.medium-4.medium-push-8.columns
     .rounded-panel
       .padding-wrapper
         %h5 About
@@ -32,6 +23,12 @@
           = f.text_field :website, placeholder: "Website", class: 'url'
           = f.text_field :city, placeholder: "City", class: ''
           = f.text_field :state_code, placeholder: "State", class: 'state_code'
-
     .rounded-panel.user-trust
       = render(partial: "users/user_home_trust")
+  .review-column.small-12.medium-8.columns.medium-pull-4.no-padding-left
+    .recent-listing
+      - if @total_listings > 0
+        = render(partial: "users/user_recent_listings")
+
+    .user-feed
+      = render(partial: "stories/story_post_status")

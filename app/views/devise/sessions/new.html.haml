@@ -1,7 +1,7 @@
 = content_for :title, "Login | Signup"
 
 :css
-  .body {
+  body {
     padding-top: 0px !important;
   }
   .global-head {
@@ -10,14 +10,13 @@
   .global-subhead {
     display: none;
   }
-
 .landing-page
   .scrolling-background-container
     .scrolling-bg.animate-background
   .row
-    .email-block.small-6.small-centered.columns
+    .email-block.medium-6.medium-centered.columns
       = image_tag "landing-logo.jpg", :class => "landing-logo"
-      .login-form.small-8.columns.small-centered
+      .login-form.medium-8.columns.small-centered
         %a.button.facebook-button{href: user_omniauth_authorize_path(:facebook)} 
           %i.icon.ion-social-facebook
           Login with Facebook

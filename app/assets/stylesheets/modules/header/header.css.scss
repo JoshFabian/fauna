@@ -8,7 +8,7 @@
   padding-bottom: 15px;
   position: fixed;
   top: 0;
-  z-index: 3;
+  z-index: 9999;
   .header-logo {
     width: 105px;
   }
@@ -107,7 +107,7 @@
       }
     }
     .header-cta {
-      @media (max-width: 430px) {
+      @media (max-width: 773px) {
         display: block;
         margin-top: 25px;
       }
@@ -132,7 +132,8 @@
   position: fixed;
   top: 61px;
   z-index: 2;
-  @media (max-width: 430px) {
+  @media (max-width: 773px) {
+    top: 100px;
     overflow: scroll;
     .inline-list {
       width: 750px;
@@ -208,9 +209,6 @@
     background: #fff;
     transition: .2s ease-in;
     text-indent: 20px;
-    @media (max-width: 430px) {
-      width: 200px;
-    }
     &:focus {
       background: $orange;
       border: $orange;
@@ -221,9 +219,12 @@
       }
     }
   }
-  @media (max-width: 430px) {
+  @media (max-width: 773px) {
+    width: 200px;
     margin-left: 0px !important;
     margin-top: 10px !important;
+    display: block;
+    width: 100%;
   }
   input:focus::-webkit-input-placeholder {
     color: #fff;

@@ -1,5 +1,5 @@
 :css
-  .body {
+  body {
     padding-top: 0px !important;
   }
   .global-head {
@@ -15,10 +15,10 @@
   .row
     = form_for(@user, html: {class: "form-validation user-reset-password"}) do |f|
       = f.hidden_field :reset_password_token
-      .email-block.small-6.small-centered.columns
+      .email-block.small-12.medium-6.medium-centered.columns
         = image_tag "landing-logo.jpg", :class => "landing-logo"
         %h3 Reset Password
-        .register-form.small-8.columns.small-centered
+        .register-form.medium-8.columns.medium-centered
           = f.password_field :password, required: true, class: "", placeholder: 'New Password'
           = f.password_field :password_confirmation, required: true, class: "", placeholder: 'Confirm Password', equalTo: "#user_password"
         = f.submit 'Continue', class: 'button'

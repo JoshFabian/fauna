@@ -11,10 +11,10 @@
     .scrolling-bg.animate-background
   .row
     = form_for(@user, as: :user, url: @url, html: {class: "form-validation user-edit", :'data-user-id' => @user.id.to_i}) do |f|
-      .email-block.small-6.small-centered.columns
+      .email-block.medium-6.medium-centered.columns
         = image_tag "landing-logo.jpg", :class => "landing-logo"
         %h3 Create an account 
-        .register-form.small-8.columns.small-centered
+        .register-form.medium-8.columns.medium-centered
           = f.email_field :email, autofocus: false, required: true, class: "", placeholder: 'email', remote: "/users/validate_email"
           .small-6.columns{:style => "padding-left: 0; padding-right: 5px;"}
             = f.text_field :first_name, autofocus: false, required: true, class: "", placeholder: 'first name'

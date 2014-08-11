@@ -37,7 +37,32 @@
       This listing has been flagged: #{@listing.flagged_reason}
 
   .list-panel
-    .listing-aside.small-12.medium-push-7.medium-5.columns
+    .listing-images.small-12.medium-7.columns
+      .listing-image-slider.royalSlider.rsDefault
+        - @all_images.each do |image|
+          %a.rsImg.bugaga{"data-rsBigImg" => "#{listing_image_show_big(image)}", :href => "#{listing_image_show_big(image)}"}
+            = image_tag listing_image_show_big(image), :class => "rsTmb"
+        
+      .small-12.columns
+        %ul.pills{:'data-tab' => ""}
+          %li.tab-title.active{:'data-pill' => 'description'}
+            %a{href: "#"} Description
+          %li.tab-title{:'data-pill' => 'reviews'}
+            %a{href: "#"} Reviews
+          %li.tab-title{:'data-pill' => 'shipping'}
+            %a{href: "#"} Shipping
+        .pills-content
+          #description.content
+            %p{itemprop: "description"}= raw @listing.description
+          #reviews.content.hide
+            - if @reviews.present?
+              = render(partial: "reviews/review_widget", locals: {reviews: @reviews})
+            - else
+              = render(partial: "reviews/review_empty")
+          #shipping.content.hide
+            = render(partial: "listings/shipping_tab")
+
+    .listing-aside.small-12.medium-5.columns
       .category-breadcrumbs
         %span
           - if @category.present?
@@ -64,31 +89,6 @@
           !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 
       = render(partial: "listings/listing_user_widget")
-
-    .listing-images.small-12.medium-pull-5.medium-7.columns
-      .listing-image-slider.royalSlider.rsDefault
-        - @all_images.each do |image|
-          %a.rsImg.bugaga{"data-rsBigImg" => "#{listing_image_show_big(image)}", :href => "#{listing_image_show_big(image)}"}
-            = image_tag listing_image_show_big(image), :class => "rsTmb"
-        
-      .small-12.columns
-        %ul.pills{:'data-tab' => ""}
-          %li.tab-title.active{:'data-pill' => 'description'}
-            %a{href: "#"} Description
-          %li.tab-title{:'data-pill' => 'reviews'}
-            %a{href: "#"} Reviews
-          %li.tab-title{:'data-pill' => 'shipping'}
-            %a{href: "#"} Shipping
-        .pills-content
-          #description.content
-            %p{itemprop: "description"}= raw @listing.description
-          #reviews.content.hide
-            - if @reviews.present?
-              = render(partial: "reviews/review_widget", locals: {reviews: @reviews})
-            - else
-              = render(partial: "reviews/review_empty")
-          #shipping.content.hide
-            = render(partial: "listings/shipping_tab")
 
     
   - if !request.xhr?
