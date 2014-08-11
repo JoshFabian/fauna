@@ -4,6 +4,10 @@
     %textarea.status-form{placeholder: "Write something...", rows: "1"}
     .panel-footer.clearfix
       %button.btn.status-button Post
+      / %span.status-fb-share 
+      /   %input#checkbox1{:type => "checkbox"}
+      /   %label{:for => "checkbox1"} Share on Facebook
+
 - else
   -# empty status panel
   .panel-body.status-panel.rounded-panel{:'data-user-id' => @user.id, style: 'display:none;'}
