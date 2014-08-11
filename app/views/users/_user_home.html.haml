@@ -26,11 +26,7 @@
           = f.text_field :state_code, placeholder: "State", class: 'state_code'
     .rounded-panel.user-trust
       = render(partial: "users/user_home_trust")
-  
-  .review-column.small-12.medium-8.columns.medium-pull-4.no-padding-left
-    .recent-listing
-      - if @total_listings > 0
-        = render(partial: "users/user_recent_listings")
 
+  .review-column.small-12.medium-8.columns.medium-pull-4.no-padding-left
     .user-feed
       = render(partial: "stories/story_post_status")
