@@ -127,7 +127,7 @@ class UsersController < ApplicationController
 
     if params[:category].present?
       @category = Category.roots.find_by_slug(params[:category])
-      # add category term
+      # add category filter
       terms.push(ListingFilter.category(@category.try(:id)))
       @store_title = [@category.try(:name)].compact.join(' ')
     elsif params[:query].present?
@@ -157,34 +157,34 @@ class UsersController < ApplicationController
   # deprecated
   # GET /:slug/store/category/:category
   # POST /:slug/store/search?query=q
-  def store_by_filter
-    @user, @me, @cover_images, @cover_set, @image = user_profile_init
-
-    # build terms
-    terms = [ListingFilter.user(@user.id), ListingFilter.state('active')]
-
-    if params[:category].present?
-      @category = Category.roots.find_by_slug(params[:category])
-      # add category term
-      terms.push(ListingFilter.category(@category.try(:id)))
-      query = {filter: {bool: {must: terms}}, sort: {id: "desc"}}
-    elsif params[:query].present?
-      # add match query
-      @query = params[:query].to_s
-      query = {query: {match: {'_all' => Search.wildcard_query(@query)}}, filter: {bool: {must: terms}}}
-    end
-
-    @listings = Listing.search(query).page(page).per(per).records
-    @category_ids = @user.listing_category_ids
-    @tab = 'store'
-    @store_title = [@category.present? ? @category.try(:name) : "Search Results"].compact.join(' ')
-
-    @title = "#{@user.handle} | Store"
-
-    respond_to do |format|
-      format.html { render(action: :store, layout: !request.xhr?) }
-    end
-  end
+  # def store_by_filter
+  #   @user, @me, @cover_images, @cover_set, @image = user_profile_init
+  # 
+  #   # build terms
+  #   terms = [ListingFilter.user(@user.id), ListingFilter.state('active')]
+  # 
+  #   if params[:category].present?
+  #     @category = Category.roots.find_by_slug(params[:category])
+  #     # add category term
+  #     terms.push(ListingFilter.category(@category.try(:id)))
+  #     query = {filter: {bool: {must: terms}}, sort: {id: "desc"}}
+  #   elsif params[:query].present?
+  #     # add match query
+  #     @query = params[:query].to_s
+  #     query = {query: {match: {'_all' => Search.wildcard_query(@query)}}, filter: {bool: {must: terms}}}
+  #   end
+  # 
+  #   @listings = Listing.search(query).page(page).per(per).records
+  #   @category_ids = @user.listing_category_ids
+  #   @tab = 'store'
+  #   @store_title = [@category.present? ? @category.try(:name) : "Search Results"].compact.join(' ')
+  # 
+  #   @title = "#{@user.handle} | Store"
+  # 
+  #   respond_to do |format|
+  #     format.html { render(action: :store, layout: !request.xhr?) }
+  #   end
+  # end
 
   # GET /users/1/edit
   # GET /:slug/edit
