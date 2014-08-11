@@ -13,9 +13,10 @@
     %tr
       %th Id
       %th Handle:Email
-      %th Facebook
+      %th Fb
       %th Roles
       %th Verified
+      %th Store
       %th Listings
       %th Sold
       %th Followers
@@ -36,6 +37,7 @@
         %td.data-cell= facebook_oauth.present? ? (facebook_oauth.facebook_share_permission? ? 'share' : 'basic') : "no"
         %td.data-cell= user.roles.map{ |s| s.to_s[0] }.join(',')
         %td.data-cell= user.verified? ? 'yes' : 'no'
+        %td.data-cell= user.store? ? 'yes' : 'no'
         %td.data-cell= user.listings.active.count
         %td.data-cell= user.listings.sold.count
         %td.data-cell= user.followers_count

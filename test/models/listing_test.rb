@@ -71,6 +71,15 @@ class ListingTest < ActiveSupport::TestCase
     end
   end
 
+  describe "user store flag" do
+    it "should set store flag after x listings" do
+      @user.store?.must_equal false
+      1.upto(10).each { Fabricate(:listing, user: @user, state: 'active') }
+      @user.reload
+      @user.store?.must_equal true
+    end
+  end
+
   describe "slug" do
     it "should auto create slug from title" do
       @listing = Fabricate(:listing, user: @user, title: "Listing 1")

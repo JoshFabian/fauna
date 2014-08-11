@@ -145,8 +145,6 @@ class UsersController < ApplicationController
     @listings = Listing.search(query).page(page).per(per).records
     # get user's listing category ids
     @category_ids = @user.listing_category_ids
-    # check user store flag
-    @store = @user.store?
 
     @tab = 'store'
     @title = "#{@user.handle} | Store"
@@ -178,7 +176,6 @@ class UsersController < ApplicationController
 
     @listings = Listing.search(query).page(page).per(per).records
     @category_ids = @user.listing_category_ids
-    @store = @user.store?
     @tab = 'store'
     @store_title = [@category.present? ? @category.try(:name) : "Search Results"].compact.join(' ')
 

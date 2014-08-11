@@ -1,12 +1,12 @@
-- if !@store
+- if !@user.store?
   .small-12.columns
     .row
       .alert-box.info.radius{"data-alert" => ""}
         You must have at least 10 listings to unlock additional Stores features!
         %a.close{:href => "#"} &times;
 
-- if @store
-  -# todo: add categories here
+- if @user.store?
+  -# todo: fix store categories styles
   .row.store-categories
     -# store categories
     %header
@@ -14,7 +14,7 @@
         - Category.roots.where(id: @category_ids).order("position asc").each do |category|
           %li= link_to category.name, user_store_category_path(@user, category.slug), class: ['user-store-category', @category.try(:name) == category.name ? 'active' : nil], :'data-category-id' => category.id
 
-- if @store
+- if @user.store?
   -# store search
   .row.store-search
     %h5{:style => "float: left; position: relative; top: 0px;"}= @store_title
