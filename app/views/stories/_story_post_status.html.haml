@@ -4,9 +4,11 @@
     %textarea.status-form{placeholder: "Write something...", rows: "1"}
     .panel-footer.clearfix
       %button.btn.status-button Post
-      %span.status-fb-share
-        = check_box_tag "facebook_share", 1, true, id: "post_facebook_share"
-        %label{for: "post_facebook_share"} Share on Facebook
+      -# disable this until facebook approves app on production
+      - if false
+        %span.status-fb-share
+          = check_box_tag "facebook_share", 1, true, id: "post_facebook_share"
+          %label{for: "post_facebook_share"} Share on Facebook
 
 - else
   -# empty status panel

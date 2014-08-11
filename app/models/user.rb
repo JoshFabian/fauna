@@ -161,18 +161,23 @@ class User < ActiveRecord::Base
     trial? or listing_credits > 0 or (subscriptions_count > 0 and subscriptions.active.count > 0)
   end
 
-  def trial?
-    self.trial_ends_at.present? and self.trial_ends_at > Time.zone.now
-  end
-
-  def twitter_verified?
-    twitter_oauths.count > 0
+  # returns true if the user store flag should be set
+  def should_be_store?
+    listings.where(state: ['active', 'draft', 'removed', 'sold']).count >= 10
   end
 
   # update inbox unread count
   def should_update_inbox_unread_count!
     i = mailbox.inbox.unread(self).pluck("distinct conversations.id").size
     update_attributes(inbox_unread_count: i) if i != inbox_unread_count
+  end
+
+  def trial?
+    self.trial_ends_at.present? and self.trial_ends_at > Time.zone.now
+  end
+
+  def twitter_verified?
+    twitter_oauths.count > 0
   end
 
   # return true if the user is both paypal and phone verified

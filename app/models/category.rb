@@ -25,6 +25,10 @@ class Category < ActiveRecord::Base
     self.level = get_parent_level + 1
   end
 
+  def as_indexed_json(options={})
+    as_json(methods: [], except: [:created_at])
+  end
+
   # used by friendly_id
   def should_generate_new_friendly_id?
     slug.blank? || name_changed?

@@ -24,6 +24,7 @@ class ListingObserver < ActiveRecord::Observer
       # listing was flagged; queue email
       Backburner::Worker.enqueue(ListingFlaggedEmailJob, [{id: listing.id}], delay: 1.minute)
     end
+    # check user store flag
     should_check_user_store(listing.user)
     # update search index
     listing.__elasticsearch__.update_document
@@ -40,7 +41,7 @@ class ListingObserver < ActiveRecord::Observer
 
   # check user store flag based on listings count
   def should_check_user_store(user)
-    if !user.store? and user.listings.where(state: ['active', 'draft', 'removed', 'sold']).count >= 10
+    if !user.store? and user.should_be_store?
       user.update(store: true)
     else
       # noop
