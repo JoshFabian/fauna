@@ -28,7 +28,6 @@ class UsersController < ApplicationController
     @average_ratings = @user.listing_average_ratings
 
     @tab = 'home'
-
     @title = "#{@user.handle} | Profile"
 
     # set return_to paths
@@ -64,7 +63,6 @@ class UsersController < ApplicationController
     @conversation_id = params[:conversation].to_i
 
     @tab = 'messages'
-
     @title = "#{@user.handle} | Messages"
 
     respond_to do |format|
@@ -94,7 +92,6 @@ class UsersController < ApplicationController
     @reviews = @user.listing_reviews
 
     @tab = 'reviews'
-
     @title = "#{@user.handle} | Reviews"
 
     respond_to do |format|
@@ -120,17 +117,38 @@ class UsersController < ApplicationController
   end
 
   # GET /:slug/store
+  # GET /:slug/store/category/:category
+  # POST /:slug/store/search?query=q
   def store
     @user, @me, @cover_images, @cover_set, @image = user_profile_init
 
     terms = [ListingFilter.user(@user.id), ListingFilter.state('active')]
-    query = {filter: {bool: {must: terms}}}
-    @listings = Listing.search(query).page(page).per(per).records
-    @category_ids = @user.listing_category_ids
-    @store = @user.store?
-    @tab = 'store'
-    @subtitle = "All Listings"
+    sort = {id: 'desc'}
 
+    if params[:category].present?
+      @category = Category.roots.find_by_slug(params[:category])
+      # add category term
+      terms.push(ListingFilter.category(@category.try(:id)))
+      @store_title = [@category.try(:name)].compact.join(' ')
+    elsif params[:query].present?
+      # add match query
+      @query = params[:query].to_s
+      @match = Hashie::Mash.new(match: {'_all' => Search.wildcard_query(@query)})
+      @store_title = ['Search Results'].compact.join(' ')
+    else
+      @store_title = ['All Listings'].compact.join(' ')
+    end
+
+    # build search query
+    query = Hashie::Mash.new(filter: {bool: {must: terms}}, sort: sort)
+    query.query = @match if @match.present?
+    @listings = Listing.search(query).page(page).per(per).records
+    # get user's listing category ids
+    @category_ids = @user.listing_category_ids
+    # check user store flag
+    @store = @user.store?
+
+    @tab = 'store'
     @title = "#{@user.handle} | Store"
 
     respond_to do |format|
@@ -138,6 +156,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # deprecated
   # GET /:slug/store/category/:category
   # POST /:slug/store/search?query=q
   def store_by_filter
@@ -161,7 +180,7 @@ class UsersController < ApplicationController
     @category_ids = @user.listing_category_ids
     @store = @user.store?
     @tab = 'store'
-    @subtitle = [@category.present? ? @category.try(:name) : "Search Results"].compact.join(' ')
+    @store_title = [@category.present? ? @category.try(:name) : "Search Results"].compact.join(' ')
 
     @title = "#{@user.handle} | Store"
 

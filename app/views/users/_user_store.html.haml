@@ -17,7 +17,7 @@
 - if @store
   -# store search
   .row.store-search
-    %h5{:style => "float: left; position: relative; top: 0px;"}= @subtitle
+    %h5{:style => "float: left; position: relative; top: 0px;"}= @store_title
     = form_for "", url: user_store_search_path(@user), method: :post, html: {class: ["search", "form-validation", "user-store-search"], style: "float: right;margin-bottom: 15px;width: auto;"} do |f|
       %div{:style => "margin:0;padding:0;display:inline"}
       = f.text_field 'query', name: 'query', value: @query, placeholder: 'Search ...'

@@ -36,8 +36,8 @@ Tegu::Application.routes.draw do
   get ':slug/messages' => "users#messages", as: :user_messages
   get ':slug/purchases' => "users#purchases", as: :user_purchases
   get ':slug/settings' => "users#settings", as: :user_settings
-  get ':slug/store/category/:category' => "users#store_by_filter", as: :user_store_category
-  post ':slug/store/search' => "users#store_by_filter", as: :user_store_search
+  get ':slug/store/category/:category' => "users#store", as: :user_store_category
+  post ':slug/store/search' => "users#store", as: :user_store_search
   get ':slug/store' => "users#store", as: :user_store
   get ':slug/reviews' => "users#reviews", as: :user_reviews
   get ':slug/verify' => "verify#start", as: :user_verify
