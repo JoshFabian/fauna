@@ -5,10 +5,8 @@
     .panel-footer.clearfix
       %button.btn.status-button Post
       %span.status-fb-share
-        / = f.check_box :facebook_share, checked: false, id: "post_facebook_share"
+        = check_box_tag "facebook_share", 1, true, id: "post_facebook_share"
         %label{for: "post_facebook_share"} Share on Facebook
-      /   %input#checkbox1{:type => "checkbox"}
-      /   %label{:for => "checkbox1"} Share on Facebook
 
 - else
   -# empty status panel
