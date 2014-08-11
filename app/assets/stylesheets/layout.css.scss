@@ -791,6 +791,12 @@
     border: 1px solid #F0F0F0;
     box-shadow: none;
     height: 180px;
+    @media (max-width: 640px) {
+      height: 300px;
+      .listing-aside {
+        margin-bottom: 15px;
+      }
+    }
     .main-image {
       margin-bottom: 0;
     }

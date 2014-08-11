@@ -21,19 +21,14 @@
   .comment-content.small-12.columns.clearfix
     .listing-embed
       .list-panel
-        .listing-images.small-6.columns
-          .main-image
-            = link_to user_listing_path(user, listing) do
-              = image_tag listing_image_story(image), itemprop: "image"
-        .listing-aside.small-6.columns
-          -# .category-breadcrumbs
-            -# %span
-            -#   %a{:href => "/listings/lizards"} Lizards
-            -#   %i.icon.ion-ios7-arrow-forward
-            -#   %a{:href => "/listings/lizards/chameleons"} Chameleons
+        .listing-aside.small-12.medium-6.medium-push-6.columns
           %h5{:itemprop => "alternateName"}= listing.title
           %h2= number_to_currency(listing.price.to_f/100.0, precision: 2)
           = link_to "View Listing", user_listing_path(user, listing), :class => "view-embedded-listing"
+        .listing-images.small-12.medium-6.medium-pull-6.columns
+          .main-image
+            = link_to user_listing_path(user, listing) do
+              = image_tag listing_image_story(image), itemprop: "image"
 
   .panel-footer.small-12.columns
     .footer-button
