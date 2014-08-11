@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   before_filter :manage_role_required!, only: [:messages, :purchases]
   before_filter :user_slug_normalize!, only: [:show]
 
+  # admins only
   # GET /users
   def index
     @users = User.order("id desc").page(params[:page]).per(20)
@@ -18,8 +19,8 @@ class UsersController < ApplicationController
 
   # GET /users/1
   # GET /:slug
-  def show
-    @user, @me, @cover_images, @cover_set, @image = user_show_init
+  def activity
+    @user, @me, @cover_images, @cover_set, @image = user_profile_init
 
     @total_listings = @user.listings.active.count
     @recent_listings = @user.listings.active.order("id desc").limit(3)
@@ -27,7 +28,6 @@ class UsersController < ApplicationController
     @average_ratings = @user.listing_average_ratings
 
     @tab = 'home'
-
     @title = "#{@user.handle} | Profile"
 
     # set return_to paths
@@ -35,23 +35,6 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html
-    end
-  end
-
-  # GET /:slug/listings
-  def listings
-    @user, @me, @cover_images, @cover_set, @image = user_show_init
-
-    terms = [ListingFilter.user(@user.id), ListingFilter.state('active')]
-    query = {filter: {bool: {must: terms}}}
-    @listings = Listing.search(query).page(page).per(per).records
-
-    @tab = 'listings'
-
-    @title = "#{@user.handle} | Listings"
-
-    respond_to do |format|
-      format.html { render(action: :show) }
     end
   end
 
@@ -64,7 +47,7 @@ class UsersController < ApplicationController
     @category_id = params[:category_id]
     terms = [ListingFilter.user(@user.id), ListingFilter.state(@state)]
     terms.push(ListingFilter.category(@category_id)) if @category_id.present?
-    query = {filter: {bool: {must: terms}}}
+    query = {filter: {bool: {must: terms}}, sort: {id: "desc"}}
     @listings = Listing.search(query).page(page).per(per).records
 
     @title = "#{@user.handle} | Manage Listings"
@@ -72,7 +55,7 @@ class UsersController < ApplicationController
 
   # GET /:slug/messages
   def messages
-    @user, @me, @cover_images, @cover_set, @image = user_show_init
+    @user, @me, @cover_images, @cover_set, @image = user_profile_init
 
     # optional mailbox label
     @label = params[:label] || 'inbox'
@@ -80,17 +63,16 @@ class UsersController < ApplicationController
     @conversation_id = params[:conversation].to_i
 
     @tab = 'messages'
-
     @title = "#{@user.handle} | Messages"
 
     respond_to do |format|
-      format.html { render(action: :show) }
+      format.html
     end
   end
 
   # GET /:slug/purchases
   def purchases
-    @user, @me, @cover_images, @cover_set, @image = user_show_init
+    @user, @me, @cover_images, @cover_set, @image = user_profile_init
     # @user = User.by_slug!(params[:slug])
 
     @user_purchases = @user.purchases
@@ -105,16 +87,15 @@ class UsersController < ApplicationController
 
   # GET /:slug/reviews
   def reviews
-    @user, @me, @cover_images, @cover_set, @image = user_show_init
+    @user, @me, @cover_images, @cover_set, @image = user_profile_init
 
     @reviews = @user.listing_reviews
 
     @tab = 'reviews'
-
     @title = "#{@user.handle} | Reviews"
 
     respond_to do |format|
-      format.html { render(action: :show) }
+      format.html
     end
   end
 
@@ -134,6 +115,76 @@ class UsersController < ApplicationController
       format.html
     end
   end
+
+  # GET /:slug/store
+  # GET /:slug/store/category/:category
+  # POST /:slug/store/search?query=q
+  def store
+    @user, @me, @cover_images, @cover_set, @image = user_profile_init
+
+    terms = [ListingFilter.user(@user.id), ListingFilter.state('active')]
+    sort = {id: 'desc'}
+
+    if params[:category].present?
+      @category = Category.roots.find_by_slug(params[:category])
+      # add category filter
+      terms.push(ListingFilter.category(@category.try(:id)))
+      @store_title = [@category.try(:name)].compact.join(' ')
+    elsif params[:query].present?
+      # add match query
+      @query = params[:query].to_s
+      @match = Hashie::Mash.new(match: {'_all' => Search.wildcard_query(@query)})
+      @store_title = ['Search Results'].compact.join(' ')
+    else
+      @store_title = ['All Listings'].compact.join(' ')
+    end
+
+    # build search query
+    query = Hashie::Mash.new(filter: {bool: {must: terms}}, sort: sort)
+    query.query = @match if @match.present?
+    @listings = Listing.search(query).page(page).per(per).records
+    # get user's listing category ids
+    @category_ids = @user.listing_category_ids
+
+    @tab = 'store'
+    @title = "#{@user.handle} | Store"
+
+    respond_to do |format|
+      format.html { render(layout: !request.xhr?) }
+    end
+  end
+
+  # deprecated
+  # GET /:slug/store/category/:category
+  # POST /:slug/store/search?query=q
+  # def store_by_filter
+  #   @user, @me, @cover_images, @cover_set, @image = user_profile_init
+  # 
+  #   # build terms
+  #   terms = [ListingFilter.user(@user.id), ListingFilter.state('active')]
+  # 
+  #   if params[:category].present?
+  #     @category = Category.roots.find_by_slug(params[:category])
+  #     # add category term
+  #     terms.push(ListingFilter.category(@category.try(:id)))
+  #     query = {filter: {bool: {must: terms}}, sort: {id: "desc"}}
+  #   elsif params[:query].present?
+  #     # add match query
+  #     @query = params[:query].to_s
+  #     query = {query: {match: {'_all' => Search.wildcard_query(@query)}}, filter: {bool: {must: terms}}}
+  #   end
+  # 
+  #   @listings = Listing.search(query).page(page).per(per).records
+  #   @category_ids = @user.listing_category_ids
+  #   @tab = 'store'
+  #   @store_title = [@category.present? ? @category.try(:name) : "Search Results"].compact.join(' ')
+  # 
+  #   @title = "#{@user.handle} | Store"
+  # 
+  #   respond_to do |format|
+  #     format.html { render(action: :store, layout: !request.xhr?) }
+  #   end
+  # end
 
   # GET /users/1/edit
   # GET /:slug/edit
@@ -200,7 +251,7 @@ class UsersController < ApplicationController
   protected
 
   # shared helper method
-  def user_show_init
+  def user_profile_init
     user = User.by_slug(params[:slug]) || User.find_by_id(params[:id])
     raise ActiveRecord::RecordNotFound if user.blank?
     me = user.id == current_user.try(:id)

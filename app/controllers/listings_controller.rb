@@ -36,11 +36,9 @@ class ListingsController < ApplicationController
   # GET /listings/:category
   # GET /listings/:category/:subcategory
   def by_category
-    token = params[:category].titleize.split.first
-    subtoken = params[:subcategory].to_s.titleize.split.first
-    @category = Category.roots.find_by_match(token)
+    @category = Category.roots.find_by_slug(params[:category])
     raise ListingException, "missing category" if @category.blank?
-    @subcategory = @category.children.find_by_match(subtoken) if subtoken.present?
+    @subcategory = @category.children.find_by_slug(params[:subcategory]) if params[:subcategory].present?
     terms = [ListingFilter.category(@subcategory.present? ? @subcategory.id : @category.id), ListingFilter.state('active')]
     query = {filter: {bool: {must: terms}}, sort: {id: "desc"}}
     @listings = Listing.search(query).page(page).per(per).records
@@ -59,7 +57,10 @@ class ListingsController < ApplicationController
     begin
       @query = params[:query].to_s
       raise ListingException, "missing search query" if @query.blank?
-      @listings = Listing.search(@query).page(page).per(per).records
+      terms = [ListingFilter.state('active')]
+      search = {query: {match: {'_all' => Search.wildcard_query(@query)}}, filter: {bool: {must: terms}},
+        sort: {id: "desc"}}
+      @listings = Listing.search(search).page(page).per(per).records
     rescue Exception => e
       @listings = []
     end

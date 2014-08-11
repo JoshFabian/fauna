@@ -1,7 +1,5 @@
 $(document).ready ->
 
-  Tegu.ListingForm.init_currency()
-
   textchange_timeout = 0
   $("#listing_title").bind 'textchange', (event, previousText) ->
     # console.log "previous:#{previousText}"

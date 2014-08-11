@@ -6,6 +6,7 @@
     %tr
       %th Id
       %th Name
+      %th Slug
       %th Level
       %th Children
       %th Total Listings
@@ -16,9 +17,10 @@
         %td= category.id
         %td
           - if category.level == 1
-            = link_to category.name, listing_category_path(category.name.parameterize)
+            = link_to category.name, listing_category_path(category.slug)
           - else
             = category.name
+        %td= category.slug
         %td= category.level
         %td= category.children_count
         %td= category.listings_count

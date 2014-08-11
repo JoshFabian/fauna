@@ -16,7 +16,7 @@
   body {
     padding-top: 135px !important;
   }
-  
+
 = form_for(@user, as: :user, html: {class: "form-validation user-edit", :'data-user-id' => @user.id.to_i}) do |f|
   .cover-photos.small-12.columns
     = hidden_field "cover_image_deletes", nil, value: nil, name: "cover_image_deletes", id: "cover_image_deletes"
@@ -47,8 +47,8 @@
   .sub-user-bar
     .row
       %ul.inline-list
-        %li= link_to "Home", user_path(@user), class: [@tab == 'home' ? 'active' : nil]
-        %li= link_to "Listings", user_listings_path(@user), class: [@tab == 'listings' ? 'active' : nil]
+        %li= link_to "Activity", user_path(@user), class: [@tab == 'home' ? 'active' : nil]
+        %li= link_to "Store", user_store_path(@user), class: [@tab == 'store' ? 'active' : nil]
         %li= link_to "Reviews", user_reviews_path(@user), class: [@tab == 'reviews' ? 'active' : nil]
         %li.edit.owner.hide{:'data-user-id' => @user.id}= link_to "Messages", user_messages_path(@user), class: [@tab == 'messages' ? 'active' : nil]
         - if false
@@ -57,9 +57,3 @@
 
   - if @tab == 'home'
     = render(partial: "users/user_home", locals: {f: f})
-  - elsif @tab == 'listings'
-    = render(partial: "users/user_listings")
-  - elsif @tab == 'messages'
-    = render(partial: "users/user_messages")
-  - elsif @tab == 'reviews'
-    = render(partial: "reviews/review", locals: {reviews: @reviews})

@@ -24,6 +24,8 @@ class ListingObserver < ActiveRecord::Observer
       # listing was flagged; queue email
       Backburner::Worker.enqueue(ListingFlaggedEmailJob, [{id: listing.id}], delay: 1.minute)
     end
+    # check user store flag
+    should_check_user_store(listing.user)
     # update search index
     listing.__elasticsearch__.update_document
   rescue Exception => e
@@ -34,4 +36,17 @@ class ListingObserver < ActiveRecord::Observer
     listing.__elasticsearch__.delete_document
   rescue Exception => e
   end
+
+  protected
+
+  # check user store flag based on listings count
+  def should_check_user_store(user)
+    if !user.store? and user.should_be_store?
+      user.update(store: true)
+    else
+      # noop
+    end
+  rescue Exception => e
+  end
+
 end

@@ -1,4 +1,5 @@
 class Category < ActiveRecord::Base
+  include FriendlyId
   include Loggy
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
@@ -13,6 +14,8 @@ class Category < ActiveRecord::Base
   acts_as_tree order: :name, counter_cache: :children_count
   acts_as_list scope: [:level]
 
+  friendly_id :name, use: :slugged
+
   scope :with_listings, -> { where("listings_count > 0") }
 
   # set search index name
@@ -20,6 +23,15 @@ class Category < ActiveRecord::Base
 
   before_validation(on: :create) do
     self.level = get_parent_level + 1
+  end
+
+  def as_indexed_json(options={})
+    as_json(methods: [], except: [:created_at])
+  end
+
+  # used by friendly_id
+  def should_generate_new_friendly_id?
+    slug.blank? || name_changed?
   end
 
   def should_update_listings_count!

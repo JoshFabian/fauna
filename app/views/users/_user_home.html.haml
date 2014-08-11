@@ -5,6 +5,11 @@
         %strong Welcome to Fauna!
         You're almost done, just
         = link_to "complete your profile", "#", :class => "edit-link"
+
+  .review-column.small-8.columns.no-padding-left
+    .user-feed
+      = render(partial: "stories/story_post_status")
+
   .profile-sidebar.small-12.medium-4.medium-push-8.columns
     .rounded-panel
       .padding-wrapper

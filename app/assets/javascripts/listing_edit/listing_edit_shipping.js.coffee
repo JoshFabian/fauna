@@ -1,6 +1,6 @@
 $(document).ready ->
 
-  $("select#listing_shipping_from").on 'change', (e) ->
+  $(document).on 'change', "select#listing_shipping_from", (e) ->
     listing_id = $(this).data('listing-id')
     shipping_from = $(this).find("option:selected").val()
     return if !listing_id and listing_id != 0
@@ -13,10 +13,6 @@ $(document).ready ->
         # console.log data
         $(".shipping-table").replaceWith(data)
     ]
-
-  if $(".shipping-table").length > 0
-    console.log "init shipping table"
-    $("select#listing_shipping_from").trigger('change')
 
   $(document).on 'change', '.listing-shipping-from-checkbox', (e) ->
     tr = $(this).closest('tr')

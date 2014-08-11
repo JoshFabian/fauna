@@ -25,7 +25,8 @@ class Listing < ActiveRecord::Base
 
   serialize :shipping_prices, Hash
 
-  store :data, accessors: [:facebook_share, :facebook_share_id, :flagged_reason, :shipping_from, :shipping_time]
+  store :data, accessors: [:checkout_option, :checkout_website, :facebook_share, :facebook_share_id,
+    :flagged_reason, :shipping_from, :shipping_time]
 
   attr_accessor :shipping_to
 

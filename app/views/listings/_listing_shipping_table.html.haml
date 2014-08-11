@@ -16,12 +16,12 @@
           - checked = value.present?
           %td.country
             .input-group-location
-              = check_box "listing", "shipping_prices[#{country.try(:code)}]", {checked: true, class: ['listing-shipping-from-checkbox', 'required', @listing.new_record? ? 'new step2' : @listing.state], id: 'shipping-from-country', title: 'Location is required'}, 1, 0
+              = check_box "listing", "shipping_prices[#{country.try(:code)}]", {checked: true, class: ['listing-shipping-from-checkbox', 'checkout-option-paypal-required', @listing.new_record? ? 'new step2' : @listing.state], id: 'shipping-from-country', title: 'Location is required'}, 1, 0
               %label{for: "shipping-from-country"}= country.try(:name)
           %td
             .input-group.price-input
               %label $
-              %input.money.text.text-small{type: "text", placeholder: "0.00", name: "listing[shipping_prices][#{country.try(:code)}]", value: value, class: ['required', 'price', @listing.new_record? ? 'new step2' : @listing.state], title: 'Price is required'}
+              %input.money.text.text-small{type: "text", placeholder: "0.00", name: "listing[shipping_prices][#{country.try(:code)}]", value: value, class: ['checkout-option-paypal-required', 'price', @listing.new_record? ? 'new step2' : @listing.state], title: 'Price is required'}
 
       -# international
       %tr
