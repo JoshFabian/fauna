@@ -1,6 +1,16 @@
 class PostShare
   include Loggy
 
+  # returns true if the post should be shared and user has authorized share permissions
+  def self.facebook_share_approved?(post, options={})
+    !facebook_shared?(post, options) and post.facebook_share == 1 and facebook_shareable?(post, options)
+  end
+
+  # returns true if the post should be shared but requires permissions from the specified user
+  def self.facebook_share_permissions_required?(post, options={})
+    !facebook_shared?(post, options) and post.facebook_share == 1 and !facebook_shareable?(post, options)
+  end
+
   # returns true if the post can be shared by the specified user
   def self.facebook_shareable?(post, options={})
     user = options[:by] || post.user

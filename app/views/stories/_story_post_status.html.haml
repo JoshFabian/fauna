@@ -4,7 +4,9 @@
     %textarea.status-form{placeholder: "Write something...", rows: "1"}
     .panel-footer.clearfix
       %button.btn.status-button Post
-      / %span.status-fb-share 
+      %span.status-fb-share
+        = f.check_box :facebook_share, checked: false, id: "post_facebook_share"
+        %label{for: "post_facebook_share"} Share on Facebook
       /   %input#checkbox1{:type => "checkbox"}
       /   %label{:for => "checkbox1"} Share on Facebook
 

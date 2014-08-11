@@ -2,8 +2,7 @@ class PostObserver < ActiveRecord::Observer
   include Loggy
 
   def after_create(post)
-    # puts "post:#{post.id} created"
-    if post.facebook_share == 1 and feature(:backburner)
+    if PostShare.facebook_share_approved?(post) and feature(:backburner)
       # queue share
       Backburner::Worker.enqueue(FacebookShareJob, [{id: post.id, klass: 'post'}])
     end
