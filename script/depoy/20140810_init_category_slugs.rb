@@ -6,8 +6,12 @@ puts "#{Time.now}: initialize category slugs"
 count = 0
 
 Category.find_each do |category|
-  category.save
-  count += 1
+  begin
+    category.save
+    count += 1
+  rescue => e
+    
+  end
 end
 
 puts "#{Time.now}: initialized #{count} categories"
