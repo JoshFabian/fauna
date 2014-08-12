@@ -66,8 +66,7 @@
 
         - if (@listing.new_record? or @listing.draft?) and feature(:story_facebook_share)
           .social-share
-            = f.check_box :facebook_share, checked: false
-            -# = f.check_box :facebook_share, checked: current_user.facebook_share_listing.to_i == 1
+            = f.check_box :facebook_share, checked: current_user.facebook_share_listing.to_i == 1
             %label{for: "listing_facebook_share"} Share this listing on Facebook
 
         .div.edit-timer
