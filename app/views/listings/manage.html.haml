@@ -15,6 +15,7 @@
       %th Handle
       %th Title
       %th State
+      %th Checkout
       %th Share
       %th Peeks
       %th Views
@@ -28,6 +29,7 @@
         %td.name-cell= link_to user.handle.truncate(30), user_path(user)
         %td.title-cell= link_to listing.title.truncate(50), user_listing_path(user, listing)
         %td.data-cell= listing.state
+        %td.data-cell= listing.checkout_option
         %td.data-cell= listing.facebook_shared? ? 'fb' : 'n/a'
         %td.data-cell= listing.peeks_count
         %td.data-cell= listing.views_count
