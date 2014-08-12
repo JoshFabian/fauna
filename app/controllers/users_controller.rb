@@ -133,7 +133,7 @@ class UsersController < ApplicationController
     elsif params[:query].present?
       # add match query
       @query = params[:query].to_s
-      @match = Hashie::Mash.new(match: {'_all' => Search.wildcard_query(@query)})
+      @match = Hashie::Mash.new(match: {'_all' => {query: Search.wildcard_query(@query), minimum_should_match: '75%'}})
       @store_title = ['Search Results'].compact.join(' ')
     else
       @store_title = ['All Listings'].compact.join(' ')
