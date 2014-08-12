@@ -13,7 +13,7 @@ module Endpoints
 
       helpers do
         def post_params
-          ActionController::Parameters.new(params).required(:post).permit(:body)
+          ActionController::Parameters.new(params).required(:post).permit(:body, :facebook_share)
         end
 
         def comment_params
@@ -44,6 +44,13 @@ module Endpoints
         PostLike.toggle_like!(@post, current_user)
         logger.post("tegu.api", log_data.merge({event: 'post.toggle_like', post_id: @post.id}))
         {post: @post.as_json()}
+      end
+
+      desc "Returns 1 if the post should be shared but requires facebook permissions"
+      get ':id/share/facebook/auth' do
+        acl_manage!(on: @post)
+        auth = PostShare.facebook_share_permissions_required?(@post) ? 1 : 0
+        {post: @post, auth: auth}
       end
 
       desc "Share post on facebook"

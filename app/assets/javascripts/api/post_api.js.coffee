@@ -25,6 +25,14 @@ class Tegu.PostApi
       success: (data) ->
         callback(null, data) if callback
 
+  @get_facebook_share_auth: (post_id, token, callback = null) ->
+    api = "/api/v1/posts/#{post_id}/share/facebook/auth?token=#{token}"
+    $.ajax api,
+      type: 'GET'
+      dataType: 'json'
+      success: (data) ->
+        callback(null, data) if callback
+
   @share_facebook: (post_id, token, callback = null) ->
     api = "/api/v1/posts/#{post_id}/share/facebook?token=#{token}"
     $.ajax api,

@@ -28,7 +28,7 @@ class PostShare
   def self.facebook_share!(post, options={})
     user = options[:by] || post.user
     graph = Koala::Facebook::API.new(user.facebook_oauth.oauth_token)
-    message = options[:message] || post.body.truncate(20)
+    message = options[:message] || post.body
     link = options[:link] || "#{Settings[Rails.env][:api_host]}/#{user.handle}"
     result = graph.put_connections('me', 'feed', message: message, link: link)
     post.update(facebook_share_id: result['id'])

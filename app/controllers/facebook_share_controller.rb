@@ -3,11 +3,11 @@ class FacebookShareController < ApplicationController
   before_filter :authenticate_user!
 
   # GET /facebook/share/:klass/:id/auth
-  # GET /facebook/share/:klass/:id/auth/from/:page
+  # GET /facebook/share/:klass/:id/auth/from/:page (e.g. 'feed', 'story', or 'listing')
   def auth
     # set return_to paths
     session[:connect_oauth_return_to] = facebook_share_path(params[:klass], params[:id], params[:page])
-
+    # redirect
     redirect_to user_omniauth_authorize_path(:facebook)
   end
 
