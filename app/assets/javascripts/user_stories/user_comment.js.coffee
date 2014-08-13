@@ -11,6 +11,8 @@ $(document).ready ->
     if (e.which == 13)
       body = $(this).val()
       return if !body or $(this).hasClass('disabled')
+      if current_user == 0
+        return window.location.href = Tegu.GuestRoute.login_route()
       $(this).addClass('disabled')
       object_id = $(this).data('object-id')
       object_klass = $(this).data('object-klass')

@@ -70,7 +70,7 @@ $(document).ready ->
     if $(this).hasClass('disabled')
       return Tegu.CheckoutForm.show_shipping_error()
     if current_user == 0
-      return window.location.href = "/login"
+      return window.location.href = Tegu.GuestRoute.login_route()
     $(this).addClass('disabled').text("Checking out ...")
     listing_id = $(this).data('listing-id')
     console.log "listing:#{listing_id}, shipping_to:#{shipping_to}"
