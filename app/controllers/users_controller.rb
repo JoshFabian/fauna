@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
 
-  before_filter :authenticate_user!, except: [:show, :validate_email, :validate_handle]
+  before_filter :authenticate_user!, except: [:activity, :validate_email, :validate_handle]
   before_filter :admin_role_required!, only: [:become, :index]
   before_filter :manage_role_required!, only: [:messages, :purchases]
-  before_filter :user_slug_normalize!, only: [:show]
+  before_filter :user_slug_normalize!, only: [:activity]
 
   # admins only
   # GET /users
@@ -259,7 +259,7 @@ class UsersController < ApplicationController
     cover_set = 1.upto(3).map do |i|
       cover_images.select{ |o| o.position == i }.first or i
     end
-    image = cover_images.first
+    image = cover_images.first || user.avatar_image
     [user, me, cover_images, cover_set, image]
   end
 
