@@ -32,7 +32,7 @@
       = link_to '#', class: ['object-comment'] do
         %i.icon.ion-reply
         reply
-    - if false#me and feature(:story_facebook_share)
+    - if me and feature(:story_facebook_share)
       .footer-button
         = link_to '#', class: ['object-facebook-share'], :'data-object-id' => post.id, :'data-object-klass' => 'post', :'data-facebook-permission' => PostShare.facebook_shareable?(post) ? 'share' : 'basic' do
           %i.icon.ion-social-facebook
