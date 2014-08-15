@@ -1317,8 +1317,10 @@ input.verification {
   .more-listings {
     margin-top: 0;
     padding: 0 5px;
-    li:nth-child(3) {
-      display: none;
+    @media (max-width: 640px) {
+      li:nth-child(3) {
+        display: none;
+      }
     }
   }
 }

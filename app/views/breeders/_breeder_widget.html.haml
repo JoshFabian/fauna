@@ -11,6 +11,6 @@
           = link_to 'Follow', '#', class: ['button', 'follow-button', 'orange-button', 'track-user-profile-view'], :'data-follow-id' => breeder.id
         .more-from-author.small-12.columns
           .more-listings
-            %ul.small-block-grid-2
+            %ul.small-block-grid-2.medium-block-grid-3
               - listings.each do |listing|
                 = render(partial: "listings/listing_tile", locals: {listing: listing, user: breeder})
