@@ -47,7 +47,8 @@ class ListingTest < ActiveSupport::TestCase
 
     describe "facebook share" do
       it "should set user.facebook_share_listing when listing.facebook_share is set" do
-        @user.facebook_share_listing.to_i.must_equal 0
+        @user.facebook_share_listing = 0; @user.save
+        @user.facebook_share_listing.must_equal 0
         @listing = @user.listings.create!(title: "Title 2", price: 100, facebook_share: 1)
         @listing.facebook_share.to_i.must_equal 1
         @user.reload

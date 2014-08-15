@@ -57,6 +57,8 @@ class User < ActiveRecord::Base
 
   before_validation(on: :create) do
     self.auth_token ||= generate_authentication_token
+    self.facebook_share_listing ||= 1
+    self.facebook_share_post ||= 1
     self.handle ||= self.email
     self.roles = [:basic]
     self.trial_ends_at ||= 30.days.from_now

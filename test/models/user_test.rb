@@ -1,8 +1,16 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  it "should create user with required attributes" do
-    @user = User.create!(email: "user#{rand(100)}@gmail.com", password: "x", password_confirmation: "x")
+  describe "create" do
+    it "should create with required attributes" do
+      @user = User.create!(email: "user#{rand(100)}@gmail.com", password: "x", password_confirmation: "x")
+    end
+
+    it "should set facebook_share preferences to 1" do
+      @user = Fabricate(:user)
+      @user.facebook_share_listing.must_equal 1
+      @user.facebook_share_post.must_equal 1
+    end
   end
 
   describe "user auth token" do
