@@ -1226,3 +1226,73 @@ input.verification {
     z-index: 0;
   }
 }
+
+.scrolling-background-container {
+  overflow: hidden;
+  height: 300px;
+  position: relative;
+  &.homepage {
+    margin-top: -45px;
+    margin-bottom: 25px;
+  }
+  .scrolling-bg {
+    background: black;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 650px;
+    background-image: image-url("scroll-bg.jpg");
+    background-repeat:repeat-y;
+    background-size: cover;
+    background-position: top right;
+    -webkit-animation: scrollBgGridLinks 35s linear;
+    animation: scrollBgGridLinks 35s linear;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+  }
+  .container {
+    text-align: center;
+  }
+  .search-form {
+    position: relative;
+    color: #fff;
+    z-index: 1;
+    h2 {
+      color: #fff;
+      margin-top: 70px;
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+    .search-input {
+      .input-wrapper {
+        width: 77%;
+        padding-right: 0;
+      }
+      .button-wrapper {
+        width: 23%;
+        padding-left: 0;
+      }
+      input {
+        height: 60px;
+        border: none;
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+        font-size: 19px;
+        text-indent: 15px;
+      }
+      .button {
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+        height: 60px;
+        line-height: 60px;
+        font-size: 18px;
+        background: $green;
+        &:hover {
+          background: darken($green, 5);
+        }
+      }
+    }
+  }
+}

@@ -1,28 +1,6 @@
 @import "globals/all";
 @import "foundation/components/grid";
 .landing-page {
-  .scrolling-background-container {
-    overflow: hidden;
-    height: 300px;
-    position: relative;
-  }
-  .scrolling-bg {
-    background: black;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 650px;
-    background-image: image-url("scroll-bg.jpg");
-    background-repeat:repeat-y;
-    background-size: cover;
-    background-position: top right;
-    -webkit-animation: scrollBgGridLinks 35s linear;
-    animation: scrollBgGridLinks 35s linear;
-    -webkit-animation-fill-mode: forwards;
-    animation-fill-mode: forwards;
-  }
   .email-block {
     @extend .clearfix;
     @extend %shadow;
