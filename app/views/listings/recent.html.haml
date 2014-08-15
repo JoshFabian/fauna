@@ -1,5 +1,6 @@
 - content_for :title, @title
 
+= render partial: "layouts/header_search"
 .row
   - if !user_signed_in?
     .small-12.columns
