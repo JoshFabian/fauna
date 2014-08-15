@@ -93,26 +93,26 @@
       margin-bottom: 0;
     }
   }
-  .more-from-author {
-    padding: 0;
-    margin-top: 15px;
-    span {
-      font-size: 12px;
+}
+.more-from-author {
+  padding: 0;
+  margin-top: 15px;
+  span {
+    font-size: 12px;
+  }
+  .more-listings { 
+    margin-top: 10px;
+    li {
+      padding-bottom: 0;
     }
-    .more-listings { 
-      margin-top: 10px;
-      li {
-        padding-bottom: 0;
+    .listing-panel {
+      border: 1px solid #e9e9e9;
+      box-shadow: none;
+      a {
+        color: #333;
       }
-      .listing-panel {
-        border: 1px solid #e9e9e9;
-        box-shadow: none;
-        a {
-          color: #333;
-        }
-        .title {
-          font-size: 13px;
-        }
+      .title {
+        font-size: 13px;
       }
     }
   }
@@ -1294,6 +1294,31 @@ input.verification {
           background: darken($green, 5);
         }
       }
+    }
+  }
+}
+
+.breeder-widget {
+  .breeder-info {
+    @media (max-width: 640px) {
+      padding-left: 0;
+      text-align: center;
+      margin-top: 5px;
+    }
+  }
+  .more-from-author {
+    padding: 0;
+    margin-top: 0;
+    .listing {
+      padding: 5px;
+      padding-bottom: 0;
+    }
+  }
+  .more-listings {
+    margin-top: 0;
+    padding: 0 5px;
+    li:nth-child(3) {
+      display: none;
     }
   }
 }

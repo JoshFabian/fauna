@@ -61,5 +61,5 @@
       - Category.roots.order("position asc").each do |category|
         %li= link_to category.name, listing_category_path(category.slug), class: [@category.try(:name) == category.name ? 'active' : nil]
 
-- if user_signed_in? and current_user.pending_listing_reviews > 0
+- if user_signed_in? and current_user.pending_listing_reviews > 0 
   = render(partial: "layouts/header_pending_listing_reviews", locals: {count: current_user.pending_listing_reviews})

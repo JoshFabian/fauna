@@ -228,3 +228,17 @@ input.button {
     color: $orange;
   }
 }
+
+.breeder-widget {
+  h4 {
+    margin-bottom: 0;
+    margin-top: -5px;
+  }
+  .orange-button {
+    padding: 5px 30px;
+    margin-top: 10px;
+    &.active {
+      background: #7f8c8d;
+    }
+  }
+}

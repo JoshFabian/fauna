@@ -2,9 +2,11 @@
 
 = render partial: "layouts/header_search"
 .row
-  - if !user_signed_in?
-    .small-12.columns
-      = render partial: "listings/guest_message"
+  / = render partial: "layouts/breeder_widget"
+  
+  / - if !user_signed_in?
+  /   .small-12.columns
+  /     = render partial: "listings/guest_message"
 
   %h5 Recent Listings
   %ul.list-grid.small-block-grid-4

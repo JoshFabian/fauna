@@ -1,0 +1,25 @@
+%h5 Featured Breeders
+%ul.small-block-grid-1.medium-block-grid-2
+  -2.times do
+    %li
+      .rounded-panel.breeder-widget
+        .small-2.columns.no-padding.show-for-medium-up
+          = image_tag "http://www.placehold.it/100/100"
+        .breeder-info.small-12.medium-10.columns
+          %h4 Hectors Habitat
+          = link_to 'Follow', '#', class: ['button', 'follow-button', 'orange-button', 'track-user-profile-view']
+        .more-from-author.small-12.columns
+          .more-listings
+            %ul.small-block-grid-2
+              -3.times do
+                %li.listing.track-listing-peek{"data-listing-id" => "213", "data-listing-slug" => "reptique-lesser-ball-python-roman-on-sale-for-119-99", "data-user-id" => "391"}
+                  %a{:href => "/reptilesbymack/listings/reptique-lesser-ball-python-roman-on-sale-for-119-99"}
+                    .listing-panel
+                      %img{:alt => "Z6v2hsuwtuxswhuqldfx", :src => "https://res.cloudinary.com/tegu/image/upload/c_fill,h_200,w_235/v1408050949/z6v2hsuwtuxswhuqldfx.jpg"}
+                        .listing-info
+                          .title
+                            Reptique™:  Lesser Ball Python - Roman - On Sale For $119.99
+                          .breeder
+                            ReptilesbyMack
+                          .price
+                            $199.99
