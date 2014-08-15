@@ -50,6 +50,8 @@ class User < ActiveRecord::Base
 
   store :data, accessors: [:facebook_share_listing, :facebook_share_post, :welcome_message]
 
+  scope :store, -> { where(store: true) }
+
   # private messaging
   acts_as_messageable
 
