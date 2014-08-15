@@ -1,8 +1,10 @@
 - content_for :title, @title
 
 = render partial: "layouts/header_search"
+
 .row
-  / = render partial: "layouts/breeder_widget"
+  - if @breeders.any?
+    = render partial: "layouts/breeder_widget"
   
   / - if !user_signed_in?
   /   .small-12.columns

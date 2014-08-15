@@ -1,0 +1,16 @@
+%h5 Featured Breeders
+%ul.small-block-grid-1.medium-block-grid-2
+  - @breeders.each do |breeder|
+    - listings = breeder.listings.active.limit(3)
+    %li
+      .rounded-panel.breeder-widget
+        .small-2.columns.no-padding.show-for-medium-up
+          = image_tag "http://www.placehold.it/100/100"
+        .breeder-info.small-12.medium-10.columns
+          %h4= breeder.handle
+          = link_to 'Follow', '#', class: ['button', 'follow-button', 'orange-button', 'track-user-profile-view'], :'data-follow-id' => breeder.id
+        .more-from-author.small-12.columns
+          .more-listings
+            %ul.small-block-grid-2
+              - listings.each do |listing|
+                = render(partial: "listings/listing_tile", locals: {listing: listing, user: breeder})

@@ -26,6 +26,8 @@ class ListingsController < ApplicationController
       mash = Hashie::Mash.new(category: category, listings: category.listings.active.order('id desc').limit(4))
     end
 
+    @breeders = User.breeder.limit(2)
+
     @title = "Recent Listings"
 
     respond_to do |format|
