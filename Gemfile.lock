@@ -154,6 +154,8 @@ GEM
     fluent-plugin-file-alternative (0.1.5)
       fluent-mixin-plaintextformatter
       fluentd (>= 0.10.39)
+    fluent-plugin-loggly (0.0.4)
+      net-http-persistent (>= 2.7)
     fluentd (0.10.48)
       cool.io (>= 1.1.1, < 2.0.0, != 1.2.0)
       http_parser.rb (>= 0.5.1, < 0.7.0)
@@ -275,6 +277,7 @@ GEM
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     mysql2 (0.3.14)
+    net-http-persistent (2.9.4)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
@@ -473,6 +476,7 @@ DEPENDENCIES
   flexmock
   fluent-logger
   fluent-plugin-file-alternative
+  fluent-plugin-loggly
   foundation-rails
   friendly_id
   geokit-rails
