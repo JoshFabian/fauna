@@ -16,7 +16,7 @@ class ListingObserver < ActiveRecord::Observer
   end
 
   def after_save(listing)
-    if listing.state_changed? and ListingShare.facebook_share_approved?(listing) and feature(:backburner)
+    if listing.state_changed? and listing.active? and ListingShare.facebook_share_approved?(listing) and feature(:backburner)
       # listing is active and facebook share has been approved
       Backburner::Worker.enqueue(FacebookShareJob, [{id: listing.id, klass: 'listing'}], delay: 30.seconds)
     end
