@@ -9,4 +9,8 @@
               = f.text_field 'query', name: 'query', value: @query, placeholder: 'What are you looking for?'
             .small-2.columns.button-wrapper
               = f.submit 'Search', class: 'button postfix'
+      .row
+        .medium-5.columns.medium-centered
+          %a.create-account{:href=>"#"} Create an Account
+          %a.breeder-button{:href=>"#"} Breeder Directory
   .scrolling-bg.animate-background

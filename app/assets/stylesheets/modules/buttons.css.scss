@@ -242,3 +242,21 @@ input.button {
     }
   }
 }
+
+.create-account, .breeder-button {
+  padding: 10px 25px;
+  color: #fff;
+  border: 1px solid;
+  border-radius: 3px;
+  background: rgba(255,255,255,.1);
+  &:hover {
+    color: $green;
+  }
+}
+
+.create-account {
+  float: left;
+}
+.breeder-button {
+  float: right;
+}
