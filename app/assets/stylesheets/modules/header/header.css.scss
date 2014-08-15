@@ -173,12 +173,14 @@
 
 .review-alert {
   @include grid-column(12);
-  margin-top: -31px;
+  margin-top: -45px;
   margin-bottom: 30px;
   text-align: center;
   padding: 0;
   position: relative;
   z-index: 1;
+  float: none;
+
   a {
     background: #1abc9c;
     display: block;
