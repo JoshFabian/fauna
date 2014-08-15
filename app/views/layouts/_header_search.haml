@@ -11,6 +11,7 @@
               = f.submit 'Search', class: 'button postfix'
       .row
         .medium-5.columns.medium-centered
-          %a.create-account{:href=>"#"} Create an Account
-          %a.breeder-button{:href=>"#"} Breeder Directory
+          - if !user_signed_in?
+            = link_to 'Create an Account', login_path, class: 'create-account'
+          = link_to 'Breeder Directory', breeders_path, class: 'breeder-button'
   .scrolling-bg.animate-background
