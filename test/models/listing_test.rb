@@ -72,8 +72,17 @@ class ListingTest < ActiveSupport::TestCase
     end
   end
 
+  describe "user breeder flag" do
+    it "should set breeder flag when user has gte 3 active listings" do
+      @user.breeder?.must_equal false
+      1.upto(10).each { Fabricate(:listing, user: @user, state: 'active') }
+      @user.reload
+      @user.breeder?.must_equal true
+    end
+  end
+
   describe "user store flag" do
-    it "should set store flag after x listings" do
+    it "should set store flag after 10 listings" do
       @user.store?.must_equal false
       1.upto(10).each { Fabricate(:listing, user: @user, state: 'active') }
       @user.reload
