@@ -1,0 +1,12 @@
+.scrolling-background-container.homepage.show-for-medium-up
+  .container
+    .search-form
+      %h2 Hundreds of reptiles at your fingertips.
+      .medium-7.columns.medium-centered.search-input
+        .row.collapse
+          = form_for "", url: listing_search_path, html: {class: "search-form"} do |f|
+            .small-10.columns.input-wrapper
+              = f.text_field 'query', name: 'query', value: @query, placeholder: 'What are you looking for?'
+            .small-2.columns.button-wrapper
+              = f.submit 'Search', class: 'button postfix'
+  .scrolling-bg.animate-background
