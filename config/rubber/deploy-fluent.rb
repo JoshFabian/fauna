@@ -5,6 +5,7 @@ namespace :rubber do
     task :install, :roles => :app do
       run "gem install fluentd"
       run "gem install fluent-plugin-file-alternative"
+      run "gem install fluent-plugin-loggly"
       # run "sudo yum install -y td-agent"
       # run "curl -L http://toolbelt.treasuredata.com/sh/install-redhat.sh | sh"
     end
