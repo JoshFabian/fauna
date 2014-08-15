@@ -250,7 +250,8 @@ input.button {
   border-radius: 3px;
   background: rgba(255,255,255,.1);
   &:hover {
-    color: $green;
+    color: #fff;
+    background: rgba(255,255,255,.2);
   }
 }
 
@@ -259,4 +260,7 @@ input.button {
 }
 .breeder-button {
   float: right;
+  &.single {
+    width: 350px;
+  }
 }

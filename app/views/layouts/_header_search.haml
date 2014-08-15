@@ -10,8 +10,11 @@
             .small-2.columns.button-wrapper
               = f.submit 'Search', class: 'button postfix'
       .row
-        .medium-5.columns.medium-centered
-          - if !user_signed_in?
+        - if !user_signed_in?
+          .medium-5.columns.medium-centered
             = link_to 'Create an Account', login_path, class: 'create-account'
-          = link_to 'Breeder Directory', breeders_path, class: 'breeder-button'
+            = link_to 'Breeder Directory', breeders_path, class: 'breeder-button'
+        -else
+          .medium-5.columns.medium-centered
+            = link_to 'Breeder Directory', breeders_path, class: 'breeder-button single'
   .scrolling-bg.animate-background
