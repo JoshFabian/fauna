@@ -5,9 +5,9 @@
     %li
       .rounded-panel.breeder-widget
         .small-2.columns.no-padding.show-for-medium-up
-          = image_tag "http://www.placehold.it/100/100"
+          = image_tag user_avatar_image_thumbnail(breeder.avatar_image, 100)
         .breeder-info.small-12.medium-10.columns
-          %h4= breeder.handle
+          %h4= link_to breeder.handle, user_path(breeder)
           = link_to 'Follow', '#', class: ['button', 'follow-button', 'orange-button', 'track-user-profile-view'], :'data-follow-id' => breeder.id
         .more-from-author.small-12.columns
           .more-listings
