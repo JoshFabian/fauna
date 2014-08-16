@@ -11,7 +11,7 @@ class BreedersController < ApplicationController
   protected
 
   def per
-    2
+    10
   end
 
 end
