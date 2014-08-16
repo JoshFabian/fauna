@@ -3,7 +3,7 @@
 = render partial: "layouts/header_search"
 
 .row
-  - if @breeders.any?
+  - if @breeders.present?
     = render partial: "breeders/breeder_widget"
   
   / - if !user_signed_in?

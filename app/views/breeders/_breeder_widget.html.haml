@@ -1,8 +1,8 @@
 %h5 Featured Breeders
-%ul.small-block-grid-1.medium-block-grid-2
+%ul.small-block-grid-1.medium-block-grid-2#breeders
   - @breeders.each do |breeder|
     - listings = breeder.listings.active.limit(3)
-    %li
+    %li.breeder
       .rounded-panel.breeder-widget
         .small-2.columns.no-padding.show-for-medium-up
           = image_tag user_avatar_image_thumbnail(breeder.avatar_image, 100)

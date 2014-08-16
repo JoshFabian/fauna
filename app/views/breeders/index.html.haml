@@ -1,3 +1,6 @@
 .row
   .container
     = render partial: "breeders/breeder_widget"
+
+.row{style: 'display: none;'}
+  = paginate @breeders

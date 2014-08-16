@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   include FriendlyId
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
   include Loggy
 
   # Include default devise modules. Others available are:
@@ -63,6 +65,10 @@ class User < ActiveRecord::Base
     self.handle ||= self.email
     self.roles = [:basic]
     self.trial_ends_at ||= 30.days.from_now
+  end
+
+  def as_indexed_json(options={})
+    as_json(methods: [:city_state_zip, :full_name, :phone_number], except: [:data])
   end
 
   # def as_json(options={})

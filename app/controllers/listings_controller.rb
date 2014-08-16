@@ -26,7 +26,7 @@ class ListingsController < ApplicationController
       mash = Hashie::Mash.new(category: category, listings: category.listings.active.order('id desc').limit(4))
     end
 
-    @breeders = User.breeder.limit(2)
+    @breeders = User.find_all_by_id(User.breeder.pluck(:id).shuffle().first(2)) rescue []
 
     @title = "Recent Listings"
 
