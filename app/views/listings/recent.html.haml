@@ -4,7 +4,7 @@
 
 .row
   - if @breeders.present?
-    = render partial: "breeders/breeder_widget"
+    = render partial: "breeders/breeder_widget", locals: {title: "Featured Breeders"}
   
   / - if !user_signed_in?
   /   .small-12.columns

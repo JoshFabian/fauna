@@ -1,4 +1,5 @@
-%h5 Featured Breeders
+%h5= title
+
 %ul.small-block-grid-1.medium-block-grid-2#breeders
   - @breeders.each do |breeder|
     - listings = breeder.listings.active.limit(3)

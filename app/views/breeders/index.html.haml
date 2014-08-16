@@ -1,6 +1,6 @@
 .row
   .container
-    = render partial: "breeders/breeder_widget"
+    = render partial: "breeders/breeder_widget", locals: {title: "Breeders Directory"}
 
 .row{style: 'display: none;'}
   = paginate @breeders
