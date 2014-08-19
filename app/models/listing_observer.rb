@@ -10,8 +10,6 @@ class ListingObserver < ActiveRecord::Observer
     # add user seller role if missing
     user.roles << :seller if !user.roles?(:seller)
     user.save
-    # track listing
-    SegmentListing.track_listing_create(listing)
   rescue Exception => e
   end
 
@@ -30,6 +28,10 @@ class ListingObserver < ActiveRecord::Observer
       should_check_user_breeder(user)
       # check user store flag
       should_check_user_store(user)
+    end
+    if listing.state_changed? and listing.active?
+      # track listing
+      SegmentListing.track_listing_create(listing)
     end
     # update search index
     listing.__elasticsearch__.update_document
