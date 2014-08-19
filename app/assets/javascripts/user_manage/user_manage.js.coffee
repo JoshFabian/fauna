@@ -1,6 +1,6 @@
 $(document).ready ->
 
-  $("a.listing-credits-add").on 'click', (e) ->
+  $(document).on 'click', "a.listing-credits-add", (e) ->
     e.preventDefault()
     user_id = $(this).data('user-id')
     async.waterfall [
