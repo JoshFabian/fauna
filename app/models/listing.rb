@@ -7,7 +7,7 @@ class Listing < ActiveRecord::Base
 
   validates :price, presence: true
   validates :state, presence: true
-  validates :title, presence: true, uniqueness: {scope: :user}
+  validates :title, presence: true
   validates :user, presence: true
 
   belongs_to :user
