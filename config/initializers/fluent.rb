@@ -1,12 +1,12 @@
 require 'fluent-logger'
 
-# add error method for undefined method erorrs
+# add error method for 'undefined method' runtime errors
 module Fluent
   module Logger
 
     def self.error(*args)
       # noop
-      @@default_logger.post("tegu.error", *args)
+      # @@default_logger.post("tegu.error", *args)
     rescue => e
     end
 
