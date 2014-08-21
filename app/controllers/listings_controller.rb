@@ -60,9 +60,13 @@ class ListingsController < ApplicationController
       @query = params[:query].to_s
       raise ListingException, "missing search query" if @query.blank?
       terms = [ListingFilter.state('active')]
-      search = {query: {match: {'_all' => Search.wildcard_query(@query)}, minimum_should_match: '75%'},
-        filter: {bool: {must: terms}}, sort: {id: "desc"}}
+      # note: minimum_should_match was causing strange results on production, es v 0.19.12
+      # search = {query: {match: {'_all' => Search.wildcard_query(@query)}, minimum_should_match: '75%'},
+      #   filter: {bool: {must: terms}}, sort: {id: "desc"}}
+      search = {query: {match: {'_all' => Search.wildcard_query(@query)}}, filter: {bool: {must: terms}},
+        sort: {id: "desc"}}
       @listings = Listing.search(search).page(page).per(per).records
+      logger.post("tegu.app", log_data.merge({event: "listing.search", query: @query}))
     rescue Exception => e
       @listings = []
     end
