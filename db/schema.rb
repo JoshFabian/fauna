@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140815192926) do
+ActiveRecord::Schema.define(version: 20140830115413) do
 
   create_table "attachinary_files", force: true do |t|
     t.integer  "attachinariable_id"
@@ -149,23 +149,24 @@ ActiveRecord::Schema.define(version: 20140815192926) do
 
   create_table "listings", force: true do |t|
     t.integer  "user_id"
-    t.string   "state",           limit: 20
-    t.string   "title",           limit: 100
-    t.string   "slug",            limit: 100
+    t.string   "state",                limit: 20
+    t.string   "title",                limit: 100
+    t.string   "slug",                 limit: 100
     t.text     "description"
     t.integer  "price"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "images_count",                default: 0
+    t.integer  "images_count",                     default: 0
     t.text     "shipping_prices"
     t.text     "data"
     t.datetime "sold_at"
-    t.integer  "views_count",                 default: 0
-    t.integer  "comments_count",              default: 0
-    t.integer  "likes_count",                 default: 0
-    t.integer  "peeks_count",                 default: 0
+    t.integer  "views_count",                      default: 0
+    t.integer  "comments_count",                   default: 0
+    t.integer  "likes_count",                      default: 0
+    t.integer  "peeks_count",                      default: 0
     t.datetime "flagged_at"
     t.datetime "removed_at"
+    t.integer  "website_clicks_count",             default: 0
   end
 
   add_index "listings", ["comments_count"], name: "index_listings_on_comments_count"
@@ -182,6 +183,7 @@ ActiveRecord::Schema.define(version: 20140815192926) do
   add_index "listings", ["title"], name: "index_listings_on_title"
   add_index "listings", ["user_id"], name: "index_listings_on_user_id"
   add_index "listings", ["views_count"], name: "index_listings_on_views_count"
+  add_index "listings", ["website_clicks_count"], name: "index_listings_on_website_clicks_count"
 
   create_table "notifications", force: true do |t|
     t.string   "type"

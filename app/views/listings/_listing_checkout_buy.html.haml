@@ -4,7 +4,7 @@
   .error-state.hide Please select a shipping option.
   = link_to 'Checkout with Paypal', '#', class: 'button buy-button checkout secondary disabled track-listing-view', :'data-listing-id' => @listing.id
 - elsif @listing.checkout_option == 'website'
-  = link_to @listing.checkout_website, class: 'button buy-button button-link track-listing-view', :target => "_blank" do
+  = link_to @listing.checkout_website, class: 'button buy-button button-link track-listing-view website', :'data-listing-id' => @listing.id, :target => "_blank" do
     Visit seller website
     %i.ion-share
 

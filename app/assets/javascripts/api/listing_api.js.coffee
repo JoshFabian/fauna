@@ -94,6 +94,14 @@ class Tegu.ListingApi
       success: (data) ->
         callback(null, data) if callback
 
+  @track_website_click: (listing_id, token, callback = null) ->
+    api = "/api/v1/listings/#{listing_id}/track/website_click?token=#{token}"
+    $.ajax api,
+      type: 'PUT'
+      dataType: 'json'
+      success: (data) ->
+        callback(null, data) if callback
+
   @get_shipping_price: (listing_id, country_code, token, callback = null) ->
     api = "/api/v1/listings/#{listing_id}/shipping/to/#{country_code}?token=#{token}"
     $.ajax api,

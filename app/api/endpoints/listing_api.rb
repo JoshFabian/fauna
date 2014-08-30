@@ -203,7 +203,7 @@ module Endpoints
         authenticate!
         ListingLike.toggle_like!(@listing, current_user)
         logger.post("tegu.api", log_data.merge({event: 'listing.toggle_like', listing_id: @listing.id}))
-        {listing: @listing.as_json()}
+        {listing: @listing}
       end
 
       desc "Create listing review"
@@ -218,6 +218,13 @@ module Endpoints
         end
         logger.post("tegu.api", log_data.merge({event: 'listing.review', listing_id: @listing.id}))
         {review: @review.as_json().merge(ratings: @review.ratings)}
+      end
+
+      desc "Track listing website click"
+      put ':id/track/website_click' do
+        @listing.increment!(:website_clicks_count)
+        logger.post("tegu.api", log_data.merge({event: 'listing.track.website_click', listing_id: @listing.id}))
+        {listing: @listing}
       end
 
       desc "Get listing shipping price"

@@ -83,3 +83,14 @@ $(document).ready ->
         if data.payment.payment_url
           window.location.href = data.payment.payment_url
     ]
+
+  $(document).on 'click', "a.website", (e) ->
+    listing_id = $(this).data('listing-id')
+    console.log "listing:#{listing_id} track website click ..."
+    async.waterfall [
+      (callback) ->
+        # track website click
+        Tegu.ListingApi.track_website_click(listing_id, auth_token, callback)
+      (data, callback) ->
+        # console.log data
+    ]
