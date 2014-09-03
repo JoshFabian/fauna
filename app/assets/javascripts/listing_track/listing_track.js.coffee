@@ -34,7 +34,7 @@ $(document).ready ->
 
   try
     if $(".track-listing-view").length > 0
-      listing_id = $("a.checkout").data('listing-id')
+      listing_id = $(".track-listing-view:first").data('listing-id')
       console.log "track listing view: #{listing_id}"
       Tegu.ListingTrack.track_listing_view(listing_id)
   catch e
