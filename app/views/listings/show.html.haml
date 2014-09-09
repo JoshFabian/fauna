@@ -75,7 +75,7 @@
       %h1
         = number_to_currency(@listing.price.to_f/100.0, precision: 2)
 
-      - if @listing.sold?
+      - if @listing.sold? or @listing.removed?
         = render(partial: 'listings/listing_checkout_sold')
       - elsif current_user.try(:id) == @listing.user_id
         = render(partial: 'listings/listing_checkout_edit')
